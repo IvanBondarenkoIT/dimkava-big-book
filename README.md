@@ -24,24 +24,24 @@ dimkava-big-book/
 | [docs/STRATEGIC_SNAPSHOT.md](docs/STRATEGIC_SNAPSHOT.md) | Текущее состояние, дизайн, следующий шаг |
 | [docs/DEVELOPMENT_PLAN.md](docs/DEVELOPMENT_PLAN.md) | План разработки по фазам |
 
-## Локальная настройка (после создания Django-проекта)
+## Локальная настройка
 
 1. Клонировать репозиторий
-2. Скопировать `.env.example` → `.env`, заполнить значения
-3. `docker-compose up -d` (Postgres + Redis)
-4. `pip install -r requirements.txt`
+2. `python -m venv venv` → `venv\Scripts\activate` (Windows)
+3. `pip install -r requirements.txt`
+4. Скопировать `.env.example` → `.env` (опционально для dev — SQLite по умолчанию)
 5. `python manage.py migrate`
-6. `python manage.py loaddata fixtures/initial_data.json`
+6. `python manage.py create_default_users` — создать admin/hr/employee
 7. `python manage.py runserver`
 
-## Дефолтные пользователи
+**С credentials из .env.example:** admin@dimkava.ge / changeme_admin
 
-См. `.env.example` — credentials задаются через переменные окружения.
+**Docker (Postgres + Redis):** `docker-compose up -d` — для использования Postgres задайте `DATABASE_URL`.
 
 ## Тесты
 
 ```bash
-python manage.py test apps.core.tests
+python manage.py test apps.core.tests apps.accounts.tests
 ```
 
 ## Технологии

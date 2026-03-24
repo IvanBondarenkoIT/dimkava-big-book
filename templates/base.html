@@ -52,9 +52,17 @@
       <a href="{% url 'search:results' %}" class="p-2 rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors">
         <span class="material-symbols-outlined">search</span>
       </a>
-      <a href="{% url 'accounts:profile' %}" class="w-10 h-10 rounded-full bg-primary-container/20 border border-primary-container/30 overflow-hidden flex-shrink-0">
-        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar" class="w-full h-full object-cover"/>
-      </a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'accounts:profile' %}" class="w-10 h-10 rounded-full bg-primary-container/20 border border-primary-container/30 overflow-hidden flex-shrink-0">
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ user.username }}" alt="Avatar" class="w-full h-full object-cover"/>
+        </a>
+        <form method="post" action="{% url 'logout' %}" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="text-sm text-on-surface-variant/60 hover:text-primary">Logout</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="btn-primary py-2 px-4 text-sm">Login</a>
+      {% endif %}
     </div>
   </nav>
 

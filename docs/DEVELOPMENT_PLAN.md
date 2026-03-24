@@ -21,20 +21,20 @@
 
 ---
 
-## Фаза 1: Project scaffold (base.md Step 1)
+## Фаза 1: Project scaffold (base.md Step 1) ✅
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 1.1 | Django project structure | config/, manage.py | — |
-| 1.2 | Settings: base, development, production | config/settings/ | — |
-| 1.3 | .env.example, python-decouple | .env.example | — |
-| 1.4 | docker-compose.yml (Postgres + Redis) | docker-compose.yml | — |
-| 1.5 | requirements.txt | requirements.txt | — |
-| 1.6 | base.html (layout: topbar only, no sidebar) | templates/base.html | — |
-| 1.7 | Auth: login, logout, password reset | accounts/views, templates | — |
-| 1.8 | Profile page | accounts/ | — |
-| 1.9 | Management command: create default users | accounts/management/ | unit |
-| 1.10 | 404, 500 templates | templates/ | — |
+| 1.1 | Django project structure | config/, manage.py | ✅ |
+| 1.2 | Settings: base, development, production | config/settings/ | ✅ |
+| 1.3 | .env.example, python-decouple | .env.example | ✅ |
+| 1.4 | docker-compose.yml (Postgres + Redis) | docker-compose.yml | ✅ |
+| 1.5 | requirements.txt | requirements.txt | ✅ |
+| 1.6 | base.html (layout: topbar only, no sidebar) | templates/base.html | ✅ |
+| 1.7 | Auth: login, logout, password reset | accounts/views, templates | ✅ |
+| 1.8 | Profile page | accounts/ | ✅ |
+| 1.9 | Management command: create default users | accounts/management/ | unit ✅ |
+| 1.10 | 404, 500 templates | templates/ | ✅ |
 
 **Checkpoint:** Пользователь может залогиниться, выйти, сбросить пароль, открыть профиль.
 

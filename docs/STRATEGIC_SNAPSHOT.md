@@ -33,7 +33,7 @@
 ## 2. Следующий шаг по плану
 
 1. **0.6** — ответы на GUIDING_QUESTIONS уже в ANSWERS; при необходимости уточнить план
-2. **Фаза 1** — project scaffold: auth (реальный login), settings split, 404/500, docker-compose
+2. **Фаза 1** — ✅ выполнена (auth, create_default_users, docker-compose, production)
 3. **Фаза 2** — онбординг (модели, YAML, views)
 4. Далее по порядку: курсы → KB/News → Departments → Analytics → Notifications → Search → Gamification → Admin
 

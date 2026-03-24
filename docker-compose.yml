@@ -1,0 +1,24 @@
+# Dim Kava — local dev (PostgreSQL + Redis)
+# Optional: use SQLite for quick start; run this when you need Postgres/Redis.
+# Usage: docker-compose up -d
+# Then: DATABASE_URL=postgres://dimkava:dimkava@localhost:5432/dimkava docker-compose ...
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: dimkava
+      POSTGRES_USER: dimkava
+      POSTGRES_PASSWORD: dimkava
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:

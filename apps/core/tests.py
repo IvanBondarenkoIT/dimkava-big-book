@@ -2,8 +2,11 @@
 Smoke tests — проверка, что все страницы открываются без ошибок.
 При изменении шаблонов, URL или views запускать: python manage.py test apps.core.tests
 """
+from django.contrib.auth import get_user_model
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
+
+User = get_user_model()
 
 
 class PageSmokeTests(TestCase):
@@ -11,6 +14,7 @@ class PageSmokeTests(TestCase):
 
     def setUp(self):
         self.client = Client()
+        self.user = User.objects.create_user(username='test@dimkava.ge', password='testpass')
 
     def test_home(self):
         r = self.client.get(reverse('core:home'))
@@ -20,7 +24,13 @@ class PageSmokeTests(TestCase):
         r = self.client.get('/login/')
         self.assertEqual(r.status_code, 200)
 
+    def test_profile_redirect_when_anonymous(self):
+        self.client.logout()
+        r = self.client.get(reverse('accounts:profile'))
+        self.assertEqual(r.status_code, 302)
+
     def test_profile(self):
+        self.client.login(username='test@dimkava.ge', password='testpass')
         r = self.client.get(reverse('accounts:profile'))
         self.assertEqual(r.status_code, 200)
 
@@ -110,8 +120,18 @@ class PageSmokeTests(TestCase):
         r = self.client.get('/admin/')
         self.assertIn(r.status_code, (200, 302))
 
-    def test_logout_redirect(self):
-        r = self.client.get('/logout/')
+    def test_logout(self):
+        """Logout via POST redirects to login."""
+        self.client.login(username='test@dimkava.ge', password='testpass')
+        r = self.client.post('/logout/')
+        self.assertEqual(r.status_code, 302)
+
+    def test_password_reset(self):
+        r = self.client.get(reverse('password_reset'))
+        self.assertEqual(r.status_code, 200)
+
+    def test_login_post_success(self):
+        r = self.client.post('/login/', {'username': 'test@dimkava.ge', 'password': 'testpass'})
         self.assertEqual(r.status_code, 302)
 
     @override_settings(DEBUG=False)
