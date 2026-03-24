@@ -10,8 +10,10 @@
     <a href="{% url 'news:detail' n.slug %}" class="card-atelier block no-underline text-inherit group">
       {% if n.pinned %}<span class="text-primary text-xs font-bold uppercase">Pinned</span>{% endif %}
       <h3 class="text-xl font-bold mt-2 text-on-surface group-hover:text-primary transition-colors">{{ n.title }}</h3>
-      <p class="text-sm text-on-surface-variant/70">{{ n.date }} • {{ n.tag }}</p>
+      <p class="text-sm text-on-surface-variant/70">{{ n.published_at|date:"M d, Y" }}{% if n.tag %} • {{ n.tag }}{% endif %}</p>
     </a>
+    {% empty %}
+    <p class="text-on-surface-variant">No news. Run: <code>python manage.py load_news</code></p>
     {% endfor %}
   </div>
 </div>

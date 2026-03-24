@@ -9,7 +9,10 @@
     {% for d in departments %}
     <a href="{% url 'departments:detail' d.slug %}" class="card-atelier block no-underline text-inherit group">
       <h3 class="text-xl font-bold text-on-surface group-hover:text-primary transition-colors">{{ d.name }}</h3>
+      {% if d.role_count %}<p class="text-sm text-on-surface-variant/70 mt-1">{{ d.role_count }} role{{ d.role_count|pluralize }}</p>{% endif %}
     </a>
+    {% empty %}
+    <p class="text-on-surface-variant col-span-full">No departments. Run: <code>python manage.py load_courses</code> then <code>python manage.py load_departments</code></p>
     {% endfor %}
   </div>
 </div>

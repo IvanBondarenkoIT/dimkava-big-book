@@ -1,0 +1,31 @@
+# Departments and roles with learning paths
+# Usage: python manage.py load_departments
+# Run load_courses first — course slugs are referenced here.
+
+departments:
+  - slug: retail-store
+    name: "Retail Store"
+    roles:
+      - title: "Manager Consultant"
+        description: "Front-line sales and service role. Responsible for client consultation, coffee preparation, equipment sales, daily operations, and executing the DK service standards. The face of Dim Kava in every store interaction."
+        order: 1
+        required_courses: [espresso-basics]
+        recommended_courses: [v60-brewing]
+
+  - slug: marketing
+    name: "Marketing"
+    roles:
+      - title: "Content Specialist"
+        description: "Creates and manages marketing content, social media, and brand communications."
+        order: 1
+        required_courses: []
+        recommended_courses: [espresso-basics, v60-brewing]
+
+  - slug: it
+    name: "IT"
+    roles:
+      - title: "Systems Administrator"
+        description: "Manages internal systems, infrastructure, and technical support."
+        order: 1
+        required_courses: []
+        recommended_courses: []

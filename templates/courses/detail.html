@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{{ course_title }}{% endblock %}
+{% block title %}{% if course %}{{ course.title }}{% else %}Course{% endif %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
   <header>
@@ -7,19 +7,31 @@
       <span class="material-symbols-outlined text-lg">arrow_back</span>
       Back to Curriculum
     </a>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ course_title }}</h1>
+    {% if course %}
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ course.title }}</h1>
+    {% if course.description %}<p class="text-on-surface-variant/70 mt-2">{{ course.description }}</p>{% endif %}
+    {% else %}
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Course not found</h1>
+    {% endif %}
   </header>
 
   <ul class="space-y-4 max-w-2xl">
     {% for lesson in lessons %}
     <li>
+      {% if lesson.lesson_type == 'quiz' %}
+      <a href="{% url 'courses:quiz' course_slug lesson.id %}" class="flex items-center gap-4 p-4 bg-surface-container-low rounded-lg hover:bg-surface-container-high transition-colors no-underline text-inherit group">
+      {% else %}
       <a href="{% url 'courses:lesson_detail' course_slug lesson.id %}" class="flex items-center gap-4 p-4 bg-surface-container-low rounded-lg hover:bg-surface-container-high transition-colors no-underline text-inherit group">
-        <span class="material-symbols-outlined text-primary">{% if lesson.completed %}check_circle{% else %}play_circle{% endif %}</span>
+      {% endif %}
+        <span class="material-symbols-outlined text-primary">{% if lesson.completed %}check_circle{% else %}{% if lesson.lesson_type == 'quiz' %}quiz{% else %}play_circle{% endif %}{% endif %}</span>
         <span class="font-medium text-on-surface group-hover:text-primary transition-colors">{{ lesson.title }}</span>
-        <span class="text-sm text-on-surface-variant ml-auto">{{ lesson.duration }}</span>
+        <span class="text-sm text-on-surface-variant ml-auto">{{ lesson.estimated_minutes }} min</span>
+        {% if lesson.quiz_score is not None %}<span class="text-xs text-on-surface-variant">{{ lesson.quiz_score }}%</span>{% endif %}
         <span class="material-symbols-outlined text-on-surface-variant/60 group-hover:text-primary">chevron_right</span>
       </a>
     </li>
+    {% empty %}
+    <li class="p-4 text-on-surface-variant">No lessons. Run: <code>python manage.py load_courses</code></li>
     {% endfor %}
   </ul>
 </div>

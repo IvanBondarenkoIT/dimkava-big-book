@@ -40,70 +40,70 @@
 
 ---
 
-## Фаза 2: Onboarding module (base.md Step 2)
+## Фаза 2: Onboarding module (base.md Step 2) ✅
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 2.1 | OnboardingProgram, OnboardingModule, OnboardingStep | onboarding/models.py | unit |
-| 2.2 | OnboardingProgress | onboarding/models.py | — |
-| 2.3 | Load onboarding from YAML (management command) | onboarding/management/ | unit |
-| 2.4 | Onboarding overview page + progress bar | onboarding/views, templates | — |
-| 2.5 | Module detail page | onboarding/ | — |
-| 2.6 | Mark step complete (service) | onboarding/services.py | unit |
-| 2.7 | Signal: onboarding_module_completed | onboarding/signals.py | — |
+| 2.1 | OnboardingProgram, OnboardingModule, OnboardingStep | onboarding/models.py | unit ✅ |
+| 2.2 | OnboardingProgress | onboarding/models.py | ✅ |
+| 2.3 | Load onboarding from YAML (management command) | onboarding/management/ | unit ✅ |
+| 2.4 | Onboarding overview page + progress bar | onboarding/views, templates | ✅ |
+| 2.5 | Module detail page | onboarding/ | ✅ |
+| 2.6 | Mark step complete (service) | onboarding/services.py | unit ✅ |
+| 2.7 | Signal: onboarding_module_completed | onboarding/signals.py | ✅ |
 
 **Checkpoint:** Сотрудник видит онбординг, отмечает шаги, прогресс сохраняется.
 
 ---
 
-## Фаза 3: Course catalog and lessons (base.md Step 3)
+## Фаза 3: Course catalog and lessons (base.md Step 3) ✅
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 3.1 | Course, Lesson, TestQuestion, UserProgress | courses/models.py | — |
-| 3.2 | Course list + filters | courses/views | — |
-| 3.3 | Course detail | courses/ | — |
-| 3.4 | Lesson page (video, text, file, quiz) | courses/ | — |
-| 3.5 | Quiz: отображение, проверка, сохранение результата | courses/ | unit |
-| 3.6 | Load quizzes from YAML | courses/management/ | — |
-| 3.7 | Signal: lesson_completed, quiz_passed | courses/signals.py | — |
+| 3.1 | Course, Lesson, TestQuestion, UserProgress | courses/models.py | ✅ |
+| 3.2 | Course list + filters | courses/views | ✅ |
+| 3.3 | Course detail | courses/ | ✅ |
+| 3.4 | Lesson page (video, text, file, quiz) | courses/ | ✅ |
+| 3.5 | Quiz: отображение, проверка, сохранение результата | courses/ | unit ✅ |
+| 3.6 | Load courses from YAML | courses/management/ | ✅ |
+| 3.7 | Signal: lesson_completed, quiz_passed | courses/signals.py | ✅ |
 
 **Checkpoint:** Каталог курсов, уроки, квизы работают, прогресс сохраняется.
 
 ---
 
-## Фаза 4: Knowledge base and news (base.md Step 4)
+## Фаза 4: Knowledge base and news (base.md Step 4) ✅
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 4.1 | KBSection, Article | knowledge_base/models.py | — |
-| 4.2 | Wiki home, section, article pages | knowledge_base/views | — |
-| 4.3 | Load articles from YAML | knowledge_base/management/ | — |
-| 4.4 | NewsPost model, news feed, single post | news/ | — |
+| 4.1 | KBSection, Article | knowledge_base/models.py | smoke ✅ |
+| 4.2 | Wiki home, section, article pages | knowledge_base/views | smoke ✅ |
+| 4.3 | Load articles from YAML | knowledge_base/management/ | smoke ✅ |
+| 4.4 | NewsPost model, news feed, single post | news/ | smoke ✅ |
 
 **Checkpoint:** База знаний и новости доступны.
 
 ---
 
-## Фаза 5: Departments and roles (base.md Step 5)
+## Фаза 5: Departments and roles (base.md Step 5) ✅
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 5.1 | Department, Role models | departments/ | — |
-| 5.2 | Department list, detail with learning path | departments/views | — |
-| 5.3 | Required/recommended courses per role | — | — |
+| 5.1 | Department, Role models | departments/ | smoke ✅ |
+| 5.2 | Department list, detail with learning path | departments/views | smoke ✅ |
+| 5.3 | Required/recommended courses per role | departments_seed.yaml | smoke ✅ |
 
 **Checkpoint:** HR видит департаменты и роли, learning path отображается.
 
 ---
 
-## Фаза 6: Analytics dashboard (base.md Step 6)
+## Фаза 6: Analytics dashboard (base.md Step 6) ✅
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 6.1 | Analytics view (HR/admin only) | analytics/ | — |
-| 6.2 | Metrics: courses, onboarding %, completion time | analytics/selectors.py | unit |
-| 6.3 | Mock data → real aggregations | — | — |
+| 6.1 | Analytics view (HR/admin only) | analytics/ | smoke ✅ |
+| 6.2 | Metrics: courses, onboarding %, completion time | analytics/selectors.py | unit ✅ |
+| 6.3 | Mock data → real aggregations | analytics/selectors.py | ✅ |
 
 **Checkpoint:** HR видит дашборд с метриками.
 

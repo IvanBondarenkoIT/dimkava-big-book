@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{{ lesson_title }}{% endblock %}
+{% block title %}{% if lesson %}{{ lesson.title }}{% else %}Lesson{% endif %}{% endblock %}
 {% block content %}
 <div class="space-y-8 pb-24">
   <header class="flex items-start justify-between gap-4">
@@ -8,26 +8,51 @@
         <span class="material-symbols-outlined text-lg">arrow_back</span>
         Back to Course
       </a>
-      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ lesson_title }}</h1>
-      <p class="text-on-surface-variant/70 mt-2">{{ duration }}</p>
+      {% if lesson %}
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ lesson.title }}</h1>
+      <p class="text-on-surface-variant/70 mt-2">{{ lesson.estimated_minutes }} min</p>
+      {% else %}
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Lesson not found</h1>
+      {% endif %}
     </div>
   </header>
 
+  {% if lesson %}
   <div class="bg-surface-container-low rounded-lg p-8 max-w-3xl">
-    <p class="text-on-surface-variant">Lesson content — dummy. Add video, text, Mark as done later.</p>
+    {% if lesson.video_url %}
+    <div class="aspect-video rounded-lg overflow-hidden mb-6 bg-black">
+      <iframe src="{{ lesson.video_url }}" class="w-full h-full" allowfullscreen></iframe>
+    </div>
+    {% endif %}
+    {% if lesson.content %}
+    <div class="text-on-surface-variant prose max-w-none">{{ lesson.content|linebreaks }}</div>
+    {% else %}
+    <p class="text-on-surface-variant">No content yet.</p>
+    {% endif %}
   </div>
-</div>
 
-<footer class="fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-xl px-6 py-6 border-t border-outline-variant/10 z-30">
-  <div class="max-w-7xl mx-auto flex gap-4">
-    <button class="flex-1 h-14 btn-primary flex items-center justify-center gap-2">
-      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
-      Mark as done
-    </button>
-    <a href="#" class="h-14 px-8 btn-secondary flex items-center justify-center gap-2 no-underline">
-      Next
-      <span class="material-symbols-outlined">chevron_right</span>
-    </a>
-  </div>
-</footer>
+  <footer class="fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-xl px-6 py-6 border-t border-outline-variant/10 z-30">
+    <div class="max-w-7xl mx-auto flex gap-4">
+      {% if not completed %}
+      <form method="post" action="{% url 'courses:mark_lesson_done' course_slug lesson.id %}" class="flex-1">
+        {% csrf_token %}
+        <button type="submit" class="w-full h-14 btn-primary flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+          Mark as done
+        </button>
+      </form>
+      {% else %}
+      <div class="flex-1 h-14 flex items-center justify-center gap-2 text-secondary font-semibold">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        Completed
+      </div>
+      {% endif %}
+      <a href="{% url 'courses:detail' course_slug %}" class="h-14 px-8 btn-secondary flex items-center justify-center gap-2 no-underline">
+        Back to course
+        <span class="material-symbols-outlined">chevron_right</span>
+      </a>
+    </div>
+  </footer>
+  {% endif %}
+</div>
 {% endblock %}

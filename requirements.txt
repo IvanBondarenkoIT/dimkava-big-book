@@ -29,6 +29,9 @@ detect-secrets>=1.4
 # YAML for content loading
 PyYAML>=6.0
 
+# Markdown for wiki/articles
+markdown>=3.5
+
 # Testing
 pytest>=7.0
 pytest-django>=4.5

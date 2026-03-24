@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{{ module_title }}{% endblock %}
+{% block title %}{% if module %}{{ module.title }}{% else %}Module{% endif %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
   <header>
@@ -7,10 +7,45 @@
       <span class="material-symbols-outlined text-lg">arrow_back</span>
       Back to Onboarding
     </a>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ module_title }}</h1>
+    {% if module %}
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ module.title }}</h1>
+    {% if module.description %}
+    <p class="text-on-surface-variant/70 mt-2 max-w-2xl">{{ module.description }}</p>
+    {% endif %}
+    {% else %}
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Module not found</h1>
+    <p class="text-on-surface-variant/70 mt-2">Load onboarding: <code>python manage.py load_onboarding</code></p>
+    {% endif %}
   </header>
-  <div class="card-atelier max-w-3xl">
-    <p class="text-on-surface-variant">Module content — dummy.</p>
+
+  <div class="space-y-4 max-w-3xl">
+    {% for s in steps %}
+    <div class="card-atelier {% if s.completed %}opacity-80{% endif %}">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            {% if s.completed %}
+            <span class="material-symbols-outlined text-secondary">check_circle</span>
+            {% endif %}
+            <h3 class="text-lg font-bold text-on-surface">{{ s.title }}</h3>
+          </div>
+          {% if s.content %}
+          <div class="mt-2 text-on-surface-variant/80 text-sm leading-relaxed prose prose-sm max-w-none">{{ s.content|linebreaks }}</div>
+          {% endif %}
+        </div>
+        {% if not s.completed %}
+        <form method="post" action="{% url 'onboarding:mark_step_complete' s.id %}" class="flex-shrink-0">
+          {% csrf_token %}
+          <button type="submit" class="btn-secondary py-2 px-4 text-sm">Mark done</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <div class="card-atelier">
+      <p class="text-on-surface-variant">No steps in this module. Load onboarding: <code>python manage.py load_onboarding</code></p>
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

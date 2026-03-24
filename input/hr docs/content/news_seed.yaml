@@ -1,0 +1,30 @@
+# Sample news for Dim Kava — seed data
+# Usage: python manage.py load_news
+
+posts:
+  - slug: welcome-2024
+    title: "Welcome to 2024!"
+    content: |
+      Happy New Year! We're kicking off 2024 with new training initiatives and a refreshed
+      knowledge base. Check out the updated procedures and service standards in the wiki.
+    tag: general
+    pinned: true
+    published_at: "2024-01-15 10:00:00"
+
+  - slug: new-course
+    title: "New Course: Latte Art Basics"
+    content: |
+      Our new Latte Art Basics course is now live. Learn foundational patterns and
+      techniques to impress customers and elevate your barista skills.
+    tag: training
+    pinned: false
+    published_at: "2024-01-10 14:00:00"
+
+  - slug: espresso-masterclass
+    title: "Espresso Masterclass — February"
+    content: |
+      Join our February masterclass for advanced extraction techniques and sensory
+      calibration. Limited spots — sign up in the Courses section.
+    tag: training
+    pinned: false
+    published_at: "2024-01-20 09:00:00"

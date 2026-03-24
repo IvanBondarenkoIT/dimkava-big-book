@@ -6,6 +6,27 @@
 #        Also used as checklist references in daily/weekly/monthly onboarding steps.
 
 # ---------------------------------------------------------------------------
+# SECTIONS (knowledge base wiki):
+# ---------------------------------------------------------------------------
+sections:
+  - slug: procedures
+    title: "Procedures & Checklists"
+    icon: checklist
+    order: 1
+  - slug: service-standards
+    title: "Service Standards"
+    icon: star
+    order: 2
+  - slug: company-info
+    title: "Company Information"
+    icon: building
+    order: 3
+  - slug: training
+    title: "Training & Qualification"
+    icon: graduation-cap
+    order: 4
+
+# ---------------------------------------------------------------------------
 # ARTICLES LIST:
 #   1. Daily Checklist — Morning to Close
 #   2. Weekly Checklist

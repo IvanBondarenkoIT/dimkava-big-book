@@ -3,6 +3,7 @@ Smoke tests — проверка, что все страницы открыва�
 При изменении шаблонов, URL или views запускать: python manage.py test apps.core.tests
 """
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 
@@ -15,6 +16,15 @@ class PageSmokeTests(TestCase):
     def setUp(self):
         self.client = Client()
         self.user = User.objects.create_user(username='test@dimkava.ge', password='testpass')
+        hr_group, _ = Group.objects.get_or_create(name='hr_manager')
+        self.user.groups.add(hr_group)
+        self.client.login(username='test@dimkava.ge', password='testpass')
+        # Seed data for smoke tests
+        from django.core.management import call_command
+        call_command('load_courses', verbosity=0)
+        call_command('load_articles', verbosity=0)
+        call_command('load_news', verbosity=0)
+        call_command('load_departments', verbosity=0)
 
     def test_home(self):
         r = self.client.get(reverse('core:home'))
@@ -30,7 +40,6 @@ class PageSmokeTests(TestCase):
         self.assertEqual(r.status_code, 302)
 
     def test_profile(self):
-        self.client.login(username='test@dimkava.ge', password='testpass')
         r = self.client.get(reverse('accounts:profile'))
         self.assertEqual(r.status_code, 200)
 
@@ -49,8 +58,12 @@ class PageSmokeTests(TestCase):
         self.assertEqual(r.status_code, 200)
 
     def test_quiz(self):
+        from apps.courses.models import Lesson
+        quiz_lesson = Lesson.objects.filter(course__slug='espresso-basics', lesson_type='quiz').first()
+        if not quiz_lesson:
+            self.skipTest('No quiz lesson in seed')
         r = self.client.get(
-            reverse('courses:quiz', kwargs={'slug': 'espresso-basics', 'pk': 1})
+            reverse('courses:quiz', kwargs={'slug': 'espresso-basics', 'pk': quiz_lesson.pk})
         )
         self.assertEqual(r.status_code, 200)
 

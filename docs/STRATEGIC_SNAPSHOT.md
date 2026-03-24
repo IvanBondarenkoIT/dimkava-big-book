@@ -13,13 +13,13 @@
 - **CSS:** Tailwind v4, static prebuild, `input.css` → `tailwind.css`
 - **Компоненты:** glass-nav, card-atelier, btn-primary, btn-secondary, Material Symbols
 
-### Функциональность (mock)
-- Dashboard, Courses (Curriculum), Onboarding, Knowledge base, News, Profile
+### Функциональность
+- Dashboard, Courses, Onboarding, Knowledge base, News, Profile — реальные данные из БД
 - Departments, Analytics, Notifications, Search — страницы есть, данные mock
 - Login (TemplateView, форма без обработки)
 
 ### Тесты
-- `python manage.py test apps.core.tests` — smoke-тесты по всем страницам (23 теста). Запускать после изменений в шаблонах/URL/views.
+- `python manage.py test apps.core.tests` — smoke-тесты по всем страницам (26 тестов). Запускать после изменений в шаблонах/URL/views.
 
 ### Документация
 - [INDEX.md](INDEX.md) — оглавление, порядок чтения
@@ -34,8 +34,12 @@
 
 1. **0.6** — ответы на GUIDING_QUESTIONS уже в ANSWERS; при необходимости уточнить план
 2. **Фаза 1** — ✅ выполнена (auth, create_default_users, docker-compose, production)
-3. **Фаза 2** — онбординг (модели, YAML, views)
-4. Далее по порядку: курсы → KB/News → Departments → Analytics → Notifications → Search → Gamification → Admin
+3. **Фаза 2** — ✅ (модели, load_onboarding, mark_step_complete, signals)
+4. **Фаза 3** — ✅ (Course, Lesson, Quiz, load_courses, UserProgress)
+5. **Фаза 4** — ✅ (KBSection, Article, NewsPost, load_articles, load_news)
+6. **Фаза 5** — ✅ (Department, Role, load_departments, learning path)
+7. **Фаза 6** — ✅ (Analytics dashboard, HR-only, real metrics)
+8. Далее: Notifications → Search → Gamification → Admin
 
 ---
 

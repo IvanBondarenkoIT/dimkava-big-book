@@ -1,0 +1,55 @@
+# Sample courses for Dim Kava — seed data
+# Usage: python manage.py load_courses
+
+courses:
+  - slug: espresso-basics
+    title: "The Art of Espresso"
+    description: "Master the fundamentals of extraction, puck prep, and sensory analysis."
+    level: beginner
+    estimated_minutes: 90
+    image: "https://images.unsplash.com/photo-1510972527921-ce03766a1cf1?q=80&w=800"
+    lessons:
+      - order: 1
+        title: "Dialing In Basics"
+        type: text
+        content: "Learn how to dial in your espresso: dose, yield, time. Start with 18g in, 36g out, 25-30 seconds."
+        minutes: 15
+      - order: 2
+        title: "Tamping Technique"
+        type: text
+        content: "Level, even tamp. Apply 15-20 kg of pressure. Avoid angled or uneven tamps."
+        minutes: 10
+      - order: 3
+        title: "Espresso Quiz"
+        type: quiz
+        minutes: 5
+        passing_score: 70
+        questions:
+          - text: "What is the typical extraction time for a double espresso?"
+            options:
+              - { text: "15-20 seconds", is_correct: false }
+              - { text: "25-30 seconds", is_correct: true }
+              - { text: "40-50 seconds", is_correct: false }
+          - text: "What dose is commonly used for a double shot?"
+            options:
+              - { text: "14g", is_correct: false }
+              - { text: "18g", is_correct: true }
+              - { text: "22g", is_correct: false }
+
+  - slug: v60-brewing
+    title: "V60 Precision Brewing"
+    description: "Learn the chemistry of pour-over and how to manipulate variables for clarity."
+    level: beginner
+    estimated_minutes: 45
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800"
+    lessons:
+      - order: 1
+        title: "Water Temperature"
+        type: text
+        content: "Use 93-96°C for light roasts, 90-93°C for darker roasts."
+        minutes: 5
+      - order: 2
+        title: "Grind Size"
+        type: text
+        content: "Medium-fine for V60. Coarser than espresso, finer than French press."
+        minutes: 5

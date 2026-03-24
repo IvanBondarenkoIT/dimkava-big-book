@@ -4,9 +4,9 @@
 <div class="space-y-8">
   <header>
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">HR Analytics Dashboard</h1>
-    <p class="text-on-surface-variant/70 mt-2">Dummy — add metrics later</p>
+    <p class="text-on-surface-variant/70 mt-2">Learning metrics and progress overview</p>
   </header>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <div class="card-atelier">
       <p class="text-3xl font-black text-primary">{{ metrics.active_courses }}</p>
       <p class="text-sm text-on-surface-variant/70 mt-1">Active courses</p>
@@ -16,8 +16,20 @@
       <p class="text-sm text-on-surface-variant/70 mt-1">Onboarding in progress</p>
     </div>
     <div class="card-atelier">
-      <p class="text-3xl font-black text-primary">{{ metrics.completion_rate }}%</p>
-      <p class="text-sm text-on-surface-variant/70 mt-1">Completion rate</p>
+      <p class="text-3xl font-black text-primary">{{ metrics.onboarding_completion_rate }}%</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">Onboarding completion rate</p>
+    </div>
+    <div class="card-atelier">
+      <p class="text-3xl font-black text-primary">{% if metrics.avg_onboarding_days is not None %}{{ metrics.avg_onboarding_days }}{% else %}—{% endif %}</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">Avg onboarding days (completed)</p>
+    </div>
+    <div class="card-atelier">
+      <p class="text-3xl font-black text-primary">{{ metrics.course_completion_rate }}%</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">Users with ≥1 course completed</p>
+    </div>
+    <div class="card-atelier">
+      <p class="text-3xl font-black text-primary">{{ metrics.total_users }}</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">Total employees</p>
     </div>
   </div>
 </div>

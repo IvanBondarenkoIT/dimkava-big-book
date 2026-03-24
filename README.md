@@ -32,7 +32,12 @@ dimkava-big-book/
 4. Скопировать `.env.example` → `.env` (опционально для dev — SQLite по умолчанию)
 5. `python manage.py migrate`
 6. `python manage.py create_default_users` — создать admin/hr/employee
-7. `python manage.py runserver`
+7. `python manage.py load_onboarding` — онбординг из YAML
+8. `python manage.py load_courses` — курсы из YAML
+9. `python manage.py load_articles` — база знаний из YAML
+10. `python manage.py load_news` — новости из YAML
+11. `python manage.py load_departments` — департаменты и роли из YAML (после load_courses)
+12. `python manage.py runserver`
 
 **С credentials из .env.example:** admin@dimkava.ge / changeme_admin
 
@@ -41,7 +46,7 @@ dimkava-big-book/
 ## Тесты
 
 ```bash
-python manage.py test apps.core.tests apps.accounts.tests
+python manage.py test apps.core.tests apps.accounts.tests apps.onboarding.tests apps.courses.tests apps.analytics.tests
 ```
 
 ## Технологии

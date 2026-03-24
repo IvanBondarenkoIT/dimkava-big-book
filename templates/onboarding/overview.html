@@ -4,7 +4,15 @@
 <div class="space-y-8">
   <header>
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Your Onboarding Journey</h1>
-    <p class="text-on-surface-variant/70 mt-2">Progress: {{ progress }}%</p>
+    {% if program %}
+    <p class="text-on-surface-variant/70 mt-2">{{ program.title }}</p>
+    <div class="mt-4 flex items-center gap-4">
+      <div class="h-2 flex-1 max-w-xs bg-surface-container-high rounded-full overflow-hidden">
+        <div class="h-full bg-primary rounded-full transition-all" style="width: {{ progress }}%"></div>
+      </div>
+      <span class="text-sm font-bold text-primary">{{ progress }}%</span>
+    </div>
+    {% endif %}
   </header>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     {% for m in modules %}
@@ -14,8 +22,12 @@
         {% elif m.status == 'in_progress' %}bg-primary-container text-on-surface
         {% else %}bg-surface-container-highest text-on-surface-variant{% endif %}">{{ m.status|title }}</span>
       <h3 class="text-xl font-bold mt-4 text-on-surface group-hover:text-primary transition-colors">{{ m.title }}</h3>
-      <p class="text-sm text-on-surface-variant/70 mt-2">{{ m.minutes }} min</p>
+      <p class="text-sm text-on-surface-variant/70 mt-2">{{ m.steps_done }}/{{ m.steps_total }} steps · {{ m.minutes }} min</p>
     </a>
+    {% empty %}
+    <div class="col-span-full card-atelier">
+      <p class="text-on-surface-variant">No onboarding modules. Run: <code>python manage.py load_onboarding</code></p>
+    </div>
     {% endfor %}
   </div>
 </div>

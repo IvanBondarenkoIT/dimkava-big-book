@@ -1,13 +1,39 @@
 {% extends 'base.html' %}
-{% block title %}Quiz{% endblock %}
+{% block title %}{% if lesson %}{{ lesson.title }}{% else %}Quiz{% endif %}{% endblock %}
 {% block content %}
-<div class="space-y-8 max-w-2xl">
+<div class="space-y-8 max-w-2xl pb-24">
   <header>
-    <p class="text-primary font-bold text-sm uppercase tracking-widest">Question {{ question_num }} of {{ total_questions }}</p>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary mt-2">Quiz</h1>
+    <a href="{% url 'courses:detail' course_slug %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+      <span class="material-symbols-outlined text-lg">arrow_back</span>
+      Back to Course
+    </a>
+    <p class="text-primary font-bold text-sm uppercase tracking-widest">Quiz · {{ questions|length }} questions</p>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary mt-2">{{ lesson.title }}</h1>
+    <p class="text-on-surface-variant/70 mt-2">Passing score: {{ passing_score }}%</p>
   </header>
-  <div class="card-atelier">
-    <p class="text-on-surface-variant">Quiz screen — add questions, answers, submit later.</p>
-  </div>
+
+  <form method="post" class="space-y-6">
+    {% csrf_token %}
+    {% for q in questions %}
+    <div class="card-atelier">
+      <h3 class="font-bold text-on-surface mb-4">{{ forloop.counter }}. {{ q.question_text }}</h3>
+      <div class="space-y-2">
+        {% for opt in q.options %}
+        <label class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors">
+          <input type="radio" name="q_{{ q.id }}" value="{{ forloop.counter0 }}" class="text-primary focus:ring-primary"/>
+          <span class="text-on-surface">{{ opt.text }}</span>
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+    {% empty %}
+    <div class="card-atelier">
+      <p class="text-on-surface-variant">No questions in this quiz.</p>
+    </div>
+    {% endfor %}
+    {% if questions %}
+    <button type="submit" class="btn-primary w-full py-4 text-lg">Submit</button>
+    {% endif %}
+  </form>
 </div>
 {% endblock %}
