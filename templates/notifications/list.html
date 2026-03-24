@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 {% block title %}Notifications{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">Notifications</h1>
-</section>
-<div class="space-y-2 max-w-2xl">
-  {% for n in notifications %}
-  <div class="p-4 bg-surface-container-low rounded-lg {% if not n.read %}border-l-4 border-primary{% endif %}">
-    <p>{{ n.text }}</p>
-    <p class="text-xs text-on-surface-variant mt-1">{{ n.date }}</p>
+<div class="space-y-8">
+  <header>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Notifications</h1>
+  </header>
+  <div class="space-y-2 max-w-2xl">
+    {% for n in notifications %}
+    <div class="card-atelier {% if not n.read %}border-l-4 border-primary{% endif %}">
+      <p class="text-on-surface">{{ n.text }}</p>
+      <p class="text-xs text-on-surface-variant/70 mt-1">{{ n.date }}</p>
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>
 {% endblock %}

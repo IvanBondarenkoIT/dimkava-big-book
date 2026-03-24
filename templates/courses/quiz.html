@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Quiz{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <p class="text-primary font-bold text-sm">Question {{ question_num }} of {{ total_questions }}</p>
-  <h1 class="font-headline text-2xl font-extrabold text-on-surface mt-2">Quiz — dummy</h1>
-</section>
-<div class="bg-surface-container-low rounded-lg p-8 max-w-2xl">
-  <p>Quiz screen — add questions, answers, submit later.</p>
+<div class="space-y-8 max-w-2xl">
+  <header>
+    <p class="text-primary font-bold text-sm uppercase tracking-widest">Question {{ question_num }} of {{ total_questions }}</p>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary mt-2">Quiz</h1>
+  </header>
+  <div class="card-atelier">
+    <p class="text-on-surface-variant">Quiz screen — add questions, answers, submit later.</p>
+  </div>
 </div>
 {% endblock %}

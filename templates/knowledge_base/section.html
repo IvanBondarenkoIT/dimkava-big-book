@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}{{ section_title }}{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">{{ section_title }}</h1>
-</section>
-<ul class="space-y-2 max-w-2xl">
-  {% for a in articles %}
-  <li><a href="{% url 'knowledge_base:article' section_slug a.slug %}" class="block p-4 bg-surface-container-low rounded-lg hover:bg-surface-container-high no-underline text-inherit">{{ a.title }}</a></li>
-  {% endfor %}
-</ul>
+<div class="space-y-8">
+  <header>
+    <a href="{% url 'knowledge_base:home' %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+      <span class="material-symbols-outlined text-lg">arrow_back</span>
+      Back to Knowledge Base
+    </a>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ section_title }}</h1>
+  </header>
+  <ul class="space-y-2 max-w-2xl">
+    {% for a in articles %}
+    <li><a href="{% url 'knowledge_base:article' section_slug a.slug %}" class="block p-4 bg-surface-container-low rounded-lg hover:bg-surface-container-high transition-colors no-underline text-inherit font-medium text-on-surface hover:text-primary">{{ a.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}

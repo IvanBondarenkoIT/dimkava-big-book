@@ -1,5 +1,5 @@
 /* Dim Kava — Design System
- * Эталон: experiments/stitch_lesson_view/lesson_view/code.html
+ * Эталон: design/etalon/dim-kava-education-visual + design/etalon/stitch_lesson_view
  * Документация: design/DESIGN_SYSTEM.md
  */
 @import "tailwindcss";
@@ -8,7 +8,7 @@
 @source "../../templates/**/*.html";
 @source "../../apps/**/templates/**/*.html";
 @source "../../design/reference/**/*.html";
-@source "../../experiments/stitch_lesson_view/**/*.html";
+@source "../../design/etalon/stitch_lesson_view/**/*.html";
 
 @theme {
   /* === Полная палитра из stitch_lesson_view === */
@@ -103,11 +103,13 @@
 }
 
 @layer components {
-  /* Glass — header/nav (эталон: glass-header) */
+  /* Glass nav — dim-kava-education-visual: sticky top bar */
   .glass-nav,
   .glass-header {
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+    background-color: rgba(251, 249, 245, 0.7);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(216, 194, 181, 0.1);
   }
   .coffee-gradient {
     background: linear-gradient(135deg, #8e4e14 0%, #f4a261 100%);
@@ -149,15 +151,15 @@
   .btn-secondary:active {
     transform: scale(0.95);
   }
-  /* Card — achievement / content block */
+  /* Card — dim-kava-education-visual: rounded-default */
   .card-atelier {
     background-color: var(--color-surface-container-lowest);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-default);
     padding: 1.5rem;
     transition: all 0.3s ease;
   }
   .card-atelier:hover {
-    box-shadow: var(--shadow-ambient);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(142, 78, 20, 0.05);
   }
   /* Nav link — sidebar */
   .nav-link {

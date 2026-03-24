@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Profile{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">{{ user_name|default:"Alex" }}</h1>
-  <p class="text-on-surface-variant font-medium">{{ role|default:"Head Barista" }} — Dim Kava Academy</p>
-</section>
-<div class="bg-surface-container-low rounded-lg p-8 max-w-2xl">
-  <p class="text-on-surface-variant">Profile page — dummy. Add avatar, settings, stats later.</p>
+<div class="space-y-8 max-w-2xl">
+  <header>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ user_name|default:"Alex" }}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{{ role|default:"Head Barista" }} — Dim Kava Academy</p>
+  </header>
+  <div class="card-atelier">
+    <p class="text-on-surface-variant">Profile page — dummy. Add avatar, settings, stats later.</p>
+  </div>
 </div>
 {% endblock %}

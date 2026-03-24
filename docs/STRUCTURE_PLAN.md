@@ -26,13 +26,14 @@ dimkava-big-book/
 │   ├── STRUCTURE_PLAN.md
 │   ├── GUIDING_QUESTIONS.md
 │   └── DEVELOPMENT_PLAN.md
-├── design/                   # Эталонные шаблоны — берём в Django
+├── design/                   # Эталонные шаблоны
 │   ├── DESIGN_SYSTEM.md
-│   ├── README.md
-│   └── reference/*.html      # authentication, lesson_view, quiz_screen...
+│   ├── etalon/               # Канонические источники
+│   │   ├── dim-kava-education-visual/  # React-эталон (git clone)
+│   │   └── stitch_lesson_view/         # HTML от Stitch
+│   └── reference/*.html      # authentication, lesson_view...
 └── experiments/
-    ├── stitch_lesson_view/   # Исходники Stitch
-    ├── stitch_output/        # React-прототип
+    ├── stitch_output/        # React-прототип (legacy)
     └── README.md
 ```
 

@@ -1,66 +1,104 @@
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}Dashboard{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-on-surface tracking-tight mb-2">Hi, {{ user_name|default:"Alex" }}</h1>
-  <p class="text-on-surface-variant font-medium">Welcome back to your atelier. Your espresso profile is {{ progress|default:85 }}% complete.</p>
-</section>
-
-<section class="grid grid-cols-12 gap-6 mb-12">
-  <div class="col-span-12 lg:col-span-8 coffee-gradient rounded-lg p-8 relative overflow-hidden flex flex-col justify-between min-h-[320px]">
-    <div class="relative z-10 max-w-md">
-      <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-wider text-white mb-4">Recommended Action</span>
-      <h2 class="font-headline text-3xl font-bold text-white mb-4">Mastering the Light Roast: Extraction Dynamics</h2>
-      <p class="text-white/90 text-sm leading-relaxed mb-6">Learn how to manipulate water temperature and grind distribution for vibrant acidity in Ethiopian single-origins.</p>
-      <a href="{% url 'courses:lesson_detail' 'espresso-basics' 1 %}" class="inline-block bg-white text-primary px-6 py-3 rounded-full font-bold text-sm shadow-xl hover:scale-105 transition-transform no-underline">Continue Module</a>
+<div class="max-w-7xl mx-auto space-y-12">
+  {# Hero — эталон dim-kava-education-visual Dashboard #}
+  <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+    <div class="lg:col-span-7 space-y-4">
+      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter text-primary leading-[0.9]">
+        Welcome back,<br/>Master Barista.
+      </h1>
+      <p class="text-lg text-on-surface-variant/70 max-w-md">
+        Your journey to the perfect extraction continues. You're in the top 5% of learners this week.
+      </p>
     </div>
-  </div>
-  <div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-lg p-8 flex flex-col justify-center items-center text-center shadow-sm">
-    <div class="relative w-32 h-32 mb-6">
-      <svg class="w-full h-full transform -rotate-90" viewBox="0 0 128 128">
-        <circle class="text-surface-container-highest" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
-        <circle class="text-primary-container" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364.4" stroke-dashoffset="54.6" stroke-linecap="round" stroke-width="8"></circle>
-      </svg>
-      <div class="absolute inset-0 flex flex-col items-center justify-center">
-        <span class="font-headline text-3xl font-extrabold text-on-surface">12</span>
-        <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Day Streak</span>
+    <div class="lg:col-span-5 flex gap-4">
+      <div class="flex-1 bg-surface-container-low p-6 rounded-lg space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-widest opacity-50">Current Streak</span>
+          <span class="material-symbols-outlined text-primary-container text-xl">local_fire_department</span>
+        </div>
+        <div class="text-4xl font-black text-primary">12 Days</div>
+      </div>
+      <div class="flex-1 bg-secondary-container/20 p-6 rounded-lg space-y-2 border border-secondary-container/30">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-widest text-secondary opacity-70">Points</span>
+          <span class="material-symbols-outlined text-secondary text-xl">military_tech</span>
+        </div>
+        <div class="text-4xl font-black text-secondary">2,450</div>
       </div>
     </div>
-    <h3 class="font-headline font-bold text-on-surface mb-2">Consistency pays off</h3>
-    <p class="text-xs text-on-surface-variant">Keep brewing every day to maintain your Artisan Badge.</p>
-  </div>
-</section>
+  </section>
 
-<section>
-  <div class="flex justify-between items-end mb-8">
-    <div>
-      <h3 class="font-headline text-2xl font-bold text-on-surface">Active Courses</h3>
-      <p class="text-on-surface-variant text-sm">Pick up exactly where you left off</p>
+  {# Continue Learning #}
+  <section class="space-y-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-2xl font-bold tracking-tight text-on-surface">Continue Learning</h2>
+      <a href="{% url 'courses:list' %}" class="text-primary font-semibold flex items-center gap-1 hover:underline no-underline">
+        View all <span class="material-symbols-outlined text-base">arrow_forward</span>
+      </a>
     </div>
-    <a href="{% url 'courses:list' %}" class="text-primary font-bold text-sm hover:underline">View All Courses</a>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {% for course in courses %}
-    <a href="{% url 'courses:detail' course.slug %}" class="group bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all no-underline text-inherit block">
-      <div class="h-48 relative overflow-hidden bg-surface-container-high"></div>
-      <div class="p-6">
-        <span class="text-[10px] font-bold text-primary uppercase tracking-widest">{{ course.category }}</span>
-        <h4 class="font-headline font-bold text-lg text-on-surface mb-4 mt-2">{{ course.title }}</h4>
-        <div class="flex justify-between items-center">
-          <span class="text-xs text-on-surface-variant">{{ course.progress }}% complete</span>
-          <span class="material-symbols-outlined text-surface-container-high group-hover:text-primary">play_arrow</span>
+    <a href="{% url 'courses:detail' active_course.slug %}" class="relative group overflow-hidden rounded-lg bg-surface-container-lowest shadow-2xl shadow-primary/5 block no-underline text-inherit">
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <div class="p-8 space-y-6 flex flex-col justify-center">
+          <div class="space-y-2">
+            <span class="text-xs font-bold uppercase tracking-widest text-primary/60">{{ active_course.category }}</span>
+            <h3 class="text-3xl font-bold leading-tight text-on-surface">{{ active_course.title }}</h3>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between text-sm font-medium text-on-surface-variant">
+              <span>Course Progress</span>
+              <span>{{ active_course.progress }}%</span>
+            </div>
+            <div class="h-2 bg-surface-container-highest rounded-full overflow-hidden">
+              <div class="h-full bg-primary rounded-full transition-all" style="width: {{ active_course.progress }}%"></div>
+            </div>
+          </div>
+          <span class="btn-primary self-start inline-flex items-center gap-2">
+            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            Resume Lesson
+          </span>
+        </div>
+        <div class="h-64 md:h-auto relative overflow-hidden min-h-[256px]">
+          <img src="{{ active_course.image }}" alt="{{ active_course.title }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+          <div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest via-transparent to-transparent md:block hidden"></div>
         </div>
       </div>
     </a>
-    {% empty %}
-    <a href="{% url 'courses:list' %}" class="group bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all no-underline text-inherit block">
-      <div class="h-48 relative overflow-hidden bg-surface-container-high"></div>
-      <div class="p-6">
-        <h4 class="font-headline font-bold text-lg text-on-surface">The Art of Espresso</h4>
-        <p class="text-sm text-on-surface-variant">65% complete</p>
+  </section>
+
+  {# Recommended + Recent Badges #}
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="md:col-span-2 space-y-6">
+      <h2 class="text-2xl font-bold tracking-tight text-on-surface">Recommended for You</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {% for course in courses %}
+        <a href="{% url 'courses:detail' course.slug %}" class="card-atelier group cursor-pointer block no-underline text-inherit">
+          <div class="aspect-video rounded-lg overflow-hidden mb-4 relative">
+            <img src="{{ course.image|default:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800' }}" alt="{{ course.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"/>
+            <div class="absolute top-3 left-3 px-2 py-1 bg-surface/90 backdrop-blur-md rounded text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">{{ course.category }}</div>
+          </div>
+          <h4 class="font-bold text-lg mb-1 text-on-surface group-hover:text-primary transition-colors">{{ course.title }}</h4>
+          <p class="text-sm text-on-surface-variant/60 line-clamp-2">{{ course.description|default:'' }}</p>
+        </a>
+        {% endfor %}
       </div>
-    </a>
-    {% endfor %}
-  </div>
-</section>
+    </div>
+    <div class="space-y-6">
+      <h2 class="text-2xl font-bold tracking-tight text-on-surface">Recent Badges</h2>
+      <div class="bg-surface-container-low rounded-lg p-6 space-y-4">
+        {% for achievement in achievements %}
+        <div class="flex items-center gap-4 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/5">
+          <div class="w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center text-2xl">{{ achievement.icon }}</div>
+          <div>
+            <div class="font-bold text-sm text-on-surface">{{ achievement.title }}</div>
+            <div class="text-xs text-on-surface-variant/40">{{ achievement.date }}</div>
+          </div>
+        </div>
+        {% endfor %}
+        <a href="#" class="block w-full py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-lg transition-colors text-center">View All Achievements</a>
+      </div>
+    </div>
+  </section>
+</div>
 {% endblock %}

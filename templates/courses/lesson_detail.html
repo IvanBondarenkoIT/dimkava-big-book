@@ -1,17 +1,33 @@
 {% extends 'base.html' %}
 {% block title %}{{ lesson_title }}{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">{{ lesson_title }}</h1>
-  <p class="text-on-surface-variant">{{ duration }} • Lesson — dummy</p>
-</section>
-<div class="bg-surface-container-low rounded-lg p-8 max-w-3xl mb-20">
-  <p>Lesson content — dummy. Add video, text, Mark as done later.</p>
+<div class="space-y-8 pb-24">
+  <header class="flex items-start justify-between gap-4">
+    <div>
+      <a href="{% url 'courses:detail' course_slug %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+        <span class="material-symbols-outlined text-lg">arrow_back</span>
+        Back to Course
+      </a>
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ lesson_title }}</h1>
+      <p class="text-on-surface-variant/70 mt-2">{{ duration }}</p>
+    </div>
+  </header>
+
+  <div class="bg-surface-container-low rounded-lg p-8 max-w-3xl">
+    <p class="text-on-surface-variant">Lesson content — dummy. Add video, text, Mark as done later.</p>
+  </div>
 </div>
-<footer class="fixed bottom-0 left-72 right-0 bg-surface/80 backdrop-blur-xl px-8 py-4 border-t border-outline-variant/10 z-30">
-  <div class="flex gap-4">
-    <button class="flex-1 py-3 coffee-gradient text-white rounded-full font-bold">Mark as done</button>
-    <button class="px-8 py-3 bg-secondary-container text-on-surface rounded-full font-bold">Next</button>
+
+<footer class="fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-xl px-6 py-6 border-t border-outline-variant/10 z-30">
+  <div class="max-w-7xl mx-auto flex gap-4">
+    <button class="flex-1 h-14 btn-primary flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+      Mark as done
+    </button>
+    <a href="#" class="h-14 px-8 btn-secondary flex items-center justify-center gap-2 no-underline">
+      Next
+      <span class="material-symbols-outlined">chevron_right</span>
+    </a>
   </div>
 </footer>
 {% endblock %}

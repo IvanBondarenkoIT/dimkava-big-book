@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Departments{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">Departments</h1>
-</section>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-  {% for d in departments %}
-  <a href="{% url 'departments:detail' d.slug %}" class="block bg-surface-container-lowest p-6 rounded-lg hover:shadow-lg no-underline text-inherit">
-    <h3 class="text-xl font-bold text-primary">{{ d.name }}</h3>
-  </a>
-  {% endfor %}
+<div class="space-y-8">
+  <header>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Departments</h1>
+  </header>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {% for d in departments %}
+    <a href="{% url 'departments:detail' d.slug %}" class="card-atelier block no-underline text-inherit group">
+      <h3 class="text-xl font-bold text-on-surface group-hover:text-primary transition-colors">{{ d.name }}</h3>
+    </a>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

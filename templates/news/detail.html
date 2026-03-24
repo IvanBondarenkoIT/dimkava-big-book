@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}{{ news_title }}{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">{{ news_title }}</h1>
-  <p class="text-on-surface-variant">{{ news_date }}</p>
-</section>
-<div class="bg-surface-container-low rounded-lg p-8 max-w-3xl">
-  <p>News content — dummy.</p>
+<div class="space-y-8 max-w-3xl">
+  <header>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ news_title }}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{{ news_date }}</p>
+  </header>
+  <div class="card-atelier">
+    <p class="text-on-surface-variant">News content — dummy.</p>
+  </div>
 </div>
 {% endblock %}

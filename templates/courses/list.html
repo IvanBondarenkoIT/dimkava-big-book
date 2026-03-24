@@ -1,16 +1,38 @@
 {% extends 'base.html' %}
-{% block title %}Courses{% endblock %}
+{% block title %}Curriculum{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">Curriculum</h1>
-  <p class="text-on-surface-variant font-medium">Browse all courses</p>
-</section>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  {% for c in courses %}
-  <a href="{% url 'courses:detail' c.slug %}" class="block bg-surface-container-lowest p-6 rounded-lg hover:shadow-lg transition-all no-underline text-inherit">
-    <h3 class="text-xl font-bold text-primary">{{ c.title }}</h3>
-    <p class="text-sm text-on-surface-variant mt-2">{{ c.category }} — {{ c.progress }}%</p>
-  </a>
-  {% endfor %}
+<div class="space-y-10">
+  <header class="space-y-6">
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Curriculum</h1>
+    <p class="text-on-surface-variant/70">Browse all courses</p>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for c in courses %}
+    <a href="{% url 'courses:detail' c.slug %}" class="card-atelier group flex flex-col h-full no-underline text-inherit">
+      <div class="aspect-video rounded-lg overflow-hidden mb-6 relative">
+        <img src="{{ c.image|default:'https://images.unsplash.com/photo-1510972527921-ce03766a1cf1?q=80&w=800' }}" alt="{{ c.title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+          <span class="text-white text-xs font-bold uppercase tracking-widest">{{ c.lessons_count|default:0 }} Lessons • {{ c.category }}</span>
+        </div>
+      </div>
+      <div class="flex-1 space-y-3">
+        <h3 class="text-2xl font-bold leading-tight text-on-surface group-hover:text-primary transition-colors">{{ c.title }}</h3>
+        <p class="text-on-surface-variant/60 text-sm leading-relaxed">{{ c.description|default:'' }}</p>
+      </div>
+      <div class="mt-8 pt-6 border-t border-outline-variant/10 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined text-sm">menu_book</span>
+          </div>
+          <span class="text-xs font-bold text-on-surface-variant/40 uppercase tracking-widest">
+            {% if c.progress > 0 %}{{ c.progress }}% Complete{% else %}Not Started{% endif %}
+          </span>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant/60 group-hover:text-primary transition-colors">chevron_right</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 # Design System Document: Specialty Coffee Learning Portal
 
-> **Эталон визуала:** `experiments/stitch_lesson_view/lesson_view/code.html` — при изменении стилей сверяться с этим файлом.
+> **Эталон визуала:** `design/etalon/dim-kava-education-visual` — Layout, Navbar, CSS. Дополнительно: `design/etalon/stitch_lesson_view/` для деталей урока.
 
 ## 1. Overview & Creative North Star
 **The Creative North Star: "The Modern Barista’s Atelier"**

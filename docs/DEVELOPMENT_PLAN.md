@@ -17,6 +17,7 @@
 | 0.5 | Наводящие вопросы (GUIDING_QUESTIONS.md) | ✅ | — |
 | 0.6 | Ответы на вопросы → корректировка плана | 🔲 | — |
 | 0.7 | Tailwind prebuild: static CSS, без FOUC, parity с эталоном | ✅ | — |
+| 0.8 | Etalon sync: dim-kava-education-visual, top navbar, все страницы | ✅ | — |
 
 ---
 

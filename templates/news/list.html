@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}News{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">News & Announcements</h1>
-</section>
-<div class="space-y-4 max-w-3xl">
-  {% for n in news %}
-  <a href="{% url 'news:detail' n.slug %}" class="block p-6 bg-surface-container-lowest rounded-lg hover:shadow-lg no-underline text-inherit">
-    {% if n.pinned %}<span class="text-primary text-xs font-bold">PINNED</span>{% endif %}
-    <h3 class="text-xl font-bold mt-2">{{ n.title }}</h3>
-    <p class="text-sm text-on-surface-variant">{{ n.date }} • {{ n.tag }}</p>
-  </a>
-  {% endfor %}
+<div class="space-y-8">
+  <header>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">News & Announcements</h1>
+  </header>
+  <div class="space-y-4 max-w-3xl">
+    {% for n in news %}
+    <a href="{% url 'news:detail' n.slug %}" class="card-atelier block no-underline text-inherit group">
+      {% if n.pinned %}<span class="text-primary text-xs font-bold uppercase">Pinned</span>{% endif %}
+      <h3 class="text-xl font-bold mt-2 text-on-surface group-hover:text-primary transition-colors">{{ n.title }}</h3>
+      <p class="text-sm text-on-surface-variant/70">{{ n.date }} • {{ n.tag }}</p>
+    </a>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

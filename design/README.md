@@ -1,6 +1,6 @@
 # Design — эталонные шаблоны и дизайн-система
 
-> Шаблоны из Stitch берём **прямо в Django** и наполняем данными. Это эталон визуала.
+> **Главный визуальный эталон:** [dim-kava-education-visual](https://github.com/IvanBondarenkoIT/dim-kava-education-visual) — React + Tailwind v4.
 
 ---
 
@@ -9,17 +9,14 @@
 ```
 design/
 ├── README.md           # этот файл
-├── DESIGN_SYSTEM.md    # Философия дизайна, токены, Do's & Don'ts (из Stitch)
-└── reference/          # Эталонные HTML-шаблоны — источник для Django
+├── DESIGN_SYSTEM.md    # Философия дизайна, токены, Do's & Don'ts
+├── etalon/             # Канонические источники
+│   ├── dim-kava-education-visual/   # React-эталон (git clone)
+│   └── stitch_lesson_view/          # HTML от Stitch (code.html)
+└── reference/          # HTML-копии для Django
     ├── authentication.html
     ├── lesson_view.html
-    ├── candidate_onboarding.html
-    ├── employee_dashboard.html
-    ├── quiz_screen.html
-    ├── knowledge_base.html
-    ├── news_feed.html
-    ├── admin_content_list.html
-    └── desktop_dashboard_layout.html
+    └── ...
 ```
 
 ---
@@ -53,8 +50,8 @@ design/
 
 ---
 
-## Связь с experiments/
+## Связь с etalon/
 
-- **experiments/stitch_lesson_view/** — исходные файлы от Stitch (code.html в папках)
-- **experiments/stitch_output/** — React-прототип из dim-kava-education-visual
-- **design/reference/** — копия эталонов, основное место для работы с Django
+- **design/etalon/dim-kava-education-visual/** — главный эталон (React, Layout, CSS)
+- **design/etalon/stitch_lesson_view/** — HTML от Stitch (lesson_view, dashboard, …)
+- **design/reference/** — HTML-копии для Django

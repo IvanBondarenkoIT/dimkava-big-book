@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 {% block title %}{{ department_name }}{% endblock %}
 {% block content %}
-<section class="mb-10">
-  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">{{ department_name }}</h1>
-</section>
-<ul class="space-y-4">
-  {% for r in roles %}
-  <li class="p-6 bg-surface-container-low rounded-lg">
-    <h3 class="font-bold">{{ r.title }}</h3>
-    <p class="text-sm text-on-surface-variant">{{ r.description }}</p>
-  </li>
-  {% endfor %}
-</ul>
+<div class="space-y-8">
+  <header>
+    <a href="{% url 'departments:list' %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+      <span class="material-symbols-outlined text-lg">arrow_back</span>
+      Back to Departments
+    </a>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ department_name }}</h1>
+  </header>
+  <ul class="space-y-4">
+    {% for r in roles %}
+    <li class="card-atelier">
+      <h3 class="font-bold text-on-surface">{{ r.title }}</h3>
+      <p class="text-sm text-on-surface-variant/70 mt-1">{{ r.description }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}

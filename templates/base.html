@@ -7,88 +7,76 @@
   <title>{% block title %}Dim Kava{% endblock %} | Internal Learning Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="{% static 'css/tailwind.css' %}"/>
+  <link rel="stylesheet" href="{% static 'css/tailwind.css' %}?v=4" fetchpriority="high"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/>
 </head>
-<body class="bg-surface text-on-surface selection:bg-primary-container/30 antialiased flex flex-col">
-  <!-- Sidebar -->
-  <aside class="fixed left-0 top-0 h-full flex flex-col p-6 z-40 bg-surface-container-low w-72 rounded-r-[2rem] shadow-2xl shadow-on-surface-variant/5 transition-all duration-300 ease-in-out">
-    <a href="{% url 'core:home' %}" class="flex items-center gap-4 mb-10 px-2 no-underline">
-      <div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
-        <img alt="Avatar" class="w-full h-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex"/>
+<body class="bg-surface text-on-surface-variant selection:bg-primary-container/30 antialiased min-h-screen flex flex-col">
+  <!-- Navbar — эталон: dim-kava-education-visual Navbar.tsx -->
+  <nav class="glass-nav sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
+    <a href="{% url 'core:home' %}" class="flex items-center gap-2 no-underline text-inherit">
+      <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white">
+        <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">coffee</span>
       </div>
-      <div class="overflow-hidden">
-        <h3 class="font-headline font-bold text-on-surface truncate">{% block sidebar_user %}Alex{% endblock %}</h3>
-        <p class="font-body text-xs text-on-surface-variant truncate">Dim Kava Academy</p>
-      </div>
+      <span class="font-bold text-xl tracking-tight text-primary">Atelier</span>
     </a>
-    <nav class="flex flex-col gap-2 flex-grow">
-      <a href="{% url 'core:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}nav-link-active text-primary{% endif %}">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-        <span>Home</span>
+
+    <div class="hidden md:flex items-center gap-6">
+      <a href="{% url 'core:home' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if request.resolver_match.url_name == 'home' %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+        <span class="material-symbols-outlined text-xl">dashboard</span>
+        <span>Dashboard</span>
       </a>
-      <a href="{% url 'onboarding:overview' %}" class="nav-link {% if 'onboarding' in request.path %}nav-link-active text-primary{% endif %}">
-        <span class="material-symbols-outlined">person_add</span>
-        <span>Onboarding</span>
-      </a>
-      <a href="{% url 'courses:list' %}" class="nav-link {% if 'courses' in request.path %}nav-link-active text-primary{% endif %}">
-        <span class="material-symbols-outlined">local_library</span>
+      <a href="{% url 'courses:list' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'courses' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+        <span class="material-symbols-outlined text-xl">menu_book</span>
         <span>Courses</span>
       </a>
-      <a href="{% url 'knowledge_base:home' %}" class="nav-link {% if 'wiki' in request.path %}nav-link-active text-primary{% endif %}">
-        <span class="material-symbols-outlined">auto_stories</span>
+      <a href="{% url 'onboarding:overview' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'onboarding' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+        <span class="material-symbols-outlined text-xl">person_add</span>
+        <span>Onboarding</span>
+      </a>
+      <a href="{% url 'knowledge_base:home' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'wiki' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+        <span class="material-symbols-outlined text-xl">auto_stories</span>
         <span>Knowledge</span>
       </a>
-      <a href="{% url 'news:list' %}" class="nav-link {% if 'news' in request.path %}nav-link-active text-primary{% endif %}">
-        <span class="material-symbols-outlined">feed</span>
+      <a href="{% url 'news:list' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'news' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+        <span class="material-symbols-outlined text-xl">feed</span>
         <span>News</span>
       </a>
-      <a href="{% url 'departments:list' %}" class="nav-link {% if 'departments' in request.path %}nav-link-active text-primary{% endif %}">
-        <span class="material-symbols-outlined">business</span>
-        <span>Departments</span>
+      <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'profile' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+        <span class="material-symbols-outlined text-xl">person</span>
+        <span>Profile</span>
       </a>
-      <a href="{% url 'analytics:dashboard' %}" class="nav-link {% if 'analytics' in request.path %}nav-link-active text-primary{% endif %} mt-auto">
-        <span class="material-symbols-outlined">admin_panel_settings</span>
-        <span>Analytics</span>
-      </a>
-    </nav>
-  </aside>
+    </div>
 
-  <!-- Top Bar -->
-  <header class="fixed top-0 left-72 right-0 z-30 glass-header bg-surface/80 flex justify-between items-center px-8 py-4 transition-all duration-300 ease-in-out">
-    <div class="flex items-center gap-8 flex-grow">
-      <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-primary">coffee</span>
-        <span class="font-headline font-extrabold text-xl text-primary tracking-tight">Dim Kava</span>
-      </div>
-      <form action="{% url 'search:results' %}" method="get" class="max-w-md w-full relative">
-        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
-        <input name="q" class="w-full pl-12 pr-4 py-2.5 bg-surface-container-high border-none rounded-full text-sm focus:ring-2 focus:ring-primary/20 transition-all duration-300" placeholder="Search lessons, guides..." type="text"/>
-      </form>
-    </div>
-    <div class="flex items-center gap-6">
-      <div class="flex items-center bg-surface-container-low rounded-full px-1 py-1">
-        <button class="px-3 py-1 text-[11px] font-bold bg-white rounded-full shadow-sm text-primary transition-all duration-150 active:scale-95">EN</button>
-        <button class="px-3 py-1 text-[11px] font-bold text-on-surface-variant hover:text-primary transition-all duration-150 active:scale-95">RU</button>
-        <button class="px-3 py-1 text-[11px] font-bold text-on-surface-variant hover:text-primary transition-all duration-150 active:scale-95">KA</button>
-      </div>
-      <a href="{% url 'notifications:list' %}" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors duration-150 active:scale-95 text-on-surface-variant">
-        <span class="material-symbols-outlined">notifications</span>
-        <span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full ring-2 ring-surface"></span>
+    <div class="flex items-center gap-4">
+      <a href="{% url 'search:results' %}" class="p-2 rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">search</span>
       </a>
-      <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 hover:opacity-80 transition-opacity duration-150 active:scale-95 no-underline text-inherit">
-        <div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-          <span class="material-symbols-outlined text-lg">person</span>
-        </div>
-        <span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+      <a href="{% url 'accounts:profile' %}" class="w-10 h-10 rounded-full bg-primary-container/20 border border-primary-container/30 overflow-hidden flex-shrink-0">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar" class="w-full h-full object-cover"/>
       </a>
     </div>
-  </header>
+  </nav>
 
   <!-- Main Content -->
-  <main class="ml-72 pt-24 px-8 pb-12">
-    {% block content %}{% endblock %}
+  <main class="flex-1 px-6 py-8">
+    <div class="max-w-7xl mx-auto">
+      {% block content %}{% endblock %}
+    </div>
   </main>
+
+  <!-- Footer — эталон: dim-kava-education-visual App.tsx -->
+  <footer class="border-t border-outline-variant/10 py-8 px-6 text-center text-on-surface-variant/60 text-sm">
+    <p class="font-semibold text-primary mb-1">Barista Atelier</p>
+    <p>© 2026 Specialty Coffee Learning Portal. All rights reserved.</p>
+    <div class="flex flex-wrap justify-center gap-6 mt-2">
+      <a href="{% url 'analytics:dashboard' %}" class="hover:text-primary transition-colors">Analytics</a>
+      <a href="{% url 'departments:list' %}" class="hover:text-primary transition-colors">Departments</a>
+      <a href="{% url 'notifications:list' %}" class="hover:text-primary transition-colors">Notifications</a>
+      <a href="#" class="hover:text-primary transition-colors">Privacy</a>
+      <a href="#" class="hover:text-primary transition-colors">Terms</a>
+      <a href="#" class="hover:text-primary transition-colors">Support</a>
+    </div>
+  </footer>
 </body>
 </html>
