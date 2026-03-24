@@ -6,16 +6,17 @@
 
 ---
 
-## Фаза 0: Подготовка ✅ (текущий шаг)
+## Фаза 0: Подготовка ✅
 
 | # | Задача | Статус | Коммит |
 |---|--------|--------|--------|
 | 0.1 | Git init, .gitignore | ✅ | init |
-| 0.2 | Локальное окружение (venv, requirements.txt) | 🔲 | chore: add Python env |
+| 0.2 | Локальное окружение (venv, requirements.txt) | ✅ | chore: add Python env |
 | 0.3 | Маппинг промптов (PROMPTS_MAPPING.md) | ✅ | — |
 | 0.4 | План структуры (STRUCTURE_PLAN.md) | ✅ | — |
 | 0.5 | Наводящие вопросы (GUIDING_QUESTIONS.md) | ✅ | — |
 | 0.6 | Ответы на вопросы → корректировка плана | 🔲 | — |
+| 0.7 | Tailwind prebuild: static CSS, без FOUC, parity с эталоном | ✅ | — |
 
 ---
 
@@ -180,9 +181,33 @@
 
 ---
 
+## Core-rules чеклист (input/prompts/core-rules.md)
+
+| § | Тема | Статус |
+|---|------|--------|
+| 1 | Env vars, settings split | ✅ |
+| 2 | Git: шаг = коммит, pre-commit scan | 🔲 |
+| 3 | Checkpoint protocol | 🔲 |
+| 4 | Django: URL naming, CBV, services | ✅ |
+| 5 | Service layer rules | 🔲 |
+| 6 | Templates: trans, components | 🔲 |
+| 7 | **Static: Tailwind prebuild** | ✅ |
+| 8 | Security | 🔲 |
+| 9 | Error handling | 🔲 |
+| 10 | Code comments | — |
+| 11 | Naming conventions | ✅ |
+| 12 | Testing | 🔲 |
+| 13 | Railway deploy | 🔲 |
+| 14 | Performance checklist | 🔲 |
+| 15 | A11y | 🔲 |
+| 16 | Logging | 🔲 |
+| 17 | README | 🔲 |
+| 18 | Code review checklist | 🔲 |
+
+---
+
 ## Следующий шаг
 
 1. Ответить на GUIDING_QUESTIONS.md.
-2. При необходимости скорректировать план (MVP, приоритеты).
-3. Начать Фазу 0.2: venv + requirements.txt.
-4. Перейти к Фазе 1: project scaffold.
+2. Проверить страницы в браузере (стили без FOUC).
+3. Перейти к Фазе 1: project scaffold (если 0.6 не блокирует).

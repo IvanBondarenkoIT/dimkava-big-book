@@ -1,0 +1,9 @@
+{
+  "name": "dimkava-big-book",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./static/css/input.css -o ./static/css/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./static/css/input.css -o ./static/css/tailwind.css --watch"
+  },
+  "description": "CSS build uses Tailwind v4 standalone (tailwindcss.exe). Run: .\\tailwindcss.exe -i ./static/css/input.css -o ./static/css/tailwind.css --minify"
+}

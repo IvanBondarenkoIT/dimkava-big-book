@@ -1,5 +1,7 @@
 # Design System Document: Specialty Coffee Learning Portal
 
+> **Эталон визуала:** `experiments/stitch_lesson_view/lesson_view/code.html` — при изменении стилей сверяться с этим файлом.
+
 ## 1. Overview & Creative North Star
 **The Creative North Star: "The Modern Barista’s Atelier"**
 This design system moves away from the sterile, "corporate LMS" look and leans into the warmth of high-end specialty coffee culture. It treats digital learning like a curated craft. We break the rigid, boxy "template" look through **intentional asymmetry**, **tonal depth**, and **overlapping editorial layers**. 
