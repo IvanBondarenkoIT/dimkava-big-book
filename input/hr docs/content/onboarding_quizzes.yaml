@@ -1,0 +1,751 @@
+# Onboarding Quizzes — All Checkpoint Questionnaires
+# Sources: Опросник трех дней, 1 недели, 2 недели, 3 недели, 1 месяца, 2 месяцев, 3 месяцев
+#          + Вопросник по итогам одного месяца, Вопросы Shop Seller
+#          + Опросник по оценке нового сотрудника
+# Django model: Lesson (lesson_type=quiz) inside a Course / OnboardingModule
+# Usage: Each quiz is a checkpoint after completing the corresponding onboarding module
+
+# ---------------------------------------------------------------------------
+# QUIZ TIMELINE:
+#   Day 3     → First knowledge check (basic company + coffee + sales)
+#   Week 1    → Coffee knowledge + drink preparation + equipment basics
+#   Week 2    → Milk drinks + Caotina + Delonghi + sales techniques
+#   Week 3    → Specialty + Blaser range + consultation skills
+#   Month 1   → Full operations: counter, Shop Seller, inventory, discounts
+#   Month 2   → Equipment expertise: machines, grinders, brands
+#   Month 3   → Advanced: cupping, expert sales, mentoring
+# ---------------------------------------------------------------------------
+
+quizzes:
+
+  - slug: quiz-day-3
+    title: "Quiz — After 3 Days"
+    onboarding_module_slug: days-2-3
+    passing_score: 70
+    description: "First checkpoint. Tests basic knowledge of the company, espresso, and coffee range."
+    sections:
+
+      - title: "Day 1 — Company & Role"
+        questions:
+          - text: "What tasks are set for employees and the new hire at the start of the working day?"
+            type: open
+          - text: "Why do we do a morning tasting and how many espresso cups do we taste during the day?"
+            type: open
+          - text: "What is the mission of Dim Kava?"
+            type: open
+          - text: "Who is the general importer of Blaser coffee?"
+            type: open
+          - text: "What career opportunities are available to Dim Kava employees?"
+            type: open
+          - text: "What rules and standards of conduct for a manager on the floor do you remember?"
+            type: open
+          - text: "What is espresso? Describe its characteristics and benefits."
+            type: open
+          - text: "What drink quality criteria must you monitor?"
+            type: open
+          - text: "What is the difference between monosorts and blends (bukety)?"
+            type: open
+          - text: "Who is a barista?"
+            type: open
+
+      - title: "Day 2 — Growing & Roasting"
+        questions:
+          - text: "Where and how does green coffee grow?"
+            type: open
+          - text: "What coffee tree species do you know?"
+            type: open
+          - text: "What Blaser coffee brands and types are available at Dim Kava?"
+            type: open
+          - text: "What types of roasting exist and how do they affect the taste?"
+            type: open
+          - text: "How should a cup of coffee be presented to the client?"
+            type: open
+          - text: "What are up-sale and cross-sale? Give an example of each."
+            type: open
+          - text: "What must you check when switching on the coffee equipment?"
+            type: open
+          - text: "How many coffee machines must you test each day?"
+            type: open
+
+      - title: "Day 3 — Processing, Grinding & Client"
+        questions:
+          - text: "Name the main methods of coffee bean processing."
+            type: open
+          - text: "What types of roasting are there and how does the chemical composition change during roasting?"
+            type: open
+          - text: "What do you know about decaf coffee?"
+            type: open
+          - text: "How should roasted coffee be stored correctly?"
+            type: open
+          - text: "Which grind size suits which preparation method (espresso, filter, Turkish)?"
+            type: open
+          - text: "What phrases do you use to greet a client?"
+            type: open
+          - text: "What bonuses does the Dim Kava loyalty card offer?"
+            type: open
+          - text: "What difficulties have you encountered working at the counter?"
+            type: open
+          - text: "What would you like to learn better at the next stage?"
+            type: open
+
+      - title: "Self-Assessment"
+        questions:
+          - text: "How confident do you feel at your workstation? (Rate 1–5)"
+            type: rating
+            min: 1
+            max: 5
+          - text: "Which topics would you like to review?"
+            type: open
+          - text: "What questions do you still have?"
+            type: open
+
+  - slug: quiz-week-1
+    title: "Quiz — After Week 1"
+    onboarding_module_slug: week-1
+    passing_score: 70
+    description: "Tests drink preparation, espresso criteria, coffee history and geography, equipment startup."
+    sections:
+
+      - title: "Drink Preparation (No Milk)"
+        questions:
+          - text: "Which drinks are in the 'no milk' category?"
+            type: open
+          - text: "How do you measure the correct dose of coffee for espresso?"
+            type: open
+          - text: "How many seconds does the extraction of a classic espresso last?"
+            type: open
+          - text: "What is the difference between americano and lungo?"
+            type: open
+          - text: "How do you check the quality of a finished drink? Name 3 signs."
+            type: open
+
+      - title: "Espresso and Cappuccino Quality"
+        questions:
+          - text: "State the correct espresso parameters: time, volume, grammes."
+            type: open
+          - text: "What should correct crema look like?"
+            type: open
+          - text: "What milk texture is needed for cappuccino?"
+            type: open
+          - text: "What happens if milk is overheated?"
+            type: open
+          - text: "How can a barista check their own drink quality independently?"
+            type: open
+
+      - title: "Coffee Knowledge — History & Geography"
+        questions:
+          - text: "In which country was coffee first consumed?"
+            type: open
+          - text: "Where and when did the first coffee house appear?"
+            type: open
+          - text: "Name three coffee growing regions."
+            type: open
+          - text: "What conditions are needed for coffee to grow?"
+            type: open
+          - text: "Name two main coffee species and their differences."
+            type: open
+          - text: "How does Arabica differ from Robusta in taste?"
+            type: open
+          - text: "What harvesting methods exist?"
+            type: open
+          - text: "Name at least 3 coffee processing methods."
+            type: open
+          - text: "What roasting levels do you know?"
+            type: open
+          - text: "What happens to the chemical composition during roasting?"
+            type: open
+          - text: "How should roasted coffee be stored correctly?"
+            type: open
+          - text: "How is soluble (instant) coffee produced?"
+            type: open
+          - text: "How is caffeine removed from coffee beans?"
+            type: open
+          - text: "How does grind size depend on the preparation method?"
+            type: open
+          - text: "What grind is needed for Turkish (cezve)?"
+            type: open
+          - text: "By what parameters is green coffee classified?"
+            type: open
+
+  - slug: quiz-week-2
+    title: "Quiz — After Week 2"
+    onboarding_module_slug: week-2
+    passing_score: 70
+    description: "Milk drinks, Caotina, Delonghi machines, sales techniques."
+    sections:
+
+      - title: "Drink Preparation"
+        questions:
+          - text: "Name the main espresso-based drinks."
+            type: open
+          - text: "What is the difference between latte and cappuccino?"
+            type: open
+          - text: "How do you prepare a flat white correctly?"
+            type: open
+          - text: "How do you know when milk has been steamed correctly?"
+            type: open
+          - text: "What are the most common mistakes when preparing milk-based drinks?"
+            type: open
+          - text: "What temperatures should espresso and milk foam be at?"
+            type: open
+
+      - title: "Caotina Product Knowledge"
+        questions:
+          - text: "What is Caotina and how does it differ from regular cocoa powder?"
+            type: open
+          - text: "What Caotina flavours do you know?"
+            type: open
+          - text: "How do you prepare a Caotina drink for maximum flavour?"
+            type: open
+          - text: "How can Caotina be used besides as a drink?"
+            type: open
+          - text: "Which milk pairs best with Caotina?"
+            type: open
+          - text: "What serving amount does the manufacturer recommend for one drink?"
+            type: open
+
+      - title: "Client Greeting & Sales"
+        questions:
+          - text: "How do you greet a client correctly?"
+            type: open
+          - text: "What phrases help build rapport with a client?"
+            type: open
+          - text: "How do you explain the advantages of the DK loyalty card to a client?"
+            type: open
+          - text: "Give an example of an up-sale (increasing the bill with a premium product or larger size)."
+            type: open
+          - text: "Give an example of a cross-sale (additional sale of a snack, accessory, or coffee)."
+            type: open
+          - text: "What do you do if a client declines an offer?"
+            type: open
+
+      - title: "Equipment — Startup & Testing"
+        questions:
+          - text: "In what sequence is the coffee machine switched on in the morning?"
+            type: open
+          - text: "What must be done before the first espresso is served?"
+            type: open
+          - text: "Why is it necessary to test at least one coffee machine per day?"
+            type: open
+          - text: "What indicators are checked during the test?"
+            type: open
+          - text: "What do you do if the equipment shows an error?"
+            type: open
+
+      - title: "Delonghi — Manual vs. Automatic"
+        questions:
+          - text: "What is the difference between working with a manual and an automatic machine?"
+            type: open
+          - text: "What is the advantage of automatic machines for the client?"
+            type: open
+          - text: "What is the advantage of manual machines for the barista?"
+            type: open
+          - text: "What main Delonghi models are available in our range?"
+            type: open
+
+  - slug: quiz-week-3
+    title: "Quiz — After Week 3"
+    onboarding_module_slug: week-3
+    passing_score: 70
+    description: "Specialty coffee, Blaser catalogue, client consultation."
+    sections:
+
+      - title: "Drink Preparation & Consultation"
+        questions:
+          - text: "How do you explain the difference between latte and cappuccino to a client?"
+            type: open
+          - text: "What do you ask a client to help choose coffee to their taste?"
+            type: open
+          - text: "What are the signs of a correctly prepared drink?"
+            type: open
+
+      - title: "Client Meeting & Sales"
+        questions:
+          - text: "What bonuses does the DK loyalty card offer?"
+            type: open
+          - text: "Give an example of an up-sale and a cross-sale."
+            type: open
+          - text: "What is most important at the first meeting with a client?"
+            type: open
+
+      - title: "Coffee Equipment"
+        questions:
+          - text: "In what sequence is the coffee machine started in the morning?"
+            type: open
+          - text: "What is the difference between a manual Delonghi machine and an automatic one?"
+            type: open
+
+      - title: "Specialty Coffee & SCA"
+        questions:
+          - text: "What does the term 'specialty coffee' mean?"
+            type: open
+          - text: "What parameters influence the SCA coffee score?"
+            type: open
+          - text: "Why is specialty coffee valued more highly than standard coffee?"
+            type: open
+
+      - title: "Blaser Catalogue — Blends & Monosorts"
+        questions:
+          - text: "What is a 'monosort'?"
+            type: open
+          - text: "What is the difference between a coffee blend (buket) and a monosort?"
+            type: open
+          - text: "Name an example of a Blaser blend and describe its flavour notes."
+            type: open
+
+  - slug: quiz-month-1
+    title: "Quiz — After Month 1"
+    onboarding_module_slug: month-1
+    passing_score: 75
+    description: "Full operations check: counter workflow, equipment, coffee knowledge, Shop Seller, documents."
+    sections:
+
+      - title: "Independent Counter Work"
+        questions:
+          - text: "What stages are included in receiving a client's order?"
+            type: open
+          - text: "How do you use the sales script correctly?"
+            type: open
+          - text: "What must you say to the client when processing payment and handing over the receipt?"
+            type: open
+          - text: "How do you correctly enter all coffee orders into the programme?"
+            type: open
+          - text: "What actions must be completed after closing the shift in the register?"
+            type: open
+          - text: "What is included in bar cleaning during the day?"
+            type: open
+
+      - title: "Client Meeting & Sales"
+        questions:
+          - text: "What bonuses does the DK loyalty card offer?"
+            type: open
+          - text: "Give an example of an up-sale."
+            type: open
+          - text: "Give an example of a cross-sale."
+            type: open
+          - text: "What is most important at the first client meeting?"
+            type: open
+
+      - title: "Coffee Equipment"
+        questions:
+          - text: "In what sequence is the coffee machine switched on?"
+            type: open
+          - text: "Why is it necessary to test at least one machine daily?"
+            type: open
+          - text: "What is the difference between manual and automatic Delonghi machines?"
+            type: open
+
+      - title: "Coffee & Caotina Knowledge"
+        questions:
+          - text: "How does specialty coffee differ from standard coffee?"
+            type: open
+          - text: "How does a monosort differ from a blend?"
+            type: open
+          - text: "What serving amount does the manufacturer recommend for one Caotina drink?"
+            type: open
+          - text: "What is Caotina and how does it differ from regular cocoa powder?"
+            type: open
+
+      - title: "Discounts & Documents"
+        questions:
+          - text: "How do you calculate the discount for a representative and for a dealer?"
+            type: open
+          - text: "How do you issue a receipt copy to a client?"
+            type: open
+
+      - title: "Company & Promotions"
+        questions:
+          - text: "What is the company structure? (Example: management, departments, stores)"
+            type: open
+          - text: "Where can you find current promotions and how do you communicate them to a client?"
+            type: open
+
+      - title: "Coffee Grades"
+        questions:
+          - text: "How do you explain the difference between a mild and a bright grade to a client?"
+            type: open
+          - text: "Name an example of a Blaser coffee grade and its flavour notes."
+            type: open
+
+      - title: "Goods Receiving & Display"
+        questions:
+          - text: "What must you check when receiving a delivery?"
+            type: open
+          - text: "How do you correctly display coffee on the shelf by expiry date?"
+            type: open
+          - text: "What do you do if a price tag is missing on the shelf?"
+            type: open
+
+  - slug: quiz-shop-seller
+    title: "Quiz — Shop Seller Operations"
+    onboarding_module_slug: month-1
+    passing_score: 80
+    description: "Dedicated quiz on all Shop Seller operations. Must be passed before working independently."
+    sections:
+
+      - title: "Sales & Payment"
+        questions:
+          - text: "Describe how we process a sale in Shop Seller."
+            type: open
+          - text: "How do we enter beverage packaging for drink preparation into the programme?"
+            type: open
+          - text: "What payment types are available in Shop Seller?"
+            type: open
+          - text: "Describe each payment type (how a sale is processed depending on payment type)."
+            type: open
+          - text: "If a client wants to pay by bank transfer, what steps do we follow and how do we enter it?"
+            type: open
+
+      - title: "Inventory"
+        questions:
+          - text: "How does the monthly inventory differ from the daily one?"
+            type: open
+          - text: "How is the daily inventory conducted (what do we count, how do we record, what do we note in comments)?"
+            type: open
+
+      - title: "Loyalty Card"
+        questions:
+          - text: "How do we open and register a Dim Kava loyalty card?"
+            type: open
+          - text: "How is the card registered as a gift?"
+            type: open
+          - text: "In what cases is the loyalty card provided free of charge?"
+            type: open
+          - text: "Who is entitled to a discount/privileged access in our store network?"
+            type: open
+          - text: "What discount do diplomats receive and how do we process it?"
+            type: open
+          - text: "What bonus system is offered to clients and what priority does having a card give?"
+            type: open
+          - text: "What does a tasting cup mean?"
+            type: open
+          - text: "How do you check if a client has free cups on their card?"
+            type: open
+          - text: "In what cases are free cups credited to a client?"
+            type: open
+          - text: "What can a client taste when buying a coffee blend (buket)?"
+            type: open
+          - text: "What can a client taste when buying a monosort?"
+            type: open
+          - text: "How do we deduct a tasting cup from the card?"
+            type: open
+          - text: "How do you process a tea service set in the programme if a client wants to buy several cups? (e.g., Rosso Nero, Lilla e Rose set)"
+            type: open
+          - text: "How do we restore a lost card?"
+            type: open
+          - text: "How many cups must a client accumulate to receive a free pack of coffee, and how is this processed? Describe in detail."
+            type: open
+          - text: "In which cases do we give a blend (buket) as a gift? In which cases — a monosort?"
+            type: open
+
+      - title: "Business Clients"
+        questions:
+          - text: "What information do we request from an organisation buying our products?"
+            type: open
+
+      - title: "Staff Procedures"
+        questions:
+          - text: "How is a cappuccino processed for staff?"
+            type: open
+          - text: "How is coffee or milk used for testing recorded?"
+            type: open
+          - text: "How many free cups is a staff member entitled to per month?"
+            type: open
+          - text: "How many of those free cups are cappuccino? How many are Caotina?"
+            type: open
+          - text: "Why is a free cup given to staff?"
+            type: open
+
+      - title: "Products & Accessories"
+        questions:
+          - text: "How is gift wrapping processed for a coffee machine purchase?"
+            type: open
+          - text: "Are disposable cups, sugar, and other consumables sold?"
+            type: open
+          - text: "What accessories are available in our store network?"
+            type: open
+          - text: "What cleaning products are available in our store network?"
+            type: open
+          - text: "What drink types are listed in Shop Seller?"
+            type: open
+          - text: "What is the maximum weight of a package set for grinding?"
+            type: open
+          - text: "How do we transfer products to another location through the programme?"
+            type: open
+
+      - title: "Cash & Closing"
+        questions:
+          - text: "How do we fill in the cash file? (what we fill in, what we compare it with)"
+            type: open
+          - text: "What types of cash collection exist in our operation?"
+            type: open
+          - text: "What is recorded in the 'expenses' column and how?"
+            type: open
+          - text: "How do we close the day in the programme?"
+            type: open
+          - text: "What amount do we enter in Shop Seller when closing the day?"
+            type: open
+          - text: "What do we do if we accidentally issue more receipts than needed?"
+            type: open
+          - text: "What do we do if at end of day the programme total and the register total do not match?"
+            type: open
+          - text: "What do we do if a product is expired or past its best-before date?"
+            type: open
+          - text: "What do we do if coffee has been standing on the display open for a long time?"
+            type: open
+
+      - title: "Bonuses — Terminology"
+        questions:
+          - text: "What does 'Marka' mean in free cups?"
+            type: open
+          - text: "What does '$5' mean in free cups?"
+            type: open
+          - text: "What does '$1' mean in free cups?"
+            type: open
+          - text: "What is 'Cash Back' and how do we write it off in the programme?"
+            type: open
+
+  - slug: quiz-month-2
+    title: "Quiz — After Month 2"
+    onboarding_module_slug: month-2
+    passing_score: 75
+    description: "Deep equipment knowledge: machines, grinders, brands, professional vs. home."
+    sections:
+
+      - title: "Client Meeting & Sales"
+        questions:
+          - text: "What bonuses does the DK loyalty card offer and how do you present them to a client?"
+            type: open
+          - text: "Give an example of an up-sale."
+            type: open
+          - text: "Give an example of a cross-sale."
+            type: open
+
+      - title: "Equipment — Startup & Testing"
+        questions:
+          - text: "In what sequence is the coffee machine switched on?"
+            type: open
+          - text: "What is checked during daily equipment testing?"
+            type: open
+          - text: "What is important to consider when starting equipment after a period of inactivity?"
+            type: open
+
+      - title: "Coffee Machines — Brands"
+        questions:
+          - text: "What are the differences between Delonghi, Nivona, and Melitta machines?"
+            type: open
+          - text: "What are the special features of the Nivona brand?"
+            type: open
+          - text: "What history and features do you know about the Melitta brand?"
+            type: open
+
+      - title: "Equipment Knowledge — Technical"
+        questions:
+          - text: "How is coffee equipment classified?"
+            type: open
+          - text: "Name the main components of a coffee machine."
+            type: open
+          - text: "What is the group head (рабочий блок)?"
+            type: open
+          - text: "What types of boilers exist?"
+            type: open
+          - text: "What is the difference between ABS plastic and polycarbonate?"
+            type: open
+          - text: "What control methods exist for coffee machines?"
+            type: open
+          - text: "What is a cappuccinatore and what types are there?"
+            type: open
+          - text: "What does 'quick steam' mean?"
+            type: open
+          - text: "How is descaling and coffee oil cleaning performed?"
+            type: open
+          - text: "Why are water filters needed?"
+            type: open
+
+      - title: "Professional Equipment"
+        questions:
+          - text: "What is the difference between manual and automatic coffee machines?"
+            type: open
+          - text: "What is the group head and what is it for?"
+            type: open
+          - text: "What does the pressure gauge show?"
+            type: open
+          - text: "What is the optimal coffee brewing temperature?"
+            type: open
+          - text: "What is a siphon system?"
+            type: open
+          - text: "What are the maintenance rules for a professional coffee machine?"
+            type: open
+
+      - title: "Grinders"
+        questions:
+          - text: "What types of grinders exist?"
+            type: open
+          - text: "What is the difference between flat and conical burrs?"
+            type: open
+          - text: "How does burr diameter affect the grind?"
+            type: open
+          - text: "What materials are used for the blades?"
+            type: open
+          - text: "How do overheat and foreign object protections work?"
+            type: open
+          - text: "How do you calibrate a professional grinder correctly?"
+            type: open
+
+      - title: "Client Service & Documents"
+        questions:
+          - text: "What training programme does the client receive when purchasing a machine?"
+            type: open
+          - text: "What are the main stages of documentation when processing a shipment?"
+            type: open
+          - text: "How do you explain the difference between a home and a professional machine to a client?"
+            type: open
+
+      - title: "Team & Reporting"
+        questions:
+          - text: "How are responsibilities distributed in the team per month?"
+            type: open
+          - text: "What goes into the report and how do you calculate it correctly?"
+            type: open
+
+  - slug: quiz-month-3
+    title: "Quiz — After Month 3"
+    onboarding_module_slug: month-3
+    passing_score: 80
+    description: "Expert-level check: advanced sales, cupping, client relationship, mentoring readiness."
+    sections:
+
+      - title: "Sales"
+        questions:
+          - text: "How do you offer coffee to a client so they make a choice faster?"
+            type: open
+          - text: "How do you explain the difference between a home and a professional coffee machine to a client?"
+            type: open
+          - text: "Give an example of a successful up-sale and cross-sale when selling coffee equipment."
+            type: open
+
+      - title: "Client Meeting"
+        questions:
+          - text: "What bonuses does the DK loyalty card offer and how do you communicate them?"
+            type: open
+          - text: "What is most important at the first meeting with a client?"
+            type: open
+
+      - title: "Equipment"
+        questions:
+          - text: "In what sequence is the coffee machine started in the morning?"
+            type: open
+          - text: "What are the differences between Delonghi, Nivona, and Melitta machines?"
+            type: open
+          - text: "How do you conduct a daily coffee machine test correctly?"
+            type: open
+
+      - title: "Documentation & Inventory"
+        questions:
+          - text: "What documents accompany a goods shipment?"
+            type: open
+          - text: "How do you correctly issue a receipt copy?"
+            type: open
+          - text: "What must you check during an inventory?"
+            type: open
+
+      - title: "Coffee Tasting (Cupping)"
+        questions:
+          - text: "What cupping methods exist?"
+            type: open
+          - text: "Which taste zones on the tongue correspond to which flavours?"
+            type: open
+          - text: "Name at least 3 flavour characteristics of coffee."
+            type: open
+
+      - title: "Working with Clients"
+        questions:
+          - text: "How do you decide which coffee to recommend to a client?"
+            type: open
+          - text: "What does 'promoting espresso culture' mean?"
+            type: open
+          - text: "What active listening techniques help when working with a client?"
+            type: open
+
+      - title: "Mentoring & Development"
+        questions:
+          - text: "What is the difference between training and mentoring?"
+            type: open
+          - text: "How do you help a newcomer settle into their role?"
+            type: open
+          - text: "What self-development direction would you choose for yourself?"
+            type: open
+
+  - slug: quiz-new-employee-behavioural
+    title: "Quiz — Behavioural & Psychological Assessment"
+    onboarding_module_slug: week-1
+    passing_score: 0
+    is_scored: false
+    description: >
+      Not a scored quiz. Used by HR/manager to evaluate attitude, self-awareness,
+      and professional behaviour. Completed by the employee in writing; reviewed
+      in a 1:1 conversation with the manager.
+    sections:
+
+      - title: "Appearance & Standards"
+        questions:
+          - text: "How do you maintain your appearance at work?"
+            type: open
+          - text: "What does following the company dress code mean to you?"
+            type: open
+
+      - title: "Learning & Development"
+        questions:
+          - text: "How do you learn new information about products and processes?"
+            type: open
+          - text: "Can you explain what new things you learned this week?"
+            type: open
+          - text: "What actions do you take to consolidate what you have learned?"
+            type: open
+
+      - title: "Client Work"
+        questions:
+          - text: "How do you show loyalty to the client and the product?"
+            type: open
+          - text: "What topics should not be discussed with a client at work?"
+            type: open
+          - text: "How do you respond if a client behaves inappropriately?"
+            type: open
+
+      - title: "Behaviour & Ethics"
+        questions:
+          - text: "How do you prioritise when handling multiple tasks at once?"
+            type: open
+          - text: "How do you receive constructive criticism from colleagues or your manager?"
+            type: open
+          - text: "What do you do if you disagree with a workplace rule?"
+            type: open
+          - text: "How do you take notes and record important information?"
+            type: open
+
+      - title: "Personal Boundaries & Communication"
+        questions:
+          - text: "How do you respond if a colleague asks about your personal life?"
+            type: open
+          - text: "How do you decide what personal information to share with colleagues and clients?"
+            type: open
+          - text: "How do you understand the limits of your own competence?"
+            type: open
+
+      - title: "Attitude & Motivation"
+        questions:
+          - text: "How do you keep a positive mood during work?"
+            type: open
+          - text: "How do you show a desire to help colleagues or clients?"
+            type: open
+          - text: "What actions demonstrate your commitment to a long-term relationship with the company?"
+            type: open
+
+      - title: "Handling Difficulty"
+        questions:
+          - text: "What do you do when you don't know how to complete a task?"
+            type: open
+          - text: "How do you respond to criticism of other employees or work methods?"
+            type: open
+          - text: "What do you do if you need to step away from your workstation?"
+            type: open

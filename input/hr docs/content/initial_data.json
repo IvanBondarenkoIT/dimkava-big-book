@@ -1,0 +1,261 @@
+[
+  {
+    "model": "knowledge_base.kbsection",
+    "pk": 1,
+    "fields": {
+      "title": "Procedures & Checklists",
+      "slug": "procedures",
+      "icon": "checklist"
+    }
+  },
+  {
+    "model": "knowledge_base.kbsection",
+    "pk": 2,
+    "fields": {
+      "title": "Service Standards",
+      "slug": "service-standards",
+      "icon": "star"
+    }
+  },
+  {
+    "model": "knowledge_base.kbsection",
+    "pk": 3,
+    "fields": {
+      "title": "Company Information",
+      "slug": "company-info",
+      "icon": "building"
+    }
+  },
+  {
+    "model": "knowledge_base.kbsection",
+    "pk": 4,
+    "fields": {
+      "title": "Training & Qualification",
+      "slug": "training",
+      "icon": "graduation-cap"
+    }
+  },
+  {
+    "model": "knowledge_base.article",
+    "pk": 1,
+    "fields": {
+      "section": 1,
+      "title": "Daily Checklist — Morning to Close",
+      "slug": "daily-checklist",
+      "status": "published",
+      "content": "See onboarding_training_plan.yaml → daily-checklist article content. Load via management command.",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "knowledge_base.article",
+    "pk": 2,
+    "fields": {
+      "section": 1,
+      "title": "Weekly Checklist",
+      "slug": "weekly-checklist",
+      "status": "published",
+      "content": "See sops_and_standards.yaml → weekly-checklist article content.",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "knowledge_base.article",
+    "pk": 3,
+    "fields": {
+      "section": 1,
+      "title": "Monthly Checklist",
+      "slug": "monthly-checklist",
+      "status": "published",
+      "content": "See sops_and_standards.yaml → monthly-checklist article content.",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "knowledge_base.article",
+    "pk": 4,
+    "fields": {
+      "section": 2,
+      "title": "DK Service Standards — Client Interaction Rules",
+      "slug": "dk-service-standards",
+      "status": "published",
+      "content": "See sops_and_standards.yaml → dk-service-standards article content.",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "knowledge_base.article",
+    "pk": 5,
+    "fields": {
+      "section": 3,
+      "title": "Job Description — Manager Consultant",
+      "slug": "job-description-manager-consultant",
+      "status": "published",
+      "content": "See sops_and_standards.yaml → job-description article content.",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "knowledge_base.article",
+    "pk": 6,
+    "fields": {
+      "section": 4,
+      "title": "Professional Qualification Levels — Dim Kava",
+      "slug": "qualification-levels",
+      "status": "published",
+      "content": "See sops_and_standards.yaml → qualification-levels article content.",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "departments.department",
+    "pk": 1,
+    "fields": {
+      "name": "Retail Store",
+      "slug": "retail-store"
+    }
+  },
+  {
+    "model": "departments.role",
+    "pk": 1,
+    "fields": {
+      "title": "Manager Consultant",
+      "department": 1,
+      "description": "Front-line sales and service role. Responsible for client consultation, coffee preparation, equipment sales, daily operations, and executing the DK service standards. The face of Dim Kava in every store interaction.",
+      "required_courses": []
+    }
+  },
+  {
+    "model": "onboarding.onboardingprogram",
+    "pk": 1,
+    "fields": {
+      "slug": "new-employee-onboarding-manager",
+      "title": "New Employee Onboarding — Manager Consultant",
+      "description": "The complete onboarding path for a new Manager-Consultant at Dim Kava. Structured across 3 months with weekly checkpoints and quizzes.",
+      "estimated_days": 90,
+      "is_active": true
+    }
+  },
+  {
+    "model": "gamification.badge",
+    "pk": 1,
+    "fields": {
+      "code": "ONBOARDING_DAY1",
+      "name": "First Day Done",
+      "description": "Completed the Day 1 onboarding module.",
+      "is_active": true,
+      "is_compliance": false
+    }
+  },
+  {
+    "model": "gamification.badge",
+    "pk": 2,
+    "fields": {
+      "code": "QUIZ_WEEK1_PASSED",
+      "name": "Week 1 — Knowledge Check",
+      "description": "Passed the Week 1 quiz with 70% or higher.",
+      "is_active": true,
+      "is_compliance": false
+    }
+  },
+  {
+    "model": "gamification.badge",
+    "pk": 3,
+    "fields": {
+      "code": "QUIZ_SHOP_SELLER",
+      "name": "Shop Seller Certified",
+      "description": "Passed the Shop Seller operations quiz with 80% or higher.",
+      "is_active": true,
+      "is_compliance": true
+    }
+  },
+  {
+    "model": "gamification.badge",
+    "pk": 4,
+    "fields": {
+      "code": "ONBOARDING_MONTH1",
+      "name": "Month 1 Complete",
+      "description": "Completed the full first month of onboarding.",
+      "is_active": true,
+      "is_compliance": false
+    }
+  },
+  {
+    "model": "gamification.badge",
+    "pk": 5,
+    "fields": {
+      "code": "ONBOARDING_COMPLETE",
+      "name": "Onboarding Graduate",
+      "description": "Completed the full 3-month onboarding programme.",
+      "is_active": true,
+      "is_compliance": false
+    }
+  },
+  {
+    "model": "gamification.badge",
+    "pk": 6,
+    "fields": {
+      "code": "COFFEE_SPECIALIST",
+      "name": "Dim Kava Coffee Specialist",
+      "description": "Demonstrated expertise in coffee knowledge across all qualification areas.",
+      "is_active": true,
+      "is_compliance": false
+    }
+  },
+  {
+    "model": "gamification.badge",
+    "pk": 7,
+    "fields": {
+      "code": "QUIZ_MASTER",
+      "name": "Quiz Master",
+      "description": "Scored 90% or higher on any quiz.",
+      "is_active": true,
+      "is_compliance": false
+    }
+  },
+  {
+    "model": "gamification.mission",
+    "pk": 1,
+    "fields": {
+      "code": "ONBOARDING_FIRST_MONTH",
+      "title": "Complete First Month Onboarding",
+      "description": "Work through Day 1 through Month 1 onboarding modules and pass all checkpoint quizzes.",
+      "is_mandatory": true,
+      "estimated_minutes": 2880,
+      "bonus_points": 200,
+      "completion_badge": 4,
+      "is_active": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "gamification.mission",
+    "pk": 2,
+    "fields": {
+      "code": "SHOP_SELLER_CERTIFIED",
+      "title": "Get Shop Seller Certified",
+      "description": "Study the Shop Seller module and pass the dedicated operations quiz.",
+      "is_mandatory": true,
+      "estimated_minutes": 120,
+      "bonus_points": 100,
+      "completion_badge": 3,
+      "is_active": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "gamification.mission",
+    "pk": 3,
+    "fields": {
+      "code": "FULL_ONBOARDING",
+      "title": "Complete Full 3-Month Onboarding",
+      "description": "Complete all onboarding modules and pass all quizzes through Month 3.",
+      "is_mandatory": false,
+      "estimated_minutes": 7200,
+      "bonus_points": 500,
+      "completion_badge": 5,
+      "is_active": true,
+      "order": 3
+    }
+  }
+]

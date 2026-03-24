@@ -1,0 +1,563 @@
+# Onboarding Training Plan — Manager / Sales Consultant
+# Source: план_обучение_стажера.docx
+# Django model: OnboardingModule + OnboardingStep
+# Usage: Load as fixture or seed data for the onboarding app
+
+# ---------------------------------------------------------------------------
+# STRUCTURE:
+#   OnboardingProgram "New Employee Onboarding — Manager Consultant"
+#     └── OnboardingModule (by day/week)
+#           └── OnboardingStep (individual topic)
+# ---------------------------------------------------------------------------
+
+program:
+  slug: new-employee-onboarding-manager
+  title: "New Employee Onboarding — Manager Consultant"
+  role: manager_consultant
+  estimated_days: 90
+  description: >
+    The complete onboarding path for a new Manager-Consultant at Dim Kava.
+    Covers company culture, coffee knowledge, sales skills, equipment,
+    and operational procedures. Structured across 3 months with weekly
+    checkpoints and quizzes.
+
+modules:
+
+  - slug: day-1
+    title: "Day 1 — Getting Started"
+    order: 1
+    estimated_minutes: 480
+    description: >
+      First day at work. Introduction to the team, store tour, first tasting,
+      and understanding what Dim Kava is.
+    steps:
+      - order: 1
+        title: "Team introduction and store tour"
+        content: >
+          Meet every team member. Get a full walk-through of the store:
+          sales floor, bar area, stock room, take-away zone. Understand
+          the layout before the day begins.
+      - order: 2
+        title: "Opening the store — morning prep"
+        content: >
+          Watch and participate in the morning setup: switching on lights,
+          cameras, TV, coffee machines, Shop Seller, Telegram.
+          Learn what needs to be done before opening.
+      - order: 3
+        title: "Daily task distribution"
+        content: >
+          Each team member receives tasks for the day. The new employee's
+          task: observe everything, ask questions, and be useful to the team.
+      - order: 4
+        title: "Morning tasting (degustation)"
+        content: >
+          Participate in the morning espresso tasting ritual. We taste
+          3 espresso cups during the day. Understand why: to control
+          quality, calibrate the grinder, and stay connected to the product.
+      - order: 5
+        title: "What is Dim Kava?"
+        content: >
+          Company overview:
+          - History and origin of Dim Kava
+          - Trademark and brand positioning
+          - General importer of Blaser coffee (Switzerland)
+          - Network of retail stores with tasting rooms, service centre, dealer network
+          - Team structure: employees, dealers, suppliers
+          - Product range: coffee, equipment, accessories, cleaning products
+          - Customer support at all stages (before and after sale)
+          - Where to buy Blaser coffee
+          - Our mission: cultivating espresso culture
+          - Career opportunities for employees
+          - Unified standards for the dealer network
+      - order: 6
+        title: "Manager conduct rules and ethics"
+        content: >
+          Core rules for behaviour on the floor:
+          - Professional appearance and dress code at all times
+          - Ethics in communication with clients and colleagues
+          - Cleanliness on the floor and behind the bar
+          - Disciplinary consequences for non-compliance
+          Note: these are non-negotiable standards, not suggestions.
+      - order: 7
+        title: "What is espresso?"
+        content: >
+          - Brief history of espresso
+          - How it is prepared (extraction, pressure, temperature)
+          - Health benefits and unique properties
+          - Why espresso is the foundation of everything we sell
+      - order: 8
+        title: "Coffee menu and quality criteria"
+        content: >
+          Study the full coffee menu. Learn the quality criteria for every
+          drink: correct crema, temperature, texture, volume, and timing.
+      - order: 9
+        title: "Coffee product range — intro"
+        content: >
+          - Monosorts vs. blends (Букеты): how to tell them apart by packaging colour
+          - Brief intro to Arabica vs. Robusta
+          - Who is a barista and what is their role
+      - order: 10
+        title: "Sales techniques and Dim Kava scripts"
+        content: >
+          - Smile and enthusiasm as a foundation
+          - DK loyalty card benefits and how to present them to clients
+          - Up-sale technique (higher price / larger size)
+          - Cross-sale technique (complementary products)
+      - order: 11
+        title: "End-of-day cleaning"
+        content: >
+          Actively participate in closing: washing coffee machines, holders,
+          grinder flasks, cleaning shelves and floor. Learn the closing
+          checklist.
+
+  - slug: days-2-3
+    title: "Days 2–3 — Coffee Knowledge"
+    order: 2
+    estimated_minutes: 960
+    description: >
+      Deep dive into coffee: growing, processing, roasting, grinding,
+      and preparation methods.
+    steps:
+      - order: 1
+        title: "Where and how green coffee grows"
+        content: >
+          - Coffee belt geography (equatorial regions)
+          - Climate, altitude, and soil conditions
+          - Coffee cherry cycle from flower to harvest
+      - order: 2
+        title: "Coffee tree species"
+        content: >
+          - Arabica: flavour profile, growing conditions, market share
+          - Robusta: strength, caffeine, foam quality
+          - Key differences in taste, growing, and use
+      - order: 3
+        title: "Blaser coffee brands and range at Dim Kava"
+        content: >
+          - Blaser Café (Switzerland) — our main brand
+          - Green coffee origins and blends represented
+          - How to navigate the product catalogue
+      - order: 4
+        title: "Roasting types and their effect on flavour"
+        content: >
+          - Light / medium / dark roast
+          - How roasting changes chemical composition
+          - Which roast works best for which preparation method
+          - How Blaser approaches roasting
+      - order: 5
+        title: "Coffee serving standards"
+        content: >
+          - How to present a cup to the client (holding from below, announcing the drink)
+          - Temperature, crema appearance, and garnish
+          - Phrase to use: "Your [drink name]! Enjoy!"
+      - order: 6
+        title: "Harvesting and processing methods"
+        content: >
+          - Picking methods: selective pick, strip pick, machine
+          - Processing: washed, natural, honey
+          - How processing affects the final flavour profile
+      - order: 7
+        title: "Grinding — basics"
+        content: >
+          - Grind sizes and which preparation method each suits
+          - Espresso / filter / French press / Turkish
+          - How to adjust grind on the machine
+      - order: 8
+        title: "Decaf coffee"
+        content: >
+          - How caffeine is removed from coffee beans
+          - Taste differences vs regular coffee
+          - Who it's for and how to recommend it
+      - order: 9
+        title: "Storing roasted coffee"
+        content: >
+          - Why packaging matters (valve, airtight)
+          - Ideal conditions: temperature, light, humidity
+          - Shelf life and what happens when coffee goes stale
+          - Store display rules: always neat, always within expiry date
+
+  - slug: week-1
+    title: "Week 1 — Core Skills"
+    order: 3
+    estimated_minutes: 2400
+    description: >
+      Building core barista and sales skills. Drink preparation, equipment
+      operation, coffee knowledge consolidation.
+    steps:
+      - order: 1
+        title: "Preparing drinks without milk"
+        content: >
+          - Espresso, lungo, americano, ristretto — differences and preparation
+          - Correct dose, extraction time (approx. 25–30 sec for espresso), volume
+          - How to check quality: 3 signs of a correct shot
+          - Difference between americano and lungo
+      - order: 2
+        title: "Espresso and cappuccino quality criteria"
+        content: >
+          - Espresso parameters: time, volume, grammes
+          - What correct crema looks like (colour, density, persistence)
+          - Milk texture for cappuccino: microfoam, temperature (60–65°C)
+          - What happens if milk is overheated
+          - How a barista checks their own drink quality
+      - order: 3
+        title: "Coffee knowledge — history"
+        content: >
+          - Country where coffee was first consumed (Ethiopia)
+          - First coffee house (Istanbul / Venice, debate)
+          - Espresso's Italian origin
+      - order: 4
+        title: "Coffee growing regions"
+        content: >
+          - Three main growing regions: Africa, Latin America, Asia-Pacific
+          - Conditions required: altitude, rainfall, temperature
+          - How region affects flavour (terroir concept)
+      - order: 5
+        title: "Green coffee classification"
+        content: >
+          - Classification parameters: screen size, defect count, cup score
+          - Specialty grade (SCA score 80+)
+          - What specialty means in practice
+      - order: 6
+        title: "Coffee machine — startup sequence"
+        content: >
+          Learn and memorise the exact startup sequence for the coffee machine.
+          This is mandatory knowledge — tested in every quiz.
+          See also: daily checklist step 2.
+      - order: 7
+        title: "Daily equipment testing"
+        content: >
+          - Why we test at least one machine daily
+          - What to check: pressure, temperature, extraction time, cleanliness
+          - How to record the test result and report in Telegram chat
+      - order: 8
+        title: "Loyalty card — client interaction"
+        content: >
+          - Ask every client about their card, every time, enthusiastically
+          - Explain benefits clearly: free cups, free packs, bonuses
+          - How to register a new card in Shop Seller
+          - When the card is free
+          - What a tasting cup means and how to track it
+      - order: 9
+        title: "Sales script — daily practice"
+        content: >
+          Practice the full sales script:
+          1. Greet client (loud and clear, eye contact, smile)
+          2. Identify needs (ask questions about preferences)
+          3. Present 3 coffee packages (let them smell)
+          4. Mention: Swiss roasting, specialty, hand-picked, SCA quality
+          5. Ask about loyalty card
+          6. Offer cross-sale or up-sale
+          7. Process order in Shop Seller
+          8. Farewell: "See you again! Next time try..."
+
+  - slug: week-2
+    title: "Week 2 — Drinks & Equipment"
+    order: 4
+    estimated_minutes: 2400
+    description: >
+      Milk-based drinks, Caotina product knowledge, Delonghi equipment basics.
+    steps:
+      - order: 1
+        title: "Milk-based espresso drinks"
+        content: >
+          - Latte, cappuccino, flat white, cortado — preparation differences
+          - Milk steaming technique: position, angle, temperature
+          - How to recognise correctly steamed milk
+          - Common mistakes and how to avoid them
+          - Correct temperatures: espresso 88–92°C, milk foam 60–65°C
+      - order: 2
+        title: "Caotina — product knowledge"
+        content: >
+          - What Caotina is: premium Swiss drinking chocolate
+          - How it differs from regular cocoa powder (quality, taste, texture)
+          - Available flavours
+          - Manufacturer's recommended serving (dosage per drink)
+          - Best milk pairing
+          - How to prepare for maximum flavour
+          - Other uses (baking, toppings)
+          - How to recommend it to clients who buy coffee
+      - order: 3
+        title: "Delonghi coffee machines — manual vs automatic"
+        content: >
+          - Manual (pump) machines: user controls brewing, barista skill required
+          - Automatic (bean-to-cup) machines: one-touch operation, client convenience
+          - Key differences in use, maintenance, and client profile
+          - How to explain the difference to a client
+          - Main Delonghi models in our range
+      - order: 4
+        title: "Up-sale and cross-sale — practice"
+        content: >
+          Practice real scenarios:
+          - Client buys coffee → offer Caotina, drip packs, or accessories
+          - Client buys a drink → offer a snack (Lomba bar, Choco Choco, cookies)
+          - Client buys equipment → offer coffee, accessories, cleaning products
+          - Client wants the cheapest option → present the next tier up and explain value
+      - order: 5
+        title: "Latte art — introduction"
+        content: >
+          - Basic latte art shapes: heart, rosette, tulip
+          - Technique: milk pouring angle and speed
+          - Practice daily and send photos to the team Telegram chat
+
+  - slug: week-3
+    title: "Week 3 — Specialty & Blaser Range"
+    order: 5
+    estimated_minutes: 2400
+    description: >
+      Specialty coffee concept, Blaser product catalogue, client consultation skills.
+    steps:
+      - order: 1
+        title: "What is specialty coffee?"
+        content: >
+          - SCA (Specialty Coffee Association) scoring system: 80+ points = specialty
+          - Parameters evaluated: aroma, flavour, aftertaste, acidity, body, uniformity
+          - Hand-picked harvest vs. machine picking
+          - Why specialty costs more and how to explain this to a client
+      - order: 2
+        title: "Monosorts vs. blends (Bukety)"
+        content: >
+          - Monosort: 100% single origin, single variety — terroir expression
+          - Blend (Buket): combination of origins/varieties — balance and consistency
+          - How to read the Blaser packaging colour system
+          - When to recommend monosort vs. blend
+      - order: 3
+        title: "Blaser product catalogue — practical study"
+        content: >
+          - Study at least 5 Blaser blends: name, origin, flavour notes
+          - Study at least 3 Blaser monosorts: name, origin, flavour notes
+          - Practice describing flavour notes to a client in simple language
+          - Example: "This one has notes of dark chocolate and almonds,
+            with low acidity — perfect if you prefer a rich, round cup"
+      - order: 4
+        title: "Coffee consultation — matching to client taste"
+        content: >
+          - How to ask the right questions: "Do you prefer strong or mild?"
+            "Milk or black?" "Fruity/bright or rich/deep?"
+          - How to explain mild vs. bright roast
+          - How to recommend the right grind for their equipment at home
+      - order: 5
+        title: "Client service practice — full script"
+        content: >
+          Run through the complete DK service standard from greeting to farewell.
+          Practise with a colleague playing the client role.
+          Checklist: greeting, needs identification, product presentation,
+          smell offer, loyalty card, up/cross-sale, payment, farewell phrase.
+
+  - slug: month-1
+    title: "Month 1 — Independent Work"
+    order: 6
+    estimated_minutes: 3600
+    description: >
+      Consolidation of all previous knowledge. Independent counter work,
+      Shop Seller operations, inventory, discounts, company structure.
+    steps:
+      - order: 1
+        title: "Independent counter work — order flow"
+        content: >
+          Full order flow without assistance:
+          1. Greet client
+          2. Identify needs
+          3. Enter order in Shop Seller
+          4. Scan DK loyalty card
+          5. Process payment (cash / card / transfer)
+          6. Issue receipt
+          7. Prepare order
+          8. Serve and farewell
+      - order: 2
+        title: "Closing the cash register"
+        content: >
+          - Actions after end-of-day cash close
+          - Filling in accounting sheets with Z-reports from all terminals
+          - Balancing the register (cash in till must match Shop Seller total)
+          - Recording cash expenses with mandatory description
+          - Closing the day in Shop Seller
+      - order: 3
+        title: "Bar cleaning — during the day"
+        content: >
+          - What is included in daytime bar maintenance
+          - Surfaces, coffee machine, grinder, take-away zone
+          - Product packaging alignment (always neat, always in place)
+      - order: 4
+        title: "Loyalty card — full knowledge"
+        content: >
+          - All DK loyalty card bonuses
+          - How to check client's current bonus balance
+          - When free cups are credited
+          - Gift card registration
+          - Lost card recovery procedure
+          - Tasting cup: what it is, how to redeem, how to write off in programme
+      - order: 5
+        title: "Shop Seller — sales operations"
+        content: >
+          Full knowledge of Shop Seller:
+          - Conducting a sale (full process)
+          - Entering beverage packaging for drink preparation
+          - Payment types: cash, card, bank transfer — each flow
+          - Issuing a receipt copy to client
+          - Handling overage receipts (mistakes)
+          - End-of-day close procedure
+          - What to do if programme total ≠ cash register total
+      - order: 6
+        title: "Inventory — daily and monthly"
+        content: >
+          - Daily inventory: what to count, how to record, what to note in comments
+          - Monthly inventory: full product count, quality check, expiry tracking
+          - Difference between daily and monthly procedures
+          - How to record correctly in Shop Seller
+      - order: 7
+        title: "Discounts — representative and dealer"
+        content: >
+          - How to calculate representative discount
+          - How to calculate dealer discount
+          - Who qualifies for discounted access/price in our store network
+          - Diplomat discount: amount and how to process it
+      - order: 8
+        title: "Company structure"
+        content: >
+          - Management structure: leadership, departments, stores
+          - How information flows: manager → team → store
+          - Where to find current promotions
+          - How to communicate promotions to clients
+      - order: 9
+        title: "Blaser coffee — flavour range"
+        content: >
+          - How to explain the difference between mild and bright roast
+          - Name and describe at least one Blaser blend from the catalogue
+          - Flavour notes vocabulary: chocolate, fruit, nuts, floral, caramel
+      - order: 10
+        title: "Goods receiving and display"
+        content: >
+          - What to check when receiving a delivery (quantity, expiry, condition)
+          - FIFO shelf display: new stock behind older stock
+          - Price tag rules: every product must have a price tag, verified against Shop Seller
+          - What to do if a price tag is missing
+
+  - slug: month-2
+    title: "Month 2 — Equipment Expertise"
+    order: 7
+    estimated_minutes: 3600
+    description: >
+      Deep knowledge of coffee equipment: machines, grinders, brands,
+      professional vs. home machines. Team work and reporting.
+    steps:
+      - order: 1
+        title: "Coffee equipment classification"
+        content: >
+          - Home (consumer) vs. professional (commercial) machines
+          - Manual (pump) vs. automatic (bean-to-cup) vs. capsule
+          - Key components: boiler, group head, pump, grinder (built-in or separate)
+      - order: 2
+        title: "Main components of a coffee machine"
+        content: >
+          - Boiler types: single / dual / thermoblock
+          - Group head (рабочая группа): what it does
+          - Pump: role in pressure (9 bar standard)
+          - Pressure gauge (барометр): how to read it
+          - Optimal brewing temperature: 88–92°C
+          - Siphon system: what it is and when it's used
+      - order: 3
+        title: "Materials — ABS plastic vs. polycarbonate"
+        content: >
+          - ABS plastic: lighter, less heat-resistant, lower cost
+          - Polycarbonate: more durable, better heat resistance, food-safe
+          - How to explain material quality to a client
+      - order: 4
+        title: "Controls and steam"
+        content: >
+          - Control types: mechanical, electronic, touchscreen
+          - Cappuccinatore (капучинатор): types — classic steam wand, Pannarello, automatic frother
+          - Quick steam (быстрый пар): what it means and why clients value it
+      - order: 5
+        title: "Descaling and cleaning"
+        content: >
+          - Descaling (от накипи): when and how, which products to use
+          - Coffee oil cleaning (от кофейного жира): daily and with chemical
+          - Why water filters matter: extending machine life, improving taste
+      - order: 6
+        title: "Grinders — types and components"
+        content: >
+          - Flat burrs vs. conical burrs: difference in grind consistency and heat
+          - Burr diameter: how it affects grind speed and quality
+          - Blade material: steel vs. titanium-coated
+          - Overheat and foreign object protection
+          - How to calibrate a professional grinder
+      - order: 7
+        title: "Brand knowledge — Delonghi, Nivona, Melitta"
+        content: >
+          - Delonghi: Italian brand, wide range, strong in consumer machines
+          - Nivona: German engineering, innovative features, long-term reliability
+          - Melitta: German heritage brand, pioneer in filter coffee, quality positioning
+          - How to compare brands when consulting a client
+      - order: 8
+        title: "Startup after downtime"
+        content: >
+          - What to check when starting equipment after extended inactivity
+          - Flushing, temperature stabilisation, test shot
+      - order: 9
+        title: "Professional machine — care rules"
+        content: >
+          - Daily backflush procedure
+          - Weekly chemical cleaning with report to Telegram
+          - Monthly deep clean
+          - Service escalation: when to call the service centre
+      - order: 10
+        title: "Client documentation at purchase"
+        content: >
+          - Training programme given to client at machine purchase
+          - Documents accompanying a shipment
+          - How to explain the difference between home and professional machine to a client
+      - order: 11
+        title: "Team organisation and reporting"
+        content: >
+          - How team responsibilities are distributed monthly
+          - What goes into the monthly report and how to calculate it
+          - Reporting format and submission schedule
+
+  - slug: month-3
+    title: "Month 3 — Expert Level & Mentoring"
+    order: 8
+    estimated_minutes: 3600
+    description: >
+      Advanced coffee knowledge, professional consultation, cupping,
+      client relationship skills, and introduction to mentoring.
+    steps:
+      - order: 1
+        title: "Advanced sales — helping clients decide faster"
+        content: >
+          - Structuring the consultation to lead naturally to a decision
+          - Asking the right 2–3 questions to narrow down quickly
+          - "Dream building": painting a picture of the client's ideal coffee moment
+          - Handling uncertainty: "Let me suggest you start with this..."
+      - order: 2
+        title: "Promoting espresso culture"
+        content: >
+          - What it means to "cultivate espresso culture"
+          - Active listening techniques: nodding, mirroring, asking follow-up
+          - Sharing coffee stories and interesting facts naturally in conversation
+      - order: 3
+        title: "Coffee cupping and tasting"
+        content: >
+          - Cupping methods: SCA standard, informal sensory evaluation
+          - Taste zones on the tongue: sweet (tip), sour (sides), bitter (back)
+          - Minimum 3 flavour descriptors every employee must know:
+            acidity, body, aftertaste
+          - How to describe coffee to a client without industry jargon
+      - order: 4
+        title: "Full equipment sale scenario"
+        content: >
+          - Up-sale and cross-sale examples for equipment (e.g., sell machine + grinder + coffee)
+          - How to explain value vs. price when client hesitates
+          - Documenting the sale: what paperwork accompanies a machine sale
+      - order: 5
+        title: "Mentoring new employees"
+        content: >
+          - The difference between training and mentoring
+          - How to help a newcomer settle in: patience, demonstration, encouragement
+          - What behaviours to model: punctuality, enthusiasm, cleanliness
+          - How to give constructive feedback to a junior colleague
+      - order: 6
+        title: "Self-development direction"
+        content: >
+          - Choose a development direction: barista skills, latte art, sales,
+            equipment expertise, or team leadership
+          - Set a personal goal for the next 3 months
+          - Discuss with manager and record in learning plan

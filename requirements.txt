@@ -1,0 +1,34 @@
+# Dim Kava Internal Learning Portal — Dependencies
+# Python 3.11+
+
+# Django
+Django>=4.2,<5.0
+
+# Database
+psycopg2-binary>=2.9
+
+# Environment & config
+python-decouple>=3.8
+django-environ>=0.11
+
+# Media & static
+Pillow>=10.0
+
+# Production
+gunicorn>=21.0
+whitenoise>=6.5
+dj-database-url>=2.1
+
+# Task queue (Celery) — stub for now
+celery>=5.3
+redis>=5.0
+
+# Security scanning
+detect-secrets>=1.4
+
+# YAML for content loading
+PyYAML>=6.0
+
+# Testing
+pytest>=7.0
+pytest-django>=4.5

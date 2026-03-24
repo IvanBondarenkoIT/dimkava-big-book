@@ -1,0 +1,346 @@
+# Standard Operating Procedures — Manager Consultant
+# Sources: ежедневные.docx, Еженедельные.docx, Ежемесячные.docx,
+#          Дк_стандарты_обслуживания.docx, Должностная_инструкция.docx
+# Django model: Article (knowledge base) + OnboardingStep checklist
+# Usage: Import as knowledge base articles in the wiki section.
+#        Also used as checklist references in daily/weekly/monthly onboarding steps.
+
+# ---------------------------------------------------------------------------
+# ARTICLES LIST:
+#   1. Daily Checklist — Morning to Close
+#   2. Weekly Checklist
+#   3. Monthly Checklist
+#   4. DK Service Standards (core behaviour rules)
+#   5. Job Description — Manager Consultant
+#   6. Professional Qualification Levels
+# ---------------------------------------------------------------------------
+
+articles:
+
+  - slug: daily-checklist
+    section: procedures
+    title: "Daily Checklist — Morning to Close"
+    status: published
+    content: |
+      This checklist covers every task that must be completed each working day,
+      from opening to closing. All items are mandatory. The shift is not considered
+      complete until every step is done.
+
+      ## Opening (Start of Day)
+
+      1. **Clock in** — Register your card/attendance in the programme at 9:30 or 15:45 (depending on shift).
+      2. **Switch on** — Lights, security camera, TV, coffee machine, Shop Seller, Telegram.
+      3. **Accept the shift register** — Cash in the till must match the previous evening's Shop Seller balance.
+      4. **Open the daily plan file** — Set your personal sales goal for the day. Fill it in at end of shift.
+
+      ## During the Day
+
+      5. **Consumables** — Replenish take-away zone supplies throughout the day. Empty and clean bins.
+      6. **Dust** — Wipe dust from all products and shelves.
+      7. **Price tags** — Check every product has a price tag that matches the Shop Seller price list.
+      8. **Stock control** — Monitor stock levels throughout the day so nothing runs out.
+      9. **Client workflow** (always follow this sequence):
+         - Greet the client warmly, identify their needs
+         - Enter the order in Shop Seller
+         - Scan the DK loyalty card
+         - Process payment
+         - Issue the receipt
+         - Prepare the order
+      10. **Loyalty card** — Ask every client about their card. Inform about current promotions and competitions.
+      11. **Coffee preparation** — Always prepare to standard. No exceptions.
+      12. **Latte art** — Apply latte art technique. Send photos of your work to the team Telegram chat.
+      13. **Display cleanliness** — Keep display cases, cabinets, fridge, and pastry bowls clean.
+      14. **Coffee packaging alignment** — Keep all coffee packaging neat and tidy throughout the day.
+      15. **Inventory** — Conduct the daily inventory correctly and completely.
+
+      ## Closing (End of Day)
+
+      16. **Cash register reconciliation** — Fill in the register (granite). Total must match the amount shown in the top-right corner of the register programme.
+      17. **Record cash expenses** — Enter all cash expense amounts in Shop Seller with a mandatory description of each item.
+      18. **Accounting sheets** — Fill in accounting sheets with Z-reports from all payment terminals at end of day.
+      19. **Close the day** — Run the end-of-day close procedure in Shop Seller.
+      20. **Clean the coffee machines** — Wash and clean machines, holders, grinder flasks. Clean shelves and floor.
+      21. **Secure and lock** — Switch off lights, set the alarm, lock the store according to the security procedure.
+
+      ---
+      > **Note:** Steps 16–18 relate to financial reporting and must never be skipped.
+      > Discrepancies between the register and Shop Seller must be flagged to the manager immediately.
+
+  - slug: weekly-checklist
+    section: procedures
+    title: "Weekly Checklist"
+    status: published
+    content: |
+      Recurring tasks that must be completed on specific days each week.
+
+      | Day | Task |
+      |---|---|
+      | **Monday** | Review new tasks assigned by the manager |
+      | **Monday** | Cross-check all price tags against the current price list |
+      | **Monday** | Place the weekly goods order |
+      | **Tuesday** | Chemical cleaning of coffee machine + send report to Telegram chat |
+      | **Thursday** | Chemical cleaning of coffee machine + send report to Telegram chat |
+      | **Friday** | Submit the completed weekly task sheet to the manager |
+
+      ---
+      **Chemical cleaning procedure:**
+      Run the full chemical cleaning cycle according to the machine manual.
+      After completion, take a photo of the cleaning confirmation screen or cycle summary
+      and send it to the team Telegram chat with the note "Tuesday/Thursday cleaning done — [store name]".
+
+      **Price tag check (Monday):**
+      Go through every product on the shelf. Compare the visible price tag to the current
+      price list in Shop Seller. If a discrepancy is found, update the tag immediately.
+      If a tag is missing, print and attach one before the store opens.
+
+  - slug: monthly-checklist
+    section: procedures
+    title: "Monthly Checklist"
+    status: published
+    content: |
+      Deep maintenance and audit tasks to be completed once per month.
+      Schedule these tasks at the end of the month during a quieter period.
+
+      | Task | Notes |
+      |---|---|
+      | **Clean and wipe display cabinets and shelves** | Wipe all surfaces of the product stand |
+      | **Defrost and clean the fridge** | Full defrost, interior cleaning |
+      | **Deep clean coffee machine groups with tablet** | Use manufacturer-approved cleaning tablet |
+      | **Wash grinder flasks and clean grinder blades** | Remove flasks fully, wash, dry, reattach. Clean blades carefully. |
+      | **Check product expiry dates** | Inspect every item on the shelf. Log in the expiry date journal. |
+      | **Full inventory** | Complete count of all products. Must be accurate and submitted to manager. |
+
+      ---
+      > **Expiry date log:** Use the dedicated expiry journal. Record product name, batch,
+      > expiry date, and any action taken (sold, removed, returned to stock).
+      > Products approaching expiry must be moved to the front of the display (FIFO rule).
+
+  - slug: dk-service-standards
+    section: service-standards
+    title: "DK Service Standards — Client Interaction Rules"
+    status: published
+    content: |
+      These are the core standards every Dim Kava employee must follow at all times.
+      They define how we present ourselves, talk to clients, and sell our products.
+      These are not suggestions — they are the standard.
+
+      ## Presence and Attitude
+
+      - We are always **smiling, making eye contact**, and ready to help with genuine enthusiasm.
+      - We **greet every client first** — loud and clear.
+      - We address **regular clients by name**.
+      - We work in **turbo mode** when the store is busy.
+
+      ## Starting the Conversation
+
+      - From the first moment, we **ask questions**. We identify needs and find out
+        their preferences regarding coffee, accessories, and machines.
+      - We introduce our coffee simply:
+        > "We carry Swiss-roasted coffee — pure varietals like 100% Arabica, 100% Robusta,
+        > and blends in different ratios."
+      - We **show 3 packages and invite the client to smell them immediately**.
+      - We always mention: **specialty beans, hand-picked, highest quality, balanced
+        acidity and exceptional aromas**.
+
+      ## Loyalty Card (Every Client, Every Time)
+
+      - Ask about the card **loudly and clearly, with enthusiasm**.
+      - Explain the benefits just as clearly.
+      - If the client doesn't want a card: *"That's a shame — you're missing out on a lot of bonuses and gifts!"*
+      - If the client has a card: **tell them their current bonus balance** and how many
+        more cups/packs they need until their next free reward. This drives additional sales.
+
+      ## Cross-Selling and Upselling
+
+      - Client buying **coffee** → offer Caotina. Ask if they've tried it. Show the aroma.
+        Explain the difference from regular cocoa.
+      - Client buying **a drink** → offer snacks: home-made cookies, Lomba bars
+        (gluten-free, sugar-free), Choco Choco chocolates.
+        > "We offer these because the client may not know the product exists — if we don't mention it, they won't buy it."
+      - Client buying **accessories** → offer coffee. Ask if they've tasted it. Show genuine interest.
+      - **Always use** up-sale and cross-sale techniques actively.
+
+      ## During the Sale
+
+      - We **never say "no"**. Instead: *"We have this instead..."*
+      - During promotions: find a way to **mention the promotion to every client**.
+        A good manager uses promotions as a tool to hit targets.
+      - When a client approaches while we're serving another: smile and say *"One moment, please?"*
+      - Ask every client if they're following **Dim Kava Georgia on Instagram and Facebook**.
+
+      ## Serving the Drink
+
+      - After preparing: announce the drink — *"Your espresso Lila Rosa! Enjoy!"*
+      - Hold the cup from below when handing it over.
+
+      ## Closing and Farewell
+
+      - Close every interaction warmly and clearly:
+        > "Have a great day, we look forward to seeing you again! I hope you enjoy it!
+        > Next time try [product]... Thank you! Thank you so much!"
+      - Do **not** use the expression "АРАПPИЗ" (or any local slang equivalent).
+
+      ## Staying on Track
+
+      - Monitor Telegram during the working day — both on the work computer and on your phone.
+      - Throughout the day, actively track progress against the daily sales plan.
+      - Discuss results with the manager at the end of the day.
+
+  - slug: job-description-manager-consultant
+    section: company-info
+    title: "Job Description — Manager Consultant"
+    status: published
+    content: |
+      ## About Dim Kava
+
+      DIM KAVA is a network of specialised stores selling Swiss-brand Blaser Café coffee
+      and coffee equipment from leading Italian manufacturers, with a tasting room and service centre.
+      Our mission: to spread espresso culture. Our goal: to maintain a leadership position in the coffee business.
+
+      The Manager Consultant is an integral part of the Dim Kava team and embodies the
+      company's core values: **teamwork, competence, leadership, uniqueness, espresso culture**.
+
+      The Manager is the face of Dim Kava in Georgia.
+
+      They are a key link in the coffee chain:
+      **plantation → harvest → processing → roasting → preparation → sale**.
+
+      ---
+
+      ## Core Functions
+
+      ### 1. Sales
+      Professional consultation and sale of products in the store. Pre-sale product preparation.
+      We care about every visitor and client. Our core goal: introduce them to the quality of
+      our products and make their life more enjoyable through what we sell.
+      **Active work to increase sales through competence, sales techniques, and client bonus systems.**
+
+      ### 2. Education & Development of the Client
+      The client is part of the Dim Kava community. With every cup, every visit, they learn
+      something new about coffee and how to prepare it correctly. We make it interesting.
+      Clients want to come back. Our clients understand coffee varieties and brewing methods.
+      They know what makes our coffee different.
+
+      ### 3. Self-Improvement
+      - Continuously improve sales technique skills.
+      - Deepen knowledge of Dim Kava products (how they work, brand history, values).
+      - Master barista technique and develop latte art skills.
+      - Stay current with coffee trends and news.
+      - Participate in championships and training events.
+      - Promote espresso culture.
+
+      ### 4. Professionalism — "Building the Dream"
+      - Use sales techniques, promotional programmes, and client offers professionally.
+      - Apply every available method to hit sales targets.
+      - Maintain professional records (inventory, reporting), submit reports on time.
+      - Know all products in the store and navigate the price list confidently.
+      - Communicative, active, and always smiling.
+      - Use professional coffee vocabulary.
+      - Know how to pique a client's interest — **"plant the seed of a dream"**.
+      - Maintain at least Category 1 qualification and continuously grow.
+      - Contribute to building a strong team by training new employees.
+
+      ### 5. Operations
+      - Follow store operating standards.
+      - Ensure high-quality, active sales through product knowledge, sales techniques,
+        cleanliness, quality product range, preparation skills, and professional client consultation.
+      - The store (coffee corner) is always clean and welcoming.
+
+      ---
+
+      ## Barista Function
+      Correctly prepare drinks according to standards. Never serve a sub-standard drink.
+      Introduce clients to different preparation methods. Give professional advice on coffee varieties.
+      > *Barista philosophy: start a good day with a good cup of coffee.
+      > A cup of coffee is the beginning of the path to selling coffee in packs — and eventually to selling a coffee machine.*
+
+      ## Active Sales Manager Function
+      An employee who is actively invested in increasing store sales.
+      Always meets the client with energy and readiness to help.
+
+  - slug: qualification-levels
+    section: training
+    title: "Professional Qualification Levels — Dim Kava"
+    status: published
+    content: |
+      Dim Kava has a structured qualification system. Every employee starts at the foundation
+      level and grows through demonstrated knowledge and practice. Advancement is confirmed
+      by passing the corresponding quiz and manager review.
+
+      ---
+
+      ## Qualification Areas
+
+      ### 1. Coffee Specialist — "Dim Kava Coffee Expert"
+      Knowledge of coffee from seed to cup:
+      - Coffee botany and growing conditions
+      - History of espresso and its value
+      - Espresso preparation technique to SCA standards
+      - Espresso-based drinks (espresso as the base)
+      - Roasting and flavour characteristics by roast level
+      - Grinding
+      - Alternative preparation methods
+      - Which coffee works best with which method
+      - Latte art
+
+      **Must know:**
+      - Coffee tree botany and cultivation
+      - Espresso history and value
+      - SCA espresso preparation standards
+      - All espresso-based drinks
+      - Roasting levels and their impact on flavour
+      - Grinding for each method
+      - Alternative brewing methods
+      - Coffee-method pairing
+      - Latte art fundamentals
+
+      ---
+
+      ### 2. Sales Techniques
+      Core sales skills applied consistently:
+      - **Contact** — eye contact, smile, open body language
+      - **Needs identification** — asking questions to understand client preferences
+      - **Presentation** — *"We carry Swiss-brand coffee..."* + show packaging + smell
+      - **Closing the sale** — always sell something; the client does not leave empty-handed
+      - **Farewell** — leaves the client wanting to return
+        > *"Looking forward to seeing you again! Next time try..."*
+      - **Cross-sale** — offer a complementary product alongside the main purchase
+      - **Up-sale** — suggest a higher-value option
+      - **Key factor:** information transfer → value communication.
+        The client understands why our product is worth it.
+
+      ---
+
+      ### 3. Product Value Communication
+      The ability to articulate the value of our products clearly:
+      - Know the values and positioning of Dim Kava as a company
+      - Know the values of each brand we carry (Blaser, Delonghi, Nivona, Melitta, Caotina, etc.)
+      - Communicate those values to clients in simple, natural language
+
+      ---
+
+      ### 4. Checklist Execution
+      Consistent fulfilment of all operational checklists:
+      - Daily checklist (every item, every day)
+      - Weekly tasks (chemical cleaning, price check, order, task submission)
+      - Monthly tasks (deep clean, inventory, expiry check)
+
+      ---
+
+      ### 5. Coffee Machine Knowledge
+      For stable equipment sales:
+      - Operating principles of manual and automatic machines
+      - Components and how they work
+      - Delonghi range: key models and their features
+      - When to recommend manual vs. automatic to a client
+      - Basic troubleshooting guidance
+
+      ---
+
+      ### 6. Service Standards
+      Mastery and consistent application of DK service rules:
+      - Greeting and farewell scripts
+      - Loyalty card — always asked, always explained
+      - Up-sale and cross-sale in every interaction
+      - Product presentations and sensory offers (smell the coffee)
+      - Compliance with appearance and behaviour standards
