@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}{{ course_title }}{% endblock %}
+{% block content %}
+<section class="mb-10">
+  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">{{ course_title }}</h1>
+</section>
+<ul class="space-y-4 max-w-2xl">
+  {% for lesson in lessons %}
+  <li>
+    <a href="{% url 'courses:lesson_detail' course_slug lesson.id %}" class="flex items-center gap-4 p-4 bg-surface-container-low rounded-lg hover:bg-surface-container-high no-underline text-inherit">
+      <span class="material-symbols-outlined text-primary">{% if lesson.completed %}check_circle{% else %}play_circle{% endif %}</span>
+      <span>{{ lesson.title }}</span>
+      <span class="text-sm text-on-surface-variant">{{ lesson.duration }}</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

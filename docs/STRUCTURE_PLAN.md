@@ -21,14 +21,19 @@ dimkava-big-book/
 │           ├── sops_and_standards.yaml
 │           ├── initial_data.json
 │           └── README.md
-├── docs/                     # Планирование и маппинг (новое)
+├── docs/                     # Планирование и маппинг
 │   ├── PROMPTS_MAPPING.md
-│   ├── STRUCTURE_PLAN.md     # этот файл
+│   ├── STRUCTURE_PLAN.md
 │   ├── GUIDING_QUESTIONS.md
 │   └── DEVELOPMENT_PLAN.md
-└── experiments/              # Эксперименты и разведка (новое)
-    ├── README.md             # Правила использования
-    └── (временные файлы)
+├── design/                   # Эталонные шаблоны — берём в Django
+│   ├── DESIGN_SYSTEM.md
+│   ├── README.md
+│   └── reference/*.html      # authentication, lesson_view, quiz_screen...
+└── experiments/
+    ├── stitch_lesson_view/   # Исходники Stitch
+    ├── stitch_output/        # React-прототип
+    └── README.md
 ```
 
 ---
@@ -37,20 +42,24 @@ dimkava-big-book/
 
 ```
 dimkava-big-book/
-├── input/                    # Исходники — не трогаем при автогенерации
+├── input/
 │   ├── prompts/
 │   └── hr docs/content/
 │
-├── docs/                     # Документация проекта
+├── docs/
 │   ├── PROMPTS_MAPPING.md
 │   ├── STRUCTURE_PLAN.md
 │   ├── GUIDING_QUESTIONS.md
 │   └── DEVELOPMENT_PLAN.md
 │
-├── experiments/              # Эксперименты
-│   ├── README.md
-│   ├── temp/                 # Временные файлы (gitignore опционально)
-│   └── scratch/              # Черновики, разведка
+├── design/                   # Эталонные шаблоны (Stitch)
+│   ├── DESIGN_SYSTEM.md
+│   └── reference/*.html      # Берём в Django, наполняем
+│
+├── experiments/
+│   ├── stitch_lesson_view/
+│   ├── stitch_output/
+│   └── README.md
 │
 ├── dimkava_portal/           # Django-проект (согласно base.md)
 │   ├── config/
@@ -93,6 +102,22 @@ dimkava-big-book/
 | Unit (модуль) | `apps/<app>/tests/` | `apps/gamification/tests/test_services.py` |
 | Интеграционные | `tests/` в корне (если нужны) | `tests/test_onboarding_flow.py` |
 | Фикстуры | `fixtures/` | `fixtures/initial_data.json` |
+
+---
+
+## Связь design/reference/ → Django templates
+
+| Эталон | Django templates |
+|--------|------------------|
+| authentication.html | accounts/login.html, signup |
+| lesson_view.html | courses/lesson_detail.html |
+| candidate_onboarding.html | onboarding/overview.html |
+| employee_dashboard.html | home.html, dashboard |
+| quiz_screen.html | courses/quiz.html (часть урока) |
+| knowledge_base.html | knowledge_base/section.html, article.html |
+| news_feed.html | news/list.html, news/detail.html |
+| admin_content_list.html | admin custom или HR UI |
+| desktop_dashboard_layout.html | base.html (layout) |
 
 ---
 

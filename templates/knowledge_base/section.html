@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ section_title }}{% endblock %}
+{% block content %}
+<section class="mb-10">
+  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">{{ section_title }}</h1>
+</section>
+<ul class="space-y-2 max-w-2xl">
+  {% for a in articles %}
+  <li><a href="{% url 'knowledge_base:article' section_slug a.slug %}" class="block p-4 bg-surface-container-low rounded-lg hover:bg-surface-container-high no-underline text-inherit">{{ a.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Dim Kava{% endblock %} | Internal Learning Portal</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "outline-variant": "#d8c2b5", "primary": "#8e4e14", "primary-container": "#f4a261",
+            "on-surface-variant": "#534439", "surface": "#fbf9f5", "surface-container-low": "#f5f3ef",
+            "surface-container-lowest": "#ffffff", "surface-container-high": "#eae8e4",
+            "surface-container-highest": "#e4e2de", "secondary": "#006a60", "secondary-container": "#8cf5e4",
+            "on-surface": "#1b1c1a"
+          },
+          fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Plus Jakarta Sans"] },
+          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .glass-nav { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .coffee-gradient { background: linear-gradient(135deg, #8e4e14 0%, #f4a261 100%); }
+    .nav-link-active { @apply bg-white shadow-sm text-primary; }
+    .nav-link { @apply flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-all font-headline text-sm font-semibold; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container/30 min-h-screen">
+  <!-- Sidebar -->
+  <aside class="fixed left-0 top-0 h-full flex flex-col p-6 z-40 bg-surface-container-low w-72 rounded-r-[2rem] shadow-2xl shadow-[#534439]/5">
+    <a href="{% url 'core:home' %}" class="flex items-center gap-4 mb-10 px-2 no-underline">
+      <div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+        <img alt="Avatar" class="w-full h-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex"/>
+      </div>
+      <div class="overflow-hidden">
+        <h3 class="font-headline font-bold text-on-surface truncate">{% block sidebar_user %}Alex{% endblock %}</h3>
+        <p class="font-body text-xs text-on-surface-variant truncate">Dim Kava Academy</p>
+      </div>
+    </a>
+    <nav class="flex flex-col gap-2 flex-grow">
+      <a href="{% url 'core:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}nav-link-active text-primary{% endif %}">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+        <span>Home</span>
+      </a>
+      <a href="{% url 'onboarding:overview' %}" class="nav-link {% if 'onboarding' in request.path %}nav-link-active text-primary{% endif %}">
+        <span class="material-symbols-outlined">person_add</span>
+        <span>Onboarding</span>
+      </a>
+      <a href="{% url 'courses:list' %}" class="nav-link {% if 'courses' in request.path %}nav-link-active text-primary{% endif %}">
+        <span class="material-symbols-outlined">local_library</span>
+        <span>Courses</span>
+      </a>
+      <a href="{% url 'knowledge_base:home' %}" class="nav-link {% if 'wiki' in request.path %}nav-link-active text-primary{% endif %}">
+        <span class="material-symbols-outlined">auto_stories</span>
+        <span>Knowledge</span>
+      </a>
+      <a href="{% url 'news:list' %}" class="nav-link {% if 'news' in request.path %}nav-link-active text-primary{% endif %}">
+        <span class="material-symbols-outlined">feed</span>
+        <span>News</span>
+      </a>
+      <a href="{% url 'departments:list' %}" class="nav-link {% if 'departments' in request.path %}nav-link-active text-primary{% endif %}">
+        <span class="material-symbols-outlined">business</span>
+        <span>Departments</span>
+      </a>
+      <a href="{% url 'analytics:dashboard' %}" class="nav-link {% if 'analytics' in request.path %}nav-link-active text-primary{% endif %} mt-auto">
+        <span class="material-symbols-outlined">admin_panel_settings</span>
+        <span>Analytics</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Top Bar -->
+  <header class="fixed top-0 left-72 right-0 z-30 glass-nav bg-surface/80 flex justify-between items-center px-8 py-4">
+    <div class="flex items-center gap-8 flex-grow">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">coffee</span>
+        <span class="font-headline font-extrabold text-xl text-primary tracking-tight">Dim Kava</span>
+      </div>
+      <form action="{% url 'search:results' %}" method="get" class="max-w-md w-full relative">
+        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+        <input name="q" class="w-full pl-12 pr-4 py-2.5 bg-surface-container-high border-none rounded-full text-sm focus:ring-2 focus:ring-primary/20" placeholder="Search lessons, guides..." type="text"/>
+      </form>
+    </div>
+    <div class="flex items-center gap-6">
+      <div class="flex items-center bg-surface-container-low rounded-full px-1 py-1">
+        <button class="px-3 py-1 text-[11px] font-bold bg-white rounded-full shadow-sm text-primary">EN</button>
+        <button class="px-3 py-1 text-[11px] font-bold text-on-surface-variant hover:text-primary">RU</button>
+        <button class="px-3 py-1 text-[11px] font-bold text-on-surface-variant hover:text-primary">KA</button>
+      </div>
+      <a href="{% url 'notifications:list' %}" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full ring-2 ring-surface"></span>
+      </a>
+      <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 hover:opacity-80 transition-opacity no-underline text-inherit">
+        <div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-lg">person</span>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="ml-72 pt-24 px-8 pb-12">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

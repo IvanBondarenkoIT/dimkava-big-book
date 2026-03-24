@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ lesson_title }}{% endblock %}
+{% block content %}
+<section class="mb-10">
+  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">{{ lesson_title }}</h1>
+  <p class="text-on-surface-variant">{{ duration }} • Lesson — dummy</p>
+</section>
+<div class="bg-surface-container-low rounded-lg p-8 max-w-3xl mb-20">
+  <p>Lesson content — dummy. Add video, text, Mark as done later.</p>
+</div>
+<footer class="fixed bottom-0 left-72 right-0 bg-surface/80 backdrop-blur-xl px-8 py-4 border-t border-outline-variant/10 z-30">
+  <div class="flex gap-4">
+    <button class="flex-1 py-3 coffee-gradient text-white rounded-full font-bold">Mark as done</button>
+    <button class="px-8 py-3 bg-secondary-container text-on-surface rounded-full font-bold">Next</button>
+  </div>
+</footer>
+{% endblock %}

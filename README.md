@@ -8,7 +8,9 @@
 dimkava-big-book/
 ├── input/           # Исходники: промпты, HR-контент
 ├── docs/            # Планирование, маппинг, вопросы
-├── experiments/     # Временные эксперименты
+├── design/          # Эталонные шаблоны из Stitch — берём в Django
+│   └── reference/   # HTML: authentication, lesson_view, quiz_screen...
+├── experiments/     # stitch_lesson_view, stitch_output (исходники)
 └── (dimkava_portal/ — появится при реализации)
 ```
 

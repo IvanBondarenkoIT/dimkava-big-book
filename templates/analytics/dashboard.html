@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Analytics{% endblock %}
+{% block content %}
+<section class="mb-10">
+  <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight mb-2">HR Analytics Dashboard</h1>
+  <p class="text-on-surface-variant">Dummy — add metrics later</p>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div class="p-6 bg-surface-container-low rounded-lg">
+    <p class="text-3xl font-black text-primary">{{ metrics.active_courses }}</p>
+    <p class="text-sm text-on-surface-variant">Active courses</p>
+  </div>
+  <div class="p-6 bg-surface-container-low rounded-lg">
+    <p class="text-3xl font-black text-primary">{{ metrics.onboarding_in_progress }}</p>
+    <p class="text-sm text-on-surface-variant">Onboarding in progress</p>
+  </div>
+  <div class="p-6 bg-surface-container-low rounded-lg">
+    <p class="text-3xl font-black text-primary">{{ metrics.completion_rate }}%</p>
+    <p class="text-sm text-on-surface-variant">Completion rate</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dim Kava Academy | Modern Barista Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#d8c2b5",
+              "primary": "#8e4e14",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed": "#261814",
+              "tertiary-fixed": "#f7ddd6",
+              "on-secondary-fixed": "#00201c",
+              "primary-container": "#f4a261",
+              "tertiary-container": "#c7b0a9",
+              "surface-bright": "#fbf9f5",
+              "surface-container-highest": "#e4e2de",
+              "tertiary-fixed-dim": "#dac1bb",
+              "surface-tint": "#8e4e14",
+              "inverse-primary": "#ffb780",
+              "on-surface-variant": "#534439",
+              "surface": "#fbf9f5",
+              "secondary-fixed": "#8cf5e4",
+              "primary-fixed-dim": "#ffb780",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-primary": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "on-error": "#ffffff",
+              "surface-container-low": "#f5f3ef",
+              "on-primary-fixed": "#2f1400",
+              "on-surface": "#1b1c1a",
+              "on-error-container": "#93000a",
+              "surface-variant": "#e4e2de",
+              "error": "#ba1a1a",
+              "on-background": "#1b1c1a",
+              "on-secondary-container": "#007166",
+              "on-primary-container": "#6f3800",
+              "inverse-on-surface": "#f2f0ed",
+              "on-tertiary-container": "#54433e",
+              "background": "#fbf9f5",
+              "on-secondary-fixed-variant": "#005048",
+              "surface-dim": "#dbdad6",
+              "surface-container-high": "#eae8e4",
+              "primary-fixed": "#ffdcc4",
+              "surface-container": "#efeeea",
+              "tertiary": "#6d5a55",
+              "on-primary-fixed-variant": "#6f3800",
+              "outline": "#867468",
+              "secondary-fixed-dim": "#6fd8c8",
+              "on-tertiary-fixed-variant": "#54433e",
+              "secondary-container": "#8cf5e4",
+              "inverse-surface": "#30312e",
+              "secondary": "#006a60"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .coffee-gradient {
+            background: linear-gradient(135deg, #8e4e14 0%, #f4a261 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container/30">
+<!-- Navigation Drawer (Sidebar) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 z-40 bg-[#f5f3ef] dark:bg-stone-900 h-screen w-72 rounded-r-[2rem] shadow-2xl shadow-[#534439]/5 transition-all duration-300 ease-in-out">
+<!-- Profile Header -->
+<div class="flex items-center gap-4 mb-10 px-2">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="User Barista Avatar" class="w-full h-full object-cover" data-alt="portrait of a professional male barista with a friendly smile wearing a canvas apron in a sunlit cafe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmTvjoE2uRzE-B2_VVS32VWjdHEyFLkfmPG14gBHvylzZgyXatwn_kL_IsXAX0S4fwEr7RXz6Y66J-0wBndLgs81IDLAMPJoIJMt4W7qFpe3wmqVJ3kHI5d_twgRDmRAqjGhhPLEY6CBOuq_ZLaS1CMVuumc3HOOHtN1klpJ7oCj9Uo02NgexnwKkD4eab7nUrdc-apyiVj4pYI4ntPilM_-oBl7jK8aKpbmVK1oWkbFsSLKJozK3h9m4ypsjr2CBOHkjOsh16KA5P"/>
+</div>
+<div class="overflow-hidden">
+<h3 class="font-headline font-bold text-on-surface truncate">Head Barista</h3>
+<p class="font-body text-xs text-on-surface-variant truncate">Dim Kava Academy</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2 flex-grow">
+<!-- Home (Active) -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white dark:bg-stone-800 text-[#8e4e14] dark:text-[#f4a261] shadow-sm font-headline text-sm font-semibold transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span>Home</span>
+</a>
+<!-- Onboarding -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#534439] dark:text-stone-400 font-headline text-sm font-semibold hover:bg-[#eae8e4] dark:hover:bg-stone-800 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">person_add</span>
+<span>Onboarding</span>
+</a>
+<!-- Courses -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#534439] dark:text-stone-400 font-headline text-sm font-semibold hover:bg-[#eae8e4] dark:hover:bg-stone-800 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">local_library</span>
+<span>Courses</span>
+</a>
+<!-- Knowledge -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#534439] dark:text-stone-400 font-headline text-sm font-semibold hover:bg-[#eae8e4] dark:hover:bg-stone-800 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span>Knowledge</span>
+</a>
+<!-- News -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#534439] dark:text-stone-400 font-headline text-sm font-semibold hover:bg-[#eae8e4] dark:hover:bg-stone-800 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">feed</span>
+<span>News</span>
+</a>
+<!-- Admin -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#534439] dark:text-stone-400 font-headline text-sm font-semibold hover:bg-[#eae8e4] dark:hover:bg-stone-800 transition-all duration-300 ease-in-out mt-auto" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span>Admin</span>
+</a>
+</nav>
+</aside>
+<!-- Top App Bar -->
+<header class="fixed top-0 left-72 right-0 z-30 bg-[#fbf9f5]/80 backdrop-blur-md flex justify-between items-center px-8 py-4 w-auto">
+<div class="flex items-center gap-8 flex-grow">
+<!-- Brand -->
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#8e4e14] dark:text-[#f4a261]">coffee</span>
+<span class="font-headline font-extrabold text-xl text-[#8e4e14] dark:text-[#f4a261] tracking-tight">Dim Kava</span>
+</div>
+<!-- Search Bar -->
+<div class="max-w-md w-full relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full pl-12 pr-4 py-2.5 bg-surface-container-high border-none rounded-full text-sm focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search lessons, brewing guides..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<!-- Language Switcher -->
+<div class="flex items-center bg-surface-container-low rounded-full px-1 py-1">
+<button class="px-3 py-1 text-[11px] font-bold bg-white rounded-full shadow-sm text-primary">EN</button>
+<button class="px-3 py-1 text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">RU</button>
+<button class="px-3 py-1 text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">KA</button>
+</div>
+<!-- Notification -->
+<button class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full ring-2 ring-surface"></span>
+</button>
+<!-- Profile Dropdown Trigger -->
+<button class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">person</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-72 pt-24 px-8 pb-12">
+<!-- Header Section -->
+<section class="mb-10">
+<h1 class="font-headline text-4xl font-extrabold text-on-surface tracking-tight mb-2">Hi, Alex</h1>
+<p class="text-on-surface-variant font-medium">Welcome back to your atelier. Your espresso profile is 85% complete.</p>
+</section>
+<!-- Recommended Hero Section (Asymmetric / Bento) -->
+<section class="grid grid-cols-12 gap-6 mb-12">
+<div class="col-span-12 lg:col-span-8 coffee-gradient rounded-lg p-8 relative overflow-hidden flex flex-col justify-between min-h-[320px]">
+<div class="relative z-10 max-w-md">
+<span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-wider text-white mb-4">Recommended Action</span>
+<h2 class="font-headline text-3xl font-bold text-white mb-4">Mastering the Light Roast: Extraction Dynamics</h2>
+<p class="text-white/90 text-sm leading-relaxed mb-6">Learn how to manipulate water temperature and grind distribution for vibrant acidity in Ethiopian single-origins.</p>
+<button class="bg-white text-primary px-6 py-3 rounded-full font-bold text-sm shadow-xl hover:scale-105 transition-transform">Continue Module</button>
+</div>
+<!-- Decorative Layer -->
+<div class="absolute right-0 bottom-0 top-0 w-1/2 opacity-20 pointer-events-none">
+<img alt="Coffee leaves pattern" class="w-full h-full object-cover" data-alt="abstract close-up of organic coffee cherry leaves with vibrant green texture and soft sunlight filtering through" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkqE5zb_c9vvvrXaqR93NaxcCedZPv_gws8weS-zTKTdY2U8fi5re6mlWtyUifhjq_ECPtgO3gZF0Cw5xpvszZfk46NiovuTu-jYgMoyGOinAUOgN_w4xMerLr8ib03Vl-wrlr_GzNfHpySFRY1caTVkkndDzx9G-btl8uMIDWLoBS2a_W6QWergAFLttSvXLY0c5sKUmU0y4oAZPQx_cSvDBGBm8OhUhiFJK9F5NtUBd82DgegMgnCWXUnPK3dZFMvAam9pxH9bb-"/>
+</div>
+</div>
+<!-- Streak/Progress Card -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-lg p-8 flex flex-col justify-center items-center text-center shadow-sm">
+<div class="relative w-32 h-32 mb-6">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary-container" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364.4" stroke-dashoffset="54.6" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline text-3xl font-extrabold text-on-surface">12</span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Day Streak</span>
+</div>
+</div>
+<h3 class="font-headline font-bold text-on-surface mb-2">Consistency pays off</h3>
+<p class="text-xs text-on-surface-variant">Keep brewing every day to maintain your Artisan Badge.</p>
+</div>
+</section>
+<!-- Course Grid -->
+<section>
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="font-headline text-2xl font-bold text-on-surface">Active Courses</h3>
+<p class="text-on-surface-variant text-sm">Pick up exactly where you left off</p>
+</div>
+<button class="text-primary font-bold text-sm hover:underline">View All Courses</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Course Card 1 -->
+<div class="group bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
+<div class="h-48 relative overflow-hidden">
+<img alt="Latte Art Basics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="professional barista pouring a precise heart-shaped latte art in a ceramic cup with glossy microfoam" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRT5oHBZrEId91EJz3SIOEYmLUg6oKiolcbbeUvnxnCGlPdfq76TSU-Zf0qnp2-sgmEj_5HlubQAzc6RIq8bLGYuxry2XsY5ntxstYAUx2rluMmVFu12Y_M9H6EYTMkK90erWk5lgXkdir39BOctD3jmZSLoE7t3dPPc0gzOGoqORNy7jzzJIDWL6Z5EErufebLmWwRle10tM7I89TYihBh57csC-e-y6kW6RA0kKed-16t0w4NMWavb7N4K0lO50RSOr0sOOzBj3l"/>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary">ADVANCED</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Latte Art Series</span>
+</div>
+<h4 class="font-headline font-bold text-lg text-on-surface mb-4">Precision Pouring: Advanced Rosetta</h4>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs">45m left</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">play_arrow</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="group bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
+<div class="h-48 relative overflow-hidden">
+<img alt="Espresso Science" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="close-up of a high-end espresso machine group head extraction with a rich dark crema flowing into a glass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVkV_SMtggyexjQOxDUB2PMDNaJvVFOXv8tASpD2d7OjHlcrTB3stGQexqNhVOmqTH29gSeDF-SYyS547ng8vFlCfYNZNLYoYT1oqE3G8H7rh-BOf7tRHl4aUkHXub9E9SShWkSO3Nok3BozDIA6VxDCSVWQC9lyAMMgK8XI49dReYevXGmDVgqZ9dTu9xmD54Y1zivOXl0K0wZ9oyQ5RO6VtlKGqes4u7ZlPOMdm-Pemqd2ksWbErKLlSiP-dZR5i1Be3DLriDlMK"/>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary">INTERMEDIATE</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Chemistry</span>
+</div>
+<h4 class="font-headline font-bold text-lg text-on-surface mb-4">Water Chemistry for Brewing</h4>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs">1h 20m left</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">play_arrow</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Course Card 3 -->
+<div class="group bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
+<div class="h-48 relative overflow-hidden">
+<img alt="Cupping Protocol" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="a curated setup of coffee cupping bowls and spoons on a marble table with natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxgRPCL2nm35pgxZt7J8rCv8zeORkpprlv4-NIe2dH_65iJbrF60xbfPuraenVWap9hPRiXceRaEBwEPL2RFqeXOV0pJIs_ZCW94X1RkJ9LLUqpjfpiFYn28dnpJz6sHSJafrSuNbwD39Hl5P_0LLegeXTV1BI7QqaGys2m0I4EvLb-gUk9Ju0DGbC4ICJ_K9Ickjx7IhVffYg8uf_BLJGgQEFwxIyUsrhLq7rt5uKcFUm0SgSvn0gMrqj4q2L8kPZKweE0fW_l520"/>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary">BEGINNER</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Sensory skills</span>
+</div>
+<h4 class="font-headline font-bold text-lg text-on-surface mb-4">SCA Cupping Protocol Basics</h4>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs">15m left</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">play_arrow</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

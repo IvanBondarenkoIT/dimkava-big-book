@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dim Kava | Content Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#d8c2b5",
+              "primary": "#8e4e14",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed": "#261814",
+              "tertiary-fixed": "#f7ddd6",
+              "on-secondary-fixed": "#00201c",
+              "primary-container": "#f4a261",
+              "tertiary-container": "#c7b0a9",
+              "surface-bright": "#fbf9f5",
+              "surface-container-highest": "#e4e2de",
+              "tertiary-fixed-dim": "#dac1bb",
+              "surface-tint": "#8e4e14",
+              "inverse-primary": "#ffb780",
+              "on-surface-variant": "#534439",
+              "surface": "#fbf9f5",
+              "secondary-fixed": "#8cf5e4",
+              "primary-fixed-dim": "#ffb780",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-primary": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "on-error": "#ffffff",
+              "surface-container-low": "#f5f3ef",
+              "on-primary-fixed": "#2f1400",
+              "on-surface": "#1b1c1a",
+              "on-error-container": "#93000a",
+              "surface-variant": "#e4e2de",
+              "error": "#ba1a1a",
+              "on-background": "#1b1c1a",
+              "on-secondary-container": "#007166",
+              "on-primary-container": "#6f3800",
+              "inverse-on-surface": "#f2f0ed",
+              "on-tertiary-container": "#54433e",
+              "background": "#fbf9f5",
+              "on-secondary-fixed-variant": "#005048",
+              "surface-dim": "#dbdad6",
+              "surface-container-high": "#eae8e4",
+              "primary-fixed": "#ffdcc4",
+              "surface-container": "#efeeea",
+              "tertiary": "#6d5a55",
+              "on-primary-fixed-variant": "#6f3800",
+              "outline": "#867468",
+              "secondary-fixed-dim": "#6fd8c8",
+              "on-tertiary-fixed-variant": "#54433e",
+              "secondary-container": "#8cf5e4",
+              "inverse-surface": "#30312e",
+              "secondary": "#006a60"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- Navigation Drawer (SideNav for Desktop) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full flex-col p-6 z-40 h-screen w-72 rounded-r-[2rem] bg-[#f5f3ef] dark:bg-stone-900 shadow-2xl shadow-[#534439]/5">
+<div class="flex items-center gap-3 mb-12 px-2">
+<span class="material-symbols-outlined text-[#8e4e14] dark:text-[#f4a261] text-3xl">coffee</span>
+<span class="text-[#8e4e14] dark:text-[#f4a261] font-bold text-xl tracking-tight">Dim Kava</span>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-[#534439] dark:text-stone-400 hover:bg-[#eae8e4] dark:hover:bg-stone-800" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-semibold text-sm">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-[#534439] dark:text-stone-400 hover:bg-[#eae8e4] dark:hover:bg-stone-800" href="#">
+<span class="material-symbols-outlined">person_add</span>
+<span class="font-semibold text-sm">Onboarding</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-[#534439] dark:text-stone-400 hover:bg-[#eae8e4] dark:hover:bg-stone-800" href="#">
+<span class="material-symbols-outlined">local_library</span>
+<span class="font-semibold text-sm">Courses</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-[#534439] dark:text-stone-400 hover:bg-[#eae8e4] dark:hover:bg-stone-800" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-semibold text-sm">Knowledge</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-[#534439] dark:text-stone-400 hover:bg-[#eae8e4] dark:hover:bg-stone-800" href="#">
+<span class="material-symbols-outlined">feed</span>
+<span class="font-semibold text-sm">News</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out bg-white dark:bg-stone-800 text-[#8e4e14] dark:text-[#f4a261] shadow-sm" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-semibold text-sm">Admin</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant/10 flex items-center gap-4 px-2">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-primary-container/20">
+<img class="w-full h-full object-cover" data-alt="portrait of a professional male head barista with a warm friendly expression in a modern coffee shop setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5OwPhtNwRPaHoXH4WgPpimokQGc37MdEPCICq_PyE1ZpqQTje_QF9LL5vAWIvIqZWSWoa-G3QbldRQ_eMfOxHB8lS-9pDOY5sMtZzXDz9rxzT4n4ohu27rLXMtGd8E7KQ-EdFFCLnV1SJgRXIHz_6Jvvui5IAp-oC3i5MhzyBqMraahLBu7gcT4A22KeuL74tQl2-CqqnZDja0_HqtWrM-0XHr_aGFTV5hUJ1OQrV-F3fTpxoO3LodPq_5FD-3so6pqJ7d8RdQOQn"/>
+</div>
+<div>
+<p class="text-[#8e4e14] dark:text-[#f4a261] font-bold text-sm">Head Barista</p>
+<p class="text-[#534439] dark:text-stone-400 text-xs">Dim Kava Academy</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-72 min-h-screen pb-24 md:pb-12">
+<!-- Top App Bar -->
+<header class="flex justify-between items-center px-6 py-6 md:py-8 w-full backdrop-blur-md bg-surface/80 sticky top-0 z-30">
+<div class="flex flex-col">
+<h1 class="text-2xl font-extrabold text-[#8e4e14] dark:text-[#f4a261] tracking-tight">Content Management</h1>
+<p class="text-on-surface-variant text-sm font-medium">HR Manager Dashboard</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">notifications</button>
+<button class="hidden md:flex items-center gap-2 bg-gradient-to-r from-primary to-primary-container text-white px-6 py-3 rounded-full font-bold shadow-lg hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+<span>Create New</span>
+</button>
+</div>
+</header>
+<section class="px-6 space-y-8 max-w-7xl mx-auto">
+<!-- Filters & Stats Bento Row -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Quick Search & Filters Card -->
+<div class="md:col-span-8 bg-surface-container-low p-6 rounded-lg flex flex-col md:flex-row gap-4 items-center">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface-container-lowest border-none rounded-xl focus:ring-2 focus:ring-primary/20 text-sm" placeholder="Search by title or author..." type="text"/>
+</div>
+<div class="flex gap-2 w-full md:w-auto">
+<select class="bg-surface-container-lowest border-none rounded-xl py-3 pl-4 pr-10 text-sm focus:ring-2 focus:ring-primary/20 cursor-pointer appearance-none w-full">
+<option>Department</option>
+<option>Brewing</option>
+<option>Operations</option>
+<option>Service</option>
+</select>
+<select class="bg-surface-container-lowest border-none rounded-xl py-3 pl-4 pr-10 text-sm focus:ring-2 focus:ring-primary/20 cursor-pointer appearance-none w-full">
+<option>Status</option>
+<option>Published</option>
+<option>Draft</option>
+<option>Archived</option>
+</select>
+</div>
+</div>
+<!-- Active Content Stat Card -->
+<div class="md:col-span-4 bg-secondary-container p-6 rounded-lg flex items-center justify-between relative overflow-hidden group">
+<div class="z-10">
+<p class="text-on-secondary-container/70 text-xs font-bold uppercase tracking-wider">Live Courses</p>
+<p class="text-on-secondary-container text-4xl font-extrabold mt-1">24</p>
+</div>
+<span class="material-symbols-outlined text-6xl text-on-secondary-container/10 absolute -right-2 -bottom-2 group-hover:scale-110 transition-transform duration-500">auto_stories</span>
+<div class="z-10 bg-white/40 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-on-secondary-container">+3 this month</div>
+</div>
+</div>
+<!-- Content List Table/Card Hybrid -->
+<div class="bg-surface-container-low rounded-lg overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50">
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Content Type</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Title</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Status</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Department</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1: Course -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<span class="text-xs font-bold text-primary">Course</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="font-bold text-sm text-on-surface">V60 Precision Brewing Mastery</p>
+<p class="text-xs text-on-surface-variant">Updated 2 days ago</p>
+</td>
+<td class="px-6 py-5">
+<span class="bg-secondary/10 text-secondary text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-tighter">Published</span>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant font-medium">Brewing Tech</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-1">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors" title="Preview">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors" title="Edit">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container/30 hover:text-error rounded-lg text-on-surface-variant transition-colors" title="Delete">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Article -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<span class="text-xs font-bold text-tertiary">Article</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="font-bold text-sm text-on-surface">Sustainable Sourcing: Ethiopia</p>
+<p class="text-xs text-on-surface-variant">Draft saved 4 hours ago</p>
+</td>
+<td class="px-6 py-5">
+<span class="bg-surface-container-highest text-on-surface-variant text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-tighter">Draft</span>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant font-medium">Supply Chain</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-1">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container/30 hover:text-error rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: News -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">newspaper</span>
+</div>
+<span class="text-xs font-bold text-on-primary-container">News</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="font-bold text-sm text-on-surface">New Academy Opening - Berlin</p>
+<p class="text-xs text-on-surface-variant">Scheduled for Oct 12</p>
+</td>
+<td class="px-6 py-5">
+<span class="bg-primary-container/20 text-on-primary-container text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-tighter">Scheduled</span>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant font-medium">Corporate</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-1">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container/30 hover:text-error rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Course -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<span class="text-xs font-bold text-primary">Course</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="font-bold text-sm text-on-surface">Milk Chemistry &amp; Latte Art</p>
+<p class="text-xs text-on-surface-variant">Updated 1 week ago</p>
+</td>
+<td class="px-6 py-5">
+<span class="bg-secondary/10 text-secondary text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-tighter">Published</span>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant font-medium">Hospitality</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-1">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container/30 hover:text-error rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination/Footer of list -->
+<div class="p-6 bg-surface-container-high/20 flex items-center justify-between border-t border-outline-variant/5">
+<p class="text-xs text-on-surface-variant font-medium">Showing 4 of 128 items</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full border border-outline-variant/20 flex items-center justify-center text-on-surface-variant hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded-full border border-outline-variant/20 flex items-center justify-center text-on-surface-variant hover:bg-white transition-colors text-xs font-bold">2</button>
+<button class="w-8 h-8 rounded-full border border-outline-variant/20 flex items-center justify-center text-on-surface-variant hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Promotion / Action Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-primary/5 p-8 rounded-lg relative overflow-hidden flex flex-col justify-center">
+<h3 class="text-xl font-bold text-primary mb-2">Automated Onboarding</h3>
+<p class="text-on-surface-variant text-sm max-w-sm mb-6">Schedule content chains for new baristas based on their start date.</p>
+<button class="self-start text-primary font-bold text-sm border-b-2 border-primary/20 hover:border-primary transition-all pb-1">Configure Workflow</button>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-primary/5 rotate-12">auto_fix_high</span>
+</div>
+<div class="bg-surface-container-low p-8 rounded-lg flex flex-col justify-center">
+<h3 class="text-xl font-bold text-on-surface mb-2">Internal Newsletters</h3>
+<p class="text-on-surface-variant text-sm max-w-sm mb-6">Compile your top articles into a monthly barista digest.</p>
+<button class="self-start px-6 py-2 bg-white text-on-surface font-bold text-sm rounded-full shadow-sm hover:shadow-md transition-all">Draft Digest</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Mobile FAB (Visible only on mobile) -->
+<button class="md:hidden fixed bottom-24 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center z-50 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">add</span>
+</button>
+<!-- Bottom Navigation Bar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 backdrop-blur-xl bg-[#fbf9f5]/80 dark:bg-stone-950/80 rounded-t-[2rem] shadow-[0_-4px_20px_0_rgba(142,78,20,0.05)]">
+<a class="flex flex-col items-center justify-center text-[#534439] dark:text-stone-400 hover:text-[#8e4e14]" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-wider mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#534439] dark:text-stone-400" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-wider mt-1">Learning</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#534439] dark:text-stone-400" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-wider mt-1">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f4a261] dark:bg-[#8e4e14] text-white rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-wider mt-1">Admin</span>
+</a>
+</nav>
+</body></html>

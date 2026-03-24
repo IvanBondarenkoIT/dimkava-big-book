@@ -2,6 +2,20 @@
 
 Эта папка предназначена для **временных файлов**, разведки и проверки идей.
 
+## stitch_lesson_view/
+
+Исходные HTML от Stitch (каждый экран в папке с `code.html`).  
+→ Копия в **`design/reference/`** — эталонные шаблоны. Берём их в Django и наполняем.
+
+## stitch_output/
+
+React-прототип из [dim-kava-education-visual](https://github.com/IvanBondarenkoIT/dim-kava-education-visual).  
+→ **DESIGN_SYSTEM_REFERENCE.md** — Tailwind-классы, компоненты.
+
+## Главное место для эталонов
+
+**`design/reference/`** — здесь хранятся шаблоны, которые переносим в Django.
+
 ## Правила
 
 1. **Временность** — всё, что здесь, считается временным.
