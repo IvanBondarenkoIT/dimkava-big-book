@@ -39,7 +39,8 @@
 5. **Фаза 4** — ✅ (KBSection, Article, NewsPost, load_articles, load_news)
 6. **Фаза 5** — ✅ (Department, Role, load_departments, learning path)
 7. **Фаза 6** — ✅ (Analytics dashboard, HR-only, real metrics)
-8. Далее: Notifications → Search → Gamification → Admin
+8. **Фаза 7** — ✅ (Notification model, topbar bell, signals)
+9. Далее: Search → Gamification → Admin
 
 ---
 

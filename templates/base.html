@@ -8,58 +8,106 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="{% static 'css/tailwind.css' %}?v=4" fetchpriority="high"/>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <!-- optional/block + preload: fonts load earlier, less jerk when icons appear -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2" as="font" type="font/woff2" crossorigin/>
+  <link rel="preload" href="https://fonts.gstatic.com/s/materialsymbolsoutlined/v321/kJEPBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzBwG-RpA6RzaxHMPdY40KH8nGzv3fzfVJO1USv9ls.woff2" as="font" type="font/woff2" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=optional" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/>
+  <style>
+    /* Hide disclosure arrow on details/summary so hamburger matches other icon buttons */
+    nav details summary { list-style: none; }
+    nav details summary::-webkit-details-marker { display: none; }
+    nav details summary::marker { content: ""; display: none; }
+    /* Fix layout shift: icon buttons reserve space before Material Symbols font loads */
+    nav .nav-icon-btn { width: 2.5rem; height: 2.5rem; min-width: 2.5rem; min-height: 2.5rem; }
+    nav .nav-icon-btn .material-symbols-outlined { font-size: 1.25rem; }
+  </style>
 </head>
 <body class="bg-surface text-on-surface-variant selection:bg-primary-container/30 antialiased min-h-screen flex flex-col">
   <!-- Navbar — эталон: dim-kava-education-visual Navbar.tsx -->
-  <nav class="glass-nav sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
-    <a href="{% url 'core:home' %}" class="flex items-center gap-2 no-underline text-inherit">
-      <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white">
-        <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">coffee</span>
+  <nav class="glass-nav sticky top-0 z-50 px-4 md:px-6 py-4 flex flex-nowrap items-center justify-between gap-2 md:gap-4 relative">
+    <a href="{% url 'core:home' %}" class="flex items-center gap-2 no-underline text-inherit flex-shrink-0">
+      <div class="w-10 h-10 min-w-10 min-h-10 bg-primary rounded-xl flex items-center justify-center text-white shrink-0">
+        <span class="material-symbols-outlined text-white text-2xl" style="font-variation-settings: 'FILL' 1;">coffee</span>
       </div>
-      <span class="font-bold text-xl tracking-tight text-primary">Dim Kava</span>
+      <span class="font-bold text-sm sm:text-xl tracking-tight text-primary whitespace-nowrap">DimKava</span>
     </a>
 
+    <!-- Desktop nav -->
     <div class="hidden md:flex items-center gap-6">
-      <a href="{% url 'core:home' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if request.resolver_match.url_name == 'home' %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+      <a href="{% url 'core:home' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if request.resolver_match.url_name == 'home' %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a href="{% url 'courses:list' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'courses' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+      <a href="{% url 'courses:list' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'courses' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">menu_book</span>
         <span>Courses</span>
       </a>
-      <a href="{% url 'onboarding:overview' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'onboarding' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+      <a href="{% url 'onboarding:overview' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'onboarding' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">person_add</span>
         <span>Onboarding</span>
       </a>
-      <a href="{% url 'knowledge_base:home' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'wiki' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+      <a href="{% url 'knowledge_base:home' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'wiki' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">auto_stories</span>
         <span>Knowledge</span>
       </a>
-      <a href="{% url 'news:list' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'news' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+      <a href="{% url 'news:list' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'news' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">feed</span>
         <span>News</span>
       </a>
-      <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary {% if 'profile' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
+      <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'profile' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">person</span>
         <span>Profile</span>
       </a>
     </div>
 
-    <div class="flex items-center gap-4">
-      <a href="{% url 'search:results' %}" class="p-2 rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors">
+    <!-- Mobile menu (hamburger → dropdown). Styled like search/notifications for consistency. -->
+    <details class="md:hidden">
+      <summary class="nav-icon-btn flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors cursor-pointer" aria-label="Open menu">
+        <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+      </summary>
+      <div class="absolute left-0 right-0 top-full mt-1 mx-4 py-3 px-4 rounded-xl bg-surface border border-outline-variant/20 shadow-xl flex flex-col gap-1 z-50">
+        <a href="{% url 'core:home' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if request.resolver_match.url_name == 'home' %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
+          <span class="material-symbols-outlined text-xl">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="{% url 'courses:list' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'courses' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
+          <span class="material-symbols-outlined text-xl">menu_book</span>
+          <span>Courses</span>
+        </a>
+        <a href="{% url 'onboarding:overview' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'onboarding' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
+          <span class="material-symbols-outlined text-xl">person_add</span>
+          <span>Onboarding</span>
+        </a>
+        <a href="{% url 'knowledge_base:home' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'wiki' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
+          <span class="material-symbols-outlined text-xl">auto_stories</span>
+          <span>Knowledge</span>
+        </a>
+        <a href="{% url 'news:list' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'news' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
+          <span class="material-symbols-outlined text-xl">feed</span>
+          <span>News</span>
+        </a>
+        <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'profile' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
+          <span class="material-symbols-outlined text-xl">person</span>
+          <span>Profile</span>
+        </a>
+      </div>
+    </details>
+
+    <div class="flex items-center gap-1.5 sm:gap-2 md:gap-4 flex-shrink-0 min-w-0">
+      <a href="{% url 'search:results' %}" class="nav-icon-btn flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors shrink-0" aria-label="Search" title="Search">
         <span class="material-symbols-outlined">search</span>
       </a>
       {% if user.is_authenticated %}
+        <a href="{% url 'notifications:list' %}" class="nav-icon-btn relative flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors shrink-0" title="Notifications">
+          <span class="material-symbols-outlined">notifications</span>
+          {% if unread_notifications_count %}
+          <span class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">{{ unread_notifications_count }}</span>
+          {% endif %}
+        </a>
         <a href="{% url 'accounts:profile' %}" class="w-10 h-10 rounded-full bg-primary-container/20 border border-primary-container/30 overflow-hidden flex-shrink-0">
           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ user.username }}" alt="Avatar" class="w-full h-full object-cover"/>
         </a>
-        <form method="post" action="{% url 'logout' %}" class="inline">
-          {% csrf_token %}
-          <button type="submit" class="text-sm text-on-surface-variant/60 hover:text-primary">Logout</button>
-        </form>
       {% else %}
         <a href="{% url 'login' %}" class="btn-primary py-2 px-4 text-sm">Login</a>
       {% endif %}

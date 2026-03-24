@@ -6,8 +6,12 @@
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ user_name|default:"Alex" }}</h1>
     <p class="text-on-surface-variant/70 mt-2">{{ role|default:"Head Barista" }} — Dim Kava Academy</p>
   </header>
-  <div class="card-atelier">
+  <div class="card-atelier space-y-6">
     <p class="text-on-surface-variant">Profile page — dummy. Add avatar, settings, stats later.</p>
+    <form method="post" action="{% url 'logout' %}" class="pt-4 border-t border-outline-variant/10">
+      {% csrf_token %}
+      <button type="submit" class="text-sm text-on-surface-variant/60 hover:text-primary transition-colors">Logout</button>
+    </form>
   </div>
 </div>
 {% endblock %}

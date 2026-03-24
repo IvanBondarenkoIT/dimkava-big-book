@@ -2,16 +2,32 @@
 {% block title %}Notifications{% endblock %}
 {% block content %}
 <div class="space-y-8">
-  <header>
+  <header class="flex items-center justify-between flex-wrap gap-4">
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Notifications</h1>
+    {% if unread_count %}
+    <form method="post" action="{% url 'notifications:mark_all_read' %}">
+      {% csrf_token %}
+      <button type="submit" class="text-sm text-on-surface-variant/70 hover:text-primary">Mark all as read</button>
+    </form>
+    {% endif %}
   </header>
   <div class="space-y-2 max-w-2xl">
     {% for n in notifications %}
-    <div class="card-atelier {% if not n.read %}border-l-4 border-primary{% endif %}">
-      <p class="text-on-surface">{{ n.text }}</p>
-      <p class="text-xs text-on-surface-variant/70 mt-1">{{ n.date }}</p>
-    </div>
+    <a href="{% if n.link %}{% url 'notifications:mark_read' n.pk %}{% else %}#{% endif %}" class="block no-underline text-inherit {% if n.link %}hover:opacity-90{% endif %}">
+      <div class="card-atelier {% if not n.is_read %}border-l-4 border-primary{% endif %}">
+        <p class="text-on-surface">{{ n.text }}</p>
+        <p class="text-xs text-on-surface-variant/70 mt-1">{{ n.created_at|timesince }} ago</p>
+      </div>
+    </a>
+    {% empty %}
+    <p class="text-on-surface-variant">No notifications yet.</p>
     {% endfor %}
   </div>
+  {% if page_obj and page_obj.has_other_pages %}
+  <nav class="flex gap-2">
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">Previous</a>{% endif %}
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Next</a>{% endif %}
+  </nav>
+  {% endif %}
 </div>
 {% endblock %}

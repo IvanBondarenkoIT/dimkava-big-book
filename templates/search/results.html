@@ -1,13 +1,64 @@
 {% extends 'base.html' %}
-{% block title %}Search{% endblock %}
+{% block title %}Search{% if query %} — {{ query }}{% endif %}{% endblock %}
 {% block content %}
-<div class="space-y-8">
+<div class="space-y-6">
   <header>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Search results</h1>
-    <p class="text-on-surface-variant/70 mt-2">Query: "{{ query }}" — dummy</p>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Search</h1>
+    <form action="{% url 'search:results' %}" method="get" class="mt-4 max-w-xl">
+      <div class="flex gap-2 rounded-xl bg-surface-container-high p-2">
+        <span class="material-symbols-outlined text-on-surface-variant/50 self-center">search</span>
+        <input type="search" name="q" value="{{ query }}" placeholder="Search courses, articles, news…"
+          class="flex-1 min-w-0 bg-transparent text-on-surface placeholder:text-on-surface-variant/50 border-0 focus:outline-none focus:ring-0"
+          autofocus/>
+      </div>
+    </form>
+    {% if query %}
+      <p class="text-on-surface-variant/70 mt-4">{{ results|length }} result{{ results|length|pluralize }} for "{{ query }}"</p>
+    {% endif %}
   </header>
-  <div class="card-atelier max-w-2xl">
-    <p class="text-on-surface-variant">No results yet. Add search logic later.</p>
+
+  {% if query %}
+  <div class="flex flex-wrap gap-2">
+    {% for chip_type, label in filter_chips %}
+      <a href="{% url 'search:results' %}?q={{ query|urlencode }}&type={{ chip_type }}"
+         class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-colors
+                {% if type_filter == chip_type %}bg-primary text-white{% else %}bg-surface-container-high text-on-surface-variant/80 hover:bg-surface-container{% endif %}">
+        {{ label }}
+      </a>
+    {% endfor %}
   </div>
+
+  <div class="space-y-6">
+    {% if results %}
+      {% for result in results %}
+        <a href="{{ result.url }}" class="block p-4 rounded-xl bg-surface-container-low/50 hover:bg-surface-container border border-outline-variant/10 hover:border-primary/20 transition-colors group">
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary shrink-0 mt-0.5" aria-hidden="true">
+              {% if result.type == 'course' %}menu_book{% elif result.type == 'lesson' %}play_circle{% elif result.type == 'article' %}article{% elif result.type == 'news' %}feed{% elif result.type == 'role' %}badge{% else %}description{% endif %}
+            </span>
+            <div class="min-w-0 flex-1">
+              <span class="text-xs font-medium text-primary uppercase tracking-wider">{{ result.type }}</span>
+              <h3 class="font-semibold text-on-surface mt-0.5 group-hover:text-primary transition-colors">{{ result.title }}</h3>
+              {% if result.snippet %}
+                <p class="text-sm text-on-surface-variant/80 mt-1 line-clamp-2">{{ result.snippet }}</p>
+              {% endif %}
+              {% if result.department or result.tags %}
+                <div class="flex flex-wrap gap-2 mt-2">
+                  {% if result.department %}<span class="text-xs px-2 py-0.5 rounded bg-outline-variant/20">{{ result.department }}</span>{% endif %}
+                  {% for tag in result.tags %}{% if tag %}<span class="text-xs px-2 py-0.5 rounded bg-primary/10 text-primary">{{ tag }}</span>{% endif %}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant/40 group-hover:text-primary shrink-0">arrow_forward</span>
+          </div>
+        </a>
+      {% endfor %}
+    {% else %}
+      <div class="card-atelier max-w-2xl">
+        <p class="text-on-surface-variant">No results for "{{ query }}". Try different keywords.</p>
+      </div>
+    {% endif %}
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

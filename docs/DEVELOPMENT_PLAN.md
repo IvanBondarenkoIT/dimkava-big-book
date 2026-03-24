@@ -109,26 +109,26 @@
 
 ---
 
-## Фаза 7: Notifications (base.md Step 7)
+## Фаза 7: Notifications (base.md Step 7) ✅
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 7.1 | Notification model | notifications/ | — |
-| 7.2 | Topbar bell + unread count | templates/components/ | — |
-| 7.3 | Notifications page | notifications/views | — |
-| 7.4 | Trigger logic (new course, deadline, badge) | notifications/ | unit |
+| 7.1 | Notification model | notifications/ | smoke ✅ |
+| 7.2 | Topbar bell + unread count | base.html, context_processors | ✅ |
+| 7.3 | Notifications page | notifications/views | smoke ✅ |
+| 7.4 | Trigger logic (lesson_completed, quiz_passed) | notifications/signals | unit ✅ |
 
 **Checkpoint:** Уведомления создаются и отображаются.
 
 ---
 
-## Фаза 8: Global search (base.md Step 8)
+## Фаза 8: Global search (base.md Step 8) ✅
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 8.1 | SearchResult dataclass, global_search() | search/selectors.py | unit |
-| 8.2 | Search bar in topbar | templates/ | — |
-| 8.3 | Search results page | search/views | — |
+| 8.1 | SearchResult dataclass, global_search() | search/selectors.py | unit ✅ |
+| 8.2 | Search bar in topbar | templates/base.html | — |
+| 8.3 | Search results page | search/views, templates | — |
 
 **Checkpoint:** Поиск по курсам, статьям, новостям работает.
 

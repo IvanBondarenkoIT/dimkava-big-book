@@ -121,6 +121,17 @@ class PageSmokeTests(TestCase):
         r = self.client.get(reverse('notifications:list'))
         self.assertEqual(r.status_code, 200)
 
+    def test_notifications_mark_read_redirects(self):
+        from apps.notifications.models import Notification
+        n = Notification.objects.create(
+            user=self.user, type='news', text='Test',
+            link='/courses/', is_read=False
+        )
+        r = self.client.get(reverse('notifications:mark_read', kwargs={'pk': n.pk}))
+        self.assertEqual(r.status_code, 302)
+        n.refresh_from_db()
+        self.assertTrue(n.is_read)
+
     def test_search_results(self):
         r = self.client.get(reverse('search:results'))
         self.assertEqual(r.status_code, 200)
