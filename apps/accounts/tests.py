@@ -24,3 +24,22 @@ class CreateDefaultUsersTest(TestCase):
         user = User.objects.get(username='admin@test.dimkava.ge')
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.check_password('adminpass123'))
+
+
+class LoginViewTest(TestCase):
+    """Login page behavior tests."""
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='employee@test.dimkava.ge',
+            email='employee@test.dimkava.ge',
+            password='correct-pass-123',
+        )
+
+    def test_invalid_credentials_show_error_message(self):
+        response = self.client.post('/login/', {
+            'username': self.user.username,
+            'password': 'wrong-pass',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Please enter a correct username and password')
