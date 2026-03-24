@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Leaderboard{% endblock %}
+{% block content %}
+<div class="space-y-8 max-w-2xl">
+  <header>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Leaderboard</h1>
+  </header>
+  <ol class="space-y-2">
+    {% for u in top_users %}
+    <li class="flex justify-between items-center card-atelier py-3">
+      <span class="font-medium text-on-surface">{{ forloop.counter }}. {{ u.display_name }}</span>
+      <span class="text-on-surface-variant">{{ u.total_points }} pts · L{{ u.level }}</span>
+    </li>
+    {% empty %}
+    <li class="text-on-surface-variant">No players yet.</li>
+    {% endfor %}
+  </ol>
+  {% if current_user_entry %}
+  <div class="card-atelier border-primary/30">
+    <p class="text-sm font-semibold text-primary">You</p>
+    <p class="text-on-surface">{{ current_user_entry.display_name }} — #{{ current_user_entry.rank }} · {{ current_user_entry.total_points }} pts</p>
+  </div>
+  {% endif %}
+  <p><a href="{% url 'gamification:dashboard' %}" class="text-primary font-semibold hover:underline">Back to progress</a></p>
+</div>
+{% endblock %}

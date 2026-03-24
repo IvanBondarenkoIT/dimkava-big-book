@@ -134,18 +134,20 @@
 
 ---
 
-## Фаза 9: Gamification (gamification.md)
+## Фаза 9: Gamification (gamification.md) ✅
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 9.1 | Gamification app, models | gamification/ | — |
-| 9.2 | services: award_points, award_badge, update_mission_progress | gamification/services.py | unit |
-| 9.3 | selectors: dashboard context, leaderboard | gamification/selectors.py | unit |
+| 9.1 | Gamification app, models | gamification/ | unit ✅ |
+| 9.2 | services: award_points, award_badge, update_mission_progress | gamification/services.py | unit ✅ |
+| 9.3 | selectors: dashboard context, leaderboard | gamification/selectors.py | — |
 | 9.4 | Signals: connect to courses, onboarding | gamification/signals.py | — |
 | 9.5 | Dashboard, leaderboard pages | gamification/views | — |
-| 9.6 | Badge widget, progress in templates | templates/components/ | — |
+| 9.6 | Badge widget, progress in templates | templates/gamification/ | — |
 
 **Checkpoint:** Очки, бейджи, миссии, лидерборд работают.
+
+> Миссии: базовые модели; шаги и прогресс по `module_slug`. Сигналы: очки за урок и квиз. Виджет бейджей на главной — в backlog.
 
 ---
 

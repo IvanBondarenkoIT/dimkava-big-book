@@ -34,4 +34,5 @@ urlpatterns = [
     path('analytics/', include('apps.analytics.urls')),
     path('notifications/', include('apps.notifications.urls')),
     path('search/', include('apps.search.urls')),
+    path('gamification/', include('apps.gamification.urls')),
 ]

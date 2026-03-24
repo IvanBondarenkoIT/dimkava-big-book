@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Gamification{% endblock %}
+{% block content %}
+<div class="space-y-8 max-w-4xl">
+  <header>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Your progress</h1>
+    <p class="text-on-surface-variant/70 mt-2">Level {{ level_progress.current_level }} — {{ level_progress.level_name }}</p>
+  </header>
+  <div class="card-atelier">
+    <p class="text-sm text-on-surface-variant">Points: <span class="font-bold text-on-surface">{{ profile.total_points }}</span></p>
+    <div class="mt-2 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+      <div class="h-full bg-primary rounded-full transition-all" style="width: {{ level_progress.percent_to_next_level }}%"></div>
+    </div>
+    <p class="text-xs text-on-surface-variant/60 mt-2">Rank #{{ leaderboard_rank }}</p>
+  </div>
+  {% if recent_badges %}
+  <div>
+    <h2 class="text-xl font-bold text-on-surface mb-4">Recent badges</h2>
+    <ul class="space-y-2">
+      {% for ub in recent_badges %}
+      <li class="text-on-surface-variant">{{ ub.badge.name }} — {{ ub.awarded_at|date:"M j, Y" }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% if missions %}
+  <div>
+    <h2 class="text-xl font-bold text-on-surface mb-4">Missions</h2>
+    <ul class="space-y-3">
+      {% for item in missions %}
+      <li class="card-atelier py-3">
+        <span class="font-semibold text-on-surface">{{ item.mission.title }}</span>
+        <span class="text-sm text-on-surface-variant"> — {{ item.steps_done }}/{{ item.steps_total }} steps</span>
+        {% if item.progress.is_completed %}<span class="text-primary text-sm">Done</span>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  <p><a href="{% url 'gamification:leaderboard' %}" class="text-primary font-semibold hover:underline">Leaderboard</a></p>
+</div>
+{% endblock %}
