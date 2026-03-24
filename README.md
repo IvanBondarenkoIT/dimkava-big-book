@@ -16,12 +16,13 @@ dimkava-big-book/
 
 ## Документация
 
+**→ [docs/INDEX.md](docs/INDEX.md)** — оглавление, порядок чтения
+
 | Файл | Описание |
 |------|----------|
-| [docs/PROMPTS_MAPPING.md](docs/PROMPTS_MAPPING.md) | Маппинг промптов для Cursor |
-| [docs/STRUCTURE_PLAN.md](docs/STRUCTURE_PLAN.md) | План структуры проекта |
+| [docs/ONBOARDING_DEV.md](docs/ONBOARDING_DEV.md) | Роадмап для разработчика (вернулся к проекту) |
+| [docs/STRATEGIC_SNAPSHOT.md](docs/STRATEGIC_SNAPSHOT.md) | Текущее состояние, дизайн, следующий шаг |
 | [docs/DEVELOPMENT_PLAN.md](docs/DEVELOPMENT_PLAN.md) | План разработки по фазам |
-| [docs/GUIDING_QUESTIONS.md](docs/GUIDING_QUESTIONS.md) | Наводящие вопросы — заполните перед стартом |
 
 ## Локальная настройка (после создания Django-проекта)
 
@@ -40,7 +41,7 @@ dimkava-big-book/
 ## Тесты
 
 ```bash
-pytest
+python manage.py test apps.core.tests
 ```
 
 ## Технологии

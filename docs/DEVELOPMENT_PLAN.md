@@ -2,7 +2,7 @@
 
 > Большой план по шагам. Основа — base.md, порядок — base.md §14.
 >
-> **Обновления:** после ответов на GUIDING_QUESTIONS.md план будет уточнён.
+> **Оглавление:** [INDEX.md](INDEX.md) | **Состояние:** [STRATEGIC_SNAPSHOT.md](STRATEGIC_SNAPSHOT.md) | **core-rules:** проверять перед каждым шагом.
 
 ---
 
@@ -30,7 +30,7 @@
 | 1.3 | .env.example, python-decouple | .env.example | — |
 | 1.4 | docker-compose.yml (Postgres + Redis) | docker-compose.yml | — |
 | 1.5 | requirements.txt | requirements.txt | — |
-| 1.6 | base.html (layout: topbar, sidebar) | templates/base.html | — |
+| 1.6 | base.html (layout: topbar only, no sidebar) | templates/base.html | — |
 | 1.7 | Auth: login, logout, password reset | accounts/views, templates | — |
 | 1.8 | Profile page | accounts/ | — |
 | 1.9 | Management command: create default users | accounts/management/ | unit |
@@ -163,6 +163,8 @@
 
 ## Фаза 11+: Расширения (best_practices.md)
 
+> **Backlog:** см. [FEATURES_BACKLOG.md](FEATURES_BACKLOG.md) — ачивки у аватара, комментарии с пре-модерацией, HR Task Stack.
+
 | # | Задача | Приоритет |
 |---|--------|-----------|
 | 11.1 | Mentorship (Mentor, MentorAssignment, MentorSession) | средний |
@@ -182,7 +184,9 @@
 
 ---
 
-## Core-rules чеклист (input/prompts/core-rules.md)
+## Core-rules чеклист
+
+Перед каждой фазой: [core-rules](../input/prompts/core-rules.md) — git, тесты, checkpoint, naming.
 
 | § | Тема | Статус |
 |---|------|--------|
@@ -209,6 +213,7 @@
 
 ## Следующий шаг
 
-1. Ответить на GUIDING_QUESTIONS.md.
+1. **Проверить [core-rules](../input/prompts/core-rules.md)** перед каждым шагом.
 2. Проверить страницы в браузере (стили без FOUC).
-3. Перейти к Фазе 1: project scaffold (если 0.6 не блокирует).
+3. Перейти к Фазе 1: project scaffold (auth, settings, 404/500).
+4. При необходимости — доработать план по ответам из ANSWERS (0.6).

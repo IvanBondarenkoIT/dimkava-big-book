@@ -1,6 +1,8 @@
 # План: эталон и синхронизация с dim-kava-education-visual
 
-> Цель: добиться 1:1 соответствия визуала и организации страниц с [dim-kava-education-visual](https://github.com/IvanBondarenkoIT/dim-kava-education-visual).
+> **Архив.** Выполнено. Оставлено для истории.
+>
+> Цель была: добиться 1:1 соответствия визуала с [dim-kava-education-visual](https://github.com/IvanBondarenkoIT/dim-kava-education-visual).
 
 ---
 
@@ -30,7 +32,7 @@
 ### Итерация 3: Layout и Navbar ✅
 - [x] Переработать `base.html` под структуру dim-kava-education-visual:
   - Top navbar (не sidebar): "Atelier" брендинг, Dashboard, Courses, Profile, поиск, аватар
-  - Footer: Barista Atelier © 2026
+  - Footer: Dim Kava © 2026
 - [x] Маршруты: `/` (Dashboard), `/courses`, `/profile`
 
 ### Итерация 4: Страницы-компоненты (в работе)
@@ -42,7 +44,7 @@
 ### Итерация 5: Иконки и полировка
 - [ ] Lucide vs Material Symbols — решить, добавлять ли Lucide для 1:1
 - [ ] Анимации (motion) — опционально, Alpine.js или CSS
-- [ ] Footer "Barista Atelier © 2026"
+- [ ] Footer "Dim Kava © 2026"
 
 ---
 

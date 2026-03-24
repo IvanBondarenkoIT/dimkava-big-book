@@ -2,15 +2,12 @@
 
 Эта папка предназначена для **временных файлов**, разведки и проверки идей.
 
-## stitch_output/
-
-React-прототип из [dim-kava-education-visual](https://github.com/IvanBondarenkoIT/dim-kava-education-visual).  
-→ **DESIGN_SYSTEM_REFERENCE.md** — Tailwind-классы, компоненты.
-
 ## Главное место для эталонов
 
 **`design/etalon/`** — канонические источники (dim-kava-education-visual, stitch_lesson_view).  
-**`design/reference/`** — HTML-копии для Django.
+**`design/reference/`** — HTML-копии для Django (см. design/README.md).
+
+> `stitch_output/` устарел — эталон перенесён в `design/etalon/`. Можно удалить.
 
 ## Правила
 
