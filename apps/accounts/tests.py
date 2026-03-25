@@ -1,4 +1,5 @@
 """Accounts app tests."""
+from uuid import uuid4
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
@@ -52,10 +53,13 @@ class CreateDefaultUsersTest(TestCase):
 
     @patch('apps.accounts.management.commands.create_default_users.get_var')
     def test_creates_hr_user_as_staff(self, mock_get_var):
+        # Avoid hardcoding password-like strings to prevent GitHub secret scanning alerts.
+        hr_password = f'hr-test-{uuid4()}'
+
         def get_var_impl(name, default=None):
             vals = {
                 'DEFAULT_HR_EMAIL': 'hr@test.dimkava.ge',
-                'DEFAULT_HR_PASSWORD': 'hrpass123',
+                'DEFAULT_HR_PASSWORD': hr_password,
             }
             return vals.get(name, default)
 
