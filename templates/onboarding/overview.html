@@ -14,6 +14,46 @@
     </div>
     {% endif %}
   </header>
+
+  {% if mentor_block.show %}
+  <section class="card-atelier">
+    <div class="flex items-start justify-between gap-6">
+      <div class="space-y-1">
+        <p class="text-xs font-bold uppercase tracking-widest text-primary/70">Your Mentor</p>
+        <h2 class="text-2xl font-extrabold tracking-tight text-on-surface">{{ mentor_block.mentor.name }}</h2>
+        <p class="text-sm text-on-surface-variant/80">
+          {{ mentor_block.mentor.title }} · {{ mentor_block.mentor.responsibility_area }}
+        </p>
+        {% if mentor_block.mentor.contact_info %}
+        <p class="text-sm text-on-surface-variant/70 mt-2 whitespace-pre-line">{{ mentor_block.mentor.contact_info }}</p>
+        {% endif %}
+      </div>
+      <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+      </div>
+    </div>
+
+    {% if mentor_block.sessions %}
+    <div class="mt-6 space-y-3">
+      <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant/70">Scheduled sessions</h3>
+      <div class="space-y-2">
+        {% for s in mentor_block.sessions %}
+        <div class="flex items-start justify-between gap-4 p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10">
+          <div class="space-y-1">
+            <div class="font-bold text-on-surface">{{ s.session_type|title }}</div>
+            <div class="text-sm text-on-surface-variant/70">{{ s.scheduled_date }}</div>
+          </div>
+          <div class="text-sm font-bold {% if s.is_completed %}text-secondary{% else %}text-on-surface-variant{% endif %}">
+            {% if s.is_completed %}Completed{% else %}Upcoming{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     {% for m in modules %}
     <a href="{% url 'onboarding:module_detail' m.slug %}" class="card-atelier block no-underline text-inherit group">

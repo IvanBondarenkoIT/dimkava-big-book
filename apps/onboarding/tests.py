@@ -6,7 +6,7 @@ from django.core.management import call_command
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from .models import OnboardingProgram, OnboardingModule, OnboardingStep, OnboardingProgress
+from .models import Mentor, MentorAssignment, MentorSession, OnboardingProgram, OnboardingModule, OnboardingStep, OnboardingProgress
 from .services import mark_step_complete
 
 User = get_user_model()
@@ -77,3 +77,35 @@ class MarkStepCompleteViewTest(TestCase):
         self.assertEqual(r.status_code, 302)
         self.assertIn(self.module.slug, r.url)
         self.assertEqual(OnboardingProgress.objects.filter(user=self.user, step=self.step).count(), 1)
+
+
+class MentorBlockTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.mentor_user = User.objects.create_user(username='mentor@test.ge', password='pass')
+        self.mentee = User.objects.create_user(username='mentee@test.ge', password='pass')
+        self.program = OnboardingProgram.objects.create(slug='p', title='P', estimated_days=7)
+        OnboardingModule.objects.create(program=self.program, slug='m1', title='M1', order=1, estimated_minutes=30)
+
+    def test_overview_hides_block_without_assignment(self):
+        self.client.login(username='mentee@test.ge', password='pass')
+        r = self.client.get(reverse('onboarding:overview'))
+        self.assertEqual(r.status_code, 200)
+        self.assertNotContains(r, 'Your Mentor')
+
+    def test_overview_shows_block_with_active_mentor(self):
+        mentor = Mentor.objects.create(
+            user=self.mentor_user,
+            title='Senior Barista',
+            contact_info='Slack: @mentor',
+            responsibility_area='Espresso',
+            is_active=True,
+        )
+        assignment = MentorAssignment.objects.create(mentee=self.mentee, mentor=mentor)
+        MentorSession.objects.create(assignment=assignment, session_type='day_1', scheduled_date='2026-03-25')
+
+        self.client.login(username='mentee@test.ge', password='pass')
+        r = self.client.get(reverse('onboarding:overview'))
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'Your Mentor')
+        self.assertContains(r, 'Senior Barista')

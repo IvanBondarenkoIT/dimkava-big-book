@@ -13,10 +13,11 @@ class OverviewView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        program, modules, progress = get_onboarding_overview_for_user(self.request.user)
+        program, modules, progress, mentor_block = get_onboarding_overview_for_user(self.request.user)
         context['program'] = program
         context['modules'] = modules
         context['progress'] = progress
+        context['mentor_block'] = mentor_block
         return context
 
 

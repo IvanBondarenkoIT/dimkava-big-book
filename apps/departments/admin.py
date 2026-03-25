@@ -13,6 +13,7 @@ class RoleInline(admin.TabularInline):
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
+    search_fields = ['name', 'slug']
     inlines = [RoleInline]
 
 
@@ -20,4 +21,5 @@ class DepartmentAdmin(admin.ModelAdmin):
 class RoleAdmin(admin.ModelAdmin):
     list_display = ['title', 'department', 'order']
     list_filter = ['department']
+    search_fields = ['title', 'department__name']
     filter_horizontal = ['required_courses', 'recommended_courses']

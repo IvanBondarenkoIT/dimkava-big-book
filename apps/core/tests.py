@@ -30,6 +30,11 @@ class PageSmokeTests(TestCase):
         r = self.client.get(reverse('core:home'))
         self.assertEqual(r.status_code, 200)
 
+    def test_home_shows_where_to_start_banner(self):
+        r = self.client.get(reverse('core:home'))
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'Where to start')
+
     def test_login(self):
         r = self.client.get('/login/')
         self.assertEqual(r.status_code, 200)

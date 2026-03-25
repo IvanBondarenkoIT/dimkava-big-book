@@ -67,12 +67,15 @@ class QuizView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        lesson = get_object_or_404(
-            Lesson,
+        lesson_qs = Lesson.objects.filter(
             course__slug=self.kwargs['slug'],
             pk=self.kwargs['pk'],
             lesson_type='quiz',
         )
+        profile = getattr(self.request.user, 'profile', None)
+        if profile and profile.is_candidate:
+            lesson_qs = lesson_qs.filter(visible_for_candidates=True, course__visible_for_candidates=True)
+        lesson = get_object_or_404(lesson_qs)
         questions = list(lesson.questions.all().order_by('order'))
         context['course'] = lesson.course
         context['lesson'] = lesson
@@ -82,12 +85,15 @@ class QuizView(LoginRequiredMixin, TemplateView):
         return context
 
     def post(self, request, slug, pk):
-        lesson = get_object_or_404(
-            Lesson,
+        lesson_qs = Lesson.objects.filter(
             course__slug=slug,
             pk=pk,
             lesson_type='quiz',
         )
+        profile = getattr(request.user, 'profile', None)
+        if profile and profile.is_candidate:
+            lesson_qs = lesson_qs.filter(visible_for_candidates=True, course__visible_for_candidates=True)
+        lesson = get_object_or_404(lesson_qs)
         passing = lesson.passing_score or 70
         total = lesson.questions.count()
         if total == 0:

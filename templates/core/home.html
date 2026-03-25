@@ -2,6 +2,20 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 <div class="max-w-7xl mx-auto space-y-12">
+  {% if where_to_start.show %}
+  <aside class="rounded-xl border border-primary/25 bg-primary/5 px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" role="region" aria-label="Where to start">
+    <div class="space-y-1">
+      <p class="text-xs font-bold uppercase tracking-widest text-primary/80">Where to start</p>
+      <h2 class="text-lg font-bold text-on-surface">{{ where_to_start.title }}</h2>
+      <p class="text-sm text-on-surface-variant/80 max-w-2xl">{{ where_to_start.body }}</p>
+    </div>
+    <a href="{{ where_to_start.url }}" class="btn-primary shrink-0 inline-flex items-center justify-center gap-2 min-h-[2.75rem] whitespace-nowrap no-underline">
+      {{ where_to_start.cta }}
+      <span class="material-symbols-outlined text-lg">arrow_forward</span>
+    </a>
+  </aside>
+  {% endif %}
+
   {# Hero — эталон dim-kava-education-visual Dashboard #}
   <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
     <div class="lg:col-span-7 space-y-4">

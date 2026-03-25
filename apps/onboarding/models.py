@@ -7,6 +7,7 @@ class OnboardingProgram(models.Model):
     slug = models.SlugField(unique=True, max_length=120)
     title = models.CharField(max_length=255)
     role = models.CharField(max_length=80, blank=True)
+    visible_for_candidates = models.BooleanField(default=False)
     estimated_days = models.PositiveIntegerField(default=90)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -59,3 +60,51 @@ class OnboardingProgress(models.Model):
 
     def __str__(self):
         return f'{self.user} — {self.step}'
+
+
+class Mentor(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='mentor_profile')
+    title = models.CharField(max_length=100)
+    contact_info = models.TextField(blank=True)
+    responsibility_area = models.CharField(max_length=200)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['user_id']
+
+    def __str__(self):
+        return f'Mentor: {self.user.get_username()}'
+
+
+class MentorAssignment(models.Model):
+    mentee = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='mentor_assignment')
+    mentor = models.ForeignKey(Mentor, on_delete=models.SET_NULL, null=True, related_name='assignments')
+    assigned_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-assigned_at']
+
+    def __str__(self):
+        return f'{self.mentee.get_username()} → {self.mentor or "Unassigned"}'
+
+
+class MentorSession(models.Model):
+    SESSION_TYPE_CHOICES = [
+        ('day_1', 'First Day'),
+        ('week_1', 'End of First Week'),
+        ('probation_end', 'End of Probation Period'),
+        ('custom', 'Custom'),
+    ]
+    assignment = models.ForeignKey(MentorAssignment, on_delete=models.CASCADE, related_name='sessions')
+    session_type = models.CharField(max_length=20, choices=SESSION_TYPE_CHOICES)
+    scheduled_date = models.DateField()
+    checklist_topics = models.JSONField(default=list, blank=True)
+    is_completed = models.BooleanField(default=False)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['scheduled_date', 'id']
+
+    def __str__(self):
+        return f'{self.get_session_type_display()} — {self.assignment.mentee.get_username()}'

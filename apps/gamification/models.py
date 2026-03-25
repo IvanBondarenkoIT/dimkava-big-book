@@ -19,7 +19,7 @@ class Badge(models.Model):
     code = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=100)
     description = models.TextField()
-    icon = models.ImageField(upload_to='badges/', blank=True)
+    icon = models.CharField(max_length=200, blank=True)  # URL or static path; avoids Pillow on ImageField
     is_active = models.BooleanField(default=True)
     is_compliance = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

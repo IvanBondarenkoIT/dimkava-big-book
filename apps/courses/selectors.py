@@ -4,7 +4,11 @@ from .models import Course, Lesson, UserProgress
 
 def get_courses_for_user(user):
     """List courses with progress for user."""
-    courses = Course.objects.filter(status='published').prefetch_related('lessons')
+    courses = Course.objects.filter(status='published')
+    profile = getattr(user, 'profile', None)
+    if profile and profile.is_candidate:
+        courses = courses.filter(visible_for_candidates=True)
+    courses = courses.prefetch_related('lessons')
     result = []
     for c in courses:
         total = c.lessons.count()
@@ -25,11 +29,18 @@ def get_courses_for_user(user):
 
 def get_course_detail(course_slug, user):
     """Course with lessons and completion status."""
-    course = Course.objects.filter(slug=course_slug, status='published').first()
+    qs = Course.objects.filter(slug=course_slug, status='published')
+    profile = getattr(user, 'profile', None)
+    if profile and profile.is_candidate:
+        qs = qs.filter(visible_for_candidates=True)
+    course = qs.first()
     if not course:
         return None
     lessons = []
-    for l in course.lessons.all().order_by('order'):
+    lesson_qs = course.lessons.all().order_by('order')
+    if profile and profile.is_candidate:
+        lesson_qs = lesson_qs.filter(visible_for_candidates=True)
+    for l in lesson_qs:
         prog = UserProgress.objects.filter(user=user, lesson=l).first()
         lessons.append({
             'id': l.id,
@@ -44,10 +55,17 @@ def get_course_detail(course_slug, user):
 
 def get_lesson_for_user(course_slug, lesson_id, user):
     """Lesson with completion status."""
-    course = Course.objects.filter(slug=course_slug, status='published').first()
+    qs = Course.objects.filter(slug=course_slug, status='published')
+    profile = getattr(user, 'profile', None)
+    if profile and profile.is_candidate:
+        qs = qs.filter(visible_for_candidates=True)
+    course = qs.first()
     if not course:
         return None
-    lesson = course.lessons.filter(pk=lesson_id).first()
+    lesson_qs = course.lessons.filter(pk=lesson_id)
+    if profile and profile.is_candidate:
+        lesson_qs = lesson_qs.filter(visible_for_candidates=True)
+    lesson = lesson_qs.first()
     if not lesson:
         return None
     prog = UserProgress.objects.filter(user=user, lesson=lesson).first()

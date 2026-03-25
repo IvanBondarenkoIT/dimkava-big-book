@@ -34,3 +34,45 @@ class CourseViewsTest(TestCase):
         prog = UserProgress.objects.get(user=self.user, lesson=lesson)
         self.assertEqual(prog.quiz_score, 80)
         self.assertTrue(prog.is_completed)
+
+
+class CandidateVisibilityTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.candidate = User.objects.create_user(username='cand@test.ge', password='pass')
+        self.candidate.profile.user_type = 'candidate'
+        self.candidate.profile.save()
+
+        self.employee = User.objects.create_user(username='emp@test.ge', password='pass')
+
+        self.public_course = Course.objects.create(slug='c1', title='C1', status='published', level='beginner', visible_for_candidates=True)
+        self.private_course = Course.objects.create(slug='c2', title='C2', status='published', level='beginner', visible_for_candidates=False)
+
+        self.public_lesson = Lesson.objects.create(
+            course=self.public_course,
+            title='L1',
+            order=1,
+            lesson_type='quiz',
+            passing_score=70,
+            visible_for_candidates=True,
+        )
+        Lesson.objects.create(
+            course=self.private_course,
+            title='L2',
+            order=1,
+            lesson_type='text',
+            estimated_minutes=5,
+            visible_for_candidates=False,
+        )
+
+    def test_candidate_course_list_filters_out_private(self):
+        self.client.login(username='cand@test.ge', password='pass')
+        r = self.client.get(reverse('courses:list'))
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'C1')
+        self.assertNotContains(r, 'C2')
+
+    def test_candidate_quiz_404_when_not_visible(self):
+        self.client.login(username='cand@test.ge', password='pass')
+        r = self.client.get(reverse('courses:quiz', kwargs={'slug': self.private_course.slug, 'pk': 999}))
+        self.assertIn(r.status_code, (404, 302))

@@ -25,7 +25,7 @@
 - [INDEX.md](INDEX.md) — оглавление, порядок чтения
 - [ONBOARDING_DEV.md](ONBOARDING_DEV.md) — роадмап для разработчика (вернулся к проекту)
 - [DEVELOPMENT_PLAN.md](DEVELOPMENT_PLAN.md) — фазы 0–11
-- [FEATURES_BACKLOG.md](FEATURES_BACKLOG.md) — ачивки, комментарии, HR Task Stack
+- [FEATURES_BACKLOG.md](FEATURES_BACKLOG.md) — ачивки, комментарии, HR Task Stack, **кандидаты (pre-hire)**
 - [GUIDING_QUESTIONS.md](GUIDING_QUESTIONS.md) + [ANSWERS](ANSWERS) — требования
 
 ---

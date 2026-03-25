@@ -31,7 +31,7 @@ dimkava-big-book/
 3. `pip install -r requirements.txt`
 4. Скопировать `.env.example` → `.env` (опционально для dev — SQLite по умолчанию)
 5. `python manage.py migrate`
-6. `python manage.py create_default_users` — создать admin/hr/employee
+6. `python manage.py create_default_users` — создать admin/hr/employee/candidate
 7. `python manage.py load_onboarding` — онбординг из YAML
 8. `python manage.py load_courses` — курсы из YAML
 9. `python manage.py load_articles` — база знаний из YAML
@@ -39,7 +39,7 @@ dimkava-big-book/
 11. `python manage.py load_departments` — департаменты и роли из YAML (после load_courses)
 12. `python manage.py runserver`
 
-**С credentials из .env.example:** admin@dimkava.ge / changeme_admin
+**С credentials из .env.example:** admin@dimkava.ge / changeme_admin (также есть candidate@dimkava.ge)
 
 **Docker (Postgres + Redis):** `docker-compose up -d` — для использования Postgres задайте `DATABASE_URL`.
 

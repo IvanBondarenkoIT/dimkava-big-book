@@ -1,6 +1,7 @@
 """Course, Lesson, Quiz models."""
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 
 class Course(models.Model):
@@ -19,11 +20,20 @@ class Course(models.Model):
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES, default='beginner')
     estimated_minutes = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='published')
+    visible_for_candidates = models.BooleanField(default=False)
     description = models.TextField(blank=True)
     image = models.URLField(blank=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='authored_courses'
     )
+    responsible_editor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='course_responsible',
+    )
+    review_required_after_days = models.PositiveIntegerField(default=180)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -32,6 +42,13 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def is_stale(self) -> bool:
+        if not self.updated_at:
+            return False
+        delta = timezone.now() - self.updated_at
+        return delta.days > self.review_required_after_days
 
 
 class Lesson(models.Model):
@@ -50,6 +67,7 @@ class Lesson(models.Model):
     estimated_minutes = models.PositiveIntegerField(default=0)
     is_required = models.BooleanField(default=True)
     passing_score = models.PositiveIntegerField(null=True, blank=True)  # For quiz: 0-100
+    visible_for_candidates = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['course', 'order']

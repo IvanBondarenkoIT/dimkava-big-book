@@ -1,15 +1,27 @@
 """Onboarding data selectors — for views."""
-from .models import OnboardingProgram, OnboardingModule, OnboardingStep, OnboardingProgress
+from .models import OnboardingProgram, OnboardingProgress
+
+
+def _program_for_user(user):
+    """Prefer program assigned by AssignmentRule; else first program."""
+    profile = getattr(user, 'profile', None)
+    if profile and profile.assigned_onboarding_program_id:
+        program = profile.assigned_onboarding_program
+    else:
+        program = OnboardingProgram.objects.order_by('id').first()
+    if program and profile and profile.is_candidate and not program.visible_for_candidates:
+        return OnboardingProgram.objects.filter(visible_for_candidates=True).order_by('id').first()
+    return program
 
 
 def get_onboarding_overview_for_user(user):
     """
     Return program, modules with status for user, and overall progress %.
-    Uses first program; later can filter by role.
+    Uses assigned program from UserProfile when set; otherwise first program.
     """
-    program = OnboardingProgram.objects.first()
+    program = _program_for_user(user)
     if not program:
-        return None, [], 0
+        return None, [], 0, {'show': False, 'mentor': None, 'sessions': []}
 
     modules_data = []
     total_steps = 0
@@ -40,12 +52,13 @@ def get_onboarding_overview_for_user(user):
         })
 
     progress = int((completed_steps / total_steps * 100)) if total_steps else 0
-    return program, modules_data, progress
+    mentor_block = get_mentor_block_for_user(user)
+    return program, modules_data, progress, mentor_block
 
 
 def get_module_for_user(module_slug, user):
     """Return module with steps and completion status for user."""
-    program = OnboardingProgram.objects.first()
+    program = _program_for_user(user)
     if not program:
         return None
     module = program.modules.filter(slug=module_slug).first()
@@ -66,4 +79,42 @@ def get_module_for_user(module_slug, user):
     return {
         'module': module,
         'steps': steps_data,
+    }
+
+
+def get_mentor_block_for_user(user):
+    """
+    Mentor context for onboarding overview.
+    Returns a dict:
+      - show: bool
+      - mentor: {...} | None
+      - sessions: [{...}]
+    """
+    from .models import MentorAssignment
+
+    assignment = MentorAssignment.objects.select_related('mentor', 'mentor__user').filter(mentee=user).first()
+    if not assignment or not assignment.mentor or not assignment.mentor.is_active:
+        return {'show': False, 'mentor': None, 'sessions': []}
+
+    sessions = list(
+        assignment.sessions.order_by('scheduled_date', 'id').values(
+            'id',
+            'session_type',
+            'scheduled_date',
+            'is_completed',
+            'completed_at',
+            'notes',
+        )
+    )
+
+    mentor = assignment.mentor
+    return {
+        'show': True,
+        'mentor': {
+            'name': mentor.user.get_full_name() or mentor.user.get_username(),
+            'title': mentor.title,
+            'contact_info': mentor.contact_info,
+            'responsibility_area': mentor.responsibility_area,
+        },
+        'sessions': sessions,
     }
