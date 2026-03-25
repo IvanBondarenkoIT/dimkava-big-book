@@ -3,8 +3,9 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from .models import Course, Lesson, UserProgress
+from .models import Course, ILPItem, IndividualLearningPlan, Lesson, UserProgress
 from .services import mark_lesson_complete, save_quiz_result
+from .selectors import get_active_ilp_context_for_user
 
 User = get_user_model()
 
@@ -76,3 +77,16 @@ class CandidateVisibilityTests(TestCase):
         self.client.login(username='cand@test.ge', password='pass')
         r = self.client.get(reverse('courses:quiz', kwargs={'slug': self.private_course.slug, 'pk': 999}))
         self.assertIn(r.status_code, (404, 302))
+
+
+class ILPSelectorsTests(TestCase):
+    def test_active_ilp_context_progress_and_next_up(self):
+        user = User.objects.create_user(username='ilp@test.ge', password='pass')
+        plan = IndividualLearningPlan.objects.create(user=user, title='Plan A', is_active=True)
+        ILPItem.objects.create(plan=plan, content_type='course', object_slug='espresso-basics', title='Course 1', order=1, is_completed=True)
+        ILPItem.objects.create(plan=plan, content_type='article', object_slug='daily-check', title='Article 1', order=2, is_completed=False)
+
+        ctx = get_active_ilp_context_for_user(user)
+        self.assertTrue(ctx['has_plan'])
+        self.assertEqual(ctx['progress'], 50)
+        self.assertEqual(ctx['next_up']['title'], 'Article 1')

@@ -6,6 +6,67 @@
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ user_name|default:"Alex" }}</h1>
     <p class="text-on-surface-variant/70 mt-2">{{ role|default:"Head Barista" }} — Dim Kava Academy</p>
   </header>
+  
+  <section class="card-atelier space-y-4">
+    <div class="flex items-start justify-between gap-6">
+      <div>
+        <h2 class="text-2xl font-extrabold tracking-tight text-on-surface">My Learning Plan</h2>
+        {% if ilp.has_plan %}
+          <p class="text-sm text-on-surface-variant/70 mt-1">{{ ilp.title }}</p>
+          {% if ilp.deadline %}
+            <p class="text-xs text-on-surface-variant/60 mt-1">Deadline: {{ ilp.deadline }}</p>
+          {% endif %}
+        {% else %}
+          <p class="text-sm text-on-surface-variant/70 mt-1">No active plan yet.</p>
+        {% endif %}
+      </div>
+      {% if ilp.has_plan %}
+      <div class="text-right">
+        <div class="text-2xl font-black text-primary">{{ ilp.progress }}%</div>
+        <div class="text-xs text-on-surface-variant/60">{{ ilp.completed_items }}/{{ ilp.total_items }} done</div>
+      </div>
+      {% endif %}
+    </div>
+
+    {% if ilp.has_plan %}
+      <div class="h-2 bg-surface-container-high rounded-full overflow-hidden">
+        <div class="h-full bg-primary rounded-full transition-all" style="width: {{ ilp.progress }}%"></div>
+      </div>
+
+      {% if ilp.next_up %}
+      <div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant/10">
+        <div class="text-xs font-bold uppercase tracking-widest text-primary/70">Next up</div>
+        <div class="font-extrabold text-on-surface mt-1">{{ ilp.next_up.title }}</div>
+        <div class="text-sm text-on-surface-variant/70 mt-1">
+          {{ ilp.next_up.content_type|title }}
+          {% if ilp.next_up.deadline %} · deadline {{ ilp.next_up.deadline }}{% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="space-y-2">
+        {% for item in ilp.items|slice:":6" %}
+        <div class="flex items-start justify-between gap-4 p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10">
+          <div class="min-w-0">
+            <div class="font-bold text-on-surface truncate">{{ item.title }}</div>
+            <div class="text-xs text-on-surface-variant/60 mt-0.5">
+              {{ item.content_type|title }}
+              {% if item.is_required %} · required{% else %} · optional{% endif %}
+              {% if item.deadline %} · {{ item.deadline }}{% endif %}
+            </div>
+          </div>
+          <div class="text-sm font-bold {% if item.is_completed %}text-secondary{% else %}text-on-surface-variant{% endif %}">
+            {% if item.is_completed %}Done{% else %}Pending{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% if ilp.total_items > 6 %}
+        <div class="text-xs text-on-surface-variant/60">Showing 6 of {{ ilp.total_items }} items.</div>
+      {% endif %}
+    {% endif %}
+  </section>
+
   <div class="card-atelier space-y-6">
     <p class="text-on-surface-variant">Profile page — dummy. Add avatar, settings, stats later.</p>
     <form method="post" action="{% url 'logout' %}" class="pt-4 border-t border-outline-variant/10">

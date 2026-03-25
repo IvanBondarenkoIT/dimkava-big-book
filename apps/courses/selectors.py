@@ -1,5 +1,5 @@
 """Course selectors — for views."""
-from .models import Course, Lesson, UserProgress
+from .models import Course, IndividualLearningPlan, Lesson, UserProgress
 
 
 def get_courses_for_user(user):
@@ -73,4 +73,47 @@ def get_lesson_for_user(course_slug, lesson_id, user):
         'course': course,
         'lesson': lesson,
         'completed': prog.is_completed if prog else False,
+    }
+
+
+def get_active_ilp_context_for_user(user):
+    """
+    Minimal ILP context for profile page.
+    Returns {'has_plan': bool, ...}.
+    """
+    plan = (
+        IndividualLearningPlan.objects.filter(user=user, is_active=True)
+        .prefetch_related('items')
+        .order_by('-created_at', 'id')
+        .first()
+    )
+    if not plan:
+        return {'has_plan': False}
+
+    items = list(
+        plan.items.all().order_by('order', 'id').values(
+            'id',
+            'title',
+            'content_type',
+            'object_slug',
+            'is_required',
+            'deadline',
+            'is_completed',
+            'order',
+        )
+    )
+    total = len(items)
+    completed = sum(1 for i in items if i['is_completed'])
+    progress = int((completed / total) * 100) if total else 0
+    next_up = next((i for i in items if not i['is_completed']), None)
+
+    return {
+        'has_plan': True,
+        'title': plan.title,
+        'deadline': plan.deadline,
+        'progress': progress,
+        'total_items': total,
+        'completed_items': completed,
+        'next_up': next_up,
+        'items': items,
     }

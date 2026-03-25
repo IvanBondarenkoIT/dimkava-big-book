@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Course, Lesson, TestQuestion, UserProgress
+from .models import Course, ILPItem, IndividualLearningPlan, Lesson, TestQuestion, UserProgress
 
 
 class LessonInline(admin.TabularInline):
@@ -82,3 +82,30 @@ class UserProgressAdmin(admin.ModelAdmin):
     list_display = ['user', 'lesson', 'is_completed', 'quiz_score', 'completed_at']
     list_filter = ['is_completed']
     autocomplete_fields = ['user', 'lesson']
+
+
+class ILPItemInline(admin.TabularInline):
+    model = ILPItem
+    extra = 0
+    ordering = ['order', 'id']
+
+
+@admin.register(IndividualLearningPlan)
+class IndividualLearningPlanAdmin(admin.ModelAdmin):
+    list_display = ['title', 'user', 'is_active', 'deadline', 'created_at', 'items_count']
+    list_filter = ['is_active']
+    search_fields = ['title', 'user__username', 'user__email']
+    autocomplete_fields = ['user', 'created_by']
+    inlines = [ILPItemInline]
+
+    @admin.display(description='Items')
+    def items_count(self, obj):
+        return obj.items.count()
+
+
+@admin.register(ILPItem)
+class ILPItemAdmin(admin.ModelAdmin):
+    list_display = ['title', 'plan', 'content_type', 'object_slug', 'is_required', 'is_completed', 'deadline', 'order']
+    list_filter = ['content_type', 'is_required', 'is_completed']
+    search_fields = ['title', 'object_slug', 'plan__title', 'plan__user__username', 'plan__user__email']
+    autocomplete_fields = ['plan']

@@ -50,6 +50,20 @@ class CreateDefaultUsersTest(TestCase):
         self.assertEqual(user.profile.user_type, 'candidate')
         self.assertEqual(user.profile.phone, '+995500000000')
 
+    @patch('apps.accounts.management.commands.create_default_users.get_var')
+    def test_creates_hr_user_as_staff(self, mock_get_var):
+        def get_var_impl(name, default=None):
+            vals = {
+                'DEFAULT_HR_EMAIL': 'hr@test.dimkava.ge',
+                'DEFAULT_HR_PASSWORD': 'hrpass123',
+            }
+            return vals.get(name, default)
+
+        mock_get_var.side_effect = get_var_impl
+        call_command('create_default_users')
+        user = User.objects.get(username='hr@test.dimkava.ge')
+        self.assertTrue(user.is_staff)
+
 
 class LoginViewTest(TestCase):
     """Login page behavior tests."""

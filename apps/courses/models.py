@@ -104,3 +104,50 @@ class UserProgress(models.Model):
 
     def __str__(self):
         return f'{self.user} — {self.lesson}'
+
+
+class IndividualLearningPlan(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='learning_plans',
+    )
+    title = models.CharField(max_length=200)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='created_ilps',
+    )
+    deadline = models.DateField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at', 'id']
+
+    def __str__(self):
+        return f'ILP: {self.user} — {self.title}'
+
+
+class ILPItem(models.Model):
+    CONTENT_TYPE_CHOICES = [
+        ('course', 'Course'),
+        ('lesson', 'Lesson'),
+        ('article', 'Article'),
+    ]
+    plan = models.ForeignKey(IndividualLearningPlan, on_delete=models.CASCADE, related_name='items')
+    content_type = models.CharField(max_length=20, choices=CONTENT_TYPE_CHOICES)
+    object_slug = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
+    is_required = models.BooleanField(default=True)
+    deadline = models.DateField(null=True, blank=True)
+    is_completed = models.BooleanField(default=False)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return f'ILPItem: {self.title}'

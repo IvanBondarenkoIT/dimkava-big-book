@@ -5,7 +5,8 @@ Run after migrate.
 """
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
 from decouple import config
 
@@ -36,6 +37,9 @@ class Command(BaseCommand):
         created = 0
         updated = 0
 
+        # Ensure HR group has the right admin permissions.
+        self._ensure_hr_permissions()
+
         users_config = [
             ('admin', 'DEFAULT_ADMIN_EMAIL', 'DEFAULT_ADMIN_PASSWORD', ['admin']),
             ('hr', 'DEFAULT_HR_EMAIL', 'DEFAULT_HR_PASSWORD', ['hr_manager']),
@@ -52,7 +56,11 @@ class Command(BaseCommand):
 
             user, user_created = User.objects.get_or_create(
                 username=email,
-                defaults={'email': email, 'is_staff': role == 'admin', 'is_superuser': role == 'admin'}
+                defaults={
+                    'email': email,
+                    'is_staff': role in ('admin', 'hr'),
+                    'is_superuser': role == 'admin',
+                }
             )
             if user_created:
                 user.set_password(password)
@@ -61,6 +69,11 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f'Created user: {email} ({role})'))
             elif update:
                 user.set_password(password)
+                # Ensure correct flags on update as well.
+                if role in ('admin', 'hr') and not user.is_staff:
+                    user.is_staff = True
+                if role == 'admin' and not user.is_superuser:
+                    user.is_superuser = True
                 user.save()
                 updated += 1
                 self.stdout.write(self.style.SUCCESS(f'Updated password: {email}'))
@@ -91,6 +104,30 @@ class Command(BaseCommand):
 
         if seed:
             self._seed_demo_content_if_empty()
+
+    def _ensure_hr_permissions(self):
+        """
+        Give hr_manager enough permissions to use Django admin for content + candidates.
+        We intentionally grant view/add/change (no delete) for safety.
+        """
+        hr_group, _ = Group.objects.get_or_create(name='hr_manager')
+
+        app_labels = [
+            'accounts',
+            'courses',
+            'onboarding',
+            'knowledge_base',
+            'news',
+            'departments',
+            'notifications',
+            'gamification',
+        ]
+        models_ct = ContentType.objects.filter(app_label__in=app_labels)
+        perms = Permission.objects.filter(
+            content_type__in=models_ct,
+            codename__regex=r'^(view|add|change)_',
+        )
+        hr_group.permissions.add(*perms)
 
     def _seed_demo_content_if_empty(self):
         """
