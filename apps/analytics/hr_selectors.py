@@ -8,6 +8,7 @@ from dataclasses import dataclass
 class CandidateRow:
     profile_id: int
     user_id: int
+    public_username: str
     email: str
     phone: str
     email_verified_at: object
@@ -37,6 +38,7 @@ def get_candidate_rows():
             CandidateRow(
                 profile_id=p.pk,
                 user_id=p.user_id,
+                public_username=p.get_public_username(),
                 email=p.user.email or p.user.username,
                 phone=p.phone,
                 email_verified_at=p.email_verified_at,

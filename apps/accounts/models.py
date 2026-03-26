@@ -1,6 +1,7 @@
 """User profile and automated assignment rules (best_practices §3)."""
 from django.conf import settings
 from django.db import models
+from django.utils.text import slugify
 
 
 class UserProfile(models.Model):
@@ -60,6 +61,12 @@ class UserProfile(models.Model):
         choices=DISPLAY_BADGE_PLACEMENT_CHOICES,
         default='corner',
     )
+    public_username = models.SlugField(
+        max_length=40,
+        blank=True,
+        db_index=True,
+        help_text='Public handle shown in UI instead of email.',
+    )
 
     class Meta:
         verbose_name = 'User profile'
@@ -67,6 +74,15 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'Profile: {self.user}'
+
+    def get_public_username(self) -> str:
+        if self.public_username:
+            return self.public_username
+        email = getattr(self.user, 'email', '') or ''
+        if email and '@' in email:
+            base = email.split('@', 1)[0]
+            return slugify(base)[:40] or 'user'
+        return slugify(getattr(self.user, 'username', '') or '')[:40] or 'user'
 
     @property
     def is_candidate(self) -> bool:

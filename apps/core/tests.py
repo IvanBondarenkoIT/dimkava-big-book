@@ -18,7 +18,11 @@ class PageSmokeTests(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='test@dimkava.ge', password='testpass')
+        self.user = User.objects.create_user(
+            username='test@dimkava.ge',
+            email='test@dimkava.ge',
+            password='testpass',
+        )
         hr_group, _ = Group.objects.get_or_create(name='hr_manager')
         self.user.groups.add(hr_group)
         self.client.login(username='test@dimkava.ge', password='testpass')
@@ -161,6 +165,14 @@ class PageSmokeTests(TestCase):
     def test_password_reset(self):
         r = self.client.get(reverse('password_reset'))
         self.assertEqual(r.status_code, 200)
+
+    def test_password_reset_post_sends_email(self):
+        from django.core import mail
+
+        r = self.client.post(reverse('password_reset'), {'email': 'test@dimkava.ge'})
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('password', mail.outbox[0].subject.lower())
 
     def test_login_post_success(self):
         r = self.client.post('/login/', {'username': 'test@dimkava.ge', 'password': 'testpass'})

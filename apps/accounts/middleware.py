@@ -5,17 +5,27 @@ Email confirmation is optional: we send a link, but do not block learning.
 from django.core.exceptions import PermissionDenied
 
 
-def _verified_candidate_forbidden(path: str) -> bool:
-    prefixes = (
-        '/wiki',
-        '/news',
-        '/departments',
-        '/analytics',
-        '/gamification',
-        '/notifications',
-        '/search',
+def _is_allowed_for_candidate(path: str) -> bool:
+    # Learning + minimal account endpoints only. Anything else is forbidden by default.
+    allowed_prefixes = (
+        '/',
+        '/courses',
+        '/onboarding',
+        '/profile',
+        '/accounts/confirm-email',
+        '/accounts/email-pending',
+        '/accounts/resend-verification',
+        '/login',
+        '/logout',
+        '/password-reset',
+        '/admin',  # Django admin will still enforce staff-only; keep this for predictable behavior.
     )
-    for p in prefixes:
+    allowed_exact = (
+        '/favicon.ico',
+    )
+    if path in allowed_exact:
+        return True
+    for p in allowed_prefixes:
         if path == p or path.startswith(p + '/'):
             return True
     return False
@@ -42,7 +52,7 @@ class CandidateRestrictionsMiddleware:
         if path.startswith('/static/') or path.startswith('/media/'):
             return self.get_response(request)
 
-        if _verified_candidate_forbidden(path):
+        if not _is_allowed_for_candidate(path):
             raise PermissionDenied('This section is available to employees only.')
 
         return self.get_response(request)

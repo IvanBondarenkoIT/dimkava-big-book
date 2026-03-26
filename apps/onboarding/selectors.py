@@ -87,9 +87,10 @@ def get_onboarding_overview_for_user(user):
         )
         for fb in qs:
             u = fb.user
+            profile = getattr(u, 'profile', None)
             public_feedback.append(
                 {
-                    'user_name': u.get_full_name() or u.get_username(),
+                    'user_name': profile.get_public_username() if profile else (u.get_full_name() or u.get_username()),
                     'user_username': u.get_username(),
                     'rating': fb.rating,
                     'comment': fb.comment,

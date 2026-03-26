@@ -86,3 +86,17 @@ class AvatarBadgeForm(forms.ModelForm):
         if not UserBadge.objects.filter(user=self._user, badge=badge).exists():
             raise forms.ValidationError('You can only display badges you earned.')
         return badge
+
+
+class PublicUsernameForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['public_username']
+
+    def clean_public_username(self):
+        handle = (self.cleaned_data.get('public_username') or '').strip().lower()
+        if not handle:
+            raise forms.ValidationError('Username is required.')
+        if not re.match(r'^[a-z0-9][a-z0-9\-]{1,39}$', handle):
+            raise forms.ValidationError('Use 2–40 chars: lowercase letters, digits, hyphen.')
+        return handle

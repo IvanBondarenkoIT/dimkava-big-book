@@ -39,9 +39,14 @@ def global_search(query: str, user) -> list[SearchResult]:
     q = query.strip()
     results: list[SearchResult] = []
     q_obj = Q(title__icontains=q) | Q(description__icontains=q)
+    profile = getattr(user, 'profile', None)
+    is_candidate = bool(profile and getattr(profile, 'is_candidate', False))
 
     # Courses (published only)
-    for obj in Course.objects.filter(q_obj, status="published").select_related()[:10]:
+    course_qs = Course.objects.filter(q_obj, status="published")
+    if is_candidate:
+        course_qs = course_qs.filter(visible_for_candidates=True)
+    for obj in course_qs.select_related()[:10]:
         results.append(
             SearchResult(
                 type="course",
@@ -55,11 +60,14 @@ def global_search(query: str, user) -> list[SearchResult]:
 
     # Lessons (within published courses)
     lesson_q = Q(title__icontains=q) | Q(content__icontains=q)
-    for lesson in (
+    lesson_qs = (
         Lesson.objects.filter(lesson_q)
         .select_related("course")
-        .filter(course__status="published")[:10]
-    ):
+        .filter(course__status="published")
+    )
+    if is_candidate:
+        lesson_qs = lesson_qs.filter(visible_for_candidates=True, course__visible_for_candidates=True)
+    for lesson in lesson_qs[:10]:
         results.append(
             SearchResult(
                 type="lesson",
@@ -73,47 +81,50 @@ def global_search(query: str, user) -> list[SearchResult]:
 
     # Articles (published only)
     article_q = Q(title__icontains=q) | Q(content__icontains=q)
-    for obj in (
-        Article.objects.filter(article_q, status="published")
-        .select_related("section")[:10]
-    ):
-        results.append(
-            SearchResult(
-                type="article",
-                title=obj.title,
-                url=f"/wiki/{obj.section.slug}/{obj.slug}/",
-                snippet=_excerpt(obj.content or obj.title),
-                department="",
-                tags=[obj.section.title] if obj.section else [],
+    if not is_candidate:
+        for obj in (
+            Article.objects.filter(article_q, status="published")
+            .select_related("section")[:10]
+        ):
+            results.append(
+                SearchResult(
+                    type="article",
+                    title=obj.title,
+                    url=f"/wiki/{obj.section.slug}/{obj.slug}/",
+                    snippet=_excerpt(obj.content or obj.title),
+                    department="",
+                    tags=[obj.section.title] if obj.section else [],
+                )
             )
-        )
 
     # News
     news_q = Q(title__icontains=q) | Q(content__icontains=q)
-    for obj in NewsPost.objects.filter(news_q)[:10]:
-        results.append(
-            SearchResult(
-                type="news",
-                title=obj.title,
-                url=f"/news/{obj.slug}/",
-                snippet=_excerpt(obj.content or obj.title),
-                department="",
-                tags=[obj.tag] if obj.tag else [],
+    if not is_candidate:
+        for obj in NewsPost.objects.filter(news_q)[:10]:
+            results.append(
+                SearchResult(
+                    type="news",
+                    title=obj.title,
+                    url=f"/news/{obj.slug}/",
+                    snippet=_excerpt(obj.content or obj.title),
+                    department="",
+                    tags=[obj.tag] if obj.tag else [],
+                )
             )
-        )
 
     # Roles (title, description)
     role_q = Q(title__icontains=q) | Q(description__icontains=q)
-    for obj in Role.objects.filter(role_q).select_related("department")[:10]:
-        results.append(
-            SearchResult(
-                type="role",
-                title=obj.title,
-                url=f"/departments/{obj.department.slug}/",
-                snippet=_excerpt(obj.description or obj.title),
-                department=obj.department.name if obj.department else "",
-                tags=[],
+    if not is_candidate:
+        for obj in Role.objects.filter(role_q).select_related("department")[:10]:
+            results.append(
+                SearchResult(
+                    type="role",
+                    title=obj.title,
+                    url=f"/departments/{obj.department.slug}/",
+                    snippet=_excerpt(obj.description or obj.title),
+                    department=obj.department.name if obj.department else "",
+                    tags=[],
+                )
             )
-        )
 
     return results

@@ -80,3 +80,27 @@ class GlobalSearchTest(TestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].type, "role")
         self.assertEqual(results[0].department, "Retail")
+
+    def test_candidate_search_filters_to_candidate_visible_only(self):
+        candidate = User.objects.create_user(username="cand", password="test")
+        candidate.profile.user_type = 'candidate'
+        candidate.profile.save()
+
+        Course.objects.create(
+            title="Public Coffee",
+            slug="public-coffee",
+            description="Public",
+            status="published",
+            visible_for_candidates=True,
+        )
+        Course.objects.create(
+            title="Private Coffee",
+            slug="private-coffee",
+            description="Private",
+            status="published",
+            visible_for_candidates=False,
+        )
+        results = global_search("coffee", candidate)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].type, "course")
+        self.assertIn("public-coffee", results[0].url)

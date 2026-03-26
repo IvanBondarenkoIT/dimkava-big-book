@@ -10,7 +10,7 @@ from django.views.generic import FormView, TemplateView
 
 from django.contrib.auth.views import LoginView as AuthLoginView
 
-from .forms import AvatarBadgeForm, CandidatePhoneForm, CandidateRegistrationForm
+from .forms import AvatarBadgeForm, CandidatePhoneForm, CandidateRegistrationForm, PublicUsernameForm
 from .email_verification import unsign_user_id
 from .mailing import send_candidate_verification_email
 from .selectors import get_profile_dashboard_context
@@ -49,20 +49,31 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             context['avatar_badge_form'] = form
             return self.render_to_response(context)
 
+        if action == 'set_public_username':
+            form = PublicUsernameForm(request.POST, instance=profile)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Username updated.')
+                return HttpResponseRedirect(reverse('accounts:profile'))
+            context = self.get_context_data(**kwargs)
+            context['public_username_form'] = form
+            return self.render_to_response(context)
+
         return HttpResponseRedirect(reverse('accounts:profile'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        context['user_name'] = user.get_full_name() or user.username
+        profile = user.profile
+        context['user_name'] = profile.get_public_username()
         context['role'] = _get_role_display(user)
         from apps.courses.selectors import get_active_ilp_context_for_user
 
         context['ilp'] = get_active_ilp_context_for_user(user)
         context['profile_dashboard'] = get_profile_dashboard_context(user)
-        profile = user.profile
         context['phone_form'] = CandidatePhoneForm(instance=profile) if profile.is_candidate else None
         context['avatar_badge_form'] = AvatarBadgeForm(instance=profile, user=user)
+        context['public_username_form'] = PublicUsernameForm(instance=profile)
         context['show_ilp'] = True
         return context
 

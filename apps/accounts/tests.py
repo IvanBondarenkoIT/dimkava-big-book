@@ -201,6 +201,16 @@ class CandidateRegistrationAndEmailTests(TestCase):
             r = self.client.get(path)
             self.assertEqual(r.status_code, 403, msg=f'Expected 403 for candidate path {path}')
 
+    def test_candidate_cannot_open_unknown_sections_by_default(self):
+        user = User.objects.create_user(username='u4b@test.ge', email='u4b@test.ge', password='pass123456789')
+        user.profile.user_type = 'candidate'
+        user.profile.email_verified_at = None
+        user.profile.save()
+        self.client.login(username='u4b@test.ge', password='pass123456789')
+
+        r = self.client.get('/some-new-internal-tool/')
+        self.assertEqual(r.status_code, 403)
+
     def test_candidate_can_open_courses_and_onboarding(self):
         user = User.objects.create_user(username='u5@test.ge', email='u5@test.ge', password='pass123456789')
         user.profile.user_type = 'candidate'
@@ -342,3 +352,21 @@ class AvatarBadgeSelectionTests(TestCase):
         r = self.client.get(reverse('core:home'))
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, '🏆')
+
+
+class PublicUsernameTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='pu@test.ge', email='pu@test.ge', password='pass')
+        self.client.login(username='pu@test.ge', password='pass')
+
+    def test_profile_post_updates_public_username(self):
+        r = self.client.post(
+            reverse('accounts:profile'),
+            {'action': 'set_public_username', 'public_username': 'master-barista'},
+            follow=True,
+        )
+        self.assertEqual(r.status_code, 200)
+        self.user.profile.refresh_from_db()
+        self.assertEqual(self.user.profile.public_username, 'master-barista')
+        self.assertContains(r, 'master-barista')

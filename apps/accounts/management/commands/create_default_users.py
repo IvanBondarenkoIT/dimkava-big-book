@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
+from django.db.models import Q
 from django.utils import timezone
 from decouple import config
 
@@ -129,9 +130,12 @@ class Command(BaseCommand):
             'comments',
         ]
         models_ct = ContentType.objects.filter(app_label__in=app_labels)
-        perms = Permission.objects.filter(
-            content_type__in=models_ct,
-            codename__regex=r'^(view|add|change)_',
+        perms = (
+            Permission.objects.filter(content_type__in=models_ct).filter(
+                Q(codename__startswith='view_')
+                | Q(codename__startswith='add_')
+                | Q(codename__startswith='change_')
+            )
         )
         hr_group.permissions.add(*perms)
 

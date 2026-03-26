@@ -5,8 +5,8 @@ import dj_database_url
 
 DEBUG = False
 SECRET_KEY = config('SECRET_KEY')  # Required in prod, no default
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='').split(',')
+ALLOWED_HOSTS = [h.strip() for h in config('ALLOWED_HOSTS', default='').split(',') if h.strip()]
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in config('CSRF_TRUSTED_ORIGINS', default='').split(',') if o.strip()]
 
 # Database — PostgreSQL from DATABASE_URL (Railway provides this)
 DATABASES = {
@@ -20,6 +20,9 @@ X_FRAME_OPTIONS = 'DENY'
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+# Common reverse-proxy setup (Railway/Render/Fly/Nginx): trust X-Forwarded-Proto for https detection.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Static files — WhiteNoise (add whitenoise to MIDDLEWARE in base when deploying)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

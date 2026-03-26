@@ -18,7 +18,7 @@ class KnowledgeBaseHomeView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class SectionView(TemplateView):
+class SectionView(LoginRequiredMixin, TemplateView):
     template_name = 'knowledge_base/section.html'
 
     def get_context_data(self, **kwargs):
