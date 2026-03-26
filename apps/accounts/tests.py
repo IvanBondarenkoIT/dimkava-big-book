@@ -187,6 +187,29 @@ class CandidateRegistrationAndEmailTests(TestCase):
         r = self.client.get('/wiki/')
         self.assertEqual(r.status_code, 403)
 
+    def test_unverified_candidate_cannot_open_employee_sections(self):
+        user = User.objects.create_user(username='u4@test.ge', email='u4@test.ge', password='pass123456789')
+        user.profile.user_type = 'candidate'
+        user.profile.email_verified_at = None
+        user.profile.save()
+        self.client.login(username='u4@test.ge', password='pass123456789')
+
+        for path in ['/wiki/', '/news/', '/departments/', '/analytics/', '/gamification/', '/notifications/', '/search/']:
+            r = self.client.get(path)
+            self.assertEqual(r.status_code, 403, msg=f'Expected 403 for candidate path {path}')
+
+    def test_candidate_can_open_courses_and_onboarding(self):
+        user = User.objects.create_user(username='u5@test.ge', email='u5@test.ge', password='pass123456789')
+        user.profile.user_type = 'candidate'
+        user.profile.email_verified_at = None
+        user.profile.save()
+        self.client.login(username='u5@test.ge', password='pass123456789')
+
+        r = self.client.get(reverse('courses:list'))
+        self.assertEqual(r.status_code, 200)
+        r = self.client.get(reverse('onboarding:overview'))
+        self.assertEqual(r.status_code, 200)
+
 
 class CandidateConversionTests(TestCase):
     def test_convert_candidate_to_employee_sets_status_and_groups(self):

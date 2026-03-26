@@ -155,9 +155,9 @@
 
 | # | Задача | Файлы | Тесты |
 |---|--------|-------|-------|
-| 10.1 | Admin для всех моделей | */admin.py | — |
-| 10.2 | Custom list_display, filters, inlines | — | — |
-| 10.3 | Stale content indicator (best_practices) | CourseAdmin, ArticleAdmin | — |
+| 10.1 | Admin для всех моделей | */admin.py | ✅ |
+| 10.2 | Custom list_display, filters, inlines | — | ✅ |
+| 10.3 | Stale content indicator (best_practices) | CourseAdmin, ArticleAdmin | ✅ |
 
 **Checkpoint:** HR/Admin управляют контентом через Django Admin.
 
@@ -169,13 +169,13 @@
 
 | # | Задача | Приоритет |
 |---|--------|-----------|
-| 11.1 | Mentorship (Mentor, MentorAssignment, MentorSession) | средний |
-| 11.2 | Individual Learning Plans (ILP) | средний |
-| 11.3 | AssignmentRule (auto-assign) | высокий |
-| 11.4 | LessonRating, OnboardingFeedback | средний |
-| 11.5 | Content lifecycle (responsible_editor, is_stale) | низкий |
-| 11.6 | "Where to start" flow | высокий |
-| 11.7 | **Candidates (pre-hire)**: role/flags/HR monitoring/conversion | высокий |
+| 11.1 | Mentorship (Mentor, MentorAssignment, MentorSession) | ✅ |
+| 11.2 | Individual Learning Plans (ILP) | ✅ |
+| 11.3 | AssignmentRule (auto-assign) | ✅ |
+| 11.4 | LessonRating, OnboardingFeedback | ✅ |
+| 11.5 | Content lifecycle (responsible_editor, is_stale) | ✅ |
+| 11.6 | "Where to start" flow | ✅ |
+| 11.7 | **Candidates (pre-hire)**: role/flags/HR monitoring/conversion | ✅ |
 
 **11.7 Candidates (pre-hire) — кратко:**
 - Роль/статус пользователя `candidate` (минимальные права, ограниченная навигация).
@@ -183,7 +183,7 @@
 - HR-дашборд/админ-лист кандидатов: прогресс/результаты, фильтры.
 - Action: конвертация кандидата в сотрудника (назначение dept/role + применение `AssignmentRule`).
 
-**11.7 Candidates — разбиение имплементации (рекомендуемый порядок):**
+**11.7 Candidates — разбиение имплементации (выполнено, email confirm опционален):**
 - **11.7.1 Регистрация кандидата + телефон**
   - `phone` хранится в профиле пользователя
   - для `candidate` — телефон **обязателен** на форме регистрации
@@ -194,8 +194,9 @@
   - защита на уровне view (если candidate лезет в “внутренние” страницы — 403/redirect)
 - **11.7.3 Email confirmation (кандидаты)**
   - отправка письма при регистрации
-  - до подтверждения: показывать экран “Confirm your email” и не пускать к контенту/квизам
-  - MVP-вариант: Django signing token + одноразовая ссылка, хранить `is_email_verified` в профиле
+  - экран “Confirm your email” (email_pending) + возможность resend
+  - **подтверждение опционально** (кандидаты не блокируются на регистрации)
+  - MVP-вариант: Django signing token + одноразовая ссылка, хранить `email_verified_at` в профиле
 - **11.7.4 HR monitoring + конвертация**
   - список кандидатов (admin) + фильтры + быстрые действия
   - конвертация: candidate → employee, назначение dept/role, применение `AssignmentRule`
