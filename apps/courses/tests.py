@@ -4,8 +4,8 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import Course, ILPItem, IndividualLearningPlan, Lesson, LessonRating, UserProgress
-from .services import mark_lesson_complete, save_quiz_result
+from .models import Course, ILPItem, IndividualLearningPlan, Lesson, LessonRating, TestQuestion, UserProgress
+from .services import mark_lesson_complete, save_quiz_result, unlock_candidate_quiz_retake
 from .selectors import get_active_ilp_context_for_user
 
 User = get_user_model()
@@ -79,6 +79,47 @@ class CandidateVisibilityTests(TestCase):
         self.client.login(username='cand@test.ge', password='pass')
         r = self.client.get(reverse('courses:quiz', kwargs={'slug': self.private_course.slug, 'pk': 999}))
         self.assertIn(r.status_code, (404, 302))
+
+    def test_candidate_quiz_single_attempt_locked_until_hr_unlock(self):
+        from .models import TestQuestion
+
+        q = TestQuestion.objects.create(
+            lesson=self.public_lesson,
+            question_text='Q1',
+            options=[
+                {'text': 'A', 'is_correct': True},
+                {'text': 'B', 'is_correct': False},
+            ],
+            order=1,
+        )
+        self.client.login(username='cand@test.ge', password='pass')
+        url = reverse('courses:quiz', kwargs={'slug': self.public_course.slug, 'pk': self.public_lesson.pk})
+        data = {f'q_{q.pk}': '0'}
+
+        r = self.client.post(url, data)
+        self.assertEqual(r.status_code, 302)
+        p = UserProgress.objects.get(user=self.candidate, lesson=self.public_lesson)
+        self.assertTrue(p.candidate_quiz_locked)
+        first_score = p.quiz_score
+
+        # Candidate cannot resubmit while locked.
+        r = self.client.post(url, data, follow=True)
+        self.assertEqual(r.status_code, 200)
+        p.refresh_from_db()
+        self.assertEqual(p.quiz_score, first_score)
+        self.assertEqual(p.quiz_attempts_count, 1)
+
+        # HR unlocks retake.
+        hr = User.objects.create_user(username='hrunlock@test.ge', password='pass')
+        unlock_candidate_quiz_retake(p, by_user=hr)
+        p.refresh_from_db()
+        self.assertFalse(p.candidate_quiz_locked)
+
+        r = self.client.post(url, data)
+        self.assertEqual(r.status_code, 302)
+        p.refresh_from_db()
+        self.assertTrue(p.candidate_quiz_locked)
+        self.assertEqual(p.quiz_attempts_count, 2)
 
 
 class ILPSelectorsTests(TestCase):

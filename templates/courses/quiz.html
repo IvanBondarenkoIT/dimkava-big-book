@@ -14,13 +14,23 @@
 
   <form method="post" class="space-y-6">
     {% csrf_token %}
+    {% if quiz_locked %}
+    <div class="card-atelier border border-amber-500/30 bg-amber-500/5">
+      <p class="font-bold text-amber-800">Retake locked</p>
+      <p class="text-sm text-on-surface-variant/80 mt-1">
+        You already submitted this quiz.
+        {% if existing_quiz_score is not None %}Your score: <strong>{{ existing_quiz_score }}%</strong>.{% endif %}
+        HR must review and unlock retake before you can submit again.
+      </p>
+    </div>
+    {% endif %}
     {% for q in questions %}
     <div class="card-atelier">
       <h3 class="font-bold text-on-surface mb-4">{{ forloop.counter }}. {{ q.question_text }}</h3>
       <div class="space-y-2">
         {% for opt in q.options %}
         <label class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors">
-          <input type="radio" name="q_{{ q.id }}" value="{{ forloop.counter0 }}" class="text-primary focus:ring-primary"/>
+          <input type="radio" name="q_{{ q.id }}" value="{{ forloop.counter0 }}" class="text-primary focus:ring-primary" {% if quiz_locked %}disabled{% endif %}/>
           <span class="text-on-surface">{{ opt.text }}</span>
         </label>
         {% endfor %}
@@ -31,7 +41,7 @@
       <p class="text-on-surface-variant">No questions in this quiz.</p>
     </div>
     {% endfor %}
-    {% if questions %}
+    {% if questions and not quiz_locked %}
     <button type="submit" class="btn-primary w-full py-4 text-lg">Submit</button>
     {% endif %}
   </form>

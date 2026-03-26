@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 from .models import Course, ILPItem, IndividualLearningPlan, Lesson, LessonRating, TestQuestion, UserProgress
+from .services import unlock_candidate_quiz_retake
 
 
 class LessonInline(admin.TabularInline):
@@ -90,9 +91,31 @@ class TestQuestionAdmin(admin.ModelAdmin):
 
 @admin.register(UserProgress)
 class UserProgressAdmin(admin.ModelAdmin):
-    list_display = ['user', 'lesson', 'is_completed', 'quiz_score', 'completed_at']
-    list_filter = ['is_completed']
+    list_display = [
+        'user',
+        'lesson',
+        'is_completed',
+        'quiz_score',
+        'quiz_attempts_count',
+        'candidate_quiz_locked',
+        'completed_at',
+    ]
+    list_filter = ['is_completed', 'candidate_quiz_locked', 'lesson__lesson_type']
     autocomplete_fields = ['user', 'lesson']
+    actions = ['allow_candidate_quiz_retake']
+
+    @admin.action(description='Allow candidate quiz retake (unlock selected)')
+    def allow_candidate_quiz_retake(self, request, queryset):
+        unlocked = 0
+        for p in queryset.select_related('user__profile', 'lesson'):
+            profile = getattr(p.user, 'profile', None)
+            if not profile or not profile.is_candidate:
+                continue
+            if p.lesson.lesson_type != 'quiz':
+                continue
+            unlock_candidate_quiz_retake(p, by_user=request.user)
+            unlocked += 1
+        self.message_user(request, f'Unlocked {unlocked} quiz attempt(s) for candidate retake.')
 
 
 class ILPItemInline(admin.TabularInline):

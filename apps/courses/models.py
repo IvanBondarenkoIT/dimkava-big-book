@@ -98,6 +98,16 @@ class UserProgress(models.Model):
     is_completed = models.BooleanField(default=False)
     completed_at = models.DateTimeField(null=True, blank=True)
     quiz_score = models.PositiveIntegerField(null=True, blank=True)  # 0-100
+    quiz_attempts_count = models.PositiveIntegerField(default=0)
+    candidate_quiz_locked = models.BooleanField(default=False)
+    candidate_retake_unlocked_at = models.DateTimeField(null=True, blank=True)
+    candidate_retake_unlocked_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='candidate_quiz_unlock_actions',
+    )
 
     class Meta:
         unique_together = [('user', 'lesson')]

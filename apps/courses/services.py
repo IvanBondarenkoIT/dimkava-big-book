@@ -47,3 +47,19 @@ def save_quiz_result(user, lesson: Lesson, score: int, passing_score: int = 70) 
     if passed:
         quiz_passed.send(sender=UserProgress, user=user, lesson=lesson, score=score)
     return passed
+
+
+def unlock_candidate_quiz_retake(progress: UserProgress, *, by_user) -> None:
+    """Allow candidate to retake a locked quiz once."""
+    if not progress.lesson or progress.lesson.lesson_type != 'quiz':
+        return
+    progress.candidate_quiz_locked = False
+    progress.candidate_retake_unlocked_at = timezone.now()
+    progress.candidate_retake_unlocked_by = by_user
+    progress.save(
+        update_fields=[
+            'candidate_quiz_locked',
+            'candidate_retake_unlocked_at',
+            'candidate_retake_unlocked_by',
+        ]
+    )
