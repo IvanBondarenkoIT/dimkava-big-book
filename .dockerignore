@@ -1,0 +1,15 @@
+.git
+.gitignore
+.env
+.venv
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+staticfiles/
+db.sqlite3
+media/
+node_modules/
+experiments/
+C:\Users\
