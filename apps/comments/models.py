@@ -32,8 +32,8 @@ class Comment(models.Model):
     class Meta:
         ordering = ['-created_at']
         indexes = [
-            models.Index(fields=['status', 'created_at']),
-            models.Index(fields=['content_type', 'object_id', 'status']),
+            models.Index(fields=['status', 'created_at'], name='comments_co_status_08b9ef_idx'),
+            models.Index(fields=['content_type', 'object_id', 'status'], name='comments_co_content_1832ed_idx'),
         ]
 
     def __str__(self):

@@ -32,11 +32,11 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name='comment',
-            index=models.Index(fields=['status', 'created_at'], name='comments_com_status_4a1b8d_idx'),
+            index=models.Index(fields=['status', 'created_at'], name='comments_co_status_08b9ef_idx'),
         ),
         migrations.AddIndex(
             model_name='comment',
-            index=models.Index(fields=['content_type', 'object_id', 'status'], name='comments_com_content_7b0b9c_idx'),
+            index=models.Index(fields=['content_type', 'object_id', 'status'], name='comments_co_content_1832ed_idx'),
         ),
     ]
 
