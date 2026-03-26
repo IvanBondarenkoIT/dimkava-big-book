@@ -18,6 +18,28 @@ class UserProfileInline(admin.StackedInline):
 
 class UserAdmin(BaseUserAdmin):
     inlines = [UserProfileInline]
+    list_display = [
+        'username',
+        'email',
+        'first_name',
+        'last_name',
+        'is_staff',
+        'is_superuser',
+        'profile_user_type',
+        'profile_email_verified_at',
+        'last_login',
+        'date_joined',
+    ]
+
+    @admin.display(description='User type')
+    def profile_user_type(self, obj):
+        profile = getattr(obj, 'profile', None)
+        return getattr(profile, 'user_type', '')
+
+    @admin.display(description='Email verified at')
+    def profile_email_verified_at(self, obj):
+        profile = getattr(obj, 'profile', None)
+        return getattr(profile, 'email_verified_at', None)
 
 
 @admin.register(UserProfile)

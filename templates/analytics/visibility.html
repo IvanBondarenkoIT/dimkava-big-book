@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Visibility for candidates{% endblock %}
+{% block content %}
+<div class="space-y-10">
+  <header class="flex items-start justify-between gap-6">
+    <div>
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Visibility for candidates</h1>
+      <p class="text-on-surface-variant/70 mt-2">Toggle what candidates can see (programs, courses, lessons).</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="{% url 'analytics:hr_hub' %}" class="btn-secondary px-4 py-2 no-underline">HR Hub</a>
+      <a href="/admin/" class="btn-secondary px-4 py-2 no-underline">Admin</a>
+    </div>
+  </header>
+
+  <section class="card-atelier p-0 overflow-hidden">
+    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">Onboarding programs</div>
+    {% for p in programs %}
+      <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-outline-variant/10">
+        <div class="min-w-0">
+          <div class="font-bold text-on-surface truncate">{{ p.title }}</div>
+          <div class="text-xs text-on-surface-variant/60 mt-0.5">{{ p.slug }}</div>
+        </div>
+        <form method="post" class="flex items-center gap-2">
+          {% csrf_token %}
+          <input type="hidden" name="target" value="program"/>
+          <input type="hidden" name="id" value="{{ p.id }}"/>
+          <input type="hidden" name="value" value="{% if p.visible_for_candidates %}0{% else %}1{% endif %}"/>
+          <button type="submit" class="btn-secondary px-3 py-2 text-xs">
+            {% if p.visible_for_candidates %}Visible{% else %}Hidden{% endif %}
+          </button>
+        </form>
+      </div>
+    {% empty %}
+      <div class="px-5 py-6 text-on-surface-variant/70">No programs.</div>
+    {% endfor %}
+  </section>
+
+  <section class="card-atelier p-0 overflow-hidden">
+    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">Courses</div>
+    {% for c in courses %}
+      <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-outline-variant/10">
+        <div class="min-w-0">
+          <div class="font-bold text-on-surface truncate">{{ c.title }}</div>
+          <div class="text-xs text-on-surface-variant/60 mt-0.5">{{ c.slug }} · {{ c.status }}</div>
+        </div>
+        <form method="post" class="flex items-center gap-2">
+          {% csrf_token %}
+          <input type="hidden" name="target" value="course"/>
+          <input type="hidden" name="id" value="{{ c.id }}"/>
+          <input type="hidden" name="value" value="{% if c.visible_for_candidates %}0{% else %}1{% endif %}"/>
+          <button type="submit" class="btn-secondary px-3 py-2 text-xs">
+            {% if c.visible_for_candidates %}Visible{% else %}Hidden{% endif %}
+          </button>
+        </form>
+      </div>
+    {% empty %}
+      <div class="px-5 py-6 text-on-surface-variant/70">No courses.</div>
+    {% endfor %}
+  </section>
+
+  <section class="card-atelier p-0 overflow-hidden">
+    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">Lessons</div>
+    {% for l in lessons %}
+      <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-outline-variant/10">
+        <div class="min-w-0">
+          <div class="font-bold text-on-surface truncate">{{ l.course.title }} — {{ l.title }}</div>
+          <div class="text-xs text-on-surface-variant/60 mt-0.5">#{{ l.order }} · {{ l.lesson_type }}</div>
+        </div>
+        <form method="post" class="flex items-center gap-2">
+          {% csrf_token %}
+          <input type="hidden" name="target" value="lesson"/>
+          <input type="hidden" name="id" value="{{ l.id }}"/>
+          <input type="hidden" name="value" value="{% if l.visible_for_candidates %}0{% else %}1{% endif %}"/>
+          <button type="submit" class="btn-secondary px-3 py-2 text-xs">
+            {% if l.visible_for_candidates %}Visible{% else %}Hidden{% endif %}
+          </button>
+        </form>
+      </div>
+    {% empty %}
+      <div class="px-5 py-6 text-on-surface-variant/70">No lessons.</div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}
+

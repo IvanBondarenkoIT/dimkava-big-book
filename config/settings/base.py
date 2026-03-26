@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.notifications',
     'apps.search',
     'apps.gamification',
+    'apps.comments',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +74,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'apps.notifications.context_processors.unread_notifications_count',
                 'apps.accounts.context_processors.candidate_ui',
+                'apps.accounts.context_processors.hr_ui',
             ],
         },
     },

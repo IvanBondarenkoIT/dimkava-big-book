@@ -5,6 +5,8 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% block title %}Dim Kava{% endblock %} | Internal Learning Portal</title>
+  <link rel="icon" href="{% static 'favicon.ico' %}" sizes="any">
+  <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="{% static 'css/tailwind.css' %}?v=4" fetchpriority="high"/>
@@ -133,6 +135,12 @@
     </details>
 
     <div class="flex items-center gap-1.5 sm:gap-2 md:gap-4 flex-shrink-0 min-w-0">
+      {% if hr_ui %}
+      <a href="{% url 'analytics:hr_hub' %}" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-primary text-white font-extrabold text-sm shadow hover:opacity-95 transition-opacity no-underline" title="HR tools">
+        <span class="material-symbols-outlined text-lg" aria-hidden="true">verified_user</span>
+        <span>HR</span>
+      </a>
+      {% endif %}
       {% if not candidate_ui %}
       <a href="{% url 'search:results' %}" class="nav-icon-btn flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors shrink-0" aria-label="Search" title="Search">
         <span class="material-symbols-outlined">search</span>
