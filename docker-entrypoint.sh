@@ -6,7 +6,12 @@ python manage.py migrate --noinput
 
 if [ "${AUTO_CREATE_DEFAULT_USERS:-}" = "1" ] || [ "${AUTO_CREATE_DEFAULT_USERS:-}" = "true" ]; then
   echo "Creating default users (AUTO_CREATE_DEFAULT_USERS enabled)..."
-  python manage.py create_default_users --update
+  if [ "${AUTO_SEED_DEMO_CONTENT:-}" = "1" ] || [ "${AUTO_SEED_DEMO_CONTENT:-}" = "true" ]; then
+    echo "Auto-seeding demo content (AUTO_SEED_DEMO_CONTENT enabled)..."
+    python manage.py create_default_users --update
+  else
+    python manage.py create_default_users --update --no-seed
+  fi
 fi
 
 echo "Collecting static..."
