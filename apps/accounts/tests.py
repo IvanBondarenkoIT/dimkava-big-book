@@ -5,14 +5,17 @@ from unittest.mock import patch
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.core.management import call_command
-from django.test import TestCase
+from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils import timezone
 
 from apps.departments.models import Department, Role
+from apps.courses.models import Course, Lesson, UserProgress
+from apps.gamification.models import Badge, GamificationProfile, UserBadge
 from apps.onboarding.models import OnboardingProgram
 
 from .models import AssignmentRule
+from .selectors import get_profile_dashboard_context
 from .services import convert_candidate_to_employee, find_matching_rule
 
 User = get_user_model()
@@ -258,3 +261,84 @@ class SeedDemoContentTests(TestCase):
         mock_get_var.side_effect = get_var_impl
         call_command('create_default_users', '--no-seed')
         self.assertEqual(mock_call_command.call_count, 0)
+
+
+class ProfileDashboardSelectorTests(TestCase):
+    def test_profile_dashboard_metrics(self):
+        user = User.objects.create_user(username='p@test.ge', email='p@test.ge', password='pass')
+        GamificationProfile.objects.filter(user=user).update(total_points=840, level=8)
+
+        c1 = Course.objects.create(slug='pc1', title='C1', status='published', level='beginner')
+        l11 = Lesson.objects.create(course=c1, title='L1', order=1, lesson_type='text', estimated_minutes=30, is_required=True)
+        l12 = Lesson.objects.create(course=c1, title='L2', order=2, lesson_type='text', estimated_minutes=30, is_required=True)
+        c2 = Course.objects.create(slug='pc2', title='C2', status='published', level='intermediate')
+        l21 = Lesson.objects.create(course=c2, title='L1', order=1, lesson_type='text', estimated_minutes=60, is_required=True)
+
+        UserProgress.objects.create(user=user, lesson=l11, is_completed=True)
+        UserProgress.objects.create(user=user, lesson=l12, is_completed=True)
+        UserProgress.objects.create(user=user, lesson=l21, is_completed=False)
+
+        compliance = Badge.objects.create(code='COMPL', name='Compliance', description='ok', is_compliance=True)
+        regular = Badge.objects.create(code='REG', name='Regular', description='ok', is_compliance=False)
+        UserBadge.objects.create(user=user, badge=compliance)
+        UserBadge.objects.create(user=user, badge=regular)
+
+        ctx = get_profile_dashboard_context(user)
+        self.assertEqual(ctx['courses_done'], 1)
+        self.assertEqual(ctx['hours_spent'], 1)
+        self.assertEqual(ctx['skill_level'], 8.4)
+        self.assertEqual(ctx['certificates_count'], 1)
+        self.assertTrue(len(ctx['certification_progress']) >= 3)
+        self.assertEqual(len(ctx['badge_showcase']), 2)
+
+
+class AvatarBadgeSelectionTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='ab@test.ge', email='ab@test.ge', password='pass')
+        self.client.login(username='ab@test.ge', password='pass')
+
+    def test_user_can_select_only_earned_badge_for_avatar(self):
+        from apps.gamification.models import Badge, UserBadge
+
+        b1 = Badge.objects.create(code='B1', name='B1', description='ok', icon='🏆')
+        b2 = Badge.objects.create(code='B2', name='B2', description='ok', icon='🎖️')
+        UserBadge.objects.create(user=self.user, badge=b1)
+
+        r = self.client.post(
+            reverse('accounts:profile'),
+            {
+                'action': 'set_avatar_badge',
+                'display_badge': str(b2.id),
+                'display_badge_placement': 'corner',
+            },
+        )
+        self.assertEqual(r.status_code, 200)
+        self.user.profile.refresh_from_db()
+        self.assertIsNone(self.user.profile.display_badge)
+
+        r = self.client.post(
+            reverse('accounts:profile'),
+            {
+                'action': 'set_avatar_badge',
+                'display_badge': str(b1.id),
+                'display_badge_placement': 'corner',
+            },
+            follow=True,
+        )
+        self.assertEqual(r.status_code, 200)
+        self.user.profile.refresh_from_db()
+        self.assertEqual(self.user.profile.display_badge_id, b1.id)
+
+    def test_base_template_renders_selected_badge_icon(self):
+        from apps.gamification.models import Badge, UserBadge
+
+        b1 = Badge.objects.create(code='B3', name='B3', description='ok', icon='🏆')
+        UserBadge.objects.create(user=self.user, badge=b1)
+        self.user.profile.display_badge = b1
+        self.user.profile.display_badge_placement = 'corner'
+        self.user.profile.save()
+
+        r = self.client.get(reverse('core:home'))
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, '🏆')

@@ -20,10 +20,15 @@
   <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
     <div class="lg:col-span-7 space-y-4">
       <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter text-primary leading-[0.9]">
-        Welcome back,<br/>Master Barista.
+        Welcome back,<br/>{{ home_snapshot.role_title }}.
       </h1>
       <p class="text-lg text-on-surface-variant/70 max-w-md">
-        Your journey to the perfect extraction continues. You're in the top 5% of learners this week.
+        Your journey to the perfect extraction continues.
+        {% if home_snapshot.weekly_learners > 1 %}
+        You're in the top {{ home_snapshot.top_percentile_this_week }}% this week (#{{ home_snapshot.weekly_rank }} of {{ home_snapshot.weekly_learners }}).
+        {% else %}
+        Keep going this week to climb the leaderboard.
+        {% endif %}
       </p>
     </div>
     <div class="lg:col-span-5 flex gap-4">
@@ -32,14 +37,14 @@
           <span class="text-xs font-bold uppercase tracking-widest opacity-50">Current Streak</span>
           <span class="material-symbols-outlined text-primary-container text-xl">local_fire_department</span>
         </div>
-        <div class="text-4xl font-black text-primary">12 Days</div>
+        <div class="text-4xl font-black text-primary">{{ home_snapshot.current_streak_days }} Days</div>
       </div>
       <div class="flex-1 bg-secondary-container/20 p-6 rounded-lg space-y-2 border border-secondary-container/30">
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold uppercase tracking-widest text-secondary opacity-70">Points</span>
           <span class="material-symbols-outlined text-secondary text-xl">military_tech</span>
         </div>
-        <div class="text-4xl font-black text-secondary">2,450</div>
+        <div class="text-4xl font-black text-secondary">{{ home_snapshot.total_points }}</div>
       </div>
     </div>
   </section>

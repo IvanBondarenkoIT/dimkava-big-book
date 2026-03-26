@@ -43,6 +43,23 @@ class UserProfile(models.Model):
         blank=True,
         help_text='Set when the user confirms their email (required for candidates before learning access).',
     )
+    display_badge = models.ForeignKey(
+        'gamification.Badge',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Optional badge to display near the user avatar.',
+    )
+    DISPLAY_BADGE_PLACEMENT_CHOICES = [
+        ('corner', 'Corner'),
+        ('overlay', 'Overlay'),
+    ]
+    display_badge_placement = models.CharField(
+        max_length=20,
+        choices=DISPLAY_BADGE_PLACEMENT_CHOICES,
+        default='corner',
+    )
 
     class Meta:
         verbose_name = 'User profile'

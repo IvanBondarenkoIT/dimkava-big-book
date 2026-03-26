@@ -26,8 +26,10 @@
 | Документ | Для кого | Описание |
 |----------|----------|----------|
 | [ROLE_GUIDES.md](ROLE_GUIDES.md) | Все | Ссылки на инструкции по ролям |
+| [ROLE_GUIDE_CANDIDATE.md](ROLE_GUIDE_CANDIDATE.md) | Candidate | Регистрация, ограничения доступа, как учиться |
+| [ROLE_GUIDE_EMPLOYEE.md](ROLE_GUIDE_EMPLOYEE.md) | Employee | Профиль, KPI, ILP, feedback |
 | [ROLE_GUIDE_HR.md](ROLE_GUIDE_HR.md) | HR | Кандидаты, контент для кандидатов, мониторинг, конвертация |
-| [ROLE_GUIDE_ADMIN.md](ROLE_GUIDE_ADMIN.md) | Admin | Окружение, дефолтные пользователи, демо-контент, группы |
+| [ROLE_GUIDE_ADMIN.md](ROLE_GUIDE_ADMIN.md) | Admin | Окружение, доступы, стабильность, инциденты |
 
 ---
 

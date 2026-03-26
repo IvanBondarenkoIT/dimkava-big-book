@@ -147,3 +147,68 @@ class CommentModerationView(LoginRequiredMixin, UserPassesTestMixin, TemplateVie
             c.reject(by_user=request.user)
 
         return redirect('analytics:comment_moderation')
+
+
+class OnboardingFeedbackModerationView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'analytics/onboarding_feedback_moderation.html'
+
+    def test_func(self):
+        return user_can_view_analytics(self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        from django.db.models import Q
+        from apps.onboarding.models import OnboardingFeedback
+
+        program_id = (self.request.GET.get('program') or '').strip()
+        rating = (self.request.GET.get('rating') or '').strip()
+        q = (self.request.GET.get('q') or '').strip()
+
+        pending_qs = (
+            OnboardingFeedback.objects.filter(status=OnboardingFeedback.Status.PENDING)
+            .select_related('user', 'program', 'moderated_by')
+            .order_by('-updated_at', '-id')
+        )
+        if program_id.isdigit():
+            pending_qs = pending_qs.filter(program_id=int(program_id))
+        if rating.isdigit():
+            pending_qs = pending_qs.filter(rating=int(rating))
+        if q:
+            pending_qs = pending_qs.filter(
+                Q(user__username__icontains=q)
+                | Q(user__email__icontains=q)
+                | Q(comment__icontains=q)
+                | Q(program__title__icontains=q)
+            )
+
+        context['pending_feedback'] = pending_qs
+        context['program_filter'] = program_id
+        context['rating_filter'] = rating
+        context['query_filter'] = q
+        context['program_options'] = (
+            OnboardingFeedback.objects.filter(status=OnboardingFeedback.Status.PENDING)
+            .select_related('program')
+            .values('program_id', 'program__title')
+            .order_by('program__title')
+            .distinct()
+        )
+        return context
+
+    def post(self, request, *args, **kwargs):
+        action = request.POST.get('action')
+        feedback_id = request.POST.get('feedback_id')
+        if not action or not feedback_id:
+            return redirect('analytics:onboarding_feedback_moderation')
+
+        from apps.onboarding.models import OnboardingFeedback
+
+        fb = OnboardingFeedback.objects.filter(pk=feedback_id, status=OnboardingFeedback.Status.PENDING).first()
+        if not fb:
+            return redirect('analytics:onboarding_feedback_moderation')
+
+        if action == 'approve':
+            fb.approve(by_user=request.user)
+        elif action == 'reject':
+            fb.reject(by_user=request.user)
+
+        return redirect('analytics:onboarding_feedback_moderation')

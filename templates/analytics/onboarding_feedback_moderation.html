@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}Onboarding feedback moderation{% endblock %}
+{% block content %}
+<div class="space-y-8">
+  <header class="flex items-start justify-between gap-6">
+    <div>
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Onboarding feedback moderation</h1>
+      <p class="text-on-surface-variant/70 mt-2">Approve feedback before it becomes visible to everyone.</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="{% url 'analytics:hr_hub' %}" class="btn-secondary px-4 py-2 no-underline">HR Hub</a>
+      <a href="/admin/onboarding/onboardingfeedback/?status__exact=pending" class="btn-secondary px-4 py-2 no-underline">Open in admin</a>
+    </div>
+  </header>
+
+  <section class="card-atelier">
+    <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant/60 mb-1">Program</label>
+        <select name="program" class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm">
+          <option value="">All</option>
+          {% for p in program_options %}
+            <option value="{{ p.program_id }}" {% if program_filter == p.program_id|stringformat:"s" %}selected{% endif %}>{{ p.program__title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant/60 mb-1">Rating</label>
+        <select name="rating" class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm">
+          <option value="">All</option>
+          {% for r in "12345" %}
+            <option value="{{ forloop.counter }}" {% if rating_filter == forloop.counter|stringformat:"s" %}selected{% endif %}>{{ forloop.counter }}/5</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="md:col-span-2">
+        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant/60 mb-1">Search</label>
+        <input type="text" name="q" value="{{ query_filter }}" placeholder="user email, username, program, text..." class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm"/>
+      </div>
+      <div class="md:col-span-4 flex items-center gap-2">
+        <button type="submit" class="btn-primary px-4 py-2 text-sm">Apply filters</button>
+        <a href="{% url 'analytics:onboarding_feedback_moderation' %}" class="btn-secondary px-4 py-2 text-sm no-underline">Reset</a>
+      </div>
+    </form>
+  </section>
+
+  <section class="card-atelier p-0 overflow-hidden">
+    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">Pending</div>
+    {% for fb in pending_feedback %}
+      <div class="px-5 py-4 border-b border-outline-variant/10 space-y-2">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="text-sm text-on-surface-variant/70">
+            <strong class="text-on-surface">{{ fb.user.get_username }}</strong>
+            · {{ fb.program.title }}
+            · {{ fb.rating }}/5
+            · {{ fb.updated_at|date:"Y-m-d H:i" }}
+          </div>
+          <div class="flex items-center gap-2">
+            <form method="post" class="inline">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="reject"/>
+              <input type="hidden" name="feedback_id" value="{{ fb.id }}"/>
+              <button type="submit" class="btn-secondary px-3 py-2 text-xs">Reject</button>
+            </form>
+            <form method="post" class="inline">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="approve"/>
+              <input type="hidden" name="feedback_id" value="{{ fb.id }}"/>
+              <button type="submit" class="btn-primary px-3 py-2 text-xs">Approve</button>
+            </form>
+          </div>
+        </div>
+        {% if fb.comment %}
+        <div class="text-on-surface whitespace-pre-wrap">{{ fb.comment }}</div>
+        {% endif %}
+      </div>
+    {% empty %}
+      <div class="px-5 py-8 text-on-surface-variant/70">No pending onboarding feedback.</div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}
+

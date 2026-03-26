@@ -74,7 +74,32 @@ class HRToolsAccessTests(TestCase):
         self.client.login(username='hr@test.local', password='x')
         self.assertEqual(self.client.get(reverse('analytics:visibility')).status_code, 200)
         self.assertEqual(self.client.get(reverse('analytics:comment_moderation')).status_code, 200)
+        self.assertEqual(self.client.get(reverse('analytics:onboarding_feedback_moderation')).status_code, 200)
 
     def test_regular_user_cannot_open_visibility(self):
         self.client.login(username='u@test.local', password='x')
         self.assertEqual(self.client.get(reverse('analytics:visibility')).status_code, 403)
+
+    def test_onboarding_feedback_moderation_filters(self):
+        from apps.onboarding.models import OnboardingProgram, OnboardingFeedback
+
+        self.client.login(username='hr@test.local', password='x')
+        p1 = OnboardingProgram.objects.create(slug='p1-test', title='P1')
+        p2 = OnboardingProgram.objects.create(slug='p2-test', title='P2')
+        u1 = User.objects.create_user(username='fb1@test.local', email='fb1@test.local', password='x')
+        u2 = User.objects.create_user(username='fb2@test.local', email='fb2@test.local', password='x')
+        OnboardingFeedback.objects.create(user=u1, program=p1, rating=5, comment='Great progress')
+        OnboardingFeedback.objects.create(user=u2, program=p2, rating=2, comment='Needs support')
+
+        base = reverse('analytics:onboarding_feedback_moderation')
+        r = self.client.get(base, {'program': str(p1.id)})
+        self.assertContains(r, 'Great progress')
+        self.assertNotContains(r, 'Needs support')
+
+        r = self.client.get(base, {'rating': '2'})
+        self.assertContains(r, 'Needs support')
+        self.assertNotContains(r, 'Great progress')
+
+        r = self.client.get(base, {'q': 'fb1@test.local'})
+        self.assertContains(r, 'Great progress')
+        self.assertNotContains(r, 'Needs support')

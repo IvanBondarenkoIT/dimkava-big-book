@@ -12,7 +12,7 @@ class UserProfileInline(admin.StackedInline):
     max_num = 1
     can_delete = False
     fk_name = 'user'
-    autocomplete_fields = ['department', 'role', 'assigned_onboarding_program']
+    autocomplete_fields = ['department', 'role', 'assigned_onboarding_program', 'display_badge']
     readonly_fields = ['email_verified_at']
 
 
@@ -49,15 +49,17 @@ class UserProfileAdmin(admin.ModelAdmin):
         'user_type',
         'phone',
         'email_verified_at',
+        'display_badge',
+        'display_badge_placement',
         'department',
         'role',
         'assigned_onboarding_program',
         'onboarding_progress_pct',
         'last_login',
     ]
-    list_filter = ['user_type', 'department', 'role', 'assigned_onboarding_program']
+    list_filter = ['user_type', 'display_badge_placement', 'department', 'role', 'assigned_onboarding_program']
     search_fields = ['user__username', 'user__email', 'phone']
-    autocomplete_fields = ['user', 'department', 'role', 'assigned_onboarding_program']
+    autocomplete_fields = ['user', 'department', 'role', 'assigned_onboarding_program', 'display_badge']
 
     @admin.display(description='Last login')
     def last_login(self, obj):

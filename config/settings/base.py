@@ -75,6 +75,7 @@ TEMPLATES = [
                 'apps.notifications.context_processors.unread_notifications_count',
                 'apps.accounts.context_processors.candidate_ui',
                 'apps.accounts.context_processors.hr_ui',
+                'apps.accounts.context_processors.avatar_badge',
             ],
         },
     },

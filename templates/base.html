@@ -161,8 +161,15 @@
           {% endif %}
         </a>
         {% endif %}
-        <a href="{% url 'accounts:profile' %}" class="w-10 h-10 rounded-full bg-primary-container/20 border border-primary-container/30 overflow-hidden flex-shrink-0">
+        <a href="{% url 'accounts:profile' %}" class="relative w-10 h-10 rounded-full bg-primary-container/20 border border-primary-container/30 overflow-hidden flex-shrink-0">
           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ user.username }}" alt="Avatar" class="w-full h-full object-cover"/>
+          {% if avatar_badge %}
+            {% if avatar_badge.placement == 'overlay' %}
+              <span class="absolute inset-0 flex items-center justify-center text-lg" title="Badge">{{ avatar_badge.icon }}</span>
+            {% else %}
+              <span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-surface border border-outline-variant/30 flex items-center justify-center text-xs" title="Badge">{{ avatar_badge.icon }}</span>
+            {% endif %}
+          {% endif %}
         </a>
       {% else %}
         <a href="{% url 'login' %}" class="btn-primary py-2 px-4 text-sm">Login</a>

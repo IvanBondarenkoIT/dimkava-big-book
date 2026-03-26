@@ -22,3 +22,18 @@ def hr_ui(request):
     if request.user.is_superuser:
         return {'hr_ui': True}
     return {'hr_ui': request.user.groups.filter(name='hr_manager').exists()}
+
+
+def avatar_badge(request):
+    if not request.user.is_authenticated:
+        return {'avatar_badge': None}
+    profile = getattr(request.user, 'profile', None)
+    if not profile or not getattr(profile, 'display_badge_id', None):
+        return {'avatar_badge': None}
+    badge = profile.display_badge
+    return {
+        'avatar_badge': {
+            'icon': getattr(badge, 'icon', '') or '🏅',
+            'placement': getattr(profile, 'display_badge_placement', 'corner') or 'corner',
+        }
+    }

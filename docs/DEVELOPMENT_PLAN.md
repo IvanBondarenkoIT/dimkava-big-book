@@ -176,6 +176,7 @@
 | 11.5 | Content lifecycle (responsible_editor, is_stale) | ✅ |
 | 11.6 | "Where to start" flow | ✅ |
 | 11.7 | **Candidates (pre-hire)**: role/flags/HR monitoring/conversion | ✅ |
+| 11.8 | **Profile + Home Achievement Snapshot** (welcome, streak, points, percentile, KPI cards) | ✅ |
 
 **11.7 Candidates (pre-hire) — кратко:**
 - Роль/статус пользователя `candidate` (минимальные права, ограниченная навигация).
@@ -200,6 +201,26 @@
 - **11.7.4 HR monitoring + конвертация**
   - список кандидатов (admin) + фильтры + быстрые действия
   - конвертация: candidate → employee, назначение dept/role, применение `AssignmentRule`
+
+**11.8 Profile/Home Achievement Snapshot — разбиение имплементации:**
+- ✅ **11.8.1 Дашборд-приветствие (home)**
+  - блок: `Welcome back, <role>.`
+  - подзаголовок: прогресс-нэрратив (`journey continues`)
+  - метрики: `current_streak`, `points`, `top_percentile` (на неделе)
+- ✅ **11.8.2 KPI профиля (profile)**
+  - `courses_done`: курс завершён при `100% required lessons completed`
+  - `hours_spent`: сумма `estimated_minutes` только по завершённым урокам
+  - `skill_level`: индекс `0..10` из points (`min(10, round(points/100, 1))`)
+  - `certificates`: только `compliance badges` (`Badge.is_compliance=True`)
+- ✅ **11.8.3 Certification progress**
+  - прогресс по трекам (beginner/intermediate/manager)
+  - карточки + progress bars
+- ✅ **11.8.4 Badge showcase**
+  - последние/избранные бейджи в профиле
+  - подготовка к отображению “бэйджа у аватара” (backlog)
+- ✅ **11.8.5 Тесты и устойчивость**
+  - unit-тесты формул KPI
+  - smoke-тесты profile/home
 
 ---
 

@@ -111,10 +111,24 @@ class MentorSession(models.Model):
 
 
 class OnboardingFeedback(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'pending', 'Pending'
+        APPROVED = 'approved', 'Approved'
+        REJECTED = 'rejected', 'Rejected'
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='onboarding_feedback')
     program = models.ForeignKey(OnboardingProgram, on_delete=models.CASCADE, related_name='feedback')
     rating = models.PositiveSmallIntegerField()  # 1..5
     comment = models.TextField(blank=True)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+    moderated_at = models.DateTimeField(null=True, blank=True)
+    moderated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='moderated_onboarding_feedback',
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -124,3 +138,19 @@ class OnboardingFeedback(models.Model):
 
     def __str__(self):
         return f'OnboardingFeedback: {self.program} — {self.rating}/5'
+
+    def approve(self, *, by_user) -> None:
+        from django.utils import timezone
+
+        self.status = self.Status.APPROVED
+        self.moderated_at = timezone.now()
+        self.moderated_by = by_user
+        self.save(update_fields=['status', 'moderated_at', 'moderated_by'])
+
+    def reject(self, *, by_user) -> None:
+        from django.utils import timezone
+
+        self.status = self.Status.REJECTED
+        self.moderated_at = timezone.now()
+        self.moderated_by = by_user
+        self.save(update_fields=['status', 'moderated_at', 'moderated_by'])

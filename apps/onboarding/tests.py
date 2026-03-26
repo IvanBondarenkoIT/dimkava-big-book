@@ -125,3 +125,37 @@ class OnboardingFeedbackTests(TestCase):
         fb = OnboardingFeedback.objects.get(user=self.user, program=self.program)
         self.assertEqual(fb.rating, 5)
         self.assertEqual(fb.comment, 'Great')
+        self.assertEqual(fb.status, OnboardingFeedback.Status.PENDING)
+
+    def test_submit_feedback_without_rating_keeps_existing_rating(self):
+        OnboardingFeedback.objects.create(user=self.user, program=self.program, rating=3, comment='Old', status=OnboardingFeedback.Status.APPROVED)
+        self.client.login(username='fb@test.ge', password='pass')
+        r = self.client.post(reverse('onboarding:submit_feedback'), {'comment': 'New'})
+        self.assertEqual(r.status_code, 302)
+        fb = OnboardingFeedback.objects.get(user=self.user, program=self.program)
+        self.assertEqual(fb.rating, 3)
+        self.assertEqual(fb.comment, 'New')
+        self.assertEqual(fb.status, OnboardingFeedback.Status.PENDING)
+
+    def test_overview_shows_only_approved_feedback_from_others(self):
+        other = User.objects.create_user(username='other@test.ge', password='pass')
+        OnboardingFeedback.objects.create(
+            user=other,
+            program=self.program,
+            rating=4,
+            comment='Approved',
+            status=OnboardingFeedback.Status.APPROVED,
+        )
+        other2 = User.objects.create_user(username='other2@test.ge', password='pass')
+        OnboardingFeedback.objects.create(
+            user=other2,
+            program=self.program,
+            rating=2,
+            comment='Pending',
+            status=OnboardingFeedback.Status.PENDING,
+        )
+        self.client.login(username='fb@test.ge', password='pass')
+        r = self.client.get(reverse('onboarding:overview'))
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'Approved')
+        self.assertNotContains(r, 'Pending')

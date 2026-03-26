@@ -1,5 +1,6 @@
 """Onboarding admin."""
 from django.contrib import admin
+from django.utils import timezone
 from .models import (
     Mentor,
     MentorAssignment,
@@ -99,7 +100,24 @@ class MentorSessionAdmin(admin.ModelAdmin):
 
 @admin.register(OnboardingFeedback)
 class OnboardingFeedbackAdmin(admin.ModelAdmin):
-    list_display = ['program', 'user', 'rating', 'updated_at']
-    list_filter = ['rating', 'program']
+    list_display = ['program', 'user', 'rating', 'status', 'updated_at', 'moderated_at', 'moderated_by']
+    list_filter = ['status', 'rating', 'program']
     search_fields = ['program__title', 'user__username', 'user__email', 'comment']
     autocomplete_fields = ['program', 'user']
+    actions = ['approve_feedback', 'reject_feedback']
+
+    @admin.action(description='Approve selected onboarding feedback')
+    def approve_feedback(self, request, queryset):
+        queryset.update(
+            status=OnboardingFeedback.Status.APPROVED,
+            moderated_at=timezone.now(),
+            moderated_by=request.user,
+        )
+
+    @admin.action(description='Reject selected onboarding feedback')
+    def reject_feedback(self, request, queryset):
+        queryset.update(
+            status=OnboardingFeedback.Status.REJECTED,
+            moderated_at=timezone.now(),
+            moderated_by=request.user,
+        )

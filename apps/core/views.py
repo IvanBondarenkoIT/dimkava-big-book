@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 from apps.courses.selectors import get_courses_for_user
 
-from .selectors import get_where_to_start_hint
+from .selectors import get_home_achievement_snapshot, get_where_to_start_hint
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -18,4 +18,5 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context['active_course'] = active or {'slug': '', 'title': 'No courses', 'category': '', 'progress': 0, 'image': ''}
         context['achievements'] = []
         context['where_to_start'] = get_where_to_start_hint(user)
+        context['home_snapshot'] = get_home_achievement_snapshot(user)
         return context

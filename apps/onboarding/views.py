@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.views import View
@@ -53,17 +54,24 @@ class SubmitFeedbackView(LoginRequiredMixin, View):
         if not program:
             return redirect('onboarding:overview')
 
+        existing = OnboardingFeedback.objects.filter(user=request.user, program=program).first()
         try:
             rating = int(request.POST.get('rating') or 0)
         except ValueError:
             rating = 0
         comment = (request.POST.get('comment') or '').strip()
         if rating < 1 or rating > 5:
-            return redirect('onboarding:overview')
+            # If user only updated comment (or UI didn't send rating), keep previous rating.
+            if existing and 1 <= existing.rating <= 5:
+                rating = existing.rating
+            else:
+                messages.error(request, 'Please select a rating from 1 to 5.')
+                return redirect('onboarding:overview')
 
         OnboardingFeedback.objects.update_or_create(
             user=request.user,
             program=program,
-            defaults={'rating': rating, 'comment': comment},
+            defaults={'rating': rating, 'comment': comment, 'status': OnboardingFeedback.Status.PENDING},
         )
+        messages.success(request, 'Feedback saved.')
         return redirect('onboarding:overview')

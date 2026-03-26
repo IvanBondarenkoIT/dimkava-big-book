@@ -10,9 +10,10 @@ from django.views.generic import FormView, TemplateView
 
 from django.contrib.auth.views import LoginView as AuthLoginView
 
-from .forms import CandidatePhoneForm, CandidateRegistrationForm
+from .forms import AvatarBadgeForm, CandidatePhoneForm, CandidateRegistrationForm
 from .email_verification import unsign_user_id
 from .mailing import send_candidate_verification_email
+from .selectors import get_profile_dashboard_context
 
 User = get_user_model()
 
@@ -26,7 +27,9 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         profile = request.user.profile
-        if profile.is_candidate:
+        action = request.POST.get('action') or ''
+
+        if action == 'update_phone' and profile.is_candidate:
             form = CandidatePhoneForm(request.POST, instance=profile)
             if form.is_valid():
                 form.save()
@@ -35,6 +38,17 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             context = self.get_context_data(**kwargs)
             context['phone_form'] = form
             return self.render_to_response(context)
+
+        if action == 'set_avatar_badge':
+            form = AvatarBadgeForm(request.POST, instance=profile, user=request.user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Avatar badge updated.')
+                return HttpResponseRedirect(reverse('accounts:profile'))
+            context = self.get_context_data(**kwargs)
+            context['avatar_badge_form'] = form
+            return self.render_to_response(context)
+
         return HttpResponseRedirect(reverse('accounts:profile'))
 
     def get_context_data(self, **kwargs):
@@ -45,8 +59,10 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         from apps.courses.selectors import get_active_ilp_context_for_user
 
         context['ilp'] = get_active_ilp_context_for_user(user)
+        context['profile_dashboard'] = get_profile_dashboard_context(user)
         profile = user.profile
         context['phone_form'] = CandidatePhoneForm(instance=profile) if profile.is_candidate else None
+        context['avatar_badge_form'] = AvatarBadgeForm(instance=profile, user=user)
         context['show_ilp'] = True
         return context
 

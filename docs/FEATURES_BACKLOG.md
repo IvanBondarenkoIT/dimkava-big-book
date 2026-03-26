@@ -52,6 +52,9 @@
 | Ачивки у аватара | 9 (Gamification), 3 (Courses/Quiz) | **После** основного плана |
 | Комментарии + Task Stack | 4 (KB, News), 3 (Courses), 7 (Notifications), 10 (Admin) | **После** основного плана; HR approve до публикации — обязательно |
 
+Примечание:
+- Блоки профиля/главной (`welcome`, `streak`, `points`, `top percentile`, KPI cards) относятся к **DEVELOPMENT_PLAN 11.8** и идут **до** финального backlog про “бэйдж у аватара”.
+
 ---
 
 ## 3. Кандидаты (pre-hire) + конвертация в сотрудника

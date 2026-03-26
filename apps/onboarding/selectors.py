@@ -59,12 +59,50 @@ def get_onboarding_overview_for_user(user):
 
     progress = int((completed_steps / total_steps * 100)) if total_steps else 0
     mentor_block = get_mentor_block_for_user(user)
-    feedback = None
+    feedback = OnboardingFeedback.objects.filter(user=user, program=program).first() if program else None
+
+    public_feedback = []
     if program:
-        feedback = OnboardingFeedback.objects.filter(user=user, program=program).first()
+        from django.db.models import OuterRef, Subquery
+        from apps.gamification.models import UserBadge
+
+        latest_badge_name = Subquery(
+            UserBadge.objects.filter(user_id=OuterRef('user_id'))
+            .select_related('badge')
+            .order_by('-awarded_at')
+            .values('badge__name')[:1]
+        )
+        latest_badge_icon = Subquery(
+            UserBadge.objects.filter(user_id=OuterRef('user_id'))
+            .select_related('badge')
+            .order_by('-awarded_at')
+            .values('badge__icon')[:1]
+        )
+
+        qs = (
+            OnboardingFeedback.objects.filter(program=program, status=OnboardingFeedback.Status.APPROVED)
+            .select_related('user')
+            .annotate(latest_badge_name=latest_badge_name, latest_badge_icon=latest_badge_icon)
+            .order_by('-updated_at')[:12]
+        )
+        for fb in qs:
+            u = fb.user
+            public_feedback.append(
+                {
+                    'user_name': u.get_full_name() or u.get_username(),
+                    'user_username': u.get_username(),
+                    'rating': fb.rating,
+                    'comment': fb.comment,
+                    'updated_at': fb.updated_at,
+                    'badge_name': getattr(fb, 'latest_badge_name', None),
+                    'badge_icon': getattr(fb, 'latest_badge_icon', None),
+                }
+            )
+
     feedback_block = {
         'rating': feedback.rating if feedback else None,
         'comment': feedback.comment if feedback else '',
+        'public_feedback': public_feedback,
     }
     return program, modules_data, progress, mentor_block, feedback_block
 

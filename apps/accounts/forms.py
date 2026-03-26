@@ -55,3 +55,34 @@ class CandidatePhoneForm(forms.ModelForm):
         if not _PHONE_RE.match(phone):
             raise forms.ValidationError('Enter a valid phone number (digits; + allowed at start).')
         return phone
+
+
+class AvatarBadgeForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['display_badge', 'display_badge_placement']
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._user = user
+        from apps.gamification.models import UserBadge
+
+        earned_badge_ids = list(
+            UserBadge.objects.filter(user=user).values_list('badge_id', flat=True)
+        ) if user else []
+        self.fields['display_badge'].queryset = (
+            self.fields['display_badge'].queryset.filter(id__in=earned_badge_ids)
+        )
+        self.fields['display_badge'].required = False
+
+    def clean_display_badge(self):
+        badge = self.cleaned_data.get('display_badge')
+        if badge is None:
+            return None
+        if not self._user:
+            raise forms.ValidationError('Invalid user.')
+        from apps.gamification.models import UserBadge
+
+        if not UserBadge.objects.filter(user=self._user, badge=badge).exists():
+            raise forms.ValidationError('You can only display badges you earned.')
+        return badge

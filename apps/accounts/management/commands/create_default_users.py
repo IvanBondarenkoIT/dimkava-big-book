@@ -126,6 +126,7 @@ class Command(BaseCommand):
             'departments',
             'notifications',
             'gamification',
+            'comments',
         ]
         models_ct = ContentType.objects.filter(app_label__in=app_labels)
         perms = Permission.objects.filter(
