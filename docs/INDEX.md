@@ -46,7 +46,7 @@
 |----------|--------------|----------|
 | [STRUCTURE_PLAN.md](STRUCTURE_PLAN.md) | «Где это лежит?» | Структура папок, связь design → Django, input → проект |
 | [PROMPTS_MAPPING.md](PROMPTS_MAPPING.md) | Работа с AI / Cursor | Какие промпты применять, порядок, связь с фазами |
-| [FEATURES_BACKLOG.md](FEATURES_BACKLOG.md) | Будущие фичи | Ачивки, комментарии, HR Task Stack |
+| [FEATURES_BACKLOG.md](FEATURES_BACKLOG.md) | Будущие фичи (последняя очередь) | Ачивки и комментарии — в конец roadmap; комментарии только после approve HR + админка модерации |
 
 ---
 

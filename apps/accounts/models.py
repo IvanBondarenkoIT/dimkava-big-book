@@ -38,6 +38,11 @@ class UserProfile(models.Model):
         related_name='assigned_users',
     )
     pending_course_slugs = models.JSONField(default=list, blank=True)
+    email_verified_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text='Set when the user confirms their email (required for candidates before learning access).',
+    )
 
     class Meta:
         verbose_name = 'User profile'
@@ -49,6 +54,10 @@ class UserProfile(models.Model):
     @property
     def is_candidate(self) -> bool:
         return self.user_type == 'candidate'
+
+    @property
+    def is_email_verified(self) -> bool:
+        return self.email_verified_at is not None
 
 
 class AssignmentRule(models.Model):

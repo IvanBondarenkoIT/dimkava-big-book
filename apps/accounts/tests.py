@@ -3,8 +3,11 @@ from uuid import uuid4
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
+from django.core import mail
 from django.core.management import call_command
 from django.test import TestCase
+from django.urls import reverse
+from django.utils import timezone
 
 from apps.departments.models import Department, Role
 from apps.onboarding.models import OnboardingProgram
@@ -50,6 +53,7 @@ class CreateDefaultUsersTest(TestCase):
         self.assertTrue(user.groups.filter(name='candidate').exists())
         self.assertEqual(user.profile.user_type, 'candidate')
         self.assertEqual(user.profile.phone, '+995500000000')
+        self.assertIsNotNone(user.profile.email_verified_at)
 
     @patch('apps.accounts.management.commands.create_default_users.get_var')
     def test_creates_hr_user_as_staff(self, mock_get_var):
@@ -131,6 +135,57 @@ class AssignmentRuleTests(TestCase):
         self.profile.role = self.role
         self.profile.save()
         self.assertIsNone(find_matching_rule(self.profile))
+
+
+class CandidateRegistrationAndEmailTests(TestCase):
+    def test_register_candidate_sends_email_and_redirects_home(self):
+        r = self.client.post(
+            reverse('accounts:register_candidate'),
+            {
+                'email': 'newcand@test.dimkava.ge',
+                'phone': '+995511111111',
+                'password1': 'x' * 12,
+                'password2': 'x' * 12,
+            },
+        )
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, reverse('core:home'))
+        user = User.objects.get(username='newcand@test.dimkava.ge')
+        self.assertEqual(user.profile.user_type, 'candidate')
+        self.assertIsNone(user.profile.email_verified_at)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('confirm', mail.outbox[0].body.lower())
+
+    def test_unverified_candidate_can_open_home(self):
+        user = User.objects.create_user(username='u1@test.ge', email='u1@test.ge', password='pass123456789')
+        user.profile.user_type = 'candidate'
+        user.profile.email_verified_at = None
+        user.profile.save()
+        self.client.login(username='u1@test.ge', password='pass123456789')
+        r = self.client.get(reverse('core:home'))
+        self.assertEqual(r.status_code, 200)
+
+    def test_confirm_email_verifies_and_redirects(self):
+        user = User.objects.create_user(username='u2@test.ge', email='u2@test.ge', password='pass123456789')
+        user.profile.user_type = 'candidate'
+        user.profile.email_verified_at = None
+        user.profile.save()
+        from apps.accounts.email_verification import sign_user_id
+
+        token = sign_user_id(user.pk)
+        r = self.client.get(reverse('accounts:confirm_email') + f'?token={token}')
+        self.assertEqual(r.status_code, 302)
+        user.profile.refresh_from_db()
+        self.assertIsNotNone(user.profile.email_verified_at)
+
+    def test_verified_candidate_cannot_open_wiki(self):
+        user = User.objects.create_user(username='u3@test.ge', email='u3@test.ge', password='pass123456789')
+        user.profile.user_type = 'candidate'
+        user.profile.email_verified_at = timezone.now()
+        user.profile.save()
+        self.client.login(username='u3@test.ge', password='pass123456789')
+        r = self.client.get('/wiki/')
+        self.assertEqual(r.status_code, 403)
 
 
 class CandidateConversionTests(TestCase):

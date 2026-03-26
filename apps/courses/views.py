@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.views.generic import TemplateView
 
-from .models import Course, Lesson, TestQuestion
+from .models import Course, Lesson, LessonRating, TestQuestion
 from .selectors import get_course_detail, get_courses_for_user, get_lesson_for_user
 from .services import mark_lesson_complete, save_quiz_result
 
@@ -52,6 +52,8 @@ class LessonDetailView(LoginRequiredMixin, TemplateView):
         context['lesson'] = data['lesson']
         context['course_slug'] = data['course'].slug
         context['completed'] = data['completed']
+        context['rating'] = data.get('rating')
+        context['rating_comment'] = data.get('rating_comment', '')
         return context
 
 
@@ -112,3 +114,26 @@ class QuizView(LoginRequiredMixin, TemplateView):
         score = int((correct / total) * 100) if total else 0
         save_quiz_result(request.user, lesson, score, passing)
         return redirect('courses:detail', slug=slug)
+
+
+class RateLessonView(LoginRequiredMixin, View):
+    def post(self, request, slug, pk):
+        data = get_lesson_for_user(slug, pk, request.user)
+        if not data or not data.get('lesson'):
+            return redirect('courses:detail', slug=slug)
+        lesson = data['lesson']
+
+        try:
+            rating = int(request.POST.get('rating') or 0)
+        except ValueError:
+            rating = 0
+        comment = (request.POST.get('comment') or '').strip()
+        if rating < 1 or rating > 5:
+            return redirect('courses:lesson_detail', slug=slug, pk=pk)
+
+        LessonRating.objects.update_or_create(
+            user=request.user,
+            lesson=lesson,
+            defaults={'rating': rating, 'comment': comment},
+        )
+        return redirect('courses:lesson_detail', slug=slug, pk=pk)

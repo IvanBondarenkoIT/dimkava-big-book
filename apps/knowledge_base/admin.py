@@ -21,17 +21,19 @@ class KBSectionAdmin(admin.ModelAdmin):
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = [
-        'title',
+        'title_display',
         'section',
         'slug',
         'status_display',
         'stale_indicator',
         'responsible_editor',
+        'review_required_after_days',
         'updated_at',
     ]
     list_filter = ['status', 'section', 'responsible_editor']
     search_fields = ['title', 'slug', 'content']
     autocomplete_fields = ['responsible_editor']
+    list_editable = ['responsible_editor', 'review_required_after_days']
 
     @admin.display(description='Status')
     def status_display(self, obj):
@@ -48,3 +50,12 @@ class ArticleAdmin(admin.ModelAdmin):
                 obj.review_required_after_days,
             )
         return '—'
+
+    @admin.display(description='Title')
+    def title_display(self, obj):
+        title = obj.title
+        if obj.is_stale:
+            return format_html('<span style="color:#b91c1c;font-weight:800;">⚠️ {}</span>', title)
+        if obj.status == 'draft':
+            return format_html('<span style="color:#b45309;font-weight:800;">{}</span>', title)
+        return title

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Confirm your email{% endblock %}
+{% block content %}
+<div class="max-w-xl mx-auto space-y-6">
+  <header>
+    <h1 class="text-4xl font-extrabold tracking-tighter text-primary">Confirm your email</h1>
+    <p class="text-on-surface-variant/70 mt-2">We sent a link to <strong class="text-on-surface">{{ user.email }}</strong>. Open it to unlock courses and onboarding.</p>
+  </header>
+  <div class="card-atelier space-y-4">
+    <p class="text-sm text-on-surface-variant/80">Did not receive the message? Check spam or resend below (console backend in dev prints to the terminal).</p>
+    <form method="post" action="{% url 'accounts:resend_verification' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn-primary">Resend verification email</button>
+    </form>
+    <form method="post" action="{% url 'logout' %}" class="pt-2">
+      {% csrf_token %}
+      <button type="submit" class="text-sm text-on-surface-variant/60 hover:text-primary">Log out</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

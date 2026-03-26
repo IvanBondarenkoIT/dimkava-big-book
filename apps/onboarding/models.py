@@ -108,3 +108,19 @@ class MentorSession(models.Model):
 
     def __str__(self):
         return f'{self.get_session_type_display()} — {self.assignment.mentee.get_username()}'
+
+
+class OnboardingFeedback(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='onboarding_feedback')
+    program = models.ForeignKey(OnboardingProgram, on_delete=models.CASCADE, related_name='feedback')
+    rating = models.PositiveSmallIntegerField()  # 1..5
+    comment = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = [('user', 'program')]
+        ordering = ['-updated_at', '-id']
+
+    def __str__(self):
+        return f'OnboardingFeedback: {self.program} — {self.rating}/5'

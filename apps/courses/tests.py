@@ -2,8 +2,9 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.utils import timezone
 
-from .models import Course, ILPItem, IndividualLearningPlan, Lesson, UserProgress
+from .models import Course, ILPItem, IndividualLearningPlan, Lesson, LessonRating, UserProgress
 from .services import mark_lesson_complete, save_quiz_result
 from .selectors import get_active_ilp_context_for_user
 
@@ -42,6 +43,7 @@ class CandidateVisibilityTests(TestCase):
         self.client = Client()
         self.candidate = User.objects.create_user(username='cand@test.ge', password='pass')
         self.candidate.profile.user_type = 'candidate'
+        self.candidate.profile.email_verified_at = timezone.now()
         self.candidate.profile.save()
 
         self.employee = User.objects.create_user(username='emp@test.ge', password='pass')
@@ -90,3 +92,23 @@ class ILPSelectorsTests(TestCase):
         self.assertTrue(ctx['has_plan'])
         self.assertEqual(ctx['progress'], 50)
         self.assertEqual(ctx['next_up']['title'], 'Article 1')
+
+
+class LessonRatingTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='rate@test.ge', password='pass')
+        self.course = Course.objects.create(slug='r1', title='R1', status='published', level='beginner')
+        self.lesson = Lesson.objects.create(course=self.course, title='L1', order=1, lesson_type='text', estimated_minutes=5)
+
+    def test_post_rating_creates_or_updates(self):
+        self.client.login(username='rate@test.ge', password='pass')
+        url = reverse('courses:rate_lesson', kwargs={'slug': self.course.slug, 'pk': self.lesson.pk})
+        r = self.client.post(url, {'rating': '4', 'comment': 'Nice'})
+        self.assertEqual(r.status_code, 302)
+        lr = LessonRating.objects.get(user=self.user, lesson=self.lesson)
+        self.assertEqual(lr.rating, 4)
+
+        self.client.post(url, {'rating': '5', 'comment': 'Great'})
+        lr.refresh_from_db()
+        self.assertEqual(lr.rating, 5)

@@ -6,7 +6,7 @@ from django.core.management import call_command
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from .models import Mentor, MentorAssignment, MentorSession, OnboardingProgram, OnboardingModule, OnboardingStep, OnboardingProgress
+from .models import Mentor, MentorAssignment, MentorSession, OnboardingFeedback, OnboardingProgram, OnboardingModule, OnboardingStep, OnboardingProgress
 from .services import mark_step_complete
 
 User = get_user_model()
@@ -109,3 +109,19 @@ class MentorBlockTests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, 'Your Mentor')
         self.assertContains(r, 'Senior Barista')
+
+
+class OnboardingFeedbackTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='fb@test.ge', password='pass')
+        self.program = OnboardingProgram.objects.create(slug='p', title='P', estimated_days=7)
+        OnboardingModule.objects.create(program=self.program, slug='m1', title='M1', order=1, estimated_minutes=30)
+
+    def test_submit_feedback_creates_record(self):
+        self.client.login(username='fb@test.ge', password='pass')
+        r = self.client.post(reverse('onboarding:submit_feedback'), {'rating': '5', 'comment': 'Great'})
+        self.assertEqual(r.status_code, 302)
+        fb = OnboardingFeedback.objects.get(user=self.user, program=self.program)
+        self.assertEqual(fb.rating, 5)
+        self.assertEqual(fb.comment, 'Great')

@@ -13,6 +13,7 @@ class UserProfileInline(admin.StackedInline):
     can_delete = False
     fk_name = 'user'
     autocomplete_fields = ['department', 'role', 'assigned_onboarding_program']
+    readonly_fields = ['email_verified_at']
 
 
 class UserAdmin(BaseUserAdmin):
@@ -25,6 +26,7 @@ class UserProfileAdmin(admin.ModelAdmin):
         'user',
         'user_type',
         'phone',
+        'email_verified_at',
         'department',
         'role',
         'assigned_onboarding_program',
@@ -43,10 +45,17 @@ class UserProfileAdmin(admin.ModelAdmin):
     def onboarding_progress_pct(self, obj):
         from apps.onboarding.selectors import get_onboarding_overview_for_user
 
-        _program, _modules, progress, _mentor = get_onboarding_overview_for_user(obj.user)
+        _program, _modules, progress, _mentor, _feedback = get_onboarding_overview_for_user(obj.user)
         return progress
 
-    actions = ['convert_to_employee']
+    actions = ['convert_to_employee', 'mark_email_verified']
+
+    @admin.action(description='Mark email as verified (candidates)')
+    def mark_email_verified(self, request, queryset):
+        from django.utils import timezone
+
+        updated = queryset.update(email_verified_at=timezone.now())
+        self.message_user(request, f'Marked {updated} profile(s) as email verified.')
 
     @admin.action(description='Convert selected candidates to employees')
     def convert_to_employee(self, request, queryset):

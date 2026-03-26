@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
+from django.utils import timezone
 from decouple import config
 
 User = get_user_model()
@@ -97,6 +98,10 @@ class Command(BaseCommand):
                     if phone and getattr(profile, 'phone', '') != phone:
                         profile.phone = phone
                         update_fields.append('phone')
+                    # Seed candidate must access learning without going through email flow.
+                    if getattr(profile, 'email_verified_at', None) is None:
+                        profile.email_verified_at = timezone.now()
+                        update_fields.append('email_verified_at')
                 if update_fields:
                     profile.save(update_fields=update_fields)
 

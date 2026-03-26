@@ -1,5 +1,5 @@
 """Onboarding data selectors — for views."""
-from .models import OnboardingProgram, OnboardingProgress
+from .models import OnboardingFeedback, OnboardingProgram, OnboardingProgress
 
 
 def _program_for_user(user):
@@ -21,7 +21,13 @@ def get_onboarding_overview_for_user(user):
     """
     program = _program_for_user(user)
     if not program:
-        return None, [], 0, {'show': False, 'mentor': None, 'sessions': []}
+        return (
+            None,
+            [],
+            0,
+            {'show': False, 'mentor': None, 'sessions': []},
+            {'rating': None, 'comment': ''},
+        )
 
     modules_data = []
     total_steps = 0
@@ -53,7 +59,14 @@ def get_onboarding_overview_for_user(user):
 
     progress = int((completed_steps / total_steps * 100)) if total_steps else 0
     mentor_block = get_mentor_block_for_user(user)
-    return program, modules_data, progress, mentor_block
+    feedback = None
+    if program:
+        feedback = OnboardingFeedback.objects.filter(user=user, program=program).first()
+    feedback_block = {
+        'rating': feedback.rating if feedback else None,
+        'comment': feedback.comment if feedback else '',
+    }
+    return program, modules_data, progress, mentor_block, feedback_block
 
 
 def get_module_for_user(module_slug, user):

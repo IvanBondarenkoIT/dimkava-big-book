@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.views.generic import TemplateView
 
-from .models import OnboardingStep
+from .models import OnboardingFeedback, OnboardingStep
 from .selectors import get_module_for_user, get_onboarding_overview_for_user
 from .services import mark_step_complete
 
@@ -13,11 +13,12 @@ class OverviewView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        program, modules, progress, mentor_block = get_onboarding_overview_for_user(self.request.user)
+        program, modules, progress, mentor_block, feedback_block = get_onboarding_overview_for_user(self.request.user)
         context['program'] = program
         context['modules'] = modules
         context['progress'] = progress
         context['mentor_block'] = mentor_block
+        context['feedback'] = feedback_block
         return context
 
 
@@ -44,3 +45,25 @@ class MarkStepCompleteView(LoginRequiredMixin, View):
         step = get_object_or_404(OnboardingStep, pk=step_id)
         mark_step_complete(request.user, step)
         return redirect('onboarding:module_detail', slug=step.module.slug)
+
+
+class SubmitFeedbackView(LoginRequiredMixin, View):
+    def post(self, request):
+        program, _modules, _progress, _mentor, _feedback = get_onboarding_overview_for_user(request.user)
+        if not program:
+            return redirect('onboarding:overview')
+
+        try:
+            rating = int(request.POST.get('rating') or 0)
+        except ValueError:
+            rating = 0
+        comment = (request.POST.get('comment') or '').strip()
+        if rating < 1 or rating > 5:
+            return redirect('onboarding:overview')
+
+        OnboardingFeedback.objects.update_or_create(
+            user=request.user,
+            program=program,
+            defaults={'rating': rating, 'comment': comment},
+        )
+        return redirect('onboarding:overview')

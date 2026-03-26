@@ -4,6 +4,7 @@ from .models import (
     Mentor,
     MentorAssignment,
     MentorSession,
+    OnboardingFeedback,
     OnboardingModule,
     OnboardingProgram,
     OnboardingProgress,
@@ -94,3 +95,11 @@ class MentorSessionAdmin(admin.ModelAdmin):
     list_filter = ['session_type', 'is_completed']
     search_fields = ['assignment__mentee__username', 'assignment__mentee__email', 'notes']
     autocomplete_fields = ['assignment']
+
+
+@admin.register(OnboardingFeedback)
+class OnboardingFeedbackAdmin(admin.ModelAdmin):
+    list_display = ['program', 'user', 'rating', 'updated_at']
+    list_filter = ['rating', 'program']
+    search_fields = ['program__title', 'user__username', 'user__email', 'comment']
+    autocomplete_fields = ['program', 'user']

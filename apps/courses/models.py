@@ -151,3 +151,19 @@ class ILPItem(models.Model):
 
     def __str__(self):
         return f'ILPItem: {self.title}'
+
+
+class LessonRating(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lesson_ratings')
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='ratings')
+    rating = models.PositiveSmallIntegerField()  # 1..5
+    comment = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = [('user', 'lesson')]
+        ordering = ['-updated_at', '-id']
+
+    def __str__(self):
+        return f'LessonRating: {self.lesson} — {self.rating}/5'

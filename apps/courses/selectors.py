@@ -1,5 +1,5 @@
 """Course selectors — for views."""
-from .models import Course, IndividualLearningPlan, Lesson, UserProgress
+from .models import Course, IndividualLearningPlan, Lesson, LessonRating, UserProgress
 
 
 def get_courses_for_user(user):
@@ -69,10 +69,13 @@ def get_lesson_for_user(course_slug, lesson_id, user):
     if not lesson:
         return None
     prog = UserProgress.objects.filter(user=user, lesson=lesson).first()
+    rating = LessonRating.objects.filter(user=user, lesson=lesson).first()
     return {
         'course': course,
         'lesson': lesson,
         'completed': prog.is_completed if prog else False,
+        'rating': rating.rating if rating else None,
+        'rating_comment': rating.comment if rating else '',
     }
 
 

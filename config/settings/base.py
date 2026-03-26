@@ -2,6 +2,7 @@
 Django base settings — shared across all environments.
 """
 from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -9,11 +10,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Security: use python-decouple, fallback for dev without .env
 try:
     from decouple import config
-    SECRET_KEY = config('SECRET_KEY', default='django-insecure-dummy-key-change-in-production')
     DEBUG = config('DEBUG', default=True, cast=bool)
+    SECRET_KEY = config('SECRET_KEY', default='')
 except ImportError:
-    SECRET_KEY = 'django-insecure-dummy-key-change-in-production'
     DEBUG = True
+    SECRET_KEY = ''
+
+if not SECRET_KEY:
+    # Safe local fallback; production must provide SECRET_KEY via env.
+    SECRET_KEY = 'CHANGE_ME_IN_ENV'
+
+if SECRET_KEY == 'CHANGE_ME_IN_ENV' and not DEBUG:
+    raise ImproperlyConfigured('SECRET_KEY must be set in environment for production.')
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -47,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.accounts.middleware.CandidateRestrictionsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -63,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.notifications.context_processors.unread_notifications_count',
+                'apps.accounts.context_processors.candidate_ui',
             ],
         },
     },
@@ -94,6 +104,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email (override in development/production)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'Dim Kava <noreply@dimkava.ge>'
 
 # Auth
 LOGIN_URL = 'login'

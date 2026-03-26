@@ -1,5 +1,6 @@
 """Assignment rules: match profile to rules and set program / course slugs."""
 from django.db import transaction
+from django.utils import timezone
 
 from .models import AssignmentRule, UserProfile
 
@@ -42,6 +43,10 @@ def convert_candidate_to_employee(user, *, department=None, role=None) -> None:
     if role is not None and profile.role_id != getattr(role, 'id', role):
         profile.role_id = getattr(role, 'id', role)
         updates.append('role')
+    if profile.email_verified_at is None:
+        profile.email_verified_at = timezone.now()
+        updates.append('email_verified_at')
+
     if updates:
         profile.save(update_fields=updates)
 

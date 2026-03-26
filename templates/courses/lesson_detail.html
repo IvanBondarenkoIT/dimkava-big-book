@@ -31,6 +31,39 @@
     {% endif %}
   </div>
 
+  <section class="card-atelier max-w-3xl space-y-4">
+    <div class="flex items-start justify-between gap-6">
+      <div>
+        <h2 class="text-2xl font-extrabold tracking-tight text-on-surface">Lesson feedback</h2>
+        <p class="text-sm text-on-surface-variant/70 mt-1">Rate this lesson to help us improve content quality.</p>
+      </div>
+      {% if rating %}
+        <div class="text-right">
+          <div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">Your rating</div>
+          <div class="text-2xl font-black text-primary">{{ rating }}/5</div>
+        </div>
+      {% endif %}
+    </div>
+
+    <form method="post" action="{% url 'courses:rate_lesson' course_slug lesson.id %}" class="space-y-3">
+      {% csrf_token %}
+      <div class="flex flex-wrap gap-2">
+        {% for i in "12345" %}
+          {% with n=i|add:"0" %}
+          <label class="px-3 py-2 rounded-lg border border-outline-variant/20 bg-surface-container-lowest hover:border-primary/40 cursor-pointer">
+            <input type="radio" name="rating" value="{{ forloop.counter }}" class="mr-2" {% if rating == forloop.counter %}checked{% endif %}/>
+            <span class="font-bold">{{ forloop.counter }}</span>
+          </label>
+          {% endwith %}
+        {% endfor %}
+      </div>
+      <div>
+        <textarea name="comment" rows="3" class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" placeholder="Optional comment...">{{ rating_comment }}</textarea>
+      </div>
+      <button type="submit" class="btn-primary px-5 py-3">Save feedback</button>
+    </form>
+  </section>
+
   <footer class="fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-xl px-6 py-6 border-t border-outline-variant/10 z-30">
     <div class="max-w-7xl mx-auto flex gap-4">
       {% if not completed %}

@@ -9,7 +9,7 @@ def get_where_to_start_hint(user):
     from apps.courses.selectors import get_courses_for_user
     from apps.onboarding.selectors import get_onboarding_overview_for_user
 
-    program, _modules, progress_pct, _mentor_block = get_onboarding_overview_for_user(user)
+    program, _modules, progress_pct, _mentor_block, _feedback_block = get_onboarding_overview_for_user(user)
     if program and progress_pct < 100:
         return {
             'show': True,
