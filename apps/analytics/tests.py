@@ -28,3 +28,20 @@ class AnalyticsSelectorsTests(TestCase):
         Course.objects.create(slug='draft', title='Draft', status='draft')
         m = get_analytics_metrics()
         self.assertEqual(m['active_courses'], 1)
+
+
+class ContentReviewAccessTests(TestCase):
+    def test_hr_can_open_content_review(self):
+        hr = User.objects.create_user(username='hr@test.local', password='x')
+        from django.contrib.auth.models import Group
+        hr.groups.add(Group.objects.get_or_create(name='hr_manager')[0])
+
+        self.client.login(username='hr@test.local', password='x')
+        resp = self.client.get(reverse('analytics:content_review'))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_regular_user_cannot_open_content_review(self):
+        u = User.objects.create_user(username='u@test.local', password='x')
+        self.client.login(username='u@test.local', password='x')
+        resp = self.client.get(reverse('analytics:content_review'))
+        self.assertEqual(resp.status_code, 403)
