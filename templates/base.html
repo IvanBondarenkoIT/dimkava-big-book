@@ -88,6 +88,12 @@
         <span class="material-symbols-outlined" aria-hidden="true">menu</span>
       </summary>
       <div class="absolute left-0 right-0 top-full mt-1 mx-4 py-3 px-4 rounded-xl bg-surface border border-outline-variant/20 shadow-xl flex flex-col gap-1 z-50">
+        {% if hr_ui %}
+        <a href="{% url 'analytics:hr_hub' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-extrabold text-white bg-primary hover:opacity-95 transition-opacity no-underline">
+          <span class="material-symbols-outlined text-xl">verified_user</span>
+          <span>HR Hub</span>
+        </a>
+        {% endif %}
         {% if candidate_ui == 'verified' or candidate_ui == 'unverified' %}
         <a href="{% url 'core:home' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if request.resolver_match.url_name == 'home' %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">dashboard</span>
@@ -136,7 +142,7 @@
 
     <div class="flex items-center gap-1.5 sm:gap-2 md:gap-4 flex-shrink-0 min-w-0">
       {% if hr_ui %}
-      <a href="{% url 'analytics:hr_hub' %}" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-primary text-white font-extrabold text-sm shadow hover:opacity-95 transition-opacity no-underline" title="HR tools">
+      <a href="{% url 'analytics:hr_hub' %}" class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-primary text-white font-extrabold text-sm shadow hover:opacity-95 transition-opacity no-underline" title="HR tools">
         <span class="material-symbols-outlined text-lg" aria-hidden="true">verified_user</span>
         <span>HR</span>
       </a>
