@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
-{% block title %}News{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "News" %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
   <header>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">News & Announcements</h1>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "News & Announcements" %}</h1>
   </header>
   <div class="space-y-4 max-w-3xl">
     {% for n in news %}
     <a href="{% url 'news:detail' n.slug %}" class="card-atelier block no-underline text-inherit group">
-      {% if n.pinned %}<span class="text-primary text-xs font-bold uppercase">Pinned</span>{% endif %}
-      <h3 class="text-xl font-bold mt-2 text-on-surface group-hover:text-primary transition-colors">{{ n.title }}</h3>
-      <p class="text-sm text-on-surface-variant/70">{{ n.published_at|date:"M d, Y" }}{% if n.tag %} • {{ n.tag }}{% endif %}</p>
+      {% if n.pinned %}<span class="text-primary text-xs font-bold uppercase">{% trans "Pinned" %}</span>{% endif %}
+      <h3 class="text-xl font-bold mt-2 text-on-surface group-hover:text-primary transition-colors">{{ n.localized_title }}</h3>
+      <p class="text-sm text-on-surface-variant/70">{{ n.published_at|date:"M d, Y" }}{% if n.tag %} • {{ n.localized_tag }}{% endif %}</p>
     </a>
     {% empty %}
-    <p class="text-on-surface-variant">No news. Run: <code>python manage.py load_news</code></p>
+    <p class="text-on-surface-variant">{% trans "No news. Run:" %} <code>python manage.py load_news</code></p>
     {% endfor %}
   </div>
 </div>

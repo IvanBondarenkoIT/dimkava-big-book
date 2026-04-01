@@ -1,10 +1,10 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dim Kava | Login</title>
+  <title>Dim Kava | {% trans "Login" %}</title>
   <link rel="icon" href="{% static 'favicon.ico' %}" sizes="any">
   <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
   <link rel="stylesheet" href="{% static 'css/tailwind.css' %}?v=4" fetchpriority="high"/>
@@ -12,16 +12,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/>
 </head>
 <body class="bg-surface text-on-surface-variant min-h-screen flex flex-col items-center justify-center p-6 antialiased">
+  <div class="absolute top-4 right-4">
+    <form action="{% url 'set_language' %}" method="post" class="inline-flex items-center gap-2 rounded-full border border-outline-variant/20 bg-surface px-3 py-1.5 text-sm">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <label for="language-select" class="text-on-surface-variant/70">{% trans "Language" %}</label>
+      <select id="language-select" name="language" class="bg-transparent text-on-surface focus:outline-none" onchange="this.form.submit()">
+        {% get_current_language as CURRENT_LANG %}
+        {% get_available_languages as AVAILABLE_LANGUAGES %}
+        {% for lang_code, lang_name in AVAILABLE_LANGUAGES %}
+          <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANG %}selected{% endif %}>{{ lang_name }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
   <div class="w-full max-w-md">
     <div class="text-center mb-10">
       <div class="w-16 h-16 coffee-gradient rounded-xl flex items-center justify-center mx-auto shadow-xl">
         <span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings: 'FILL' 1;">coffee</span>
       </div>
       <h1 class="text-3xl font-extrabold text-primary mt-4">Dim Kava</h1>
-      <p class="text-sm uppercase tracking-widest text-on-surface-variant/60">Internal Learning Portal</p>
+      <p class="text-sm uppercase tracking-widest text-on-surface-variant/60">{% trans "Internal Learning Portal" %}</p>
     </div>
     <div class="card-atelier p-8 shadow-xl">
-      <h2 class="text-xl font-bold text-primary mb-6">Sign in</h2>
+      <h2 class="text-xl font-bold text-primary mb-6">{% trans "Sign in" %}</h2>
       {% if messages %}
       <div class="mb-4 space-y-2">
         {% for message in messages %}
@@ -40,14 +54,14 @@
         {% csrf_token %}
         {% if next %}<input type="hidden" name="next" value="{{ next }}"/>{% endif %}
         <div>
-          <label class="block text-sm font-semibold mb-2 text-on-surface">Email</label>
+          <label class="block text-sm font-semibold mb-2 text-on-surface">{% trans "Email" %}</label>
           <input type="email" name="username" value="{{ form.username.value|default:'' }}" placeholder="you@dimkava.ge" class="w-full px-4 py-3 bg-surface-container-high rounded-lg border-0 focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-on-surface-variant/40"/>
           {% if form.username.errors %}
           <p class="mt-1 text-xs text-red-200">{{ form.username.errors.0 }}</p>
           {% endif %}
         </div>
         <div>
-          <label class="block text-sm font-semibold mb-2 text-on-surface">Password</label>
+          <label class="block text-sm font-semibold mb-2 text-on-surface">{% trans "Password" %}</label>
           <input type="password" name="password" placeholder="••••••••" class="w-full px-4 py-3 bg-surface-container-high rounded-lg border-0 focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-on-surface-variant/40"/>
           {% if form.password.errors %}
           <p class="mt-1 text-xs text-red-200">{{ form.password.errors.0 }}</p>
@@ -55,15 +69,15 @@
         </div>
         <div class="flex items-center gap-2">
           <input type="checkbox" id="remember" name="remember" class="rounded text-primary focus:ring-primary"/>
-          <label for="remember" class="text-sm">Remember me</label>
+          <label for="remember" class="text-sm">{% trans "Remember me" %}</label>
         </div>
-        <button type="submit" class="w-full btn-primary">Sign in</button>
+        <button type="submit" class="w-full btn-primary">{% trans "Sign in" %}</button>
       </form>
       <p class="mt-4 text-center text-sm">
-        <a href="{% url 'password_reset' %}" class="text-on-surface-variant/60 hover:text-primary">Forgot password?</a>
+        <a href="{% url 'password_reset' %}" class="text-on-surface-variant/60 hover:text-primary">{% trans "Forgot password?" %}</a>
       </p>
       <p class="mt-3 text-center text-sm">
-        <a href="{% url 'accounts:register_candidate' %}" class="text-on-surface-variant/60 hover:text-primary">Candidate registration</a>
+        <a href="{% url 'accounts:register_candidate' %}" class="text-on-surface-variant/60 hover:text-primary">{% trans "Candidate registration" %}</a>
       </p>
     </div>
   </div>

@@ -1,14 +1,15 @@
-## Admin guide — эксплуатация, доступы и стабильность
+# ROLE GUIDE — ADMIN
 
-### Зона ответственности Admin
-- Поддержка рабочего окружения и зависимостей.
-- Миграции и целостность данных.
-- Роли/доступы (HR, employee, candidate, admin).
-- Безопасность: `.env`, секреты, контроль инцидентов.
+Обновлено: 2026-03-26  
+Назначение: инструкция по поддержке системы, доступов и стабильной эксплуатации.
 
----
+## 1) Ответственность администратора
+- Поддержка окружения и зависимостей.
+- Миграции и консистентность схемы/данных.
+- Управление ролями и правами.
+- Безопасность конфигурации и инцидент-реакция.
 
-### Быстрый старт после pull
+## 2) Базовый запуск после обновления
 1. Активировать `.venv`.
 2. `pip install -r requirements.txt`
 3. `python manage.py migrate`
@@ -16,27 +17,18 @@
 5. `python manage.py test`
 6. `python manage.py create_default_users --update`
 
----
-
-### Дефолтные пользователи и seed
-Команда:
+## 3) Дефолтные пользователи и seed
+Основная команда:
 - `python manage.py create_default_users --update`
 
-Эффект:
-- создаёт/обновляет `admin/hr/employee/candidate` из `.env`;
-- если контент пустой, автозапускает:
-  - `load_courses`
-  - `load_onboarding`
-  - `load_articles`
-  - `load_news`
-  - `load_departments`
+Что делает:
+- создает/обновляет `admin`, `hr`, `employee`, `candidate` из `.env`;
+- при пустом контенте может запускать автозаполнение.
 
-Отключить автосидинг:
+Отключение автосидинга:
 - `python manage.py create_default_users --no-seed`
 
----
-
-### Критичные `.env` переменные (минимум)
+## 4) Ключевые переменные `.env`
 - `SECRET_KEY`
 - `DEFAULT_ADMIN_EMAIL`, `DEFAULT_ADMIN_PASSWORD`
 - `DEFAULT_HR_EMAIL`, `DEFAULT_HR_PASSWORD`
@@ -44,55 +36,35 @@
 - `DEFAULT_CANDIDATE_EMAIL`, `DEFAULT_CANDIDATE_PASSWORD`, `DEFAULT_CANDIDATE_PHONE`
 - `EMAIL_BACKEND`, `DEFAULT_FROM_EMAIL`
 
----
+## 5) Роли и права
+- Группы: `admin`, `hr_manager`, `employee`, `candidate`.
+- Для HR обязателен `is_staff=True` (доступ к `/admin/`).
+- `UserProfile.user_type` должен соответствовать бизнес-роли.
 
-### Права и группы
-Основные группы:
-- `hr_manager`
-- `employee`
-- `candidate`
-- `admin`
-
-Ключевые моменты:
-- HR должен быть `is_staff=True`, иначе не войдёт в админку.
-- Тип профиля (`UserProfile.user_type`) синхронизирует роли candidate/employee.
-- Для HR используются явные model-права на управление профильными сущностями.
-
----
-
-### Где админу управлять системой
+## 6) Где управлять системой
 - Пользователи/профили: `/admin/auth/user/`, `/admin/accounts/userprofile/`
-- Assignment rules: `/admin/accounts/assignmentrule/`
-- Контент: `courses`, `onboarding`, `knowledge_base`, `news`
-- Модерация:
-  - комментарии: `/admin/comments/comment/`
-  - onboarding feedback: `/admin/onboarding/onboardingfeedback/`
+- Контент: разделы `courses`, `onboarding`, `knowledge_base`, `news`
+- Модерация: `/admin/comments/comment/`, `/admin/onboarding/onboardingfeedback/`
+- Назначения/правила: `/admin/accounts/assignmentrule/`
 
----
-
-### Операционный режим контента
-Есть 2 режима:
-1. Ручные правки в админке (обычно HR).
-2. Массовый импорт YAML-командами (обычно Admin/Dev).
-
-Если совмещаете оба режима:
-- заранее фиксируйте “источник истины”,
-- иначе YAML может перетереть ручные правки.
-
----
-
-### Инциденты и диагностика (минимальный протокол)
+## 7) Инциденты: минимальный протокол
 1. `python manage.py check`
 2. `python manage.py showmigrations`
 3. `python manage.py test`
-4. Проверить `.env` и доступность зависимостей в `.venv`
-5. При проблемах ролей: переприменить `create_default_users --update`
+4. Проверить актуальность `.env` и секретов.
+5. Если проблема ролей: повторить `create_default_users --update`.
 
----
+## 8) Недельный контроль
+- Проверить доступ HR к `/analytics/hr/` и `/admin/`.
+- Проверить ограничения кандидата (доступ только к разрешенным зонам).
+- Проверить очереди модерации.
+- Проверить статус миграций и отсутствие дрейфа схемы.
 
-### Чеклист Admin (еженедельно)
-- Проверить, что HR заходит в `/admin/` и `/analytics/hr/`.
-- Проверить, что кандидат может открыть только допустимые разделы.
-- Проверить pending-очереди модерации (comments/feedback).
-- Проверить отсутствие секретов в коде и корректность `.env`.
+## 9) Скриншоты для этой инструкции
+- `SHOT-A1`: admin users/profiles.
+![SHOT-A1 admin home](C:/Users/Computer/.cursor/projects/d-CursorProjects-dimkava-big-book/assets/c__Users_Computer_AppData_Roaming_Cursor_User_workspaceStorage_bbc6fcab8e4ff239132c403c3d74202b_images_image-8fdae264-954a-4553-852e-be3d97298651.png)
+- `SHOT-A2`: admin `UserProgress` с lock/attempts.
+![SHOT-A2 admin userprogress](C:/Users/Computer/.cursor/projects/d-CursorProjects-dimkava-big-book/assets/c__Users_Computer_AppData_Roaming_Cursor_User_workspaceStorage_bbc6fcab8e4ff239132c403c3d74202b_images_image-51a9bcad-b4bc-43dc-bddf-9f5be6ce02fb.png)
+- `SHOT-A3`: admin comments/onboarding feedback moderation.
+![SHOT-A3 hr comments moderation](C:/Users/Computer/.cursor/projects/d-CursorProjects-dimkava-big-book/assets/c__Users_Computer_AppData_Roaming_Cursor_User_workspaceStorage_bbc6fcab8e4ff239132c403c3d74202b_images_image-83c4adbd-f817-4666-8b3b-b582eb0d759c.png)
 

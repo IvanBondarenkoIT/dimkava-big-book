@@ -22,6 +22,6 @@ class NewsDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['news_title'] = self.object.title
+        context['news_title'] = self.object.localized_title
         context['news_date'] = self.object.published_at.strftime('%b %d, %Y')
         return context

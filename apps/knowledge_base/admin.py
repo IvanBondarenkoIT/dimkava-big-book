@@ -14,8 +14,15 @@ class ArticleInline(admin.TabularInline):
 @admin.register(KBSection)
 class KBSectionAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'order', 'icon']
-    search_fields = ['title', 'slug']
+    search_fields = ['title', 'title_en', 'title_ka', 'title_ru', 'slug']
     inlines = [ArticleInline]
+    fieldsets = (
+        (None, {'fields': ('slug', 'order', 'icon')}),
+        ('English', {'fields': ('title_en',)}),
+        ('Georgian', {'fields': ('title_ka',)}),
+        ('Russian', {'fields': ('title_ru',)}),
+        ('Legacy/Fallback', {'fields': ('title',)}),
+    )
 
 
 @admin.register(Article)
@@ -31,9 +38,21 @@ class ArticleAdmin(admin.ModelAdmin):
         'updated_at',
     ]
     list_filter = ['status', 'section', 'responsible_editor']
-    search_fields = ['title', 'slug', 'content']
+    search_fields = [
+        'title', 'title_en', 'title_ka', 'title_ru',
+        'slug',
+        'content', 'content_en', 'content_ka', 'content_ru',
+    ]
     autocomplete_fields = ['responsible_editor']
     list_editable = ['responsible_editor', 'review_required_after_days']
+    fieldsets = (
+        (None, {'fields': ('section', 'slug', 'status')}),
+        ('English', {'fields': ('title_en', 'content_en')}),
+        ('Georgian', {'fields': ('title_ka', 'content_ka')}),
+        ('Russian', {'fields': ('title_ru', 'content_ru')}),
+        ('Legacy/Fallback', {'fields': ('title', 'content')}),
+        ('Review', {'fields': ('responsible_editor', 'review_required_after_days')}),
+    )
 
     @admin.display(description='Status')
     def status_display(self, obj):

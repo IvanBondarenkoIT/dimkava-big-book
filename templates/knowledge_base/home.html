@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}Knowledge Base{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Knowledge Base" %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
   <header>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Knowledge Base</h1>
-    <p class="text-on-surface-variant/70 mt-2">Procedures, standards, company info</p>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "Knowledge Base" %}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{% trans "Procedures, standards, company info" %}</p>
   </header>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     {% for s in sections %}

@@ -13,6 +13,8 @@
 program:
   slug: new-employee-onboarding-manager
   title: "New Employee Onboarding — Manager Consultant"
+  title_en: "New Employee Onboarding — Manager Consultant"
+  title_ru: "Онбординг нового сотрудника — менеджер‑консультант"
   role: manager_consultant
   estimated_days: 90
   description: >
@@ -20,42 +22,100 @@ program:
     Covers company culture, coffee knowledge, sales skills, equipment,
     and operational procedures. Structured across 3 months with weekly
     checkpoints and quizzes.
+  description_en: >
+    The complete onboarding path for a new Manager-Consultant at Dim Kava.
+    Covers company culture, coffee knowledge, sales skills, equipment,
+    and operational procedures. Structured across 3 months with weekly
+    checkpoints and quizzes.
+  description_ru: >
+    Полный онбординг‑маршрут для нового менеджера‑консультанта в Dim Kava.
+    Включает культуру компании, знания о кофе, навыки продаж, оборудование
+    и операционные процедуры. Структурирован на 3 месяца с еженедельными
+    контрольными точками и квизами.
 
 modules:
 
   - slug: day-1
     title: "Day 1 — Getting Started"
+    title_en: "Day 1 — Getting Started"
+    title_ru: "День 1 — Начало работы"
     order: 1
     estimated_minutes: 480
     description: >
       First day at work. Introduction to the team, store tour, first tasting,
       and understanding what Dim Kava is.
+    description_en: >
+      First day at work. Introduction to the team, store tour, first tasting,
+      and understanding what Dim Kava is.
+    description_ru: >
+      Первый рабочий день. Знакомство с командой, экскурсия по магазину, первая дегустация
+      и понимание того, что такое Dim Kava.
     steps:
       - order: 1
         title: "Team introduction and store tour"
+        title_en: "Team introduction and store tour"
+        title_ru: "Знакомство с командой и экскурсия по магазину"
         content: >
           Meet every team member. Get a full walk-through of the store:
           sales floor, bar area, stock room, take-away zone. Understand
           the layout before the day begins.
+        content_en: >
+          Meet every team member. Get a full walk-through of the store:
+          sales floor, bar area, stock room, take-away zone. Understand
+          the layout before the day begins.
+        content_ru: >
+          Познакомьтесь со всеми членами команды. Пройдите по всем зонам магазина:
+          торговый зал, бар, склад, зона take‑away. Разберитесь в планировке
+          до начала рабочего дня.
       - order: 2
         title: "Opening the store — morning prep"
+        title_en: "Opening the store — morning prep"
+        title_ru: "Открытие магазина — утренняя подготовка"
         content: >
           Watch and participate in the morning setup: switching on lights,
           cameras, TV, coffee machines, Shop Seller, Telegram.
           Learn what needs to be done before opening.
+        content_en: >
+          Watch and participate in the morning setup: switching on lights,
+          cameras, TV, coffee machines, Shop Seller, Telegram.
+          Learn what needs to be done before opening.
+        content_ru: >
+          Наблюдайте и участвуйте в утренней подготовке: включение света,
+          камер, TV, кофемашин, Shop Seller, Telegram.
+          Изучите, что нужно сделать до открытия.
       - order: 3
         title: "Daily task distribution"
+        title_en: "Daily task distribution"
+        title_ru: "Распределение задач на день"
         content: >
           Each team member receives tasks for the day. The new employee's
           task: observe everything, ask questions, and be useful to the team.
+        content_en: >
+          Each team member receives tasks for the day. The new employee's
+          task: observe everything, ask questions, and be useful to the team.
+        content_ru: >
+          Каждый сотрудник получает задачи на день. Задача новичка —
+          наблюдать за процессами, задавать вопросы и быть полезным команде.
       - order: 4
         title: "Morning tasting (degustation)"
+        title_en: "Morning tasting (degustation)"
+        title_ru: "Утренняя дегустация"
         content: >
           Participate in the morning espresso tasting ritual. We taste
           3 espresso cups during the day. Understand why: to control
           quality, calibrate the grinder, and stay connected to the product.
+        content_en: >
+          Participate in the morning espresso tasting ritual. We taste
+          3 espresso cups during the day. Understand why: to control
+          quality, calibrate the grinder, and stay connected to the product.
+        content_ru: >
+          Участвуйте в утреннем ритуале дегустации эспрессо. В течение дня мы пробуем
+          3 чашки эспрессо. Поймите зачем: контролировать качество, калибровать помол
+          и “держать контакт” с продуктом.
       - order: 5
         title: "What is Dim Kava?"
+        title_en: "What is Dim Kava?"
+        title_ru: "Что такое Dim Kava?"
         content: >
           Company overview:
           - History and origin of Dim Kava
@@ -69,8 +129,36 @@ modules:
           - Our mission: cultivating espresso culture
           - Career opportunities for employees
           - Unified standards for the dealer network
+        content_en: >
+          Company overview:
+          - History and origin of Dim Kava
+          - Trademark and brand positioning
+          - General importer of Blaser coffee (Switzerland)
+          - Network of retail stores with tasting rooms, service centre, dealer network
+          - Team structure: employees, dealers, suppliers
+          - Product range: coffee, equipment, accessories, cleaning products
+          - Customer support at all stages (before and after sale)
+          - Where to buy Blaser coffee
+          - Our mission: cultivating espresso culture
+          - Career opportunities for employees
+          - Unified standards for the dealer network
+        content_ru: >
+          Обзор компании:
+          - История и происхождение Dim Kava
+          - Торговая марка и позиционирование бренда
+          - Генеральный импортёр кофе Blaser (Швейцария)
+          - Сеть розничных магазинов с дегустационными залами, сервисным центром и дилерской сетью
+          - Структура команды: сотрудники, дилеры, поставщики
+          - Ассортимент: кофе, оборудование, аксессуары, средства для чистки
+          - Поддержка клиентов на всех этапах (до и после покупки)
+          - Где купить кофе Blaser
+          - Наша миссия: развитие культуры эспрессо
+          - Карьерные возможности для сотрудников
+          - Единые стандарты для дилерской сети
       - order: 6
         title: "Manager conduct rules and ethics"
+        title_en: "Manager conduct rules and ethics"
+        title_ru: "Правила поведения менеджера и этика"
         content: >
           Core rules for behaviour on the floor:
           - Professional appearance and dress code at all times
@@ -78,166 +166,340 @@ modules:
           - Cleanliness on the floor and behind the bar
           - Disciplinary consequences for non-compliance
           Note: these are non-negotiable standards, not suggestions.
+        content_en: >
+          Core rules for behaviour on the floor:
+          - Professional appearance and dress code at all times
+          - Ethics in communication with clients and colleagues
+          - Cleanliness on the floor and behind the bar
+          - Disciplinary consequences for non-compliance
+          Note: these are non-negotiable standards, not suggestions.
+        content_ru: >
+          Базовые правила поведения в зале:
+          - Профессиональный внешний вид и дресс‑код всегда
+          - Этичное общение с клиентами и коллегами
+          - Чистота в зале и за баром
+          - Дисциплинарные последствия за несоблюдение
+          Примечание: это обязательные стандарты, а не рекомендации.
       - order: 7
         title: "What is espresso?"
+        title_en: "What is espresso?"
+        title_ru: "Что такое эспрессо?"
         content: >
           - Brief history of espresso
           - How it is prepared (extraction, pressure, temperature)
           - Health benefits and unique properties
           - Why espresso is the foundation of everything we sell
+        content_en: >
+          - Brief history of espresso
+          - How it is prepared (extraction, pressure, temperature)
+          - Health benefits and unique properties
+          - Why espresso is the foundation of everything we sell
+        content_ru: >
+          - Краткая история эспрессо
+          - Как он готовится (экстракция, давление, температура)
+          - Польза и уникальные свойства
+          - Почему эспрессо — основа всего, что мы продаём
       - order: 8
         title: "Coffee menu and quality criteria"
+        title_en: "Coffee menu and quality criteria"
+        title_ru: "Кофейное меню и критерии качества"
         content: >
           Study the full coffee menu. Learn the quality criteria for every
           drink: correct crema, temperature, texture, volume, and timing.
+        content_en: >
+          Study the full coffee menu. Learn the quality criteria for every
+          drink: correct crema, temperature, texture, volume, and timing.
+        content_ru: >
+          Изучите полное кофейное меню. Разберите критерии качества для каждого напитка:
+          правильная крема, температура, текстура, объём и тайминг.
       - order: 9
         title: "Coffee product range — intro"
+        title_en: "Coffee product range — intro"
+        title_ru: "Ассортимент кофе — введение"
         content: >
           - Monosorts vs. blends (Букеты): how to tell them apart by packaging colour
           - Brief intro to Arabica vs. Robusta
           - Who is a barista and what is their role
+        content_en: >
+          - Monosorts vs. blends (Букеты): how to tell them apart by packaging colour
+          - Brief intro to Arabica vs. Robusta
+          - Who is a barista and what is their role
+        content_ru: >
+          - Моносорта и бленды («букеты»): как отличать по цвету упаковки
+          - Кратко: арабика vs робуста
+          - Кто такой бариста и в чём его роль
       - order: 10
         title: "Sales techniques and Dim Kava scripts"
+        title_en: "Sales techniques and Dim Kava scripts"
+        title_ru: "Техники продаж и скрипты Dim Kava"
         content: >
           - Smile and enthusiasm as a foundation
           - DK loyalty card benefits and how to present them to clients
           - Up-sale technique (higher price / larger size)
           - Cross-sale technique (complementary products)
+        content_en: >
+          - Smile and enthusiasm as a foundation
+          - DK loyalty card benefits and how to present them to clients
+          - Up-sale technique (higher price / larger size)
+          - Cross-sale technique (complementary products)
+        content_ru: >
+          - Улыбка и энтузиазм как основа
+          - Преимущества карты лояльности DK и как о них рассказать клиенту
+          - Up‑sale (более высокая цена / больший размер)
+          - Cross‑sale (дополняющие товары)
       - order: 11
         title: "End-of-day cleaning"
+        title_en: "End-of-day cleaning"
+        title_ru: "Уборка в конце дня"
         content: >
           Actively participate in closing: washing coffee machines, holders,
           grinder flasks, cleaning shelves and floor. Learn the closing
           checklist.
+        content_en: >
+          Actively participate in closing: washing coffee machines, holders,
+          grinder flasks, cleaning shelves and floor. Learn the closing
+          checklist.
+        content_ru: >
+          Активно участвуйте в закрытии: мойка кофемашин, холдеров,
+          бункеров/воронок кофемолок, уборка полок и пола. Изучите чек‑лист закрытия.
 
   - slug: days-2-3
     title: "Days 2–3 — Coffee Knowledge"
+    title_en: "Days 2–3 — Coffee Knowledge"
+    title_ru: "Дни 2–3 — Знания о кофе"
     order: 2
     estimated_minutes: 960
     description: >
       Deep dive into coffee: growing, processing, roasting, grinding,
       and preparation methods.
+    description_en: >
+      Deep dive into coffee: growing, processing, roasting, grinding,
+      and preparation methods.
+    description_ru: >
+      Углублённое изучение кофе: выращивание, обработка, обжарка, помол
+      и способы приготовления.
     steps:
       - order: 1
         title: "Where and how green coffee grows"
+        title_ru: "Где и как растёт зелёный кофе"
         content: >
           - Coffee belt geography (equatorial regions)
           - Climate, altitude, and soil conditions
           - Coffee cherry cycle from flower to harvest
+        content_ru: >
+          - География кофейного пояса (экваториальные регионы)
+          - Климат, высота над уровнем моря и почвенные условия
+          - Цикл кофейной ягоды от цветения до сбора урожая
       - order: 2
         title: "Coffee tree species"
+        title_ru: "Виды кофейных деревьев"
         content: >
           - Arabica: flavour profile, growing conditions, market share
           - Robusta: strength, caffeine, foam quality
           - Key differences in taste, growing, and use
+        content_ru: >
+          - Арабика: вкусовой профиль, условия выращивания, доля рынка
+          - Робуста: крепость, кофеин, качество пенки
+          - Ключевые различия во вкусе, выращивании и применении
       - order: 3
         title: "Blaser coffee brands and range at Dim Kava"
+        title_ru: "Кофейные бренды Blaser и ассортимент в Dim Kava"
         content: >
           - Blaser Café (Switzerland) — our main brand
           - Green coffee origins and blends represented
           - How to navigate the product catalogue
+        content_ru: >
+          - Blaser Café (Швейцария) — наш основной бренд
+          - Представленные зерновые происхождения и смеси
+          - Как ориентироваться в каталоге продукции
       - order: 4
         title: "Roasting types and their effect on flavour"
+        title_ru: "Типы обжарки и их влияние на вкус"
         content: >
           - Light / medium / dark roast
           - How roasting changes chemical composition
           - Which roast works best for which preparation method
           - How Blaser approaches roasting
+        content_ru: >
+          - Светлая / средняя / тёмная обжарка
+          - Как обжарка меняет химический состав
+          - Какая обжарка лучше подходит к какому способу приготовления
+          - Подход Blaser к обжарке
       - order: 5
         title: "Coffee serving standards"
+        title_ru: "Стандарты подачи кофе"
         content: >
           - How to present a cup to the client (holding from below, announcing the drink)
           - Temperature, crema appearance, and garnish
           - Phrase to use: "Your [drink name]! Enjoy!"
+        content_ru: >
+          - Как подать чашку клиенту (держать снизу, назвать напиток)
+          - Температура, вид кремы, гарнир
+          - Фраза: «Ваш [название напитка]! Приятного аппетита!»
       - order: 6
         title: "Harvesting and processing methods"
+        title_ru: "Сбор и способы обработки"
         content: >
           - Picking methods: selective pick, strip pick, machine
           - Processing: washed, natural, honey
           - How processing affects the final flavour profile
+        content_ru: >
+          - Способы сбора: селективный, полный срез, машинный
+          - Обработка: мытая, натуральная, honey (мёд)
+          - Как обработка влияет на итоговый вкусовой профиль
       - order: 7
         title: "Grinding — basics"
+        title_ru: "Помол — основы"
         content: >
           - Grind sizes and which preparation method each suits
           - Espresso / filter / French press / Turkish
           - How to adjust grind on the machine
+        content_ru: >
+          - Размеры помола и для какого способа приготовления какой подходит
+          - Эспрессо / фильтр / френч-пресс / турка
+          - Как регулировать помол на аппарате
       - order: 8
         title: "Decaf coffee"
+        title_ru: "Кофе без кофеина"
         content: >
           - How caffeine is removed from coffee beans
           - Taste differences vs regular coffee
           - Who it's for and how to recommend it
+        content_ru: >
+          - Как кофеин удаляют из зёрен
+          - Отличия вкуса от обычного кофе
+          - Для кого подходит и как рекомендовать
       - order: 9
         title: "Storing roasted coffee"
+        title_ru: "Хранение обжаренного кофе"
         content: >
           - Why packaging matters (valve, airtight)
           - Ideal conditions: temperature, light, humidity
           - Shelf life and what happens when coffee goes stale
           - Store display rules: always neat, always within expiry date
+        content_ru: >
+          - Почему важна упаковка (клапан, герметичность)
+          - Оптимальные условия: температура, свет, влажность
+          - Срок годности и что происходит при устаревании зерна
+          - Правила витрины: всегда аккуратно, всегда в пределах срока годности
 
   - slug: week-1
     title: "Week 1 — Core Skills"
+    title_en: "Week 1 — Core Skills"
+    title_ru: "Неделя 1 — Базовые навыки"
     order: 3
     estimated_minutes: 2400
     description: >
       Building core barista and sales skills. Drink preparation, equipment
       operation, coffee knowledge consolidation.
+    description_en: >
+      Building core barista and sales skills. Drink preparation, equipment
+      operation, coffee knowledge consolidation.
+    description_ru: >
+      Формирование базовых навыков бариста и продаж. Приготовление напитков,
+      работа с оборудованием, закрепление знаний о кофе.
     steps:
       - order: 1
         title: "Preparing drinks without milk"
+        title_ru: "Приготовление напитков без молока"
         content: >
           - Espresso, lungo, americano, ristretto — differences and preparation
           - Correct dose, extraction time (approx. 25–30 sec for espresso), volume
           - How to check quality: 3 signs of a correct shot
           - Difference between americano and lungo
+        content_ru: >
+          - Эспрессо, лунго, американо, ристретто — отличия и приготовление
+          - Правильная доза, время экстракции (около 25–30 сек для эспрессо), объём
+          - Как проверить качество: 3 признака правильного шота
+          - Разница между американо и лунго
       - order: 2
         title: "Espresso and cappuccino quality criteria"
+        title_ru: "Критерии качества эспрессо и капучино"
         content: >
           - Espresso parameters: time, volume, grammes
           - What correct crema looks like (colour, density, persistence)
           - Milk texture for cappuccino: microfoam, temperature (60–65°C)
           - What happens if milk is overheated
           - How a barista checks their own drink quality
+        content_ru: >
+          - Параметры эспрессо: время, объём, граммы
+          - Как выглядит правильная крема (цвет, плотность, устойчивость)
+          - Текстура молока для капучино: микропена, температура (60–65°C)
+          - Что происходит при перегреве молока
+          - Как бариста проверяет качество своего напитка
       - order: 3
         title: "Coffee knowledge — history"
+        title_ru: "Знания о кофе — история"
         content: >
           - Country where coffee was first consumed (Ethiopia)
           - First coffee house (Istanbul / Venice, debate)
           - Espresso's Italian origin
+        content_ru: >
+          - Страна, где кофе впервые начали пить (Эфиопия)
+          - Первые кофейни (Стамбул / Венеция — в дискуссии)
+          - Итальянское происхождение эспрессо
       - order: 4
         title: "Coffee growing regions"
+        title_ru: "Регионы выращивания кофе"
         content: >
           - Three main growing regions: Africa, Latin America, Asia-Pacific
           - Conditions required: altitude, rainfall, temperature
           - How region affects flavour (terroir concept)
+        content_ru: >
+          - Три основных региона: Африка, Латинская Америка, Азиатско-Тихоокеанский
+          - Необходимые условия: высота, осадки, температура
+          - Как регион влияет на вкус (концепция терруара)
       - order: 5
         title: "Green coffee classification"
+        title_ru: "Классификация зелёного кофе"
         content: >
           - Classification parameters: screen size, defect count, cup score
           - Specialty grade (SCA score 80+)
           - What specialty means in practice
+        content_ru: >
+          - Параметры классификации: размер сита, количество дефектов, cup score
+          - Грейд specialty (оценка SCA 80+)
+          - Что specialty означает на практике
       - order: 6
         title: "Coffee machine — startup sequence"
+        title_ru: "Кофемашина — порядок включения"
         content: >
           Learn and memorise the exact startup sequence for the coffee machine.
           This is mandatory knowledge — tested in every quiz.
           See also: daily checklist step 2.
+        content_ru: >
+          Выучите и запомните точную последовательность включения кофемашины.
+          Это обязательные знания — проверяются в каждом тесте.
+          См. также: шаг 2 ежедневного чек-листа.
       - order: 7
         title: "Daily equipment testing"
+        title_ru: "Ежедневное тестирование оборудования"
         content: >
           - Why we test at least one machine daily
           - What to check: pressure, temperature, extraction time, cleanliness
           - How to record the test result and report in Telegram chat
+        content_ru: >
+          - Зачем тестируем минимум одну машину ежедневно
+          - Что проверять: давление, температура, время экстракции, чистота
+          - Как зафиксировать результат и отчитаться в чате Telegram
       - order: 8
         title: "Loyalty card — client interaction"
+        title_ru: "Карта лояльности — работа с клиентом"
         content: >
           - Ask every client about their card, every time, enthusiastically
           - Explain benefits clearly: free cups, free packs, bonuses
           - How to register a new card in Shop Seller
           - When the card is free
           - What a tasting cup means and how to track it
+        content_ru: >
+          - Спрашивайте у каждого клиента про карту, каждый раз, с энтузиазмом
+          - Чётко объясняйте выгоды: бесплатные чашки, пачки, бонусы
+          - Как зарегистрировать новую карту в Shop Seller
+          - Когда карта бесплатная
+          - Что такое дегустационная чашка и как её отслеживать
       - order: 9
         title: "Sales script — daily practice"
+        title_ru: "Скрипт продаж — ежедневная практика"
         content: >
           Practice the full sales script:
           1. Greet client (loud and clear, eye contact, smile)
@@ -248,24 +510,48 @@ modules:
           6. Offer cross-sale or up-sale
           7. Process order in Shop Seller
           8. Farewell: "See you again! Next time try..."
+        content_ru: >
+          Отработайте полный скрипт продаж:
+          1. Поприветствуйте клиента (громко и чётко, зрительный контакт, улыбка)
+          2. Выясните потребности (вопросы о предпочтениях)
+          3. Покажите 3 упаковки кофе (дайте понюхать)
+          4. Упомяните: швейцарская обжарка, specialty, ручной сбор, качество SCA
+          5. Спросите про карту лояльности
+          6. Предложите кросс-продажу или апсейл
+          7. Оформите заказ в Shop Seller
+          8. Прощание: «Ждём снова! В следующий раз попробуйте…»
 
   - slug: week-2
     title: "Week 2 — Drinks & Equipment"
+    title_en: "Week 2 — Drinks & Equipment"
+    title_ru: "Неделя 2 — Напитки и оборудование"
     order: 4
     estimated_minutes: 2400
     description: >
       Milk-based drinks, Caotina product knowledge, Delonghi equipment basics.
+    description_en: >
+      Milk-based drinks, Caotina product knowledge, Delonghi equipment basics.
+    description_ru: >
+      Молочные напитки, знание продуктов Caotina, основы оборудования Delonghi.
     steps:
       - order: 1
         title: "Milk-based espresso drinks"
+        title_ru: "Молочные напитки на основе эспрессо"
         content: >
           - Latte, cappuccino, flat white, cortado — preparation differences
           - Milk steaming technique: position, angle, temperature
           - How to recognise correctly steamed milk
           - Common mistakes and how to avoid them
           - Correct temperatures: espresso 88–92°C, milk foam 60–65°C
+        content_ru: >
+          - Латте, капучино, флэт уайт, кортадо — отличия приготовления
+          - Техника вспенивания молока: положение, угол, температура
+          - Как распознать правильно вспененное молоко
+          - Типичные ошибки и как их избежать
+          - Правильные температуры: эспрессо 88–92°C, молочная пена 60–65°C
       - order: 2
         title: "Caotina — product knowledge"
+        title_ru: "Caotina — знание продукта"
         content: >
           - What Caotina is: premium Swiss drinking chocolate
           - How it differs from regular cocoa powder (quality, taste, texture)
@@ -275,83 +561,157 @@ modules:
           - How to prepare for maximum flavour
           - Other uses (baking, toppings)
           - How to recommend it to clients who buy coffee
+        content_ru: >
+          - Что такое Caotina: премиальный швейцарский питьевой шоколад
+          - Чем отличается от обычего какао-порошка (качество, вкус, текстура)
+          - Доступные вкусы
+          - Рекомендуемая дозировка производителя на напиток
+          - С каким молоком лучше всего сочетается
+          - Как приготовить для максимального вкуса
+          - Другие применения (выпечка, топпинги)
+          - Как рекомендовать клиентам, которые покупают кофе
       - order: 3
         title: "Delonghi coffee machines — manual vs automatic"
+        title_ru: "Кофемашины Delonghi — ручные и автоматические"
         content: >
           - Manual (pump) machines: user controls brewing, barista skill required
           - Automatic (bean-to-cup) machines: one-touch operation, client convenience
           - Key differences in use, maintenance, and client profile
           - How to explain the difference to a client
           - Main Delonghi models in our range
+        content_ru: >
+          - Ручные (рожковые): пользователь управляет завариванием, нужны навыки бариста
+          - Автоматические (зерно в чашку): одно касание, удобство для клиента
+          - Ключевые отличия в использовании, обслуживании и профиле клиента
+          - Как объяснить разницу клиенту
+          - Основные модели Delonghi в нашем ассортименте
       - order: 4
         title: "Up-sale and cross-sale — practice"
+        title_ru: "Апсейл и кросс-продажа — практика"
         content: >
           Practice real scenarios:
           - Client buys coffee → offer Caotina, drip packs, or accessories
           - Client buys a drink → offer a snack (Lomba bar, Choco Choco, cookies)
           - Client buys equipment → offer coffee, accessories, cleaning products
           - Client wants the cheapest option → present the next tier up and explain value
+        content_ru: >
+          Отработайте реальные сценарии:
+          - Клиент покупает кофе → предложите Caotina, дрип-пакеты или аксессуары
+          - Клиент покупает напиток → предложите снек (батончик Lomba, Choco Choco, печенье)
+          - Клиент покупает оборудование → предложите кофе, аксессуары, средства для чистки
+          - Клиент хочет самый дешёвый вариант → покажите следующий уровень и объясните ценность
       - order: 5
         title: "Latte art — introduction"
+        title_ru: "Латте-арт — введение"
         content: >
           - Basic latte art shapes: heart, rosette, tulip
           - Technique: milk pouring angle and speed
           - Practice daily and send photos to the team Telegram chat
+        content_ru: >
+          - Базовые фигуры латте-арта: сердце, розетка, тюльпан
+          - Техника: угол и скорость вливания молока
+          - Практикуйтесь ежедневно и присылайте фото в командный чат Telegram
 
   - slug: week-3
     title: "Week 3 — Specialty & Blaser Range"
+    title_en: "Week 3 — Specialty & Blaser Range"
+    title_ru: "Неделя 3 — Спешелти и ассортимент Blaser"
     order: 5
     estimated_minutes: 2400
     description: >
       Specialty coffee concept, Blaser product catalogue, client consultation skills.
+    description_en: >
+      Specialty coffee concept, Blaser product catalogue, client consultation skills.
+    description_ru: >
+      Концепция specialty, каталог продукции Blaser, навыки консультирования клиентов.
     steps:
       - order: 1
         title: "What is specialty coffee?"
+        title_ru: "Что такое specialty coffee?"
         content: >
           - SCA (Specialty Coffee Association) scoring system: 80+ points = specialty
           - Parameters evaluated: aroma, flavour, aftertaste, acidity, body, uniformity
           - Hand-picked harvest vs. machine picking
           - Why specialty costs more and how to explain this to a client
+        content_ru: >
+          - Система оценки SCA (Specialty Coffee Association): 80+ баллов = specialty
+          - Оцениваемые параметры: аромат, вкус, послевкусие, кислотность, тело, однородность
+          - Ручной сбор vs машинный
+          - Почему specialty дороже и как объяснить это клиенту
       - order: 2
         title: "Monosorts vs. blends (Bukety)"
+        title_ru: "Моносорта и смеси (букеты)"
         content: >
           - Monosort: 100% single origin, single variety — terroir expression
           - Blend (Buket): combination of origins/varieties — balance and consistency
           - How to read the Blaser packaging colour system
           - When to recommend monosort vs. blend
+        content_ru: >
+          - Моносорт: 100% одно происхождение, один сорт — выражение терруара
+          - Смесь (букет): сочетание происхождений/сортов — баланс и стабильность
+          - Как читать цветовую систему упаковки Blaser
+          - Когда рекомендовать моносорт, когда смесь
       - order: 3
         title: "Blaser product catalogue — practical study"
+        title_ru: "Каталог Blaser — практическое изучение"
         content: >
           - Study at least 5 Blaser blends: name, origin, flavour notes
           - Study at least 3 Blaser monosorts: name, origin, flavour notes
           - Practice describing flavour notes to a client in simple language
           - Example: "This one has notes of dark chocolate and almonds,
             with low acidity — perfect if you prefer a rich, round cup"
+        content_ru: >
+          - Изучите минимум 5 смесей Blaser: название, происхождение, вкусовые ноты
+          - Изучите минимум 3 моносорта Blaser: название, происхождение, ноты
+          - Практикуйтесь описывать ноты клиенту простым языком
+          - Пример: «У этого тёмный шоколад и миндаль, низкая кислотность —
+            отлично, если любите насыщенную, округлую чашку»
       - order: 4
         title: "Coffee consultation — matching to client taste"
+        title_ru: "Консультация по кофе — подбор под вкус клиента"
         content: >
           - How to ask the right questions: "Do you prefer strong or mild?"
             "Milk or black?" "Fruity/bright or rich/deep?"
           - How to explain mild vs. bright roast
           - How to recommend the right grind for their equipment at home
+        content_ru: >
+          - Как задавать правильные вопросы: «Крепкий или мягкий?»
+            «С молоком или без?» «Фруктовая яркость или глубокое тело?»
+          - Как объяснить мягкую vs яркую обжарку
+          - Как рекомендовать помол под домашнее оборудование клиента
       - order: 5
         title: "Client service practice — full script"
+        title_ru: "Обслуживание клиента — полный скрипт"
         content: >
           Run through the complete DK service standard from greeting to farewell.
           Practise with a colleague playing the client role.
           Checklist: greeting, needs identification, product presentation,
           smell offer, loyalty card, up/cross-sale, payment, farewell phrase.
+        content_ru: >
+          Пройдите полный стандарт обслуживания DK от приветствия до прощания.
+          Отработайте с коллегой в роли клиента.
+          Чек-лист: приветствие, выявление потребностей, презентация товара,
+          предложение понюхать, карта лояльности, ап/кросс-продажа, оплата, прощальная фраза.
 
   - slug: month-1
     title: "Month 1 — Independent Work"
+    title_en: "Month 1 — Independent Work"
+    title_ru: "Месяц 1 — Самостоятельная работа"
     order: 6
     estimated_minutes: 3600
     description: >
       Consolidation of all previous knowledge. Independent counter work,
       Shop Seller operations, inventory, discounts, company structure.
+    description_en: >
+      Consolidation of all previous knowledge. Independent counter work,
+      Shop Seller operations, inventory, discounts, company structure.
+    description_ru: >
+      Закрепление всего пройденного. Самостоятельная работа за стойкой,
+      операции в Shop Seller, инвентаризация, скидки, структура компании.
     steps:
       - order: 1
         title: "Independent counter work — order flow"
+        title_ru: "Самостоятельная работа за стойкой — цикл заказа"
         content: >
           Full order flow without assistance:
           1. Greet client
@@ -362,22 +722,45 @@ modules:
           6. Issue receipt
           7. Prepare order
           8. Serve and farewell
+        content_ru: >
+          Полный цикл заказа без помощи:
+          1. Поприветствовать клиента
+          2. Выяснить потребности
+          3. Внести заказ в Shop Seller
+          4. Сканировать карту лояльности DK
+          5. Провести оплату (наличные / карта / перевод)
+          6. Выдать чек
+          7. Приготовить заказ
+          8. Подать и попрощаться
       - order: 2
         title: "Closing the cash register"
+        title_ru: "Закрытие кассы"
         content: >
           - Actions after end-of-day cash close
           - Filling in accounting sheets with Z-reports from all terminals
           - Balancing the register (cash in till must match Shop Seller total)
           - Recording cash expenses with mandatory description
           - Closing the day in Shop Seller
+        content_ru: >
+          - Действия после закрытия кассы в конце дня
+          - Заполнение учётных листов с Z-отчётами со всех терминалов
+          - Сверка кассы (наличные в ящике = итогу Shop Seller)
+          - Учёт расходов наличными с обязательным описанием
+          - Закрытие дня в Shop Seller
       - order: 3
         title: "Bar cleaning — during the day"
+        title_ru: "Уборка бара — в течение дня"
         content: >
           - What is included in daytime bar maintenance
           - Surfaces, coffee machine, grinder, take-away zone
           - Product packaging alignment (always neat, always in place)
+        content_ru: >
+          - Что входит в дневное обслуживание бара
+          - Поверхности, кофемашина, кофемолка, зона навынос
+          - Выравнивание упаковки товара (всегда аккуратно, всегда на месте)
       - order: 4
         title: "Loyalty card — full knowledge"
+        title_ru: "Карта лояльности — полное знание"
         content: >
           - All DK loyalty card bonuses
           - How to check client's current bonus balance
@@ -385,8 +768,16 @@ modules:
           - Gift card registration
           - Lost card recovery procedure
           - Tasting cup: what it is, how to redeem, how to write off in programme
+        content_ru: >
+          - Все бонусы карты лояльности DK
+          - Как проверить текущий баланс бонусов клиента
+          - Когда начисляются бесплатные чашки
+          - Регистрация подарочной карты
+          - Процедура восстановления утерянной карты
+          - Дегустационная чашка: что это, как списать, как провести в программе
       - order: 5
         title: "Shop Seller — sales operations"
+        title_ru: "Shop Seller — операции продаж"
         content: >
           Full knowledge of Shop Seller:
           - Conducting a sale (full process)
@@ -396,57 +787,109 @@ modules:
           - Handling overage receipts (mistakes)
           - End-of-day close procedure
           - What to do if programme total ≠ cash register total
+        content_ru: >
+          Полное знание Shop Seller:
+          - Проведение продажи (полный процесс)
+          - Ввод упаковки напитка для приготовления
+          - Типы оплаты: наличные, карта, перевод — сценарий для каждого
+          - Выдача копии чека клиенту
+          - Лишние чеки (ошибки)
+          - Процедура закрытия дня
+          - Что делать, если итог программы ≠ итогу кассы
       - order: 6
         title: "Inventory — daily and monthly"
+        title_ru: "Инвентаризация — ежедневная и ежемесячная"
         content: >
           - Daily inventory: what to count, how to record, what to note in comments
           - Monthly inventory: full product count, quality check, expiry tracking
           - Difference between daily and monthly procedures
           - How to record correctly in Shop Seller
+        content_ru: >
+          - Ежедневная: что пересчитывать, как фиксировать, что писать в комментариях
+          - Ежемесячная: полный пересчёт, проверка качества, сроки годности
+          - Разница между ежедневной и ежемесячной процедурой
+          - Как корректно внести в Shop Seller
       - order: 7
         title: "Discounts — representative and dealer"
+        title_ru: "Скидки — представитель и дилер"
         content: >
           - How to calculate representative discount
           - How to calculate dealer discount
           - Who qualifies for discounted access/price in our store network
           - Diplomat discount: amount and how to process it
+        content_ru: >
+          - Как считать представительскую скидку
+          - Как считать дилерскую скидку
+          - Кто имеет право на льготный доступ/цену в сети магазинов
+          - Дипломатическая скидка: размер и как оформить
       - order: 8
         title: "Company structure"
+        title_ru: "Структура компании"
         content: >
           - Management structure: leadership, departments, stores
           - How information flows: manager → team → store
           - Where to find current promotions
           - How to communicate promotions to clients
+        content_ru: >
+          - Структура управления: руководство, отделы, магазины
+          - Как идёт информация: менеджер → команда → магазин
+          - Где смотреть актуальные акции
+          - Как доносить акции до клиентов
       - order: 9
         title: "Blaser coffee — flavour range"
+        title_ru: "Кофе Blaser — вкусовой диапазон"
         content: >
           - How to explain the difference between mild and bright roast
           - Name and describe at least one Blaser blend from the catalogue
           - Flavour notes vocabulary: chocolate, fruit, nuts, floral, caramel
+        content_ru: >
+          - Как объяснить разницу между мягкой и яркой обжаркой
+          - Назвать и описать минимум одну смесь Blaser из каталога
+          - Словарь нот: шоколад, фрукт, орех, цветы, карамель
       - order: 10
         title: "Goods receiving and display"
+        title_ru: "Приёмка товара и выкладка"
         content: >
           - What to check when receiving a delivery (quantity, expiry, condition)
           - FIFO shelf display: new stock behind older stock
           - Price tag rules: every product must have a price tag, verified against Shop Seller
           - What to do if a price tag is missing
+        content_ru: >
+          - Что проверять при приёмке (количество, срок, состояние)
+          - Выкладка FIFO: новая партия за старой
+          - Ценники: у каждого товара есть ценник, сверка с Shop Seller
+          - Что делать, если ценника нет
 
   - slug: month-2
     title: "Month 2 — Equipment Expertise"
+    title_en: "Month 2 — Equipment Expertise"
+    title_ru: "Месяц 2 — Экспертиза по оборудованию"
     order: 7
     estimated_minutes: 3600
     description: >
       Deep knowledge of coffee equipment: machines, grinders, brands,
       professional vs. home machines. Team work and reporting.
+    description_en: >
+      Deep knowledge of coffee equipment: machines, grinders, brands,
+      professional vs. home machines. Team work and reporting.
+    description_ru: >
+      Глубокие знания кофейного оборудования: машины, кофемолки, бренды,
+      профессиональное и домашнее оборудование. Работа в команде и отчётность.
     steps:
       - order: 1
         title: "Coffee equipment classification"
+        title_ru: "Классификация кофейного оборудования"
         content: >
           - Home (consumer) vs. professional (commercial) machines
           - Manual (pump) vs. automatic (bean-to-cup) vs. capsule
           - Key components: boiler, group head, pump, grinder (built-in or separate)
+        content_ru: >
+          - Домашние (бытовые) vs профессиональные (коммерческие) машины
+          - Ручные (рожковые) vs автоматические (зерно в чашку) vs капсульные
+          - Ключевые узлы: бойлер, группа, помпа, кофемолка (встроенная или отдельная)
       - order: 2
         title: "Main components of a coffee machine"
+        title_ru: "Основные узлы кофемашины"
         content: >
           - Boiler types: single / dual / thermoblock
           - Group head (рабочая группа): what it does
@@ -454,110 +897,208 @@ modules:
           - Pressure gauge (барометр): how to read it
           - Optimal brewing temperature: 88–92°C
           - Siphon system: what it is and when it's used
+        content_ru: >
+          - Типы бойлеров: одинарный / двойной / термоблок
+          - Группа (рабочая группа): для чего нужна
+          - Помпа: роль в давлении (стандарт 9 бар)
+          - Манометр (барометр): как читать показания
+          - Оптимальная температура заваривания: 88–92°C
+          - Система сифона: что это и когда применяется
       - order: 3
         title: "Materials — ABS plastic vs. polycarbonate"
+        title_ru: "Материалы — ABS-пластик и поликарбонат"
         content: >
           - ABS plastic: lighter, less heat-resistant, lower cost
           - Polycarbonate: more durable, better heat resistance, food-safe
           - How to explain material quality to a client
+        content_ru: >
+          - ABS-пластик: легче, менее термостойкий, ниже цена
+          - Поликарбонат: прочнее, лучше термостойкость, пищевой
+          - Как объяснить клиенту качество материала
       - order: 4
         title: "Controls and steam"
+        title_ru: "Управление и пар"
         content: >
           - Control types: mechanical, electronic, touchscreen
           - Cappuccinatore (капучинатор): types — classic steam wand, Pannarello, automatic frother
           - Quick steam (быстрый пар): what it means and why clients value it
+        content_ru: >
+          - Типы управления: механика, электроника, сенсор
+          - Капучинатор: виды — классическая паровая трубка, Pannarello, автоматический
+          - Быстрый пар: что это и почему это ценят клиенты
       - order: 5
         title: "Descaling and cleaning"
+        title_ru: "Удаление накипи и чистка"
         content: >
           - Descaling (от накипи): when and how, which products to use
           - Coffee oil cleaning (от кофейного жира): daily and with chemical
           - Why water filters matter: extending machine life, improving taste
+        content_ru: >
+          - Декальцинация (от накипи): когда и как, какие средства
+          - Чистка от кофейного жира: ежедневно и химией
+          - Зачем фильтры воды: срок службы машины и вкус
       - order: 6
         title: "Grinders — types and components"
+        title_ru: "Кофемолки — типы и узлы"
         content: >
           - Flat burrs vs. conical burrs: difference in grind consistency and heat
           - Burr diameter: how it affects grind speed and quality
           - Blade material: steel vs. titanium-coated
           - Overheat and foreign object protection
           - How to calibrate a professional grinder
+        content_ru: >
+          - Плоские vs конические жернова: однородность помола и нагрев
+          - Диаметр жерновов: влияние на скорость и качество помола
+          - Материал жерновов: сталь vs титановое покрытие
+          - Защита от перегрева и посторонних предметов
+          - Как калибровать профессиональную кофемолку
       - order: 7
         title: "Brand knowledge — Delonghi, Nivona, Melitta"
+        title_ru: "Знание брендов — Delonghi, Nivona, Melitta"
         content: >
           - Delonghi: Italian brand, wide range, strong in consumer machines
           - Nivona: German engineering, innovative features, long-term reliability
           - Melitta: German heritage brand, pioneer in filter coffee, quality positioning
           - How to compare brands when consulting a client
+        content_ru: >
+          - Delonghi: итальянский бренд, широкая линейка, силён в бытовых машинах
+          - Nivona: немецкая инженерия, инновации, надёжность
+          - Melitta: немецкий бренд с историей, пионер фильтр-кофе, позиционирование качества
+          - Как сравнивать бренды при консультации
       - order: 8
         title: "Startup after downtime"
+        title_ru: "Запуск после простоя"
         content: >
           - What to check when starting equipment after extended inactivity
           - Flushing, temperature stabilisation, test shot
+        content_ru: >
+          - Что проверить при запуске после длительного простоя
+          - Промывка, стабилизация температуры, тестовый шот
       - order: 9
         title: "Professional machine — care rules"
+        title_ru: "Профессиональная машина — правила ухода"
         content: >
           - Daily backflush procedure
           - Weekly chemical cleaning with report to Telegram
           - Monthly deep clean
           - Service escalation: when to call the service centre
+        content_ru: >
+          - Ежедневный бэкфлаш
+          - Еженедельная химчистка с отчётом в Telegram
+          - Ежемесячная глубокая чистка
+          - Когда вызывать сервисный центр
       - order: 10
         title: "Client documentation at purchase"
+        title_ru: "Документы клиента при покупке"
         content: >
           - Training programme given to client at machine purchase
           - Documents accompanying a shipment
           - How to explain the difference between home and professional machine to a client
+        content_ru: >
+          - Программа обучения при покупке машины
+          - Документы к поставке
+          - Как объяснить разницу между домашней и профессиональной машиной
       - order: 11
         title: "Team organisation and reporting"
+        title_ru: "Организация команды и отчётность"
         content: >
           - How team responsibilities are distributed monthly
           - What goes into the monthly report and how to calculate it
           - Reporting format and submission schedule
+        content_ru: >
+          - Как ежемесячно распределяются зоны ответственности в команде
+          - Что входит в месячный отчёт и как считать показатели
+          - Формат отчёта и сроки сдачи
 
   - slug: month-3
     title: "Month 3 — Expert Level & Mentoring"
+    title_en: "Month 3 — Expert Level & Mentoring"
+    title_ru: "Месяц 3 — Экспертный уровень и наставничество"
     order: 8
     estimated_minutes: 3600
     description: >
       Advanced coffee knowledge, professional consultation, cupping,
       client relationship skills, and introduction to mentoring.
+    description_en: >
+      Advanced coffee knowledge, professional consultation, cupping,
+      client relationship skills, and introduction to mentoring.
+    description_ru: >
+      Продвинутые знания о кофе, профессиональное консультирование, каппинг,
+      работа с клиентами и введение в наставничество.
     steps:
       - order: 1
         title: "Advanced sales — helping clients decide faster"
+        title_ru: "Продвинутые продажи — помочь клиенту решиться быстрее"
         content: >
           - Structuring the consultation to lead naturally to a decision
           - Asking the right 2–3 questions to narrow down quickly
           - "Dream building": painting a picture of the client's ideal coffee moment
           - Handling uncertainty: "Let me suggest you start with this..."
+        content_ru: >
+          - Выстроить консультацию так, чтобы естественно прийти к решению
+          - Задать 2–3 правильных вопроса и быстро сузить выбор
+          - «Построение мечты»: нарисовать идеальный кофейный момент клиента
+          - Работа с сомнениями: «Предлагаю начать с этого…»
       - order: 2
         title: "Promoting espresso culture"
+        title_ru: "Продвижение эспрессо-культуры"
         content: >
           - What it means to "cultivate espresso culture"
           - Active listening techniques: nodding, mirroring, asking follow-up
           - Sharing coffee stories and interesting facts naturally in conversation
+        content_ru: >
+          - Что значит «культивировать эспрессо-культуру»
+          - Активное слушание: кивки, отражение, уточняющие вопросы
+          - Делиться историями о кофе и фактами естественно в разговоре
       - order: 3
         title: "Coffee cupping and tasting"
+        title_ru: "Каппинг и дегустация кофе"
         content: >
           - Cupping methods: SCA standard, informal sensory evaluation
           - Taste zones on the tongue: sweet (tip), sour (sides), bitter (back)
           - Minimum 3 flavour descriptors every employee must know:
             acidity, body, aftertaste
           - How to describe coffee to a client without industry jargon
+        content_ru: >
+          - Методы каппинга: стандарт SCA, неформальная сенсорная оценка
+          - Зоны вкуса на языке: сладость (кончик), кислотина (бока), горечь (корень)
+          - Минимум 3 дескриптора, которые должен знать каждый:
+            кислотность, тело, послевкусие
+          - Как описывать кофе клиенту без жаргона индустрии
       - order: 4
         title: "Full equipment sale scenario"
+        title_ru: "Полный сценарий продажи оборудования"
         content: >
           - Up-sale and cross-sale examples for equipment (e.g., sell machine + grinder + coffee)
           - How to explain value vs. price when client hesitates
           - Documenting the sale: what paperwork accompanies a machine sale
+        content_ru: >
+          - Примеры апсейла и кросс-продажи оборудования (машина + кофемолка + кофе)
+          - Как объяснить ценность vs цену, если клиент сомневается
+          - Оформление продажи: какие документы сопровождают продажу машины
       - order: 5
         title: "Mentoring new employees"
+        title_ru: "Наставничество новых сотрудников"
         content: >
           - The difference between training and mentoring
           - How to help a newcomer settle in: patience, demonstration, encouragement
           - What behaviours to model: punctuality, enthusiasm, cleanliness
           - How to give constructive feedback to a junior colleague
+        content_ru: >
+          - Разница между обучением и наставничеством
+          - Как помочь новичку адаптироваться: терпение, показ, поддержка
+          - Какие поведенческие модели задавать: пунктуальность, энтузиазм, чистота
+          - Как давать конструктивную обратную связь младшему коллеге
       - order: 6
         title: "Self-development direction"
+        title_ru: "Направление саморазвития"
         content: >
           - Choose a development direction: barista skills, latte art, sales,
             equipment expertise, or team leadership
           - Set a personal goal for the next 3 months
           - Discuss with manager and record in learning plan
+        content_ru: >
+          - Выберите направление: навыки бариста, латте-арт, продажи,
+            экспертиза по оборудованию или лидерство в команде
+          - Поставьте личную цель на ближайшие 3 месяца
+          - Обсудите с руководителем и зафиксируйте в плане обучения

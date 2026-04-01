@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}{% if module %}{{ module.title }}{% else %}Module{% endif %}{% endblock %}
+{% load i18n %}
+{% block title %}{% if module %}{{ module.title }}{% else %}{% trans "Module" %}{% endif %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
   <header>
     <a href="{% url 'onboarding:overview' %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
       <span class="material-symbols-outlined text-lg">arrow_back</span>
-      Back to Onboarding
+      {% trans "Back to Onboarding" %}
     </a>
     {% if module %}
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ module.title }}</h1>
@@ -13,8 +14,8 @@
     <p class="text-on-surface-variant/70 mt-2 max-w-2xl">{{ module.description }}</p>
     {% endif %}
     {% else %}
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Module not found</h1>
-    <p class="text-on-surface-variant/70 mt-2">Load onboarding: <code>python manage.py load_onboarding</code></p>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "Module not found" %}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{% trans "Load onboarding:" %} <code>python manage.py load_onboarding</code></p>
     {% endif %}
   </header>
 
@@ -36,14 +37,14 @@
         {% if not s.completed %}
         <form method="post" action="{% url 'onboarding:mark_step_complete' s.id %}" class="flex-shrink-0">
           {% csrf_token %}
-          <button type="submit" class="btn-secondary py-2 px-4 text-sm">Mark done</button>
+          <button type="submit" class="btn-secondary py-2 px-4 text-sm">{% trans "Mark done" %}</button>
         </form>
         {% endif %}
       </div>
     </div>
     {% empty %}
     <div class="card-atelier">
-      <p class="text-on-surface-variant">No steps in this module. Load onboarding: <code>python manage.py load_onboarding</code></p>
+      <p class="text-on-surface-variant">{% trans "No steps in this module." %} {% trans "Load onboarding:" %} <code>python manage.py load_onboarding</code></p>
     </div>
     {% endfor %}
   </div>

@@ -3,6 +3,7 @@ from typing import Optional
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from .models import Badge, GamificationProfile, Mission, PointsLog, UserBadge, UserMissionProgress
 
@@ -19,13 +20,13 @@ LEVEL_THRESHOLDS = [
 ]
 
 LEVEL_NAMES = {
-    1: 'Newcomer',
-    2: 'Barista',
-    3: 'Specialist',
-    4: 'Expert',
-    5: 'Senior Expert',
-    6: 'Mentor',
-    7: 'Legend',
+    1: _('Newcomer'),
+    2: _('Barista'),
+    3: _('Specialist'),
+    4: _('Expert'),
+    5: _('Senior Expert'),
+    6: _('Mentor'),
+    7: _('Legend'),
 }
 
 

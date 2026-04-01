@@ -1,15 +1,22 @@
 """Onboarding models — program, modules, steps, progress."""
 from django.conf import settings
 from django.db import models
+from django.utils.translation import get_language
 
 
 class OnboardingProgram(models.Model):
     slug = models.SlugField(unique=True, max_length=120)
     title = models.CharField(max_length=255)
+    title_en = models.CharField(max_length=255, blank=True, default='')
+    title_ka = models.CharField(max_length=255, blank=True, default='')
+    title_ru = models.CharField(max_length=255, blank=True, default='')
     role = models.CharField(max_length=80, blank=True)
     visible_for_candidates = models.BooleanField(default=False)
     estimated_days = models.PositiveIntegerField(default=90)
     description = models.TextField(blank=True)
+    description_en = models.TextField(blank=True, default='')
+    description_ka = models.TextField(blank=True, default='')
+    description_ru = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -18,14 +25,30 @@ class OnboardingProgram(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def localized_title(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'title_{lang}', '') or self.title_en or self.title
+
+    @property
+    def localized_description(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'description_{lang}', '') or self.description_en or self.description
+
 
 class OnboardingModule(models.Model):
     program = models.ForeignKey(OnboardingProgram, on_delete=models.CASCADE, related_name='modules')
     slug = models.SlugField(max_length=120)
     title = models.CharField(max_length=255)
+    title_en = models.CharField(max_length=255, blank=True, default='')
+    title_ka = models.CharField(max_length=255, blank=True, default='')
+    title_ru = models.CharField(max_length=255, blank=True, default='')
     order = models.PositiveIntegerField(default=0)
     estimated_minutes = models.PositiveIntegerField(default=0)
     description = models.TextField(blank=True)
+    description_en = models.TextField(blank=True, default='')
+    description_ka = models.TextField(blank=True, default='')
+    description_ru = models.TextField(blank=True, default='')
 
     class Meta:
         ordering = ['program', 'order']
@@ -34,12 +57,23 @@ class OnboardingModule(models.Model):
     def __str__(self):
         return f'{self.program.title} — {self.title}'
 
+    @property
+    def localized_title(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'title_{lang}', '') or self.title_en or self.title
+
 
 class OnboardingStep(models.Model):
     module = models.ForeignKey(OnboardingModule, on_delete=models.CASCADE, related_name='steps')
     order = models.PositiveIntegerField(default=0)
     title = models.CharField(max_length=255)
+    title_en = models.CharField(max_length=255, blank=True, default='')
+    title_ka = models.CharField(max_length=255, blank=True, default='')
+    title_ru = models.CharField(max_length=255, blank=True, default='')
     content = models.TextField(blank=True)
+    content_en = models.TextField(blank=True, default='')
+    content_ka = models.TextField(blank=True, default='')
+    content_ru = models.TextField(blank=True, default='')
 
     class Meta:
         ordering = ['module', 'order']
@@ -47,6 +81,16 @@ class OnboardingStep(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def localized_title(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'title_{lang}', '') or self.title_en or self.title
+
+    @property
+    def localized_content(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'content_{lang}', '') or self.content_en or self.content
 
 
 class OnboardingProgress(models.Model):

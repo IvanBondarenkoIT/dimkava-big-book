@@ -29,6 +29,11 @@ PyYAML>=6.0
 # Markdown for wiki/articles
 markdown>=3.5
 
+# i18n helpers (compile .mo on Windows without GNU gettext)
+polib>=1.2.0
+
+# HTTP client for translation (stdlib used; keep requests optional)
+
 # Testing
 pytest>=7.0
 pytest-django>=4.5

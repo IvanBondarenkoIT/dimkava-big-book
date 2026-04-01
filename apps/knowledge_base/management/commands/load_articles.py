@@ -15,6 +15,23 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--path', default=str(DEFAULT_PATH), help='Path to YAML')
+        parser.add_argument('--auto-translate-draft', action='store_true')
+
+    @staticmethod
+    def _loc(data: dict, key: str, lang: str, default: str = '') -> str:
+        direct = data.get(f'{key}_{lang}')
+        if direct:
+            return direct
+        nested = data.get(key)
+        if isinstance(nested, dict):
+            return nested.get(lang) or nested.get('en') or default
+        if lang == 'en' and isinstance(nested, str):
+            return nested
+        return default
+
+    @staticmethod
+    def _draft(value: str, lang: str) -> str:
+        return f'[AUTO-{lang}] {value}' if value else ''
 
     def handle(self, *args, **options):
         path = Path(options['path'])
@@ -25,11 +42,21 @@ class Command(BaseCommand):
         with open(path, encoding='utf-8') as f:
             data = yaml.safe_load(f)
 
+        auto_draft = bool(options.get('auto_translate_draft'))
         for s in data.get('sections', []):
+            title_en = self._loc(s, 'title', 'en', s.get('title', ''))
+            title_ka = self._loc(s, 'title', 'ka', '')
+            title_ru = self._loc(s, 'title', 'ru', '')
+            if auto_draft:
+                title_ka = title_ka or self._draft(title_en, 'ka')
+                title_ru = title_ru or self._draft(title_en, 'ru')
             section, _ = KBSection.objects.update_or_create(
                 slug=s['slug'],
                 defaults={
-                    'title': s['title'],
+                    'title': title_en,
+                    'title_en': title_en,
+                    'title_ka': title_ka,
+                    'title_ru': title_ru,
                     'icon': s.get('icon', ''),
                     'order': s.get('order', 0),
                 }
@@ -50,9 +77,15 @@ class Command(BaseCommand):
                 section=section,
                 slug=a['slug'],
                 defaults={
-                    'title': a['title'],
+                    'title': self._loc(a, 'title', 'en', a.get('title', '')),
+                    'title_en': self._loc(a, 'title', 'en', a.get('title', '')),
+                    'title_ka': self._loc(a, 'title', 'ka', '') or (self._draft(self._loc(a, 'title', 'en', a.get('title', '')), 'ka') if auto_draft else ''),
+                    'title_ru': self._loc(a, 'title', 'ru', '') or (self._draft(self._loc(a, 'title', 'en', a.get('title', '')), 'ru') if auto_draft else ''),
                     'status': a.get('status', 'published'),
-                    'content': a.get('content', ''),
+                    'content': self._loc(a, 'content', 'en', a.get('content', '')),
+                    'content_en': self._loc(a, 'content', 'en', a.get('content', '')),
+                    'content_ka': self._loc(a, 'content', 'ka', '') or (self._draft(self._loc(a, 'content', 'en', a.get('content', '')), 'ka') if auto_draft else ''),
+                    'content_ru': self._loc(a, 'content', 'ru', '') or (self._draft(self._loc(a, 'content', 'en', a.get('content', '')), 'ru') if auto_draft else ''),
                 }
             )
             self.stdout.write(self.style.SUCCESS(f'  Article: {article.title}'))

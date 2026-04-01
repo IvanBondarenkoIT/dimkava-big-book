@@ -1,10 +1,10 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="{{ LANGUAGE_CODE|default:'en' }}">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{% block title %}Dim Kava{% endblock %} | Internal Learning Portal</title>
+  <title>{% block title %}Dim Kava{% endblock %} | {% trans "Internal Learning Portal" %}</title>
   <link rel="icon" href="{% static 'favicon.ico' %}" sizes="any">
   <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -23,6 +23,22 @@
     /* Fix layout shift: icon buttons reserve space before Material Symbols font loads */
     nav .nav-icon-btn { width: 2.5rem; height: 2.5rem; min-width: 2.5rem; min-height: 2.5rem; }
     nav .nav-icon-btn .material-symbols-outlined { font-size: 1.25rem; }
+    /* Ensure ligatures render as icons (avoid showing "coffee", "dashboard" etc.) */
+    .material-symbols-outlined {
+      font-family: "Material Symbols Outlined";
+      font-weight: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: "liga";
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: "liga";
+    }
   </style>
 </head>
 <body class="bg-surface text-on-surface-variant selection:bg-primary-container/30 antialiased min-h-screen flex flex-col">
@@ -40,101 +56,101 @@
       {% if candidate_ui == 'verified' or candidate_ui == 'unverified' %}
       <a href="{% url 'core:home' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if request.resolver_match.url_name == 'home' %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">dashboard</span>
-        <span>Dashboard</span>
+        <span>{% trans "Dashboard" %}</span>
       </a>
       <a href="{% url 'courses:list' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'courses' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">menu_book</span>
-        <span>Courses</span>
+        <span>{% trans "Courses" %}</span>
       </a>
       <a href="{% url 'onboarding:overview' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'onboarding' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">person_add</span>
-        <span>Onboarding</span>
+        <span>{% trans "Onboarding" %}</span>
       </a>
       <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'profile' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">person</span>
-        <span>Profile</span>
+        <span>{% trans "Profile" %}</span>
       </a>
       {% else %}
       <a href="{% url 'core:home' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if request.resolver_match.url_name == 'home' %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">dashboard</span>
-        <span>Dashboard</span>
+        <span>{% trans "Dashboard" %}</span>
       </a>
       <a href="{% url 'courses:list' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'courses' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">menu_book</span>
-        <span>Courses</span>
+        <span>{% trans "Courses" %}</span>
       </a>
       <a href="{% url 'onboarding:overview' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'onboarding' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">person_add</span>
-        <span>Onboarding</span>
+        <span>{% trans "Onboarding" %}</span>
       </a>
       <a href="{% url 'knowledge_base:home' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'wiki' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">auto_stories</span>
-        <span>Knowledge</span>
+        <span>{% trans "Knowledge" %}</span>
       </a>
       <a href="{% url 'news:list' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'news' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">feed</span>
-        <span>News</span>
+        <span>{% trans "News" %}</span>
       </a>
       <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 font-medium transition-colors hover:text-primary shrink-0 {% if 'profile' in request.path %}text-primary{% else %}text-on-surface-variant/60{% endif %}">
         <span class="material-symbols-outlined text-xl">person</span>
-        <span>Profile</span>
+        <span>{% trans "Profile" %}</span>
       </a>
       {% endif %}
     </div>
 
     <!-- Mobile menu (hamburger → dropdown). Styled like search/notifications for consistency. -->
     <details class="md:hidden">
-      <summary class="nav-icon-btn flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors cursor-pointer" aria-label="Open menu">
+      <summary class="nav-icon-btn flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors cursor-pointer" aria-label="{% trans 'Open menu' %}">
         <span class="material-symbols-outlined" aria-hidden="true">menu</span>
       </summary>
       <div class="absolute left-0 right-0 top-full mt-1 mx-4 py-3 px-4 rounded-xl bg-surface border border-outline-variant/20 shadow-xl flex flex-col gap-1 z-50">
         {% if hr_ui %}
         <a href="{% url 'analytics:hr_hub' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-extrabold text-white bg-primary hover:opacity-95 transition-opacity no-underline">
           <span class="material-symbols-outlined text-xl">verified_user</span>
-          <span>HR Hub</span>
+          <span>{% trans "HR Hub" %}</span>
         </a>
         {% endif %}
         {% if candidate_ui == 'verified' or candidate_ui == 'unverified' %}
         <a href="{% url 'core:home' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if request.resolver_match.url_name == 'home' %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">dashboard</span>
-          <span>Dashboard</span>
+          <span>{% trans "Dashboard" %}</span>
         </a>
         <a href="{% url 'courses:list' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'courses' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">menu_book</span>
-          <span>Courses</span>
+          <span>{% trans "Courses" %}</span>
         </a>
         <a href="{% url 'onboarding:overview' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'onboarding' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">person_add</span>
-          <span>Onboarding</span>
+          <span>{% trans "Onboarding" %}</span>
         </a>
         <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'profile' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">person</span>
-          <span>Profile</span>
+          <span>{% trans "Profile" %}</span>
         </a>
         {% else %}
         <a href="{% url 'core:home' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if request.resolver_match.url_name == 'home' %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">dashboard</span>
-          <span>Dashboard</span>
+          <span>{% trans "Dashboard" %}</span>
         </a>
         <a href="{% url 'courses:list' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'courses' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">menu_book</span>
-          <span>Courses</span>
+          <span>{% trans "Courses" %}</span>
         </a>
         <a href="{% url 'onboarding:overview' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'onboarding' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">person_add</span>
-          <span>Onboarding</span>
+          <span>{% trans "Onboarding" %}</span>
         </a>
         <a href="{% url 'knowledge_base:home' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'wiki' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">auto_stories</span>
-          <span>Knowledge</span>
+          <span>{% trans "Knowledge" %}</span>
         </a>
         <a href="{% url 'news:list' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'news' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">feed</span>
-          <span>News</span>
+          <span>{% trans "News" %}</span>
         </a>
         <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg font-medium {% if 'profile' in request.path %}text-primary bg-primary/10{% else %}text-on-surface-variant/80 hover:bg-surface-container-high{% endif %}">
           <span class="material-symbols-outlined text-xl">person</span>
-          <span>Profile</span>
+          <span>{% trans "Profile" %}</span>
         </a>
         {% endif %}
       </div>
@@ -142,19 +158,19 @@
 
     <div class="flex items-center gap-1.5 sm:gap-2 md:gap-4 flex-shrink-0 min-w-0">
       {% if hr_ui %}
-      <a href="{% url 'analytics:hr_hub' %}" class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-primary text-white font-extrabold text-sm shadow hover:opacity-95 transition-opacity no-underline" title="HR tools">
+      <a href="{% url 'analytics:hr_hub' %}" class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-primary text-white font-extrabold text-sm shadow hover:opacity-95 transition-opacity no-underline" title="{% trans 'HR tools' %}">
         <span class="material-symbols-outlined text-lg" aria-hidden="true">verified_user</span>
-        <span>HR</span>
+        <span>{% trans "HR" %}</span>
       </a>
       {% endif %}
       {% if not candidate_ui %}
-      <a href="{% url 'search:results' %}" class="nav-icon-btn flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors shrink-0" aria-label="Search" title="Search">
+      <a href="{% url 'search:results' %}" class="nav-icon-btn flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors shrink-0" aria-label="{% trans 'Search' %}" title="{% trans 'Search' %}">
         <span class="material-symbols-outlined">search</span>
       </a>
       {% endif %}
       {% if user.is_authenticated %}
         {% if not candidate_ui %}
-        <a href="{% url 'notifications:list' %}" class="nav-icon-btn relative flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors shrink-0" title="Notifications">
+        <a href="{% url 'notifications:list' %}" class="nav-icon-btn relative flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant/60 hover:text-primary transition-colors shrink-0" title="{% trans 'Notifications' %}">
           <span class="material-symbols-outlined">notifications</span>
           {% if unread_notifications_count %}
           <span class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">{{ unread_notifications_count }}</span>
@@ -162,7 +178,7 @@
         </a>
         {% endif %}
         <a href="{% url 'accounts:profile' %}" class="relative w-10 h-10 rounded-full bg-primary-container/20 border border-primary-container/30 overflow-hidden flex-shrink-0">
-          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ user.username }}" alt="Avatar" class="w-full h-full object-cover"/>
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ user.username }}" alt="{% trans 'Avatar' %}" class="w-full h-full object-cover"/>
           {% if avatar_badge %}
             {% if avatar_badge.placement == 'overlay' %}
               <span class="absolute inset-0 flex items-center justify-center text-lg" title="Badge">{{ avatar_badge.icon }}</span>
@@ -172,10 +188,25 @@
           {% endif %}
         </a>
       {% else %}
-        <a href="{% url 'login' %}" class="btn-primary py-2 px-4 text-sm">Login</a>
+        <a href="{% url 'login' %}" class="btn-primary py-2 px-4 text-sm">{% trans "Login" %}</a>
       {% endif %}
     </div>
   </nav>
+
+  <div class="px-4 md:px-6 mt-2 flex justify-end">
+    <form action="{% url 'set_language' %}" method="post" class="inline-flex items-center gap-2 rounded-full border border-outline-variant/20 bg-surface px-3 py-1.5 text-sm">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <label for="language-select" class="text-on-surface-variant/70">{% trans "Language" %}</label>
+      <select id="language-select" name="language" class="bg-transparent text-on-surface focus:outline-none" onchange="this.form.submit()">
+        {% get_current_language as CURRENT_LANG %}
+        {% get_available_languages as AVAILABLE_LANGUAGES %}
+        {% for lang_code, lang_name in AVAILABLE_LANGUAGES %}
+          <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANG %}selected{% endif %}>{{ lang_name }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
 
   <!-- Main Content -->
   <main class="flex-1 px-6 py-8">
@@ -194,18 +225,18 @@
   <!-- Footer — эталон: dim-kava-education-visual App.tsx -->
   <footer class="border-t border-outline-variant/10 py-8 px-6 text-center text-on-surface-variant/60 text-sm">
     <p class="font-semibold text-primary mb-1">Dim Kava</p>
-    <p>© 2026 Specialty Coffee Learning Portal. All rights reserved.</p>
+    <p>{% trans "© 2026 Specialty Coffee Learning Portal. All rights reserved." %}</p>
     <div class="flex flex-wrap justify-center gap-6 mt-2">
       {% if not candidate_ui %}
-      <a href="{% url 'analytics:dashboard' %}" class="hover:text-primary transition-colors">Analytics</a>
-      <a href="{% url 'analytics:content_review' %}" class="hover:text-primary transition-colors">Content to review</a>
-      <a href="{% url 'departments:list' %}" class="hover:text-primary transition-colors">Departments</a>
-      <a href="{% url 'notifications:list' %}" class="hover:text-primary transition-colors">Notifications</a>
-      <a href="{% url 'gamification:dashboard' %}" class="hover:text-primary transition-colors">Progress</a>
+      <a href="{% url 'analytics:dashboard' %}" class="hover:text-primary transition-colors">{% trans "Analytics" %}</a>
+      <a href="{% url 'analytics:content_review' %}" class="hover:text-primary transition-colors">{% trans "Content to review" %}</a>
+      <a href="{% url 'departments:list' %}" class="hover:text-primary transition-colors">{% trans "Departments" %}</a>
+      <a href="{% url 'notifications:list' %}" class="hover:text-primary transition-colors">{% trans "Notifications" %}</a>
+      <a href="{% url 'gamification:dashboard' %}" class="hover:text-primary transition-colors">{% trans "Progress" %}</a>
       {% endif %}
-      <a href="#" class="hover:text-primary transition-colors">Privacy</a>
-      <a href="#" class="hover:text-primary transition-colors">Terms</a>
-      <a href="#" class="hover:text-primary transition-colors">Support</a>
+      <a href="#" class="hover:text-primary transition-colors">{% trans "Privacy" %}</a>
+      <a href="#" class="hover:text-primary transition-colors">{% trans "Terms" %}</a>
+      <a href="#" class="hover:text-primary transition-colors">{% trans "Support" %}</a>
     </div>
   </footer>
 </body>

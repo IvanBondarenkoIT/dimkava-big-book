@@ -1,0 +1,208 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dimkava\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Internal Learning Portal"
+msgstr "შიდა სასწავლო პორტალი"
+
+msgid "Language"
+msgstr "ენა"
+
+msgid "Dashboard"
+msgstr "დეშბორდი"
+
+msgid "Courses"
+msgstr "კურსები"
+
+msgid "Onboarding"
+msgstr "ონბორდინგი"
+
+msgid "Profile"
+msgstr "პროფილი"
+
+msgid "Knowledge"
+msgstr "ცოდნა"
+
+msgid "News"
+msgstr "სიახლეები"
+
+msgid "Login"
+msgstr "შესვლა"
+
+msgid "Sign in"
+msgstr "შესვლა"
+
+msgid "Email"
+msgstr "ელფოსტა"
+
+msgid "Password"
+msgstr "პაროლი"
+
+msgid "Remember me"
+msgstr "დამიმახსოვრე"
+
+msgid "Forgot password?"
+msgstr "დაგავიწყდათ პაროლი?"
+
+msgid "Candidate registration"
+msgstr "კანდიდატის რეგისტრაცია"
+
+msgid "Where to start"
+msgstr "საიდან დავიწყოთ"
+
+msgid "Welcome back,"
+msgstr "კეთილი დაბრუნება,"
+
+msgid "Your journey to the perfect extraction continues."
+msgstr "თქვენი გზა იდეალური ექსტრაქციისკენ გრძელდება."
+
+msgid "You're in the top %(pct)s%% this week (#%(rank)s of %(total)s)."
+msgstr "ამ კვირაში თქვენ ხართ ტოპ %(pct)s%%‑ში (#%(rank)s %(total)s‑დან)."
+
+msgid "Keep going this week to climb the leaderboard."
+msgstr "გააგრძელეთ ამ კვირაში, რომ ლიდერბორდზე აიწიოთ."
+
+msgid "Current Streak"
+msgstr "მიმდინარე სერია"
+
+msgid "Days"
+msgstr "დღე"
+
+msgid "Points"
+msgstr "ქულები"
+
+msgid "Continue Learning"
+msgstr "გაგრძელება"
+
+msgid "View all"
+msgstr "ყველას ნახვა"
+
+msgid "Course Progress"
+msgstr "კურსის პროგრესი"
+
+msgid "Resume Lesson"
+msgstr "გაკვეთილის გაგრძელება"
+
+msgid "Start here"
+msgstr "დაიწყეთ აქედან"
+
+msgid "Finish your onboarding track before moving to courses."
+msgstr "დაასრულეთ ონბორდინგის ტრეკი, სანამ კურსებზე გადახვალთ."
+
+msgid "Open onboarding"
+msgstr "ონბორდინგის გახსნა"
+
+msgid "Next step"
+msgstr "შემდეგი ნაბიჯი"
+
+msgid "Continue where you left off: %(course)s."
+msgstr "გააგრძელეთ იქიდან, სადაც შეჩერდით: %(course)s."
+
+msgid "Resume course"
+msgstr "კურსის გაგრძელება"
+
+msgid "Explore courses"
+msgstr "გამოიკვლიეთ კურსები"
+
+msgid "Pick a course from the catalog to build your skills."
+msgstr "აირჩიეთ კურსი კატალოგიდან უნარების გასაუმჯობესებლად."
+
+msgid "Browse catalog"
+msgstr "კატალოგის ნახვა"
+
+msgid "No courses"
+msgstr "კურსები არ არის"
+
+msgid "Beginner"
+msgstr "დამწყები"
+
+msgid "Intermediate"
+msgstr "საშუალო"
+
+msgid "Manager"
+msgstr "მენეჯერი"
+
+msgid "Recommended for You"
+msgstr "რეკომენდებული თქვენთვის"
+
+msgid "Recent Badges"
+msgstr "ბოლო ბეიჯები"
+
+msgid "View All Achievements"
+msgstr "ყველა მიღწევა"
+
+msgid "HR"
+msgstr "HR"
+
+msgid "Analytics"
+msgstr "ანალიტიკა"
+
+msgid "Content to review"
+msgstr "შესამოწმებელი კონტენტი"
+
+msgid "Departments"
+msgstr "დეპარტამენტები"
+
+msgid "Notifications"
+msgstr "შეტყობინებები"
+
+msgid "Progress"
+msgstr "პროგრესი"
+
+msgid "Privacy"
+msgstr "კონფიდენციალურობა"
+
+msgid "Terms"
+msgstr "პირობები"
+
+msgid "Support"
+msgstr "მხარდაჭერა"
+
+msgid "Newcomer"
+msgstr "ახალბედა"
+
+msgid "Barista"
+msgstr "ბარისტა"
+
+msgid "Specialist"
+msgstr "სპეციალისტი"
+
+msgid "Expert"
+msgstr "ექსპერტი"
+
+msgid "Senior Expert"
+msgstr "უფროსი ექსპერტი"
+
+msgid "Mentor"
+msgstr "მენტორი"
+
+msgid "Legend"
+msgstr "ლეგენდა"
+
+msgid "News & Announcements"
+msgstr "სიახლეები და განცხადებები"
+
+msgid "Pinned"
+msgstr "მიმაგრებული"
+
+msgid "No news. Run:"
+msgstr "სიახლეები არ არის. გაუშვით:"
+
+msgid "Back to News"
+msgstr "სიახლეებზე დაბრუნება"
+
+msgid "No content."
+msgstr "შინაარსი არ არის."
+
+msgctxt "news_post_tag"
+msgid "General"
+msgstr "ზოგადი"
+
+msgctxt "news_post_tag"
+msgid "Training"
+msgstr "ტრენინგი"

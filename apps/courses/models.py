@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import get_language
 
 
 class Course(models.Model):
@@ -16,12 +17,18 @@ class Course(models.Model):
         ('published', 'Published'),
     ]
     title = models.CharField(max_length=255)
+    title_en = models.CharField(max_length=255, blank=True, default='')
+    title_ka = models.CharField(max_length=255, blank=True, default='')
+    title_ru = models.CharField(max_length=255, blank=True, default='')
     slug = models.SlugField(unique=True, max_length=120)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES, default='beginner')
     estimated_minutes = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='published')
     visible_for_candidates = models.BooleanField(default=False)
     description = models.TextField(blank=True)
+    description_en = models.TextField(blank=True, default='')
+    description_ka = models.TextField(blank=True, default='')
+    description_ru = models.TextField(blank=True, default='')
     image = models.URLField(blank=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='authored_courses'
@@ -44,6 +51,16 @@ class Course(models.Model):
         return self.title
 
     @property
+    def localized_title(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'title_{lang}', '') or self.title_en or self.title
+
+    @property
+    def localized_description(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'description_{lang}', '') or self.description_en or self.description
+
+    @property
     def is_stale(self) -> bool:
         if not self.updated_at:
             return False
@@ -60,9 +77,15 @@ class Lesson(models.Model):
     ]
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
     title = models.CharField(max_length=255)
+    title_en = models.CharField(max_length=255, blank=True, default='')
+    title_ka = models.CharField(max_length=255, blank=True, default='')
+    title_ru = models.CharField(max_length=255, blank=True, default='')
     order = models.PositiveIntegerField(default=0)
     lesson_type = models.CharField(max_length=20, choices=LESSON_TYPES, default='text')
     content = models.TextField(blank=True)
+    content_en = models.TextField(blank=True, default='')
+    content_ka = models.TextField(blank=True, default='')
+    content_ru = models.TextField(blank=True, default='')
     video_url = models.URLField(blank=True)
     estimated_minutes = models.PositiveIntegerField(default=0)
     is_required = models.BooleanField(default=True)
@@ -76,12 +99,28 @@ class Lesson(models.Model):
     def __str__(self):
         return f'{self.course.title} — {self.title}'
 
+    @property
+    def localized_title(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'title_{lang}', '') or self.title_en or self.title
+
+    @property
+    def localized_content(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'content_{lang}', '') or self.content_en or self.content
+
 
 class TestQuestion(models.Model):
     """Multiple choice question for quiz lessons. options: [{"text": "...", "is_correct": true}, ...]"""
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='questions')
     question_text = models.TextField()
+    question_text_en = models.TextField(blank=True, default='')
+    question_text_ka = models.TextField(blank=True, default='')
+    question_text_ru = models.TextField(blank=True, default='')
     options = models.JSONField(default=list)  # [{"text": "...", "is_correct": true}, ...]
+    options_en = models.JSONField(default=list, blank=True)
+    options_ka = models.JSONField(default=list, blank=True)
+    options_ru = models.JSONField(default=list, blank=True)
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -90,6 +129,16 @@ class TestQuestion(models.Model):
 
     def __str__(self):
         return self.question_text[:50]
+
+    @property
+    def localized_question_text(self) -> str:
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'question_text_{lang}', '') or self.question_text_en or self.question_text
+
+    @property
+    def localized_options(self):
+        lang = (get_language() or 'en').split('-')[0]
+        return getattr(self, f'options_{lang}', None) or self.options_en or self.options
 
 
 class UserProgress(models.Model):

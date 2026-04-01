@@ -2,29 +2,70 @@
 # Usage: python manage.py load_news
 
 posts:
+  - slug: welcome-2026
+    title: "Welcome to 2026!"
+    title_en: "Welcome to 2026!"
+    title_ru: "Добро пожаловать в 2026!"
+    content: |
+      Happy New Year! We're kicking off 2026 with new training initiatives and a refreshed
+      knowledge base. Check out the updated procedures and service standards in the wiki.
+    content_en: |
+      Happy New Year! We're kicking off 2026 with new training initiatives and a refreshed
+      knowledge base. Check out the updated procedures and service standards in the wiki.
+    content_ru: |
+      С Новым годом! Мы начинаем 2026-й с новых обучающих инициатив и обновлённой базы знаний.
+      Загляните в вики — там обновлены процедуры и стандарты сервиса.
+    tag: general
+    pinned: true
+    published_at: "2026-01-15 10:00:00"
+
   - slug: welcome-2024
     title: "Welcome to 2024!"
+    title_en: "Welcome to 2024!"
+    title_ru: "Добро пожаловать в 2024!"
     content: |
       Happy New Year! We're kicking off 2024 with new training initiatives and a refreshed
       knowledge base. Check out the updated procedures and service standards in the wiki.
+    content_en: |
+      Happy New Year! We're kicking off 2024 with new training initiatives and a refreshed
+      knowledge base. Check out the updated procedures and service standards in the wiki.
+    content_ru: |
+      С Новым годом! Мы начинаем 2024-й с новых обучающих инициатив и обновлённой базы знаний.
+      Загляните в вики — там обновлены процедуры и стандарты сервиса.
     tag: general
     pinned: true
     published_at: "2024-01-15 10:00:00"
 
   - slug: new-course
     title: "New Course: Latte Art Basics"
+    title_en: "New Course: Latte Art Basics"
+    title_ru: "Новый курс: основы латте-арта"
     content: |
       Our new Latte Art Basics course is now live. Learn foundational patterns and
       techniques to impress customers and elevate your barista skills.
+    content_en: |
+      Our new Latte Art Basics course is now live. Learn foundational patterns and
+      techniques to impress customers and elevate your barista skills.
+    content_ru: |
+      Наш новый курс «Основы латте-арта» уже доступен. Освойте базовые узоры и техники,
+      чтобы впечатлять гостей и прокачать навыки бариста.
     tag: training
     pinned: false
     published_at: "2024-01-10 14:00:00"
 
   - slug: espresso-masterclass
     title: "Espresso Masterclass — February"
+    title_en: "Espresso Masterclass — February"
+    title_ru: "Мастер-класс по эспрессо — февраль"
     content: |
       Join our February masterclass for advanced extraction techniques and sensory
       calibration. Limited spots — sign up in the Courses section.
+    content_en: |
+      Join our February masterclass for advanced extraction techniques and sensory
+      calibration. Limited spots — sign up in the Courses section.
+    content_ru: |
+      Присоединяйтесь к февральскому мастер-классу: продвинутые техники экстракции и
+      сенсорная калибровка. Количество мест ограничено — записывайтесь в разделе «Курсы».
     tag: training
     pinned: false
     published_at: "2024-01-20 09:00:00"

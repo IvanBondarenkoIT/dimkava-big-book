@@ -13,7 +13,7 @@ def get_section_with_articles(section_slug):
         section = KBSection.objects.get(slug=section_slug)
     except KBSection.DoesNotExist:
         return None
-    articles = list(section.articles.filter(status='published').order_by('title'))
+    articles = list(section.articles.filter(status='published').order_by('title_en', 'title'))
     return {'section': section, 'articles': articles}
 
 

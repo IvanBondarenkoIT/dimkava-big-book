@@ -30,10 +30,22 @@ class CourseAdmin(admin.ModelAdmin):
         'estimated_minutes',
     ]
     list_filter = ['status', 'level', 'responsible_editor']
-    search_fields = ['title', 'slug', 'description']
+    search_fields = [
+        'title', 'title_en', 'title_ka', 'title_ru',
+        'slug',
+        'description', 'description_en', 'description_ka', 'description_ru',
+    ]
     autocomplete_fields = ['author', 'responsible_editor']
     inlines = [LessonInline]
     list_editable = ['responsible_editor', 'review_required_after_days']
+    fieldsets = (
+        (None, {'fields': ('slug', 'level', 'status', 'visible_for_candidates', 'estimated_minutes', 'image')}),
+        ('English', {'fields': ('title_en', 'description_en')}),
+        ('Georgian', {'fields': ('title_ka', 'description_ka')}),
+        ('Russian', {'fields': ('title_ru', 'description_ru')}),
+        ('Legacy/Fallback', {'fields': ('title', 'description')}),
+        ('Review', {'fields': ('author', 'responsible_editor', 'review_required_after_days')}),
+    )
 
     @admin.display(description='Status')
     def status_display(self, obj):
@@ -65,17 +77,38 @@ class CourseAdmin(admin.ModelAdmin):
 class LessonAdmin(admin.ModelAdmin):
     list_display = ['title', 'course', 'lesson_type', 'order', 'estimated_minutes']
     list_filter = ['lesson_type']
-    search_fields = ['title', 'course__title']
+    search_fields = [
+        'title', 'title_en', 'title_ka', 'title_ru',
+        'course__title', 'course__title_en', 'course__title_ka', 'course__title_ru',
+    ]
     inlines = [TestQuestionInline]
+    fieldsets = (
+        (None, {'fields': ('course', 'order', 'lesson_type', 'estimated_minutes', 'is_required', 'passing_score', 'visible_for_candidates', 'video_url')}),
+        ('English', {'fields': ('title_en', 'content_en')}),
+        ('Georgian', {'fields': ('title_ka', 'content_ka')}),
+        ('Russian', {'fields': ('title_ru', 'content_ru')}),
+        ('Legacy/Fallback', {'fields': ('title', 'content')}),
+    )
 
 
 @admin.register(TestQuestion)
 class TestQuestionAdmin(admin.ModelAdmin):
     list_display = ['short_question', 'lesson', 'course_title', 'order']
     list_filter = ['lesson__course']
-    search_fields = ['question_text', 'lesson__title', 'lesson__course__title']
+    search_fields = [
+        'question_text', 'question_text_en', 'question_text_ka', 'question_text_ru',
+        'lesson__title', 'lesson__title_en', 'lesson__title_ka', 'lesson__title_ru',
+        'lesson__course__title', 'lesson__course__title_en', 'lesson__course__title_ka', 'lesson__course__title_ru',
+    ]
     autocomplete_fields = ['lesson']
     ordering = ['lesson', 'order']
+    fieldsets = (
+        (None, {'fields': ('lesson', 'order')}),
+        ('English', {'fields': ('question_text_en', 'options_en')}),
+        ('Georgian', {'fields': ('question_text_ka', 'options_ka')}),
+        ('Russian', {'fields': ('question_text_ru', 'options_ru')}),
+        ('Legacy/Fallback', {'fields': ('question_text', 'options')}),
+    )
 
     @admin.display(description='Question')
     def short_question(self, obj):

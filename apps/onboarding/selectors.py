@@ -50,7 +50,7 @@ def get_onboarding_overview_for_user(user):
 
         modules_data.append({
             'slug': module.slug,
-            'title': module.title,
+            'title': module.localized_title,
             'status': status,
             'minutes': module.estimated_minutes,
             'steps_done': done,
@@ -124,8 +124,8 @@ def get_module_for_user(module_slug, user):
     for step in module.steps.all().order_by('order'):
         steps_data.append({
             'id': step.id,
-            'title': step.title,
-            'content': step.content,
+            'title': step.localized_title,
+            'content': step.localized_content,
             'completed': step.id in completed_ids,
         })
     return {

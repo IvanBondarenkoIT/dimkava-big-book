@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}Dashboard{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Dashboard" %}{% endblock %}
 {% block content %}
 <div class="max-w-7xl mx-auto space-y-12">
   {% if where_to_start.show %}
-  <aside class="rounded-xl border border-primary/25 bg-primary/5 px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" role="region" aria-label="Where to start">
+  <aside class="rounded-xl border border-primary/25 bg-primary/5 px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" role="region" aria-label="{% trans 'Where to start' %}">
     <div class="space-y-1">
-      <p class="text-xs font-bold uppercase tracking-widest text-primary/80">Where to start</p>
+      <p class="text-xs font-bold uppercase tracking-widest text-primary/80">{% trans "Where to start" %}</p>
       <h2 class="text-lg font-bold text-on-surface">{{ where_to_start.title }}</h2>
       <p class="text-sm text-on-surface-variant/80 max-w-2xl">{{ where_to_start.body }}</p>
     </div>
@@ -20,28 +21,24 @@
   <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
     <div class="lg:col-span-7 space-y-4">
       <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter text-primary leading-[0.9]">
-        Welcome back,<br/>{{ home_snapshot.role_title }}.
+        {% trans "Welcome back," %}<br/>{{ home_snapshot.role_title }}.
       </h1>
       <p class="text-lg text-on-surface-variant/70 max-w-md">
-        Your journey to the perfect extraction continues.
-        {% if home_snapshot.weekly_learners > 1 %}
-        You're in the top {{ home_snapshot.top_percentile_this_week }}% this week (#{{ home_snapshot.weekly_rank }} of {{ home_snapshot.weekly_learners }}).
-        {% else %}
-        Keep going this week to climb the leaderboard.
-        {% endif %}
+        {% trans "Your journey to the perfect extraction continues." %}
+        {{ home_snapshot.leaderboard_detail }}
       </p>
     </div>
     <div class="lg:col-span-5 flex gap-4">
       <div class="flex-1 bg-surface-container-low p-6 rounded-lg space-y-2">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold uppercase tracking-widest opacity-50">Current Streak</span>
+          <span class="text-xs font-bold uppercase tracking-widest opacity-50">{% trans "Current Streak" %}</span>
           <span class="material-symbols-outlined text-primary-container text-xl">local_fire_department</span>
         </div>
-        <div class="text-4xl font-black text-primary">{{ home_snapshot.current_streak_days }} Days</div>
+        <div class="text-4xl font-black text-primary">{{ home_snapshot.current_streak_days }} {% trans "Days" %}</div>
       </div>
       <div class="flex-1 bg-secondary-container/20 p-6 rounded-lg space-y-2 border border-secondary-container/30">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold uppercase tracking-widest text-secondary opacity-70">Points</span>
+          <span class="text-xs font-bold uppercase tracking-widest text-secondary opacity-70">{% trans "Points" %}</span>
           <span class="material-symbols-outlined text-secondary text-xl">military_tech</span>
         </div>
         <div class="text-4xl font-black text-secondary">{{ home_snapshot.total_points }}</div>
@@ -52,21 +49,21 @@
   {# Continue Learning #}
   <section class="space-y-6">
     <div class="flex items-center justify-between">
-      <h2 class="text-2xl font-bold tracking-tight text-on-surface">Continue Learning</h2>
+      <h2 class="text-2xl font-bold tracking-tight text-on-surface">{% trans "Continue Learning" %}</h2>
       <a href="{% url 'courses:list' %}" class="text-primary font-semibold flex items-center gap-1 hover:underline no-underline">
-        View all <span class="material-symbols-outlined text-base">arrow_forward</span>
+        {% trans "View all" %} <span class="material-symbols-outlined text-base">arrow_forward</span>
       </a>
     </div>
     <a href="{% if active_course.slug %}{% url 'courses:detail' active_course.slug %}{% else %}{% url 'courses:list' %}{% endif %}" class="relative group overflow-hidden rounded-lg bg-surface-container-lowest shadow-2xl shadow-primary/5 block no-underline text-inherit">
       <div class="grid grid-cols-1 md:grid-cols-2">
         <div class="p-8 space-y-6 flex flex-col justify-center">
           <div class="space-y-2">
-            <span class="text-xs font-bold uppercase tracking-widest text-primary/60">{{ active_course.category }}</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-primary/60">{{ active_course.category_label|default:'' }}</span>
             <h3 class="text-3xl font-bold leading-tight text-on-surface">{{ active_course.title }}</h3>
           </div>
           <div class="space-y-2">
             <div class="flex justify-between text-sm font-medium text-on-surface-variant">
-              <span>Course Progress</span>
+              <span>{% trans "Course Progress" %}</span>
               <span>{{ active_course.progress }}%</span>
             </div>
             <div class="h-2 bg-surface-container-highest rounded-full overflow-hidden">
@@ -75,7 +72,7 @@
           </div>
           <span class="btn-primary self-start inline-flex items-center gap-2 min-h-[2.75rem]">
             <span class="material-symbols-outlined text-lg shrink-0" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-            Resume Lesson
+            {% trans "Resume Lesson" %}
           </span>
         </div>
         <div class="h-64 md:h-auto relative overflow-hidden min-h-[256px]">
@@ -89,13 +86,13 @@
   {# Recommended + Recent Badges #}
   <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
     <div class="md:col-span-2 space-y-6">
-      <h2 class="text-2xl font-bold tracking-tight text-on-surface">Recommended for You</h2>
+      <h2 class="text-2xl font-bold tracking-tight text-on-surface">{% trans "Recommended for You" %}</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {% for course in courses %}
         <a href="{% url 'courses:detail' course.slug %}" class="card-atelier group cursor-pointer block no-underline text-inherit">
           <div class="aspect-video rounded-lg overflow-hidden mb-4 relative">
             <img src="{{ course.image|default:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800' }}" alt="{{ course.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"/>
-            <div class="absolute top-3 left-3 px-2 py-1 bg-surface/90 backdrop-blur-md rounded text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">{{ course.category }}</div>
+            <div class="absolute top-3 left-3 px-2 py-1 bg-surface/90 backdrop-blur-md rounded text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">{{ course.category_label|default:'' }}</div>
           </div>
           <h4 class="font-bold text-lg mb-1 text-on-surface group-hover:text-primary transition-colors">{{ course.title }}</h4>
           <p class="text-sm text-on-surface-variant/60 line-clamp-2">{{ course.description|default:'' }}</p>
@@ -104,7 +101,7 @@
       </div>
     </div>
     <div class="space-y-6">
-      <h2 class="text-2xl font-bold tracking-tight text-on-surface">Recent Badges</h2>
+      <h2 class="text-2xl font-bold tracking-tight text-on-surface">{% trans "Recent Badges" %}</h2>
       <div class="bg-surface-container-low rounded-lg p-6 space-y-4">
         {% for achievement in achievements %}
         <div class="flex items-center gap-4 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/5">
@@ -115,7 +112,7 @@
           </div>
         </div>
         {% endfor %}
-        <a href="#" class="block w-full py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-lg transition-colors text-center">View All Achievements</a>
+        <a href="#" class="block w-full py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-lg transition-colors text-center">{% trans "View All Achievements" %}</a>
       </div>
     </div>
   </section>

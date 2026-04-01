@@ -12,7 +12,7 @@ class KnowledgeBaseHomeView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         sections = get_sections()
         context['sections'] = [
-            {'slug': s.slug, 'title': s.title, 'icon': s.icon or 'folder'}
+            {'slug': s.slug, 'title': s.localized_title, 'icon': s.icon or 'folder'}
             for s in sections
         ]
         return context
@@ -30,10 +30,10 @@ class SectionView(LoginRequiredMixin, TemplateView):
             context['articles'] = []
             return context
         context['section'] = data['section']
-        context['section_title'] = data['section'].title
+        context['section_title'] = data['section'].localized_title
         context['section_slug'] = data['section'].slug
         context['articles'] = [
-            {'slug': a.slug, 'title': a.title} for a in data['articles']
+            {'slug': a.slug, 'title': a.localized_title} for a in data['articles']
         ]
         return context
 
@@ -48,7 +48,7 @@ class ArticleView(LoginRequiredMixin, TemplateView):
             from django.http import Http404
             raise Http404('Article not found')
         context['article'] = article
-        context['article_title'] = article.title
+        context['article_title'] = article.localized_title
         context['section_slug'] = article.section.slug
-        context['section_title'] = article.section.title
+        context['section_title'] = article.section.localized_title
         return context

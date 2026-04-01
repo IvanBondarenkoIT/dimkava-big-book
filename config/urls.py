@@ -37,4 +37,5 @@ urlpatterns = [
     path('notifications/', include('apps.notifications.urls')),
     path('search/', include('apps.search.urls')),
     path('gamification/', include('apps.gamification.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

@@ -1,0 +1,280 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dimkava\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Internal Learning Portal"
+msgstr "Внутренний портал обучения"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Dashboard"
+msgstr "Дашборд"
+
+msgid "Courses"
+msgstr "Курсы"
+
+msgid "Onboarding"
+msgstr "Онбординг"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Knowledge"
+msgstr "База знаний"
+
+msgid "News"
+msgstr "Новости"
+
+msgid "Login"
+msgstr "Войти"
+
+msgid "Sign in"
+msgstr "Войти"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Remember me"
+msgstr "Запомнить меня"
+
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+msgid "Candidate registration"
+msgstr "Регистрация кандидата"
+
+msgid "Where to start"
+msgstr "С чего начать"
+
+msgid "Welcome back,"
+msgstr "С возвращением,"
+
+msgid "Your journey to the perfect extraction continues."
+msgstr "Ваш путь к идеальной экстракции продолжается."
+
+msgid "You're in the top %(pct)s%% this week (#%(rank)s of %(total)s)."
+msgstr "На этой неделе вы в топ %(pct)s%% (#%(rank)s из %(total)s)."
+
+msgid "Keep going this week to climb the leaderboard."
+msgstr "Продолжайте на этой неделе, чтобы подняться в рейтинге."
+
+msgid "Current Streak"
+msgstr "Текущая серия"
+
+msgid "Days"
+msgstr "дней"
+
+msgid "Points"
+msgstr "Очки"
+
+msgid "Continue Learning"
+msgstr "Продолжить обучение"
+
+msgid "View all"
+msgstr "Смотреть все"
+
+msgid "Course Progress"
+msgstr "Прогресс курса"
+
+msgid "Resume Lesson"
+msgstr "Продолжить урок"
+
+msgid "Start here"
+msgstr "Начните отсюда"
+
+msgid "Finish your onboarding track before moving to courses."
+msgstr "Завершите трек онбординга, прежде чем переходить к курсам."
+
+msgid "Open onboarding"
+msgstr "Открыть онбординг"
+
+msgid "Next step"
+msgstr "Следующий шаг"
+
+msgid "Continue where you left off: %(course)s."
+msgstr "Продолжите с того места, где остановились: %(course)s."
+
+msgid "Resume course"
+msgstr "Продолжить курс"
+
+msgid "Explore courses"
+msgstr "Изучайте курсы"
+
+msgid "Pick a course from the catalog to build your skills."
+msgstr "Выберите курс из каталога, чтобы развить навыки."
+
+msgid "Browse catalog"
+msgstr "Открыть каталог"
+
+msgid "No courses"
+msgstr "Нет курсов"
+
+msgid "Beginner"
+msgstr "Начинающий"
+
+msgid "Intermediate"
+msgstr "Средний"
+
+msgid "Manager"
+msgstr "Менеджер"
+
+msgid "Recommended for You"
+msgstr "Рекомендуем для вас"
+
+msgid "Recent Badges"
+msgstr "Недавние значки"
+
+msgid "View All Achievements"
+msgstr "Все достижения"
+
+msgid "HR"
+msgstr "HR"
+
+msgid "Analytics"
+msgstr "Аналитика"
+
+msgid "Content to review"
+msgstr "Контент на проверку"
+
+msgid "Departments"
+msgstr "Отделы"
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgid "Progress"
+msgstr "Прогресс"
+
+msgid "Privacy"
+msgstr "Конфиденциальность"
+
+msgid "Terms"
+msgstr "Условия"
+
+msgid "Support"
+msgstr "Поддержка"
+
+msgid "Newcomer"
+msgstr "Новичок"
+
+msgid "Barista"
+msgstr "Бариста"
+
+msgid "Specialist"
+msgstr "Специалист"
+
+msgid "Expert"
+msgstr "Эксперт"
+
+msgid "Senior Expert"
+msgstr "Старший эксперт"
+
+msgid "Mentor"
+msgstr "Наставник"
+
+msgid "Legend"
+msgstr "Легенда"
+
+msgid "Your Onboarding Journey"
+msgstr "Ваш путь онбординга"
+
+msgid "Knowledge Base"
+msgstr "База знаний"
+
+msgid "Procedures, standards, company info"
+msgstr "Процедуры, стандарты, информация о компании"
+
+msgid "Not started"
+msgstr "Не начато"
+
+msgid "In progress"
+msgstr "В процессе"
+
+msgid "Completed"
+msgstr "Завершено"
+
+msgid "steps"
+msgstr "шагов"
+
+msgid "min"
+msgstr "мин"
+
+msgid "Curriculum"
+msgstr "Программа курсов"
+
+msgid "Back to Curriculum"
+msgstr "Назад к программе"
+
+msgid "© 2026 Specialty Coffee Learning Portal. All rights reserved."
+msgstr "© 2026 Портал обучения Specialty Coffee. Все права защищены."
+
+msgid "Onboarding feedback"
+msgstr "Обратная связь по онбордингу"
+
+msgid "How was your onboarding experience so far?"
+msgstr "Как проходит ваш онбординг на данный момент?"
+
+msgid "Your rating"
+msgstr "Ваша оценка"
+
+msgid "Save feedback"
+msgstr "Сохранить отзыв"
+
+msgid "Optional comment..."
+msgstr "Комментарий (необязательно)…"
+
+msgid "Approved feedback from others"
+msgstr "Одобренные отзывы других"
+
+msgid "Back to Knowledge Base"
+msgstr "Назад к базе знаний"
+
+msgid "Back to Onboarding"
+msgstr "Назад к онбордингу"
+
+msgid "Mark done"
+msgstr "Отметить выполненным"
+
+msgid "Module"
+msgstr "Модуль"
+
+msgid "Module not found"
+msgstr "Модуль не найден"
+
+msgid "Load onboarding:"
+msgstr "Загрузите онбординг:"
+
+msgid "No steps in this module."
+msgstr "В этом модуле нет шагов."
+
+msgid "News & Announcements"
+msgstr "Новости и объявления"
+
+msgid "Pinned"
+msgstr "Закреплено"
+
+msgid "No news. Run:"
+msgstr "Нет новостей. Запустите:"
+
+msgid "Back to News"
+msgstr "Назад к новостям"
+
+msgid "No content."
+msgstr "Нет содержимого."
+
+msgctxt "news_post_tag"
+msgid "General"
+msgstr "Общее"
+
+msgctxt "news_post_tag"
+msgid "Training"
+msgstr "Обучение"

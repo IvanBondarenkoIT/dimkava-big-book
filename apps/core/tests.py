@@ -9,6 +9,7 @@ from django.contrib.auth.models import Group
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from django.utils import timezone
+from django.utils import translation
 
 User = get_user_model()
 
@@ -269,6 +270,44 @@ class HomeAchievementSnapshotTests(TestCase):
         s3 = get_home_achievement_snapshot(another)
         self.assertEqual(s1['top_percentile_this_week'], s2['top_percentile_this_week'])
         self.assertEqual(s2['top_percentile_this_week'], s3['top_percentile_this_week'])
+
+
+class I18nSmokeTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='i18n@test.dimkava.ge',
+            email='i18n@test.dimkava.ge',
+            password='testpass',
+        )
+        self.client.login(username='i18n@test.dimkava.ge', password='testpass')
+
+    def test_set_language_endpoint_updates_session(self):
+        response = self.client.post('/i18n/setlang/', {'language': 'ru', 'next': '/'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.cookies.get('django_language').value, 'ru')
+
+    def test_course_selector_uses_localized_title(self):
+        from apps.courses.models import Course
+        from apps.courses.selectors import get_courses_for_user
+
+        Course.objects.create(
+            slug='i18n-course',
+            title='English Title',
+            title_en='English Title',
+            title_ru='Русский заголовок',
+            description='English Desc',
+            description_en='English Desc',
+            description_ru='Русское описание',
+            level='beginner',
+            status='published',
+        )
+
+        with translation.override('ru'):
+            rows = get_courses_for_user(self.user)
+        matched = [r for r in rows if r['slug'] == 'i18n-course'][0]
+        self.assertEqual(matched['title'], 'Русский заголовок')
+        self.assertEqual(matched['description'], 'Русское описание')
 
 
 class HomeProfileIntegrationTests(TestCase):

@@ -137,12 +137,20 @@ Questions with `type: rating` → render as a star/number rating widget.
 
 ---
 
-## Content language
+## Content language (EN/KA/RU)
 
-All content in these files is in **English** — ready for the default language.
-Russian (`ru`) and Georgian (`ka`) translations should be added to the
-`locale/ru/` and `locale/ka/` folders as the team provides them.
+Default language is **English (`en`)**.
 
-For model content (article body, step content), consider adding
-`content_ru` and `content_ka` fields to models, or use a translation
-library like `django-modeltranslation`.
+Seed loaders now support multilingual keys for content models:
+- flat keys: `title_en`, `title_ka`, `title_ru`
+- and the same for `description_*`, `content_*`
+- for quizzes: `text_en/text_ka/text_ru`, `options_en/options_ka/options_ru`
+
+Backward compatibility:
+- old single-language keys (`title`, `description`, `content`, `text`, `options`) still work;
+- they are treated as English source values.
+
+Auto-draft mode:
+- loaders support `--auto-translate-draft` to populate missing `ka/ru` fields with
+  draft placeholders from EN.
+- HR should review and replace draft values before publishing.

@@ -30,6 +30,9 @@
 | [ROLE_GUIDE_EMPLOYEE.md](ROLE_GUIDE_EMPLOYEE.md) | Employee | Профиль, KPI, ILP, feedback |
 | [ROLE_GUIDE_HR.md](ROLE_GUIDE_HR.md) | HR | Кандидаты, контент для кандидатов, мониторинг, конвертация |
 | [ROLE_GUIDE_ADMIN.md](ROLE_GUIDE_ADMIN.md) | Admin | Окружение, доступы, стабильность, инциденты |
+| [HR_FULL_FUNCTIONAL_CHECKLIST.md](HR_FULL_FUNCTIONAL_CHECKLIST.md) | HR | Полный поэтапный чеклист проверки всего функционала |
+| [FUNCTIONAL_OVERVIEW_SHORT.md](FUNCTIONAL_OVERVIEW_SHORT.md) | Все | Короткое и понятное описание функционала системы |
+| [DIRECTOR_REPORT_WHAT_WAS_DONE.md](DIRECTOR_REPORT_WHAT_WAS_DONE.md) | Director | Что реализовано, зачем, эффект и следующие шаги |
 
 ---
 
@@ -49,6 +52,8 @@
 | [STRUCTURE_PLAN.md](STRUCTURE_PLAN.md) | «Где это лежит?» | Структура папок, связь design → Django, input → проект |
 | [PROMPTS_MAPPING.md](PROMPTS_MAPPING.md) | Работа с AI / Cursor | Какие промпты применять, порядок, связь с фазами |
 | [FEATURES_BACKLOG.md](FEATURES_BACKLOG.md) | Будущие фичи (последняя очередь) | Ачивки и комментарии — в конец roadmap; комментарии только после approve HR + админка модерации |
+| [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md) | Операции EN/KA/RU | Как переключать язык, грузить и редактировать мультиязычный контент |
+| [I18N_RU_DONE_AND_KA_PLAN.md](I18N_RU_DONE_AND_KA_PLAN.md) | После фазы RU / перед KA | Что сделано для русского и пошаговый план грузинского без пропусков |
 
 ---
 

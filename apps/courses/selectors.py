@@ -1,5 +1,15 @@
 """Course selectors — for views."""
+from django.utils.translation import gettext as _
+
 from .models import Course, IndividualLearningPlan, Lesson, LessonRating, UserProgress
+
+
+def _course_level_label(level: str) -> str:
+    return {
+        'beginner': _('Beginner'),
+        'intermediate': _('Intermediate'),
+        'manager': _('Manager'),
+    }.get(level, level)
 
 
 def get_courses_for_user(user):
@@ -16,10 +26,11 @@ def get_courses_for_user(user):
         progress = int((done / total * 100)) if total else 0
         result.append({
             'slug': c.slug,
-            'title': c.title,
-            'description': c.description,
+            'title': c.localized_title,
+            'description': c.localized_description,
             'level': c.level,
             'category': c.level,
+            'category_label': _course_level_label(c.level),
             'lessons_count': total,
             'progress': progress,
             'image': c.image or '',
@@ -44,7 +55,7 @@ def get_course_detail(course_slug, user):
         prog = UserProgress.objects.filter(user=user, lesson=l).first()
         lessons.append({
             'id': l.id,
-            'title': l.title,
+            'title': l.localized_title,
             'lesson_type': l.lesson_type,
             'estimated_minutes': l.estimated_minutes,
             'completed': prog.is_completed if prog else False,

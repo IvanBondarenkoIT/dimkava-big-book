@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
-{% block title %}{% if lesson %}{{ lesson.title }}{% else %}Lesson{% endif %}{% endblock %}
+{% load i18n %}
+{% block title %}{% if lesson %}{{ lesson.localized_title }}{% else %}{% trans "Lesson" %}{% endif %}{% endblock %}
 {% block content %}
 <div class="space-y-8 pb-24">
   <header class="flex items-start justify-between gap-4">
     <div>
       <a href="{% url 'courses:detail' course_slug %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
         <span class="material-symbols-outlined text-lg">arrow_back</span>
-        Back to Course
+        {% trans "Back to Course" %}
       </a>
       {% if lesson %}
-      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ lesson.title }}</h1>
-      <p class="text-on-surface-variant/70 mt-2">{{ lesson.estimated_minutes }} min</p>
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ lesson.localized_title }}</h1>
+      <p class="text-on-surface-variant/70 mt-2">{{ lesson.estimated_minutes }} {% trans "min" %}</p>
       {% else %}
-      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Lesson not found</h1>
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "Lesson not found" %}</h1>
       {% endif %}
     </div>
   </header>
@@ -24,22 +25,22 @@
       <iframe src="{{ lesson.video_url }}" class="w-full h-full" allowfullscreen></iframe>
     </div>
     {% endif %}
-    {% if lesson.content %}
-    <div class="text-on-surface-variant prose max-w-none">{{ lesson.content|linebreaks }}</div>
+    {% if lesson.localized_content %}
+    <div class="text-on-surface-variant prose max-w-none">{{ lesson.localized_content|linebreaks }}</div>
     {% else %}
-    <p class="text-on-surface-variant">No content yet.</p>
+    <p class="text-on-surface-variant">{% trans "No content yet." %}</p>
     {% endif %}
   </div>
 
   <section class="card-atelier max-w-3xl space-y-4">
     <div class="flex items-start justify-between gap-6">
       <div>
-        <h2 class="text-2xl font-extrabold tracking-tight text-on-surface">Lesson feedback</h2>
-        <p class="text-sm text-on-surface-variant/70 mt-1">Rate this lesson to help us improve content quality.</p>
+        <h2 class="text-2xl font-extrabold tracking-tight text-on-surface">{% trans "Lesson feedback" %}</h2>
+        <p class="text-sm text-on-surface-variant/70 mt-1">{% trans "Rate this lesson to help us improve content quality." %}</p>
       </div>
       {% if rating %}
         <div class="text-right">
-          <div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">Your rating</div>
+          <div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">{% trans "Your rating" %}</div>
           <div class="text-2xl font-black text-primary">{{ rating }}/5</div>
         </div>
       {% endif %}
@@ -58,9 +59,9 @@
         {% endfor %}
       </div>
       <div>
-        <textarea name="comment" rows="3" class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" placeholder="Optional comment...">{{ rating_comment }}</textarea>
+        <textarea name="comment" rows="3" class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" placeholder="{% trans 'Optional comment...' %}">{{ rating_comment }}</textarea>
       </div>
-      <button type="submit" class="btn-primary px-5 py-3">Save feedback</button>
+      <button type="submit" class="btn-primary px-5 py-3">{% trans "Save feedback" %}</button>
     </form>
   </section>
 
@@ -71,17 +72,17 @@
         {% csrf_token %}
         <button type="submit" class="w-full h-14 btn-primary flex items-center justify-center gap-2">
           <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
-          Mark as done
+          {% trans "Mark as done" %}
         </button>
       </form>
       {% else %}
       <div class="flex-1 h-14 flex items-center justify-center gap-2 text-secondary font-semibold">
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-        Completed
+        {% trans "Completed" %}
       </div>
       {% endif %}
       <a href="{% url 'courses:detail' course_slug %}" class="h-14 px-8 btn-secondary flex items-center justify-center gap-2 no-underline">
-        Back to course
+        {% trans "Back to course" %}
         <span class="material-symbols-outlined">chevron_right</span>
       </a>
     </div>

@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}Onboarding{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Onboarding" %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
   <header>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Your Onboarding Journey</h1>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "Your Onboarding Journey" %}</h1>
     {% if program %}
-    <p class="text-on-surface-variant/70 mt-2">{{ program.title }}</p>
+    <p class="text-on-surface-variant/70 mt-2">{{ program.localized_title }}</p>
     <div class="mt-4 flex items-center gap-4">
       <div class="h-2 flex-1 max-w-xs bg-surface-container-high rounded-full overflow-hidden">
         <div class="h-full bg-primary rounded-full transition-all" style="width: {{ progress }}%"></div>
@@ -19,7 +20,7 @@
   <section class="card-atelier">
     <div class="flex items-start justify-between gap-6">
       <div class="space-y-1">
-        <p class="text-xs font-bold uppercase tracking-widest text-primary/70">Your Mentor</p>
+        <p class="text-xs font-bold uppercase tracking-widest text-primary/70">{% trans "Your Mentor" %}</p>
         <h2 class="text-2xl font-extrabold tracking-tight text-on-surface">{{ mentor_block.mentor.name }}</h2>
         <p class="text-sm text-on-surface-variant/80">
           {{ mentor_block.mentor.title }} · {{ mentor_block.mentor.responsibility_area }}
@@ -35,7 +36,7 @@
 
     {% if mentor_block.sessions %}
     <div class="mt-6 space-y-3">
-      <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant/70">Scheduled sessions</h3>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant/70">{% trans "Scheduled sessions" %}</h3>
       <div class="space-y-2">
         {% for s in mentor_block.sessions %}
         <div class="flex items-start justify-between gap-4 p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10">
@@ -44,7 +45,7 @@
             <div class="text-sm text-on-surface-variant/70">{{ s.scheduled_date }}</div>
           </div>
           <div class="text-sm font-bold {% if s.is_completed %}text-secondary{% else %}text-on-surface-variant{% endif %}">
-            {% if s.is_completed %}Completed{% else %}Upcoming{% endif %}
+            {% if s.is_completed %}{% trans "Completed" %}{% else %}{% trans "Upcoming" %}{% endif %}
           </div>
         </div>
         {% endfor %}
@@ -60,13 +61,18 @@
       <span class="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase
         {% if m.status == 'completed' %}bg-secondary text-white
         {% elif m.status == 'in_progress' %}bg-primary-container text-on-surface
-        {% else %}bg-surface-container-highest text-on-surface-variant{% endif %}">{{ m.status|title }}</span>
+        {% else %}bg-surface-container-highest text-on-surface-variant{% endif %}">
+        {% if m.status == 'completed' %}{% trans "Completed" %}
+        {% elif m.status == 'in_progress' %}{% trans "In progress" %}
+        {% else %}{% trans "Not started" %}
+        {% endif %}
+      </span>
       <h3 class="text-xl font-bold mt-4 text-on-surface group-hover:text-primary transition-colors">{{ m.title }}</h3>
-      <p class="text-sm text-on-surface-variant/70 mt-2">{{ m.steps_done }}/{{ m.steps_total }} steps · {{ m.minutes }} min</p>
+      <p class="text-sm text-on-surface-variant/70 mt-2">{{ m.steps_done }}/{{ m.steps_total }} {% trans "steps" %} · {{ m.minutes }} {% trans "min" %}</p>
     </a>
     {% empty %}
     <div class="col-span-full card-atelier">
-      <p class="text-on-surface-variant">No onboarding modules. Run: <code>python manage.py load_onboarding</code></p>
+      <p class="text-on-surface-variant">{% trans "No onboarding modules. Run:" %} <code>python manage.py load_onboarding</code></p>
     </div>
     {% endfor %}
   </div>
@@ -75,12 +81,12 @@
   <section class="card-atelier space-y-4">
     <div class="flex items-start justify-between gap-6">
       <div>
-        <h2 class="text-2xl font-extrabold tracking-tight text-on-surface">Onboarding feedback</h2>
-        <p class="text-sm text-on-surface-variant/70 mt-1">How was your onboarding experience so far?</p>
+        <h2 class="text-2xl font-extrabold tracking-tight text-on-surface">{% trans "Onboarding feedback" %}</h2>
+        <p class="text-sm text-on-surface-variant/70 mt-1">{% trans "How was your onboarding experience so far?" %}</p>
       </div>
       {% if feedback.rating %}
         <div class="text-right">
-          <div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">Your rating</div>
+          <div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">{% trans "Your rating" %}</div>
           <div class="text-2xl font-black text-primary">{{ feedback.rating }}/5</div>
         </div>
       {% endif %}
@@ -97,14 +103,14 @@
         {% endfor %}
       </div>
       <div>
-        <textarea name="comment" rows="3" class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" placeholder="Optional comment...">{{ feedback.comment }}</textarea>
+        <textarea name="comment" rows="3" class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" placeholder="{% trans 'Optional comment...' %}">{{ feedback.comment }}</textarea>
       </div>
-      <button type="submit" class="btn-primary px-5 py-3">Save feedback</button>
+      <button type="submit" class="btn-primary px-5 py-3">{% trans "Save feedback" %}</button>
     </form>
 
     {% if feedback.public_feedback %}
     <div class="pt-4 border-t border-outline-variant/10">
-      <div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">Approved feedback from others</div>
+      <div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">{% trans "Approved feedback from others" %}</div>
       <div class="mt-3 space-y-3">
         {% for f in feedback.public_feedback %}
         <div class="p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10">

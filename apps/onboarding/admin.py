@@ -29,17 +29,31 @@ class OnboardingModuleInline(admin.TabularInline):
 @admin.register(OnboardingProgram)
 class OnboardingProgramAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'estimated_days', 'created_at']
-    search_fields = ['title', 'slug', 'role']
+    search_fields = ['title', 'title_en', 'title_ka', 'title_ru', 'slug', 'role']
     inlines = [OnboardingModuleInline]
+    fieldsets = (
+        (None, {'fields': ('slug', 'role', 'visible_for_candidates', 'estimated_days')}),
+        ('English', {'fields': ('title_en', 'description_en')}),
+        ('Georgian', {'fields': ('title_ka', 'description_ka')}),
+        ('Russian', {'fields': ('title_ru', 'description_ru')}),
+        ('Legacy/Fallback', {'fields': ('title', 'description')}),
+    )
 
 
 @admin.register(OnboardingModule)
 class OnboardingModuleAdmin(admin.ModelAdmin):
     list_display = ['title', 'program', 'order', 'estimated_minutes', 'steps_count']
     list_filter = ['program']
-    search_fields = ['title', 'slug', 'program__title']
+    search_fields = ['title', 'title_en', 'title_ka', 'title_ru', 'slug', 'program__title', 'program__title_en', 'program__title_ka', 'program__title_ru']
     inlines = [OnboardingStepInline]
     ordering = ['program', 'order']
+    fieldsets = (
+        (None, {'fields': ('program', 'slug', 'order', 'estimated_minutes')}),
+        ('English', {'fields': ('title_en', 'description_en')}),
+        ('Georgian', {'fields': ('title_ka', 'description_ka')}),
+        ('Russian', {'fields': ('title_ru', 'description_ru')}),
+        ('Legacy/Fallback', {'fields': ('title', 'description')}),
+    )
 
     def steps_count(self, obj):
         return obj.steps.count()
@@ -50,9 +64,21 @@ class OnboardingModuleAdmin(admin.ModelAdmin):
 class OnboardingStepAdmin(admin.ModelAdmin):
     list_display = ['title', 'module', 'program_title', 'order']
     list_filter = ['module__program']
-    search_fields = ['title', 'content', 'module__title', 'module__program__title']
+    search_fields = [
+        'title', 'title_en', 'title_ka', 'title_ru',
+        'content', 'content_en', 'content_ka', 'content_ru',
+        'module__title', 'module__title_en', 'module__title_ka', 'module__title_ru',
+        'module__program__title', 'module__program__title_en', 'module__program__title_ka', 'module__program__title_ru',
+    ]
     autocomplete_fields = ['module']
     ordering = ['module', 'order']
+    fieldsets = (
+        (None, {'fields': ('module', 'order')}),
+        ('English', {'fields': ('title_en', 'content_en')}),
+        ('Georgian', {'fields': ('title_ka', 'content_ka')}),
+        ('Russian', {'fields': ('title_ru', 'content_ru')}),
+        ('Legacy/Fallback', {'fields': ('title', 'content')}),
+    )
 
     @admin.display(description='Program')
     def program_title(self, obj):

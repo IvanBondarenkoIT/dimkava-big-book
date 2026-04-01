@@ -5,6 +5,7 @@ from datetime import timedelta
 from django.db.models import Sum
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 
 def get_where_to_start_hint(user):
@@ -18,10 +19,10 @@ def get_where_to_start_hint(user):
     if program and progress_pct < 100:
         return {
             'show': True,
-            'title': 'Start here',
-            'body': 'Finish your onboarding track before moving to courses.',
+            'title': _('Start here'),
+            'body': _('Finish your onboarding track before moving to courses.'),
             'url': reverse('onboarding:overview'),
-            'cta': 'Open onboarding',
+            'cta': _('Open onboarding'),
             'variant': 'primary',
         }
 
@@ -31,20 +32,20 @@ def get_where_to_start_hint(user):
         if 0 < prog < 100:
             return {
                 'show': True,
-                'title': 'Next step',
-                'body': f'Continue where you left off: {c["title"]}.',
+                'title': _('Next step'),
+                'body': _('Continue where you left off: %(course)s.') % {'course': c['title']},
                 'url': reverse('courses:detail', kwargs={'slug': c['slug']}),
-                'cta': 'Resume course',
+                'cta': _('Resume course'),
                 'variant': 'primary',
             }
 
     if courses:
         return {
             'show': True,
-            'title': 'Explore courses',
-            'body': 'Pick a course from the catalog to build your skills.',
+            'title': _('Explore courses'),
+            'body': _('Pick a course from the catalog to build your skills.'),
             'url': reverse('courses:list'),
-            'cta': 'Browse catalog',
+            'cta': _('Browse catalog'),
             'variant': 'secondary',
         }
 
@@ -106,6 +107,17 @@ def get_home_achievement_snapshot(user):
         weekly_learners = len(weekly)
         top_percentile = max(1, min(100, int(math.ceil(weekly_rank / weekly_learners * 100))))
 
+    if weekly_learners > 1:
+        leaderboard_detail = _(
+            "You're in the top %(pct)s%% this week (#%(rank)s of %(total)s)."
+        ) % {
+            'pct': top_percentile,
+            'rank': weekly_rank,
+            'total': weekly_learners,
+        }
+    else:
+        leaderboard_detail = _('Keep going this week to climb the leaderboard.')
+
     return {
         'role_title': role_title,
         'current_streak_days': streak,
@@ -113,4 +125,5 @@ def get_home_achievement_snapshot(user):
         'top_percentile_this_week': top_percentile,
         'weekly_rank': weekly_rank,
         'weekly_learners': weekly_learners,
+        'leaderboard_detail': leaderboard_detail,
     }

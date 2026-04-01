@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}Curriculum{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Curriculum" %}{% endblock %}
 {% block content %}
 <div class="space-y-10">
   <header class="space-y-6">
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Curriculum</h1>
-    <p class="text-on-surface-variant/70">Browse all courses</p>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "Curriculum" %}</h1>
+    <p class="text-on-surface-variant/70">{% trans "Browse all courses" %}</p>
   </header>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -13,7 +14,7 @@
       <div class="aspect-video rounded-lg overflow-hidden mb-6 relative">
         <img src="{{ c.image|default:'https://images.unsplash.com/photo-1510972527921-ce03766a1cf1?q=80&w=800' }}" alt="{{ c.title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-          <span class="text-white text-xs font-bold uppercase tracking-widest">{{ c.lessons_count|default:0 }} Lessons • {{ c.level }}</span>
+          <span class="text-white text-xs font-bold uppercase tracking-widest">{{ c.lessons_count|default:0 }} {% trans "Lessons" %} • {{ c.category_label|default:'' }}</span>
         </div>
       </div>
       <div class="flex-1 space-y-3">
@@ -26,14 +27,14 @@
             <span class="material-symbols-outlined text-sm">menu_book</span>
           </div>
           <span class="text-xs font-bold text-on-surface-variant/40 uppercase tracking-widest">
-            {% if c.progress > 0 %}{{ c.progress }}% Complete{% else %}Not Started{% endif %}
+            {% if c.progress > 0 %}{{ c.progress }}% {% trans "Complete" %}{% else %}{% trans "Not Started" %}{% endif %}
           </span>
         </div>
         <span class="material-symbols-outlined text-on-surface-variant/60 group-hover:text-primary transition-colors">chevron_right</span>
       </div>
     </a>
     {% empty %}
-    <p class="text-on-surface-variant col-span-full">No courses. Run: <code>python manage.py load_courses</code></p>
+    <p class="text-on-surface-variant col-span-full">{% trans "No courses. Run:" %} <code>python manage.py load_courses</code></p>
     {% endfor %}
   </div>
 </div>

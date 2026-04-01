@@ -1,34 +1,35 @@
 {% extends 'base.html' %}
-{% block title %}{% if lesson %}{{ lesson.title }}{% else %}Quiz{% endif %}{% endblock %}
+{% load i18n %}
+{% block title %}{% if lesson %}{{ lesson.localized_title }}{% else %}{% trans "Quiz" %}{% endif %}{% endblock %}
 {% block content %}
 <div class="space-y-8 max-w-2xl pb-24">
   <header>
     <a href="{% url 'courses:detail' course_slug %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
       <span class="material-symbols-outlined text-lg">arrow_back</span>
-      Back to Course
+      {% trans "Back to Course" %}
     </a>
-    <p class="text-primary font-bold text-sm uppercase tracking-widest">Quiz · {{ questions|length }} questions</p>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary mt-2">{{ lesson.title }}</h1>
-    <p class="text-on-surface-variant/70 mt-2">Passing score: {{ passing_score }}%</p>
+    <p class="text-primary font-bold text-sm uppercase tracking-widest">{% trans "Quiz" %} · {{ questions|length }} {% trans "questions" %}</p>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary mt-2">{{ lesson.localized_title }}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{% trans "Passing score:" %} {{ passing_score }}%</p>
   </header>
 
   <form method="post" class="space-y-6">
     {% csrf_token %}
     {% if quiz_locked %}
     <div class="card-atelier border border-amber-500/30 bg-amber-500/5">
-      <p class="font-bold text-amber-800">Retake locked</p>
+      <p class="font-bold text-amber-800">{% trans "Retake locked" %}</p>
       <p class="text-sm text-on-surface-variant/80 mt-1">
-        You already submitted this quiz.
-        {% if existing_quiz_score is not None %}Your score: <strong>{{ existing_quiz_score }}%</strong>.{% endif %}
-        HR must review and unlock retake before you can submit again.
+        {% trans "You already submitted this quiz." %}
+        {% if existing_quiz_score is not None %}{% trans "Your score:" %} <strong>{{ existing_quiz_score }}%</strong>.{% endif %}
+        {% trans "HR must review and unlock retake before you can submit again." %}
       </p>
     </div>
     {% endif %}
     {% for q in questions %}
     <div class="card-atelier">
-      <h3 class="font-bold text-on-surface mb-4">{{ forloop.counter }}. {{ q.question_text }}</h3>
+      <h3 class="font-bold text-on-surface mb-4">{{ forloop.counter }}. {{ q.localized_question_text }}</h3>
       <div class="space-y-2">
-        {% for opt in q.options %}
+        {% for opt in q.localized_options %}
         <label class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors">
           <input type="radio" name="q_{{ q.id }}" value="{{ forloop.counter0 }}" class="text-primary focus:ring-primary" {% if quiz_locked %}disabled{% endif %}/>
           <span class="text-on-surface">{{ opt.text }}</span>
@@ -38,11 +39,11 @@
     </div>
     {% empty %}
     <div class="card-atelier">
-      <p class="text-on-surface-variant">No questions in this quiz.</p>
+      <p class="text-on-surface-variant">{% trans "No questions in this quiz." %}</p>
     </div>
     {% endfor %}
     {% if questions and not quiz_locked %}
-    <button type="submit" class="btn-primary w-full py-4 text-lg">Submit</button>
+    <button type="submit" class="btn-primary w-full py-4 text-lg">{% trans "Submit" %}</button>
     {% endif %}
   </form>
 </div>

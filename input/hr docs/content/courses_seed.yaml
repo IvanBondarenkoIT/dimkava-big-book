@@ -4,52 +4,90 @@
 courses:
   - slug: espresso-basics
     title: "The Art of Espresso"
+    title_en: "The Art of Espresso"
+    title_ru: "Искусство эспрессо"
     description: "Master the fundamentals of extraction, puck prep, and sensory analysis."
+    description_en: "Master the fundamentals of extraction, puck prep, and sensory analysis."
+    description_ru: "Освойте основы экстракции, подготовку таблетки и сенсорный анализ."
     level: beginner
     estimated_minutes: 90
     image: "https://images.unsplash.com/photo-1510972527921-ce03766a1cf1?q=80&w=800"
     lessons:
       - order: 1
         title: "Dialing In Basics"
+        title_en: "Dialing In Basics"
+        title_ru: "Базовая настройка (dial in)"
         type: text
         content: "Learn how to dial in your espresso: dose, yield, time. Start with 18g in, 36g out, 25-30 seconds."
+        content_en: "Learn how to dial in your espresso: dose, yield, time. Start with 18g in, 36g out, 25-30 seconds."
+        content_ru: "Научитесь настраивать эспрессо: дозировка, выход, время. Начните с 18 г входа, 36 г выхода, 25–30 секунд."
         minutes: 15
       - order: 2
         title: "Tamping Technique"
+        title_en: "Tamping Technique"
+        title_ru: "Техника темпинга"
         type: text
         content: "Level, even tamp. Apply 15-20 kg of pressure. Avoid angled or uneven tamps."
+        content_en: "Level, even tamp. Apply 15-20 kg of pressure. Avoid angled or uneven tamps."
+        content_ru: "Темпуйте ровно и равномерно. Прикладывайте 15–20 кг усилия. Избегайте наклонного или неравномерного темпинга."
         minutes: 10
       - order: 3
         title: "Espresso Quiz"
+        title_en: "Espresso Quiz"
+        title_ru: "Квиз по эспрессо"
         type: quiz
         minutes: 5
         passing_score: 70
         questions:
           - text: "What is the typical extraction time for a double espresso?"
+            text_en: "What is the typical extraction time for a double espresso?"
+            text_ru: "Какое типичное время экстракции для двойного эспрессо?"
             options:
               - { text: "15-20 seconds", is_correct: false }
               - { text: "25-30 seconds", is_correct: true }
               - { text: "40-50 seconds", is_correct: false }
+            options_ru:
+              - { text: "15–20 секунд", is_correct: false }
+              - { text: "25–30 секунд", is_correct: true }
+              - { text: "40–50 секунд", is_correct: false }
           - text: "What dose is commonly used for a double shot?"
+            text_en: "What dose is commonly used for a double shot?"
+            text_ru: "Какая дозировка обычно используется для двойного шота?"
             options:
               - { text: "14g", is_correct: false }
               - { text: "18g", is_correct: true }
               - { text: "22g", is_correct: false }
+            options_ru:
+              - { text: "14 г", is_correct: false }
+              - { text: "18 г", is_correct: true }
+              - { text: "22 г", is_correct: false }
 
   - slug: v60-brewing
     title: "V60 Precision Brewing"
+    title_en: "V60 Precision Brewing"
+    title_ru: "V60: точное заваривание"
     description: "Learn the chemistry of pour-over and how to manipulate variables for clarity."
+    description_en: "Learn the chemistry of pour-over and how to manipulate variables for clarity."
+    description_ru: "Разберитесь в химии пуровера и научитесь управлять переменными для чистоты вкуса."
     level: beginner
     estimated_minutes: 45
     image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800"
     lessons:
       - order: 1
         title: "Water Temperature"
+        title_en: "Water Temperature"
+        title_ru: "Температура воды"
         type: text
         content: "Use 93-96°C for light roasts, 90-93°C for darker roasts."
+        content_en: "Use 93-96°C for light roasts, 90-93°C for darker roasts."
+        content_ru: "Используйте 93–96°C для светлой обжарки и 90–93°C для более тёмной."
         minutes: 5
       - order: 2
         title: "Grind Size"
+        title_en: "Grind Size"
+        title_ru: "Размер помола"
         type: text
         content: "Medium-fine for V60. Coarser than espresso, finer than French press."
+        content_en: "Medium-fine for V60. Coarser than espresso, finer than French press."
+        content_ru: "Для V60 — средне‑мелкий помол: грубее, чем для эспрессо, и мельче, чем для френч‑пресса."
         minutes: 5
