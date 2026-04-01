@@ -5,6 +5,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _lazy
 from django.views import View
 from django.views.generic import FormView, TemplateView
 
@@ -33,7 +35,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             form = CandidatePhoneForm(request.POST, instance=profile)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Phone number updated.')
+                messages.success(request, _('Phone number updated.'))
                 return HttpResponseRedirect(reverse('accounts:profile'))
             context = self.get_context_data(**kwargs)
             context['phone_form'] = form
@@ -43,7 +45,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             form = AvatarBadgeForm(request.POST, instance=profile, user=request.user)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Avatar badge updated.')
+                messages.success(request, _('Avatar badge updated.'))
                 return HttpResponseRedirect(reverse('accounts:profile'))
             context = self.get_context_data(**kwargs)
             context['avatar_badge_form'] = form
@@ -53,7 +55,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             form = PublicUsernameForm(request.POST, instance=profile)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Username updated.')
+                messages.success(request, _('Username updated.'))
                 return HttpResponseRedirect(reverse('accounts:profile'))
             context = self.get_context_data(**kwargs)
             context['public_username_form'] = form
@@ -80,14 +82,14 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
 def _get_role_display(user):
     if user.is_superuser:
-        return 'Admin'
+        return _lazy('Admin')
     if user.groups.filter(name='hr_manager').exists():
-        return 'HR / Director'
+        return _lazy('HR / Director')
     if getattr(user.profile, 'is_candidate', False):
-        return 'Candidate'
+        return _lazy('Candidate')
     if user.groups.filter(name='employee').exists():
-        return 'Employee'
-    return 'User'
+        return _lazy('Employee')
+    return _lazy('User')
 
 
 class CandidateRegisterView(FormView):

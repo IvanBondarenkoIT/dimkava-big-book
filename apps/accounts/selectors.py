@@ -1,5 +1,6 @@
 """Profile dashboard selectors (metrics + progress + badges)."""
 from django.db.models import Count, F, Q, Sum
+from django.utils.translation import gettext_lazy as _
 
 
 def _courses_queryset_for_user(user):
@@ -47,7 +48,11 @@ def get_profile_dashboard_context(user) -> dict:
     certificates_count = UserBadge.objects.filter(user=user, badge__is_compliance=True).count()
 
     levels = ['beginner', 'intermediate', 'manager']
-    level_titles = {'beginner': 'Beginner track', 'intermediate': 'Intermediate track', 'manager': 'Manager track'}
+    level_titles = {
+        'beginner': _('Beginner track'),
+        'intermediate': _('Intermediate track'),
+        'manager': _('Manager track'),
+    }
     certification_progress = []
     for level in levels:
         level_courses = courses_qs.filter(level=level)

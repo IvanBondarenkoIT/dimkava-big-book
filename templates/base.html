@@ -194,18 +194,7 @@
   </nav>
 
   <div class="px-4 md:px-6 mt-2 flex justify-end">
-    <form action="{% url 'set_language' %}" method="post" class="inline-flex items-center gap-2 rounded-full border border-outline-variant/20 bg-surface px-3 py-1.5 text-sm">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ request.get_full_path }}">
-      <label for="language-select" class="text-on-surface-variant/70">{% trans "Language" %}</label>
-      <select id="language-select" name="language" class="bg-transparent text-on-surface focus:outline-none" onchange="this.form.submit()">
-        {% get_current_language as CURRENT_LANG %}
-        {% get_available_languages as AVAILABLE_LANGUAGES %}
-        {% for lang_code, lang_name in AVAILABLE_LANGUAGES %}
-          <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANG %}selected{% endif %}>{{ lang_name }}</option>
-        {% endfor %}
-      </select>
-    </form>
+    {% include 'includes/language_switcher.html' %}
   </div>
 
   <!-- Main Content -->

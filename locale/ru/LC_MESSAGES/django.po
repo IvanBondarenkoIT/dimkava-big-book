@@ -278,3 +278,156 @@ msgstr "Общее"
 msgctxt "news_post_tag"
 msgid "Training"
 msgstr "Обучение"
+
+msgid "Dim Kava Academy"
+msgstr "Академия Dim Kava"
+
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgid "This is your public name in the portal. Email is hidden in the UI."
+msgstr "Это ваше публичное имя в портале. Email в интерфейсе скрыт."
+
+msgid "Save username"
+msgstr "Сохранить имя"
+
+msgid "Confirm your email (optional)"
+msgstr "Подтвердите email (необязательно)"
+
+msgid "We sent a confirmation link to your email. You can continue learning without it, but it helps HR verify your account."
+msgstr "Мы отправили ссылку для подтверждения на вашу почту. Можно продолжать обучение и без этого, но подтверждение помогает HR проверить аккаунт."
+
+msgid "Resend / instructions"
+msgstr "Отправить повторно / инструкция"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Phone number"
+msgstr "Номер телефона"
+
+msgid "Update phone"
+msgstr "Сохранить телефон"
+
+msgid "Courses done"
+msgstr "Курсов пройдено"
+
+msgid "Hours spent"
+msgstr "Часов потрачено"
+
+msgid "Skill level (0-10)"
+msgstr "Уровень навыка (0–10)"
+
+msgid "Certificates"
+msgstr "Сертификаты"
+
+msgid "Certification Progress"
+msgstr "Прогресс сертификации"
+
+#, python-format
+msgid "%(c)s/%(t)s courses completed"
+msgstr "Завершено курсов: %(c)s из %(t)s"
+
+msgid "Badge Showcase"
+msgstr "Витрина значков"
+
+msgid "No badges yet."
+msgstr "Пока нет значков."
+
+msgid "Avatar badge"
+msgstr "Значок аватара"
+
+msgid "Pick one of your earned badges to show near your avatar."
+msgstr "Выберите один из полученных значков, чтобы показать его рядом с аватаром."
+
+msgid "Badge"
+msgstr "Значок"
+
+msgid "— None —"
+msgstr "— Нет —"
+
+msgid "Placement"
+msgstr "Расположение"
+
+msgid "Save avatar badge"
+msgstr "Сохранить значок аватара"
+
+msgid "My Learning Plan"
+msgstr "Мой учебный план"
+
+msgid "Deadline:"
+msgstr "Срок:"
+
+msgid "No active plan yet."
+msgstr "Пока нет активного плана."
+
+#, python-format
+msgid "%(done)s/%(total)s done"
+msgstr "Выполнено: %(done)s из %(total)s"
+
+msgid "Next up"
+msgstr "Далее"
+
+msgid "deadline"
+msgstr "срок"
+
+msgid "required"
+msgstr "обязательно"
+
+msgid "optional"
+msgstr "по желанию"
+
+msgid "Done"
+msgstr "Готово"
+
+msgid "Pending"
+msgstr "В ожидании"
+
+#, python-format
+msgid "Showing 6 of %(total)s items."
+msgstr "Показано 6 из %(total)s элементов."
+
+msgid "Profile page — placeholder. Add avatar, settings, stats later."
+msgstr "Страница профиля — заглушка. Аватар, настройки и статистика — позже."
+
+msgid "Log out"
+msgstr "Выйти"
+
+msgid "Phone number updated."
+msgstr "Номер телефона обновлён."
+
+msgid "Avatar badge updated."
+msgstr "Значок аватара обновлён."
+
+msgid "Username updated."
+msgstr "Имя пользователя сохранено."
+
+msgid "Beginner track"
+msgstr "Начальный трек"
+
+msgid "Intermediate track"
+msgstr "Средний трек"
+
+msgid "Manager track"
+msgstr "Трек руководителя"
+
+msgid "Corner"
+msgstr "Угол"
+
+msgid "Overlay"
+msgstr "Наложение"
+
+msgid "Admin"
+msgstr "Администратор"
+
+msgid "HR / Director"
+msgstr "HR / директор"
+
+msgid "Candidate"
+msgstr "Кандидат"
+
+msgid "Employee"
+msgstr "Сотрудник"
+
+msgid "User"
+msgstr "Пользователь"

@@ -278,3 +278,156 @@ msgstr "ზოგადი"
 msgctxt "news_post_tag"
 msgid "Training"
 msgstr "ტრენინგი"
+
+msgid "Dim Kava Academy"
+msgstr "Dim Kava აკადემია"
+
+msgid "Username"
+msgstr "მომხმარებლის სახელი"
+
+msgid "This is your public name in the portal. Email is hidden in the UI."
+msgstr "ეს არის თქვენი საჯარო სახელი პორტალში. ელფოსტა ინტერფეისში დამალულია."
+
+msgid "Save username"
+msgstr "სახელის შენახვა"
+
+msgid "Confirm your email (optional)"
+msgstr "დაადასტურეთ ელფოსტა (არასავალდებულო)"
+
+msgid "We sent a confirmation link to your email. You can continue learning without it, but it helps HR verify your account."
+msgstr "დადასტურების ბმული გამოგიგზავნეთ ელფოსტაზე. შეგიძლიათ სწავლა გააგრძელოთ მის გარეშეც, მაგრამ HR-ს ანგარიშის შემოწმებაში ეხმარება."
+
+msgid "Resend / instructions"
+msgstr "ხელახლა გაგზავნა / ინსტრუქცია"
+
+msgid "Phone"
+msgstr "ტელეფონი"
+
+msgid "Phone number"
+msgstr "ნომერი"
+
+msgid "Update phone"
+msgstr "ნომრის განახლება"
+
+msgid "Courses done"
+msgstr "დასრულებული კურსები"
+
+msgid "Hours spent"
+msgstr "დახარჯული საათები"
+
+msgid "Skill level (0-10)"
+msgstr "უნარის დონე (0-10)"
+
+msgid "Certificates"
+msgstr "სერტიფიკატები"
+
+msgid "Certification Progress"
+msgstr "სერტიფიკაციის პროგრესი"
+
+#, python-format
+msgid "%(c)s/%(t)s courses completed"
+msgstr "დასრულებული კურსები: %(c)s / %(t)s"
+
+msgid "Badge Showcase"
+msgstr "ბეიჯების ვიტრინა"
+
+msgid "No badges yet."
+msgstr "ბეიჯები ჯერ არ არის."
+
+msgid "Avatar badge"
+msgstr "ავატარის ბეიჯი"
+
+msgid "Pick one of your earned badges to show near your avatar."
+msgstr "აირჩიეთ ერთი მიღებული ბეიჯი ავატარის გვერდით საჩვენებლად."
+
+msgid "Badge"
+msgstr "ბეიჯი"
+
+msgid "— None —"
+msgstr "— არა —"
+
+msgid "Placement"
+msgstr "განთავსება"
+
+msgid "Save avatar badge"
+msgstr "ავატარის ბეიჯის შენახვა"
+
+msgid "My Learning Plan"
+msgstr "ჩემი სასწავლო გეგმა"
+
+msgid "Deadline:"
+msgstr "ვადა:"
+
+msgid "No active plan yet."
+msgstr "აქტიური გეგმა ჯერ არ არის."
+
+#, python-format
+msgid "%(done)s/%(total)s done"
+msgstr "შესრულებული: %(done)s / %(total)s"
+
+msgid "Next up"
+msgstr "შემდეგი"
+
+msgid "deadline"
+msgstr "ვადა"
+
+msgid "required"
+msgstr "სავალდებულო"
+
+msgid "optional"
+msgstr "არასავალდებულო"
+
+msgid "Done"
+msgstr "შესრულებული"
+
+msgid "Pending"
+msgstr "მოლოდინში"
+
+#, python-format
+msgid "Showing 6 of %(total)s items."
+msgstr "ნაჩვენებია 6 %(total)s-დან."
+
+msgid "Profile page — placeholder. Add avatar, settings, stats later."
+msgstr "პროფილის გვერდი — დროებითი. ავატარი, პარამეტრები და სტატისტიკა მოგვიანებით."
+
+msgid "Log out"
+msgstr "გასვლა"
+
+msgid "Phone number updated."
+msgstr "ნომერი განახლებულია."
+
+msgid "Avatar badge updated."
+msgstr "ავატარის ბეიჯი განახლებულია."
+
+msgid "Username updated."
+msgstr "მომხმარებლის სახელი განახლებულია."
+
+msgid "Beginner track"
+msgstr "დამწყების ტრეკი"
+
+msgid "Intermediate track"
+msgstr "საშუალო ტრეკი"
+
+msgid "Manager track"
+msgstr "მენეჯერის ტრეკი"
+
+msgid "Corner"
+msgstr "კუთხე"
+
+msgid "Overlay"
+msgstr "ოვერლეი"
+
+msgid "Admin"
+msgstr "ადმინისტრატორი"
+
+msgid "HR / Director"
+msgstr "HR / დირექტორი"
+
+msgid "Candidate"
+msgstr "კანდიდატი"
+
+msgid "Employee"
+msgstr "თანამშრომელი"
+
+msgid "User"
+msgstr "მომხმარებელი"

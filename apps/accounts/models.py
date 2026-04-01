@@ -1,5 +1,6 @@
 """User profile and automated assignment rules (best_practices §3)."""
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.utils.text import slugify
 
@@ -53,8 +54,8 @@ class UserProfile(models.Model):
         help_text='Optional badge to display near the user avatar.',
     )
     DISPLAY_BADGE_PLACEMENT_CHOICES = [
-        ('corner', 'Corner'),
-        ('overlay', 'Overlay'),
+        ('corner', _('Corner')),
+        ('overlay', _('Overlay')),
     ]
     display_badge_placement = models.CharField(
         max_length=20,
