@@ -7,15 +7,20 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# System deps for psycopg2-binary and general build sanity
+# System deps: gettext for django compilemessages (UI translations .po → .mo)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
+    gettext \
   && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
 COPY . /app
+
+# Compile locale/ru and locale/ka message files (no DB / SECRET_KEY needed for base settings)
+RUN DJANGO_SETTINGS_MODULE=config.settings.base \
+    python manage.py compilemessages
 
 # Railway sets PORT; default to 8000 for local docker run
 ENV PORT=8000 \

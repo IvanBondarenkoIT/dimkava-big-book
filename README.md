@@ -43,6 +43,12 @@ dimkava-big-book/
 
 **Docker (Postgres + Redis):** `docker-compose up -d` — для использования Postgres задайте `DATABASE_URL`.
 
+## Деплой (Railway / Docker)
+
+- **Образ:** `Dockerfile` включает `gettext` и **`compilemessages`** для UI-переводов (`ru` / `ka`).
+- **Подтягивание переводов контента из YAML в БД:** в Railway задайте **`AUTO_LOAD_HR_CONTENT=1`** — при каждом старте контейнера выполняются `load_courses`, `load_onboarding`, `load_articles`, `load_news`, `load_departments` (идемпотентно).
+- Подробно: **[docs/RAILWAY_DEPLOY.md](docs/RAILWAY_DEPLOY.md)**.
+
 ## Тесты
 
 ```bash

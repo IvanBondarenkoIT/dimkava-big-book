@@ -122,3 +122,8 @@ Dry-run (без записи в БД):
 ## 7) Статус RU и дорожная карта KA
 
 Итоги по русскому и пошаговый план грузинского (чеклисты, файлы, команды): см. **[I18N_RU_DONE_AND_KA_PLAN.md](I18N_RU_DONE_AND_KA_PLAN.md)**.
+
+## 8) Production (Railway / Docker)
+
+- В **Dockerfile** при сборке выполняется **`compilemessages`** (нужен gettext в образе) — UI-строки из `locale/*/LC_MESSAGES/django.po` попадают в `.mo` внутри образа.
+- Чтобы при деплое **подтягивать переведённый контент** из YAML в БД, задайте **`AUTO_LOAD_HR_CONTENT=1`** (см. **[RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md)**).
