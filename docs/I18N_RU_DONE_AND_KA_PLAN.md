@@ -57,8 +57,11 @@ python tools/fill_onboarding_kb_ru.py
 После каждого файла — соответствующая команда `load_*`.
 
 ### Этап C — автоматизация (опционально, затем вычитка)
-- Черновики: `python manage.py load_<entity> --auto-translate-draft` (даёт префиксы `[AUTO-ka]`).
-- Или DeepL: см. [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md) раздел «Реальный автоперевод» — `auto_translate_content --lang ka --apply`, затем HR вычитывает.
+- **YAML (предпочтительно для git):**  
+  `python manage.py translate_seed_yaml_ka`  
+  (нужен `DEEPL_AUTH_KEY`; см. runbook §4.2). Затем `load_courses`, `load_onboarding`, `load_articles`, `load_news`.
+- Черновики без DeepL: `python manage.py load_<entity> --auto-translate-draft` (префиксы `[AUTO-ka]`).
+- **Только БД:** [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md) — `auto_translate_content --lang ka --apply` для пустых/`[AUTO-ka]` полей, затем вычитка HR.
 
 ### Этап D — контрольные списки
 **UI (KA):** логин, главная, навигация, курсы (список/деталь/урок/квиз), онбординг (обзор + модуль), база знаний (раздел + статья), новости (список + деталь), профиль.

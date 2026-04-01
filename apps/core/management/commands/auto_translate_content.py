@@ -46,13 +46,15 @@ class Command(BaseCommand):
         from apps.courses.models import Course, Lesson, TestQuestion
         from apps.knowledge_base.models import Article
         from apps.news.models import NewsPost
-        from apps.onboarding.models import OnboardingModule
+        from apps.onboarding.models import OnboardingModule, OnboardingProgram, OnboardingStep
 
         stats = {
             "Course": 0,
             "Lesson": 0,
             "TestQuestion": 0,
+            "OnboardingProgram": 0,
             "OnboardingModule": 0,
+            "OnboardingStep": 0,
             "Article": 0,
             "NewsPost": 0,
         }
@@ -123,12 +125,26 @@ class Command(BaseCommand):
             ],
         )
 
-        # Onboarding
+        # Onboarding (program + modules + steps)
+        translate_model(
+            OnboardingProgram.objects.all().order_by("id"),
+            fields_map=[
+                ("title_en", f"title_{lang}"),
+                ("description_en", f"description_{lang}"),
+            ],
+        )
         translate_model(
             OnboardingModule.objects.all().order_by("id"),
             fields_map=[
                 ("title_en", f"title_{lang}"),
                 ("description_en", f"description_{lang}"),
+            ],
+        )
+        translate_model(
+            OnboardingStep.objects.all().order_by("id"),
+            fields_map=[
+                ("title_en", f"title_{lang}"),
+                ("content_en", f"content_{lang}"),
             ],
         )
 

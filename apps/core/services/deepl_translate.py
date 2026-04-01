@@ -19,10 +19,26 @@ class DeepLConfig:
 def get_deepl_config() -> DeepLConfig:
     auth_key = (os.environ.get("DEEPL_AUTH_KEY") or "").strip()
     if not auth_key:
+        try:
+            from decouple import config as decouple_config
+
+            auth_key = (decouple_config("DEEPL_AUTH_KEY", default="") or "").strip()
+        except ImportError:
+            pass
+    if not auth_key:
         raise ImproperlyConfigured(
             "DEEPL_AUTH_KEY is not set. Add it to .env to enable live auto-translation."
         )
-    api_url = (os.environ.get("DEEPL_API_URL") or "").strip() or "https://api-free.deepl.com/v2/translate"
+    api_url = (os.environ.get("DEEPL_API_URL") or "").strip()
+    if not api_url:
+        try:
+            from decouple import config as decouple_config
+
+            api_url = (decouple_config("DEEPL_API_URL", default="") or "").strip()
+        except ImportError:
+            api_url = ""
+    if not api_url:
+        api_url = "https://api-free.deepl.com/v2/translate"
     return DeepLConfig(auth_key=auth_key, api_url=api_url)
 
 

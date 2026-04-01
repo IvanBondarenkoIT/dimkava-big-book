@@ -57,6 +57,21 @@
 - режим `--auto-translate-draft` создает черновые ka/ru значения;
 - перед публикацией HR должен проверить и отредактировать переводы.
 
+### 4.2) Заполнение грузинского в YAML через DeepL (рекомендуется для KA)
+
+Требуется `DEEPL_AUTH_KEY` в `.env` (см. `.env.example`).
+
+- Проверка объёма без ключа и без записи:  
+  `python manage.py translate_seed_yaml_ka --dry-run`
+- Запись переводов в файлы `input/hr docs/content/*.yaml`:  
+  `python manage.py translate_seed_yaml_ka`  
+  или выборочно: `--only onboarding|news|sops|courses`
+
+После этого снова выполните команды `load_*` из п. 4.
+
+Перевод в **БД** из уже загруженного EN (пустые или `[AUTO-ka]` поля):  
+`python manage.py auto_translate_content --lang ka --apply`
+
 ## 4.1) Реальный автоперевод (DeepL)
 
 Если нужно **получить настоящие переводы**, а не префиксы вида `[AUTO-ru]/[AUTO-ka]`, подключите DeepL.
