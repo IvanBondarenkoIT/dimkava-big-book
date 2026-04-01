@@ -2,733 +2,624 @@
 # Sources: ежедневные.docx, Еженедельные.docx, Ежемесячные.docx,
 #          Дк_стандарты_обслуживания.docx, Должностная_инструкция.docx
 # Django model: Article (knowledge base) + OnboardingStep checklist
-# Usage: Import as knowledge base articles in the wiki section.
-#        Also used as checklist references in daily/weekly/monthly onboarding steps.
-
+# Usage: python manage.py load_articles
+#
 # ---------------------------------------------------------------------------
 # SECTIONS (knowledge base wiki):
 # ---------------------------------------------------------------------------
+
 sections:
-  - slug: procedures
-    title: "Procedures & Checklists"
-    title_en: "Procedures & Checklists"
-    title_ru: "Процедуры и чек-листы"
-    icon: checklist
-    order: 1
-  - slug: service-standards
-    title: "Service Standards"
-    title_en: "Service Standards"
-    title_ru: "Стандарты сервиса"
-    icon: star
-    order: 2
-  - slug: company-info
-    title: "Company Information"
-    title_en: "Company Information"
-    title_ru: "Информация о компании"
-    icon: building
-    order: 3
-  - slug: training
-    title: "Training & Qualification"
-    title_en: "Training & Qualification"
-    title_ru: "Обучение и квалификация"
-    icon: graduation-cap
-    order: 4
-
-# ---------------------------------------------------------------------------
-# ARTICLES LIST:
-#   1. Daily Checklist — Morning to Close
-#   2. Weekly Checklist
-#   3. Monthly Checklist
-#   4. DK Service Standards (core behaviour rules)
-#   5. Job Description — Manager Consultant
-#   6. Professional Qualification Levels
-# ---------------------------------------------------------------------------
-
+- slug: procedures
+  title: Procedures & Checklists
+  title_en: Procedures & Checklists
+  title_ru: Процедуры и чек-листы
+  icon: checklist
+  order: 1
+  title_ka: პროცედურები და სიები
+- slug: service-standards
+  title: Service Standards
+  title_en: Service Standards
+  title_ru: Стандарты сервиса
+  icon: star
+  order: 2
+  title_ka: მომსახურების სტანდარტები
+- slug: company-info
+  title: Company Information
+  title_en: Company Information
+  title_ru: Информация о компании
+  icon: building
+  order: 3
+  title_ka: კომპანიის ინფორმაცია
+- slug: training
+  title: Training & Qualification
+  title_en: Training & Qualification
+  title_ru: Обучение и квалификация
+  icon: graduation-cap
+  order: 4
+  title_ka: ტრენინგი და კვალიფიკაცია
 articles:
+- slug: daily-checklist
+  section: procedures
+  title: Daily Checklist — Morning to Close
+  title_en: Daily Checklist — Morning to Close
+  title_ru: Ежедневный чек-лист — от открытия до закрытия
+  status: published
+  content: "This checklist covers every task that must be completed each working day,\nfrom opening to closing. All items\
+    \ are mandatory. The shift is not considered\ncomplete until every step is done.\n\n## Opening (Start of Day)\n\n1. **Clock\
+    \ in** — Register your card/attendance in the programme at 9:30 or 15:45 (depending on shift).\n2. **Switch on** — Lights,\
+    \ security camera, TV, coffee machine, Shop Seller, Telegram.\n3. **Accept the shift register** — Cash in the till must\
+    \ match the previous evening's Shop Seller balance.\n4. **Open the daily plan file** — Set your personal sales goal for\
+    \ the day. Fill it in at end of shift.\n\n## During the Day\n\n5. **Consumables** — Replenish take-away zone supplies\
+    \ throughout the day. Empty and clean bins.\n6. **Dust** — Wipe dust from all products and shelves.\n7. **Price tags**\
+    \ — Check every product has a price tag that matches the Shop Seller price list.\n8. **Stock control** — Monitor stock\
+    \ levels throughout the day so nothing runs out.\n9. **Client workflow** (always follow this sequence):\n   - Greet the\
+    \ client warmly, identify their needs\n   - Enter the order in Shop Seller\n   - Scan the DK loyalty card\n   - Process\
+    \ payment\n   - Issue the receipt\n   - Prepare the order\n10. **Loyalty card** — Ask every client about their card. Inform\
+    \ about current promotions and competitions.\n11. **Coffee preparation** — Always prepare to standard. No exceptions.\n\
+    12. **Latte art** — Apply latte art technique. Send photos of your work to the team Telegram chat.\n13. **Display cleanliness**\
+    \ — Keep display cases, cabinets, fridge, and pastry bowls clean.\n14. **Coffee packaging alignment** — Keep all coffee\
+    \ packaging neat and tidy throughout the day.\n15. **Inventory** — Conduct the daily inventory correctly and completely.\n\
+    \n## Closing (End of Day)\n\n16. **Cash register reconciliation** — Fill in the register (granite). Total must match the\
+    \ amount shown in the top-right corner of the register programme.\n17. **Record cash expenses** — Enter all cash expense\
+    \ amounts in Shop Seller with a mandatory description of each item.\n18. **Accounting sheets** — Fill in accounting sheets\
+    \ with Z-reports from all payment terminals at end of day.\n19. **Close the day** — Run the end-of-day close procedure\
+    \ in Shop Seller.\n20. **Clean the coffee machines** — Wash and clean machines, holders, grinder flasks. Clean shelves\
+    \ and floor.\n21. **Secure and lock** — Switch off lights, set the alarm, lock the store according to the security procedure.\n\
+    \n---\n> **Note:** Steps 16–18 relate to financial reporting and must never be skipped.\n> Discrepancies between the register\
+    \ and Shop Seller must be flagged to the manager immediately.\n"
+  content_en: "This checklist covers every task that must be completed each working day,\nfrom opening to closing. All items\
+    \ are mandatory. The shift is not considered\ncomplete until every step is done.\n\n## Opening (Start of Day)\n\n1. **Clock\
+    \ in** — Register your card/attendance in the programme at 9:30 or 15:45 (depending on shift).\n2. **Switch on** — Lights,\
+    \ security camera, TV, coffee machine, Shop Seller, Telegram.\n3. **Accept the shift register** — Cash in the till must\
+    \ match the previous evening's Shop Seller balance.\n4. **Open the daily plan file** — Set your personal sales goal for\
+    \ the day. Fill it in at end of shift.\n\n## During the Day\n\n5. **Consumables** — Replenish take-away zone supplies\
+    \ throughout the day. Empty and clean bins.\n6. **Dust** — Wipe dust from all products and shelves.\n7. **Price tags**\
+    \ — Check every product has a price tag that matches the Shop Seller price list.\n8. **Stock control** — Monitor stock\
+    \ levels throughout the day so nothing runs out.\n9. **Client workflow** (always follow this sequence):\n   - Greet the\
+    \ client warmly, identify their needs\n   - Enter the order in Shop Seller\n   - Scan the DK loyalty card\n   - Process\
+    \ payment\n   - Issue the receipt\n   - Prepare the order\n10. **Loyalty card** — Ask every client about their card. Inform\
+    \ about current promotions and competitions.\n11. **Coffee preparation** — Always prepare to standard. No exceptions.\n\
+    12. **Latte art** — Apply latte art technique. Send photos of your work to the team Telegram chat.\n13. **Display cleanliness**\
+    \ — Keep display cases, cabinets, fridge, and pastry bowls clean.\n14. **Coffee packaging alignment** — Keep all coffee\
+    \ packaging neat and tidy throughout the day.\n15. **Inventory** — Conduct the daily inventory correctly and completely.\n\
+    \n## Closing (End of Day)\n\n16. **Cash register reconciliation** — Fill in the register (granite). Total must match the\
+    \ amount shown in the top-right corner of the register programme.\n17. **Record cash expenses** — Enter all cash expense\
+    \ amounts in Shop Seller with a mandatory description of each item.\n18. **Accounting sheets** — Fill in accounting sheets\
+    \ with Z-reports from all payment terminals at end of day.\n19. **Close the day** — Run the end-of-day close procedure\
+    \ in Shop Seller.\n20. **Clean the coffee machines** — Wash and clean machines, holders, grinder flasks. Clean shelves\
+    \ and floor.\n21. **Secure and lock** — Switch off lights, set the alarm, lock the store according to the security procedure.\n\
+    \n---\n> **Note:** Steps 16–18 relate to financial reporting and must never be skipped.\n> Discrepancies between the register\
+    \ and Shop Seller must be flagged to the manager immediately.\n"
+  content_ru: "Этот чек-лист охватывает все задачи, которые нужно выполнить каждый рабочий день\nот открытия до закрытия.\
+    \ Все пункты обязательны. Смена не считается завершённой,\nпока не выполнен каждый шаг.\n\n## Открытие (начало дня)\n\n\
+    1. **Отметка прихода** — Зарегистрируйте карту/посещаемость в программе в 9:30 или 15:45 (в зависимости от смены).\n2.\
+    \ **Включение** — Свет, камера видеонаблюдения, TV, кофемашина, Shop Seller, Telegram.\n3. **Приём кассовой смены** —\
+    \ Наличные в кассе должны совпадать с вечерним балансом Shop Seller за предыдущий день.\n4. **Откройте файл дневного плана**\
+    \ — Задайте личную цель по продажам на день. Заполните итог в конце смены.\n\n## В течение дня\n\n5. **Расходники** —\
+    \ Пополняйте запасы зоны take-away в течение дня. Опорожняйте и мойте урны.\n6. **Пыль** — Протирайте пыль со всех товаров\
+    \ и полок.\n7. **Ценники** — У каждого товара должен быть ценник, совпадающий с прайсом в Shop Seller.\n8. **Контроль\
+    \ остатков** — Следите за остатками в течение дня, чтобы ничего не закончилось.\n9. **Работа с клиентом** (всегда в такой\
+    \ последовательности):\n   - Поприветствуйте клиента, выясните потребности\n   - Внесите заказ в Shop Seller\n   - Отсканируйте\
+    \ карту лояльности DK\n   - Примите оплату\n   - Выдайте чек\n   - Приготовьте заказ\n10. **Карта лояльности** — Спросите\
+    \ у каждого клиента про карту. Расскажите об акциях и конкурсах.\n11. **Приготовление кофе** — Всегда по стандарту. Без\
+    \ исключений.\n12. **Латте-арт** — Используйте технику латте-арта. Фото работ отправляйте в командный чат Telegram.\n\
+    13. **Чистота витрин** — Держите витрины, шкафы, холодильник и подносы с выпечкой в чистоте.\n14. **Выкладка упаковки\
+    \ кофе** — Вся упаковка кофе аккуратна и ровно в течение дня.\n15. **Инвентаризация** — Проведите ежедневную инвентаризацию\
+    \ полностью и корректно.\n\n## Закрытие (конец дня)\n\n16. **Сверка кассы** — Заполните кассу (granite). Итог должен совпадать\
+    \ с суммой в правом верхнем углу программы кассы.\n17. **Учёт расходов наличными** — Внесите все расходы наличными в Shop\
+    \ Seller с обязательным описанием каждой позиции.\n18. **Бухгалтерские листы** — Заполните листы с Z-отчётами со всех\
+    \ терминалов оплаты на конец дня.\n19. **Закрытие дня** — Выполните процедуру закрытия дня в Shop Seller.\n20. **Чистка\
+    \ кофемашин** — Помойте машины, холдеры, бункеры кофемолок. Почистите полки и пол.\n21. **Безопасность** — Выключите свет,\
+    \ включите сигнализацию, заприте магазин по процедуре безопасности.\n\n---\n> **Примечание:** шаги 16–18 относятся к финансовой\
+    \ отчётности и не могут быть пропущены.\n> Расхождения между кассой и Shop Seller немедленно сообщайте менеджеру.\n"
+  title_ka: ყოველდღიური საკონტროლო სია - დილიდან დახურვამდე
+  content_ka: "ეს ჩამონათვალი მოიცავს ყველა დავალებას, რომელიც უნდა შესრულდეს ყოველ სამუშაო დღეს,\nგახსნიდან დახურვამდე. ყველა\
+    \ ელემენტი სავალდებულოა. ცვლა არ განიხილება\nდაასრულეთ ყოველი ნაბიჯის დასრულებამდე.\n\n## გახსნა (დღის დასაწყისი)\n\n\
+    1. **Clock in** — დაარეგისტრირეთ თქვენი ბარათი/პროგრამაში დასწრება 9:30 ან 15:45 (ცვლის მიხედვით).\n2. **ჩართეთ ** — განათება,\
+    \ უსაფრთხოების კამერა, ტელევიზორი, ყავის აპარატი, მაღაზიის გამყიდველი, ტელეგრამა.\n3. **მიიღეთ ცვლის რეესტრი** — ნაღდი\
+    \ ფული უნდა შეესაბამებოდეს წინა საღამოს მაღაზიის გამყიდველის ბალანსს.\n4. **გახსენით ყოველდღიური გეგმის ფაილი** — დააყენეთ\
+    \ თქვენი პერსონალური გაყიდვების მიზანი დღისთვის. შეავსეთ იგი ცვლის ბოლოს.\n\n## დღის განმავლობაში\n\n5. **სახარჯი მასალა**\
+    \ — შეავსეთ გასატანი ზონის მარაგი მთელი დღის განმავლობაში. ცარიელი და სუფთა ურნები.\n6. **მტვერი** — წაშალეთ მტვერი ყველა\
+    \ პროდუქტიდან და თაროდან.\n7. **ფასის ტეგები** — შეამოწმეთ, რომ ყველა პროდუქტს აქვს ფასის ნიშანი, რომელიც შეესაბამება\
+    \ მაღაზიის გამყიდველის ფასების სიას.\n8. **საფონდო კონტროლი** — თვალყური ადევნეთ მარაგის დონეს მთელი დღის განმავლობაში,\
+    \ რათა არაფერი ამოიწუროს.\n9. **კლიენტის სამუშაო პროცესი ** (ყოველთვის დაიცავით ეს თანმიმდევრობა):\n   - მიესალმე კლიენტს\
+    \ თბილად, დაადგინე მათი საჭიროებები\n   - შეიყვანეთ შეკვეთა მაღაზია გამყიდველში\n   - დაასკანირეთ DK ლოიალობის ბარათი\n\
+    \   - გადახდის პროცესი\n   - გასცეს ქვითარი\n   - მოამზადე შეკვეთა\n10. **ლოიალობის ბარათი** — ჰკითხეთ თითოეულ კლიენტს\
+    \ მათი ბარათის შესახებ. აცნობეთ მიმდინარე აქციებისა და კონკურსების შესახებ.\n11. **ყავის მომზადება** — ყოველთვის მოემზადეთ\
+    \ სტანდარტების შესაბამისად. არანაირი გამონაკლისი.\n12. **ლატე არტი** — გამოიყენეთ ლატე არტის ტექნიკა. გაგზავნეთ თქვენი\
+    \ სამუშაოს ფოტოები გუნდის Telegram-ის ჩეთში.\n13. **სისუფთავის ჩვენება** — შეინახეთ ვიტრინები, კარადები, მაცივარი და საკონდიტრო\
+    \ თასები სუფთად.\n14. **ყავის შეფუთვის გასწორება** — შეინახეთ ყავის ყველა შეფუთვა მოწესრიგებული და მოწესრიგებული მთელი\
+    \ დღის განმავლობაში.\n15. **ინვენტარიზაცია** — ყოველდღიური ინვენტარიზაციის ჩატარება სწორად და სრულად.\n\n## დახურვა (დღის\
+    \ ბოლოს)\n\n16. **სალარო აპარატის შეჯერება** — რეესტრის შევსება (გრანიტი). ჯამი უნდა შეესაბამებოდეს სარეგისტრაციო პროგრამის\
+    \ ზედა მარჯვენა კუთხეში ნაჩვენები თანხას.\n17. **აღრიცხეთ ნაღდი ფულის ხარჯები** — შეიყვანეთ ყველა ფულადი ხარჯის თანხა\
+    \ მაღაზია გამყიდველში თითოეული საქონლის სავალდებულო აღწერით.\n18. **სააღრიცხვო ფურცლები** — შეავსეთ სააღრიცხვო ფურცლები\
+    \ Z- ანგარიშებით ყველა გადახდის ტერმინალიდან დღის ბოლოს.\n19. **დღის დახურვა** — განახორციელეთ დღის ბოლოს დახურვის პროცედურა\
+    \ Shop Seller-ში.\n20. **გაასუფთავეთ ყავის აპარატები** — გარეცხეთ და გაასუფთავეთ მანქანები, დამჭერები, საფქვავი კოლბები.\
+    \ გაასუფთავეთ თაროები და იატაკი.\n21. **დაიცავით და ჩაკეტეთ** — გამორთეთ განათება, დააყენეთ მაღვიძარა, ჩაკეტეთ მაღაზია\
+    \ უსაფრთხოების პროცედურის მიხედვით.\n\n---\n> **შენიშვნა:** ნაბიჯები 16-18 ეხება ფინანსურ ანგარიშგებას და არასოდეს უნდა\
+    \ გამოტოვოთ.\n> რეესტრსა და მაღაზიის გამყიდველს შორის შეუსაბამობები დაუყოვნებლივ უნდა მიეწოდოს მენეჯერს."
+- slug: weekly-checklist
+  section: procedures
+  title: Weekly Checklist
+  title_en: Weekly Checklist
+  title_ru: Еженедельный чек-лист
+  status: published
+  content: 'Recurring tasks that must be completed on specific days each week.
 
-  - slug: daily-checklist
-    section: procedures
-    title: "Daily Checklist — Morning to Close"
-    title_en: "Daily Checklist — Morning to Close"
-    title_ru: "Ежедневный чек-лист — от открытия до закрытия"
-    status: published
-    content: |
-      This checklist covers every task that must be completed each working day,
-      from opening to closing. All items are mandatory. The shift is not considered
-      complete until every step is done.
-
-      ## Opening (Start of Day)
-
-      1. **Clock in** — Register your card/attendance in the programme at 9:30 or 15:45 (depending on shift).
-      2. **Switch on** — Lights, security camera, TV, coffee machine, Shop Seller, Telegram.
-      3. **Accept the shift register** — Cash in the till must match the previous evening's Shop Seller balance.
-      4. **Open the daily plan file** — Set your personal sales goal for the day. Fill it in at end of shift.
-
-      ## During the Day
-
-      5. **Consumables** — Replenish take-away zone supplies throughout the day. Empty and clean bins.
-      6. **Dust** — Wipe dust from all products and shelves.
-      7. **Price tags** — Check every product has a price tag that matches the Shop Seller price list.
-      8. **Stock control** — Monitor stock levels throughout the day so nothing runs out.
-      9. **Client workflow** (always follow this sequence):
-         - Greet the client warmly, identify their needs
-         - Enter the order in Shop Seller
-         - Scan the DK loyalty card
-         - Process payment
-         - Issue the receipt
-         - Prepare the order
-      10. **Loyalty card** — Ask every client about their card. Inform about current promotions and competitions.
-      11. **Coffee preparation** — Always prepare to standard. No exceptions.
-      12. **Latte art** — Apply latte art technique. Send photos of your work to the team Telegram chat.
-      13. **Display cleanliness** — Keep display cases, cabinets, fridge, and pastry bowls clean.
-      14. **Coffee packaging alignment** — Keep all coffee packaging neat and tidy throughout the day.
-      15. **Inventory** — Conduct the daily inventory correctly and completely.
-
-      ## Closing (End of Day)
-
-      16. **Cash register reconciliation** — Fill in the register (granite). Total must match the amount shown in the top-right corner of the register programme.
-      17. **Record cash expenses** — Enter all cash expense amounts in Shop Seller with a mandatory description of each item.
-      18. **Accounting sheets** — Fill in accounting sheets with Z-reports from all payment terminals at end of day.
-      19. **Close the day** — Run the end-of-day close procedure in Shop Seller.
-      20. **Clean the coffee machines** — Wash and clean machines, holders, grinder flasks. Clean shelves and floor.
-      21. **Secure and lock** — Switch off lights, set the alarm, lock the store according to the security procedure.
-
-      ---
-      > **Note:** Steps 16–18 relate to financial reporting and must never be skipped.
-      > Discrepancies between the register and Shop Seller must be flagged to the manager immediately.
-
-    content_en: |
-      This checklist covers every task that must be completed each working day,
-      from opening to closing. All items are mandatory. The shift is not considered
-      complete until every step is done.
-
-      ## Opening (Start of Day)
-
-      1. **Clock in** — Register your card/attendance in the programme at 9:30 or 15:45 (depending on shift).
-      2. **Switch on** — Lights, security camera, TV, coffee machine, Shop Seller, Telegram.
-      3. **Accept the shift register** — Cash in the till must match the previous evening's Shop Seller balance.
-      4. **Open the daily plan file** — Set your personal sales goal for the day. Fill it in at end of shift.
-
-      ## During the Day
-
-      5. **Consumables** — Replenish take-away zone supplies throughout the day. Empty and clean bins.
-      6. **Dust** — Wipe dust from all products and shelves.
-      7. **Price tags** — Check every product has a price tag that matches the Shop Seller price list.
-      8. **Stock control** — Monitor stock levels throughout the day so nothing runs out.
-      9. **Client workflow** (always follow this sequence):
-         - Greet the client warmly, identify their needs
-         - Enter the order in Shop Seller
-         - Scan the DK loyalty card
-         - Process payment
-         - Issue the receipt
-         - Prepare the order
-      10. **Loyalty card** — Ask every client about their card. Inform about current promotions and competitions.
-      11. **Coffee preparation** — Always prepare to standard. No exceptions.
-      12. **Latte art** — Apply latte art technique. Send photos of your work to the team Telegram chat.
-      13. **Display cleanliness** — Keep display cases, cabinets, fridge, and pastry bowls clean.
-      14. **Coffee packaging alignment** — Keep all coffee packaging neat and tidy throughout the day.
-      15. **Inventory** — Conduct the daily inventory correctly and completely.
-
-      ## Closing (End of Day)
-
-      16. **Cash register reconciliation** — Fill in the register (granite). Total must match the amount shown in the top-right corner of the register programme.
-      17. **Record cash expenses** — Enter all cash expense amounts in Shop Seller with a mandatory description of each item.
-      18. **Accounting sheets** — Fill in accounting sheets with Z-reports from all payment terminals at end of day.
-      19. **Close the day** — Run the end-of-day close procedure in Shop Seller.
-      20. **Clean the coffee machines** — Wash and clean machines, holders, grinder flasks. Clean shelves and floor.
-      21. **Secure and lock** — Switch off lights, set the alarm, lock the store according to the security procedure.
-
-      ---
-      > **Note:** Steps 16–18 relate to financial reporting and must never be skipped.
-      > Discrepancies between the register and Shop Seller must be flagged to the manager immediately.
-
-    content_ru: |
-      Этот чек-лист охватывает все задачи, которые нужно выполнить каждый рабочий день
-      от открытия до закрытия. Все пункты обязательны. Смена не считается завершённой,
-      пока не выполнен каждый шаг.
-
-      ## Открытие (начало дня)
-
-      1. **Отметка прихода** — Зарегистрируйте карту/посещаемость в программе в 9:30 или 15:45 (в зависимости от смены).
-      2. **Включение** — Свет, камера видеонаблюдения, TV, кофемашина, Shop Seller, Telegram.
-      3. **Приём кассовой смены** — Наличные в кассе должны совпадать с вечерним балансом Shop Seller за предыдущий день.
-      4. **Откройте файл дневного плана** — Задайте личную цель по продажам на день. Заполните итог в конце смены.
-
-      ## В течение дня
-
-      5. **Расходники** — Пополняйте запасы зоны take-away в течение дня. Опорожняйте и мойте урны.
-      6. **Пыль** — Протирайте пыль со всех товаров и полок.
-      7. **Ценники** — У каждого товара должен быть ценник, совпадающий с прайсом в Shop Seller.
-      8. **Контроль остатков** — Следите за остатками в течение дня, чтобы ничего не закончилось.
-      9. **Работа с клиентом** (всегда в такой последовательности):
-         - Поприветствуйте клиента, выясните потребности
-         - Внесите заказ в Shop Seller
-         - Отсканируйте карту лояльности DK
-         - Примите оплату
-         - Выдайте чек
-         - Приготовьте заказ
-      10. **Карта лояльности** — Спросите у каждого клиента про карту. Расскажите об акциях и конкурсах.
-      11. **Приготовление кофе** — Всегда по стандарту. Без исключений.
-      12. **Латте-арт** — Используйте технику латте-арта. Фото работ отправляйте в командный чат Telegram.
-      13. **Чистота витрин** — Держите витрины, шкафы, холодильник и подносы с выпечкой в чистоте.
-      14. **Выкладка упаковки кофе** — Вся упаковка кофе аккуратна и ровно в течение дня.
-      15. **Инвентаризация** — Проведите ежедневную инвентаризацию полностью и корректно.
-
-      ## Закрытие (конец дня)
-
-      16. **Сверка кассы** — Заполните кассу (granite). Итог должен совпадать с суммой в правом верхнем углу программы кассы.
-      17. **Учёт расходов наличными** — Внесите все расходы наличными в Shop Seller с обязательным описанием каждой позиции.
-      18. **Бухгалтерские листы** — Заполните листы с Z-отчётами со всех терминалов оплаты на конец дня.
-      19. **Закрытие дня** — Выполните процедуру закрытия дня в Shop Seller.
-      20. **Чистка кофемашин** — Помойте машины, холдеры, бункеры кофемолок. Почистите полки и пол.
-      21. **Безопасность** — Выключите свет, включите сигнализацию, заприте магазин по процедуре безопасности.
-
-      ---
-      > **Примечание:** шаги 16–18 относятся к финансовой отчётности и не могут быть пропущены.
-      > Расхождения между кассой и Shop Seller немедленно сообщайте менеджеру.
-
-  - slug: weekly-checklist
-    section: procedures
-    title: "Weekly Checklist"
-    title_en: "Weekly Checklist"
-    title_ru: "Еженедельный чек-лист"
-    status: published
-    content: |
-      Recurring tasks that must be completed on specific days each week.
-
-      | Day | Task |
-      |---|---|
-      | **Monday** | Review new tasks assigned by the manager |
-      | **Monday** | Cross-check all price tags against the current price list |
-      | **Monday** | Place the weekly goods order |
-      | **Tuesday** | Chemical cleaning of coffee machine + send report to Telegram chat |
-      | **Thursday** | Chemical cleaning of coffee machine + send report to Telegram chat |
-      | **Friday** | Submit the completed weekly task sheet to the manager |
-
-      ---
-      **Chemical cleaning procedure:**
-      Run the full chemical cleaning cycle according to the machine manual.
-      After completion, take a photo of the cleaning confirmation screen or cycle summary
-      and send it to the team Telegram chat with the note "Tuesday/Thursday cleaning done — [store name]".
-
-      **Price tag check (Monday):**
-      Go through every product on the shelf. Compare the visible price tag to the current
-      price list in Shop Seller. If a discrepancy is found, update the tag immediately.
-      If a tag is missing, print and attach one before the store opens.
-
-    content_ru: |
-      Задачи, которые нужно выполнять в определённые дни каждой недели.
-
-      | День | Задача |
-      |---|---|
-      | **Понедельник** | Разобрать новые задачи от менеджера |
-      | **Понедельник** | Сверить все ценники с актуальным прайсом |
-      | **Понедельник** | Оформить еженедельный заказ товара |
-      | **Вторник** | Химчистка кофемашины + отчёт в Telegram |
-      | **Четверг** | Химчистка кофемашины + отчёт в Telegram |
-      | **Пятница** | Сдать заполненный еженедельный лист задач менеджеру |
-
-      ---
-      **Процедура химчистки:**
-      Запустите полный цикл химчистки по инструкции к машине.
-      После завершения сделайте фото экрана подтверждения или итогов цикла
-      и отправьте в командный чат Telegram с пометкой «Химчистка вторник/четверг — [название точки]».
-
-      **Проверка ценников (понедельник):**
-      Пройдите все товары на полке. Сравните ценник с текущим прайсом в Shop Seller.
-      При расхождении — сразу обновите ценник. Если ценника нет — распечатайте и прикрепите до открытия.
-
-  - slug: monthly-checklist
-    section: procedures
-    title: "Monthly Checklist"
-    title_en: "Monthly Checklist"
-    title_ru: "Ежемесячный чек-лист"
-    status: published
-    content: |
-      Deep maintenance and audit tasks to be completed once per month.
-      Schedule these tasks at the end of the month during a quieter period.
-
-      | Task | Notes |
-      |---|---|
-      | **Clean and wipe display cabinets and shelves** | Wipe all surfaces of the product stand |
-      | **Defrost and clean the fridge** | Full defrost, interior cleaning |
-      | **Deep clean coffee machine groups with tablet** | Use manufacturer-approved cleaning tablet |
-      | **Wash grinder flasks and clean grinder blades** | Remove flasks fully, wash, dry, reattach. Clean blades carefully. |
-      | **Check product expiry dates** | Inspect every item on the shelf. Log in the expiry date journal. |
-      | **Full inventory** | Complete count of all products. Must be accurate and submitted to manager. |
-
-      ---
-      > **Expiry date log:** Use the dedicated expiry journal. Record product name, batch,
-      > expiry date, and any action taken (sold, removed, returned to stock).
-      > Products approaching expiry must be moved to the front of the display (FIFO rule).
-
-    content_ru: |
-      Глубокое обслуживание и контрольные задачи — один раз в месяц.
-      Планируйте выполнение в конце месяца в более спокойное время.
-
-      | Задача | Примечания |
-      |---|---|
-      | **Протереть витрины и полки** | Все поверхности торгового стеллажа |
-      | **Разморозить и помыть холодильник** | Полная разморозка, мойка камеры |
-      | **Глубокая чистка групп кофемашины таблеткой** | Только одобренное производителем средство |
-      | **Помыть бункеры кофемолок и почистить жернова** | Бункеры снять полностью, вымыть, высушить, установить. Жернова — аккуратно. |
-      | **Проверить сроки годности** | Каждая позиция на полке. Запись в журнале сроков. |
-      | **Полная инвентаризация** | Пересчёт всего товара. Точность и сдача отчёта менеджеру. |
-
-      ---
-      > **Журнал сроков годности:** ведите отдельный журнал: наименование, партия,
-      > срок годности, действие (продано, снято, возврат на склад).
-      > Товары с приближающимся сроком выкладывайте ближе к покупателю (правило FIFO).
-
-  - slug: dk-service-standards
-    section: service-standards
-    title: "DK Service Standards — Client Interaction Rules"
-    title_en: "DK Service Standards — Client Interaction Rules"
-    title_ru: "Стандарты сервиса DK — правила общения с клиентом"
-    status: published
-    content: |
-      These are the core standards every Dim Kava employee must follow at all times.
-      They define how we present ourselves, talk to clients, and sell our products.
-      These are not suggestions — they are the standard.
-
-      ## Presence and Attitude
-
-      - We are always **smiling, making eye contact**, and ready to help with genuine enthusiasm.
-      - We **greet every client first** — loud and clear.
-      - We address **regular clients by name**.
-      - We work in **turbo mode** when the store is busy.
-
-      ## Starting the Conversation
-
-      - From the first moment, we **ask questions**. We identify needs and find out
-        their preferences regarding coffee, accessories, and machines.
-      - We introduce our coffee simply:
-        > "We carry Swiss-roasted coffee — pure varietals like 100% Arabica, 100% Robusta,
-        > and blends in different ratios."
-      - We **show 3 packages and invite the client to smell them immediately**.
-      - We always mention: **specialty beans, hand-picked, highest quality, balanced
-        acidity and exceptional aromas**.
-
-      ## Loyalty Card (Every Client, Every Time)
-
-      - Ask about the card **loudly and clearly, with enthusiasm**.
-      - Explain the benefits just as clearly.
-      - If the client doesn't want a card: *"That's a shame — you're missing out on a lot of bonuses and gifts!"*
-      - If the client has a card: **tell them their current bonus balance** and how many
-        more cups/packs they need until their next free reward. This drives additional sales.
-
-      ## Cross-Selling and Upselling
-
-      - Client buying **coffee** → offer Caotina. Ask if they've tried it. Show the aroma.
-        Explain the difference from regular cocoa.
-      - Client buying **a drink** → offer snacks: home-made cookies, Lomba bars
-        (gluten-free, sugar-free), Choco Choco chocolates.
-        > "We offer these because the client may not know the product exists — if we don't mention it, they won't buy it."
-      - Client buying **accessories** → offer coffee. Ask if they've tasted it. Show genuine interest.
-      - **Always use** up-sale and cross-sale techniques actively.
-
-      ## During the Sale
-
-      - We **never say "no"**. Instead: *"We have this instead..."*
-      - During promotions: find a way to **mention the promotion to every client**.
-        A good manager uses promotions as a tool to hit targets.
-      - When a client approaches while we're serving another: smile and say *"One moment, please?"*
-      - Ask every client if they're following **Dim Kava Georgia on Instagram and Facebook**.
-
-      ## Serving the Drink
-
-      - After preparing: announce the drink — *"Your espresso Lila Rosa! Enjoy!"*
-      - Hold the cup from below when handing it over.
-
-      ## Closing and Farewell
-
-      - Close every interaction warmly and clearly:
-        > "Have a great day, we look forward to seeing you again! I hope you enjoy it!
-        > Next time try [product]... Thank you! Thank you so much!"
-      - Do **not** use the expression "АРАПPИЗ" (or any local slang equivalent).
-
-      ## Staying on Track
-
-      - Monitor Telegram during the working day — both on the work computer and on your phone.
-      - Throughout the day, actively track progress against the daily sales plan.
-      - Discuss results with the manager at the end of the day.
-
-    content_ru: |
-      Это базовые стандарты, которым должен следовать каждый сотрудник Dim Kava всегда.
-      Они определяют, как мы выглядим, как общаемся с клиентами и как продаём.
-      Это не рекомендации — это норма.
-
-      ## Присутствие и настрой
-
-      - Мы всегда **улыбаемся, поддерживаем зрительный контакт** и готовы помочь по-настоящему.
-      - Мы **здороваемся с каждым клиентом первыми** — громко и чётко.
-      - Мы обращаемся к **постоянным клиентам по имени**.
-      - В час пик работаем в **режиме турбо**.
-
-      ## Начало разговора
-
-      - С первых секунд **задаём вопросы**. Выясняем потребности и предпочтения
-        по кофе, аксессуарам и технике.
-      - Представляем кофе простыми словами:
-        > «У нас швейцарская обжарка — моносорта 100% арабика, 100% робуста
-        > и бленды в разных пропорциях.»
-      - **Показываем три упаковки и сразу предлагаем понюхать.**
-      - Всегда упоминаем: **спешелти, ручной сбор, высокое качество, сбалансированная
-        кислотность и выразительная ароматика.**
-
-      ## Карта лояльности (каждый клиент, каждый раз)
-
-      - Спрашиваем про карту **громко, чётко и с энтузиазмом**.
-      - Объясняем выгоды так же ясно.
-      - Если клиент не хочет карту: *«Жаль — вы упускаете много бонусов и подарков!»*
-      - Если карта есть: **назовите текущий баланс бонусов** и сколько ещё чашек/упаковок
-        до следующего подарка — это стимулирует допродажи.
-
-      ## Допродажи и апсейл
-
-      - Клиент покупает **кофе** → предложите Caotina. Спросите, пробовал ли. Пусть почует аромат.
-        Объясните отличие от обычного какао.
-      - Клиент покупает **напиток** → предложите снеки: домашнее печенье, батончики Lomba
-        (без глютена, без сахара), Choco Choco.
-        > «Мы предлагаем это потому что клиент может не знать, что товар есть — если мы не скажем, он не купит.»
-      - Клиент покупает **аксессуары** → предложите кофе. Спросите, пробовал ли. Проявите искренний интерес.
-      - **Всегда** используйте апсейл и кросс-сейл активно.
-
-      ## Во время продажи
-
-      - Мы **никогда не говорим «нет»**. Вместо этого: *«У нас есть вот это…»*
-      - В акции: найдите способ **упомянуть акцию каждому клиенту**.
-      - Когда подходит второй клиент: улыбнитесь и скажите *«Одну минуту, пожалуйста?»*
-      - Спросите у каждого, подписан ли он на **Dim Kava Georgia в Instagram и Facebook**.
-
-      ## Подача напитка
-
-      - После приготовления объявите напиток: *«Ваш эспрессо Lila Rosa! Приятного!»*
-      - Передавайте чашку, держа её снизу.
-
-      ## Завершение и прощание
-
-      - Завершайте тепло и ясно:
-        > «Хорошего дня, будем рады видеть снова! Надеюсь, понравится!
-        > В следующий раз попробуйте [товар]… Спасибо большое!»
-      - Не используйте сленг вроде «араппиз» и аналоги.
-
-      ## Контроль дня
-
-      - Следите за Telegram в течение дня — и с рабочего ПК, и с телефона.
-      - Активно отслеживайте выполнение плана продаж.
-      - В конце дня обсудите результат с менеджером.
-
-  - slug: job-description-manager-consultant
-    section: company-info
-    title: "Job Description — Manager Consultant"
-    title_en: "Job Description — Manager Consultant"
-    title_ru: "Должностная инструкция — менеджер-консультант"
-    status: published
-    content: |
-      ## About Dim Kava
-
-      DIM KAVA is a network of specialised stores selling Swiss-brand Blaser Café coffee
-      and coffee equipment from leading Italian manufacturers, with a tasting room and service centre.
-      Our mission: to spread espresso culture. Our goal: to maintain a leadership position in the coffee business.
-
-      The Manager Consultant is an integral part of the Dim Kava team and embodies the
-      company's core values: **teamwork, competence, leadership, uniqueness, espresso culture**.
-
-      The Manager is the face of Dim Kava in Georgia.
-
-      They are a key link in the coffee chain:
-      **plantation → harvest → processing → roasting → preparation → sale**.
-
-      ---
-
-      ## Core Functions
-
-      ### 1. Sales
-      Professional consultation and sale of products in the store. Pre-sale product preparation.
-      We care about every visitor and client. Our core goal: introduce them to the quality of
-      our products and make their life more enjoyable through what we sell.
-      **Active work to increase sales through competence, sales techniques, and client bonus systems.**
-
-      ### 2. Education & Development of the Client
-      The client is part of the Dim Kava community. With every cup, every visit, they learn
-      something new about coffee and how to prepare it correctly. We make it interesting.
-      Clients want to come back. Our clients understand coffee varieties and brewing methods.
-      They know what makes our coffee different.
-
-      ### 3. Self-Improvement
-      - Continuously improve sales technique skills.
-      - Deepen knowledge of Dim Kava products (how they work, brand history, values).
-      - Master barista technique and develop latte art skills.
-      - Stay current with coffee trends and news.
-      - Participate in championships and training events.
-      - Promote espresso culture.
-
-      ### 4. Professionalism — "Building the Dream"
-      - Use sales techniques, promotional programmes, and client offers professionally.
-      - Apply every available method to hit sales targets.
-      - Maintain professional records (inventory, reporting), submit reports on time.
-      - Know all products in the store and navigate the price list confidently.
-      - Communicative, active, and always smiling.
-      - Use professional coffee vocabulary.
-      - Know how to pique a client's interest — **"plant the seed of a dream"**.
-      - Maintain at least Category 1 qualification and continuously grow.
-      - Contribute to building a strong team by training new employees.
-
-      ### 5. Operations
-      - Follow store operating standards.
-      - Ensure high-quality, active sales through product knowledge, sales techniques,
-        cleanliness, quality product range, preparation skills, and professional client consultation.
-      - The store (coffee corner) is always clean and welcoming.
-
-      ---
-
-      ## Barista Function
-      Correctly prepare drinks according to standards. Never serve a sub-standard drink.
-      Introduce clients to different preparation methods. Give professional advice on coffee varieties.
-      > *Barista philosophy: start a good day with a good cup of coffee.
-      > A cup of coffee is the beginning of the path to selling coffee in packs — and eventually to selling a coffee machine.*
-
-      ## Active Sales Manager Function
-      An employee who is actively invested in increasing store sales.
-      Always meets the client with energy and readiness to help.
-
-    content_ru: |
-      ## О Dim Kava
-
-      DIM KAVA — сеть специализированных магазинов, где продаётся кофе швейцарского бренда Blaser Café
-      и кофейное оборудование ведущих итальянских производителей, с дегустационной зоной и сервисным центром.
-      Наша миссия: распространять эспрессо-культуру. Наша цель: сохранять лидирующие позиции в кофейном бизнесе.
-
-      Менеджер-консультант — неотъемлемая часть команды Dim Kava и воплощает
-      ключевые ценности компании: **командность, компетентность, лидерство, уникальность, эспрессо-культура**.
-
-      Менеджер — лицо Dim Kava в Грузии.
-
-      Он — важное звено в кофейной цепочке:
-      **плантация → сбор → обработка → обжарка → приготовление → продажа**.
-
-      ---
-
-      ## Основные функции
-
-      ### 1. Продажи
-      Профессиональное консультирование и продажа товаров в магазине. Предпродажная подготовка продукции.
-      Мы заботимся о каждом посетителе и клиенте. Главная цель: познакомить их с качеством
-      нашей продукции и сделать жизнь приятнее через то, что мы продаём.
-      **Активная работа по росту продаж через компетентность, техники продаж и бонусные программы для клиентов.**
-
-      ### 2. Обучение и развитие клиента
-      Клиент — часть сообщества Dim Kava. С каждой чашкой и каждым визитом он узнаёт
-      что-то новое о кофе и о том, как его правильно готовить. Мы делаем это интересно.
-      Клиенты хотят возвращаться. Наши клиенты понимают сорта кофе и способы заваривания.
-      Они знают, чем наш кофе отличается.
-
-      ### 3. Саморазвитие
-      - Постоянно совершенствовать навыки техники продаж.
-      - Углублять знания о продукции Dim Kava (как работает, история бренда, ценности).
-      - Осваивать бариста-технику и развивать латте-арт.
-      - Следить за трендами и новостями в кофе.
-      - Участвовать в чемпионатах и обучающих мероприятиях.
-      - Продвигать эспрессо-культуру.
-
-      ### 4. Профессионализм — «построение мечты»
-      - Профессионально использовать техники продаж, акции и предложения для клиентов.
-      - Применять все доступные методы для достижения планов продаж.
-      - Вести профессиональный учёт (инвентаризация, отчётность), сдавать отчёты в срок.
-      - Знать весь ассортимент магазина и уверенно ориентироваться в прайсе.
-      - Быть коммуникабельным, активным и всегда с улыбкой.
-      - Использовать профессиональную кофейную лексику.
-      - Уметь заинтересовать клиента — **«засеять зерно мечты»**.
-      - Поддерживать как минимум квалификацию категории 1 и постоянно расти.
-      - Укреплять команду, обучая новых сотрудников.
-
-      ### 5. Операции
-      - Соблюдать стандарты работы магазина.
-      - Обеспечивать качественные активные продажи через знание продукта, техники продаж,
-        чистоту, ассортимент, навыки приготовления и профессиональное консультирование.
-      - Кофейный уголок всегда чистый и гостеприимный.
-
-      ---
-
-      ## Функция баристы
-      Правильно готовить напитки по стандартам. Никогда не подавать напиток ниже стандарта.
-      Знакомить клиентов с разными способами приготовления. Давать профессиональные советы по сортам кофе.
-      > *Философия баристы: начать хороший день с хорошей чашки кофе.
-      > Чашка кофе — начало пути к продаже кофе в упаковке — и в итоге к продаже кофемашины.*
-
-      ## Функция активного менеджера по продажам
-      Сотрудник, который активно вкладывается в рост продаж магазина.
-      Всегда встречает клиента с энергией и готовностью помочь.
-
-  - slug: qualification-levels
-    section: training
-    title: "Professional Qualification Levels — Dim Kava"
-    title_en: "Professional Qualification Levels — Dim Kava"
-    title_ru: "Уровни профессиональной квалификации — Dim Kava"
-    status: published
-    content: |
-      Dim Kava has a structured qualification system. Every employee starts at the foundation
-      level and grows through demonstrated knowledge and practice. Advancement is confirmed
-      by passing the corresponding quiz and manager review.
-
-      ---
-
-      ## Qualification Areas
-
-      ### 1. Coffee Specialist — "Dim Kava Coffee Expert"
-      Knowledge of coffee from seed to cup:
-      - Coffee botany and growing conditions
-      - History of espresso and its value
-      - Espresso preparation technique to SCA standards
-      - Espresso-based drinks (espresso as the base)
-      - Roasting and flavour characteristics by roast level
-      - Grinding
-      - Alternative preparation methods
-      - Which coffee works best with which method
-      - Latte art
-
-      **Must know:**
-      - Coffee tree botany and cultivation
-      - Espresso history and value
-      - SCA espresso preparation standards
-      - All espresso-based drinks
-      - Roasting levels and their impact on flavour
-      - Grinding for each method
-      - Alternative brewing methods
-      - Coffee-method pairing
-      - Latte art fundamentals
-
-      ---
-
-      ### 2. Sales Techniques
-      Core sales skills applied consistently:
-      - **Contact** — eye contact, smile, open body language
-      - **Needs identification** — asking questions to understand client preferences
-      - **Presentation** — *"We carry Swiss-brand coffee..."* + show packaging + smell
-      - **Closing the sale** — always sell something; the client does not leave empty-handed
-      - **Farewell** — leaves the client wanting to return
-        > *"Looking forward to seeing you again! Next time try..."*
-      - **Cross-sale** — offer a complementary product alongside the main purchase
-      - **Up-sale** — suggest a higher-value option
-      - **Key factor:** information transfer → value communication.
-        The client understands why our product is worth it.
-
-      ---
-
-      ### 3. Product Value Communication
-      The ability to articulate the value of our products clearly:
-      - Know the values and positioning of Dim Kava as a company
-      - Know the values of each brand we carry (Blaser, Delonghi, Nivona, Melitta, Caotina, etc.)
-      - Communicate those values to clients in simple, natural language
-
-      ---
-
-      ### 4. Checklist Execution
-      Consistent fulfilment of all operational checklists:
-      - Daily checklist (every item, every day)
-      - Weekly tasks (chemical cleaning, price check, order, task submission)
-      - Monthly tasks (deep clean, inventory, expiry check)
-
-      ---
-
-      ### 5. Coffee Machine Knowledge
-      For stable equipment sales:
-      - Operating principles of manual and automatic machines
-      - Components and how they work
-      - Delonghi range: key models and their features
-      - When to recommend manual vs. automatic to a client
-      - Basic troubleshooting guidance
-
-      ---
-
-      ### 6. Service Standards
-      Mastery and consistent application of DK service rules:
-      - Greeting and farewell scripts
-      - Loyalty card — always asked, always explained
-      - Up-sale and cross-sale in every interaction
-      - Product presentations and sensory offers (smell the coffee)
-      - Compliance with appearance and behaviour standards
-
-    content_ru: |
-      В Dim Kava действует структурированная система квалификации. Каждый сотрудник начинает с базового уровня
-      и растёт через подтверждённые знания и практику. Переход подтверждается
-      сдачей соответствующего теста и оценкой менеджера.
-
-      ---
-
-      ## Области квалификации
-
-      ### 1. Coffee Specialist — «эксперт по кофе Dim Kava»
-      Знание кофе от зерна до чашки:
-      - Ботаника кофе и условия выращивания
-      - История эспрессо и его ценность
-      - Техника приготовления эспрессо по стандартам SCA
-      - Напитки на основе эспрессо (эспрессо как основа)
-      - Обжарка и вкусовые характеристики по степени обжарки
-      - Помол
-      - Альтернативные способы приготовления
-      - Какой кофе к какому методу подходит
-      - Латте-арт
-
-      **Обязательно знать:**
-      - Ботанику кофейного дерева и выращивание
-      - Историю и ценность эспрессо
-      - Стандарты SCA по приготовлению эспрессо
-      - Все напитки на основе эспрессо
-      - Степени обжарки и влияние на вкус
-      - Помол под каждый метод
-      - Альтернативные методы заваривания
-      - Сочетание кофе и метода
-      - Основы латте-арта
-
-      ---
-
-      ### 2. Техники продаж
-      Базовые навыки продаж, применяемые последовательно:
-      - **Контакт** — зрительный контакт, улыбка, открытая поза
-      - **Выявление потребностей** — вопросы, чтобы понять предпочтения клиента
-      - **Презентация** — *«У нас кофе швейцарского бренда…»* + показать упаковку + дать понюхать
-      - **Закрытие сделки** — всегда продать что-то; клиент не уходит с пустыми руками
-      - **Прощание** — клиент хочет вернуться
-        > *«Ждём вас снова! В следующий раз попробуйте…»*
-      - **Кросс-продажа** — дополнительный товар к основной покупке
-      - **Апсейл** — предложение более ценного варианта
-      - **Ключевой фактор:** передача информации → донесение ценности.
-        Клиент понимает, за что платит.
-
-      ---
-
-      ### 3. Донесение ценности продукта
-      Умение ясно формулировать ценность наших товаров:
-      - Знать ценности и позиционирование Dim Kava как компании
-      - Знать ценности каждого бренда в ассортименте (Blaser, Delonghi, Nivona, Melitta, Caotina и др.)
-      - Доносить их до клиентов простым, естественным языком
-
-      ---
-
-      ### 4. Выполнение чек-листов
-      Стабильное выполнение всех операционных чек-листов:
-      - Ежедневный чек-лист (каждый пункт, каждый день)
-      - Еженедельные задачи (химчистка, проверка цен, заказ, сдача задач)
-      - Ежемесячные задачи (глубокая чистка, инвентаризация, проверка сроков)
-
-      ---
-
-      ### 5. Знание кофемашин
-      Для стабильных продаж оборудования:
-      - Принципы работы ручных и автоматических машин
-      - Узлы и их назначение
-      - Линейка Delonghi: ключевые модели и особенности
-      - Когда рекомендовать ручную, когда автоматическую клиенту
-      - Базовая помощь при неисправностях
-
-      ---
-
-      ### 6. Стандарты обслуживания
-      Владение и последовательное применение правил сервиса DK:
-      - Скрипты приветствия и прощания
-      - Карта лояльности — всегда спросить, всегда объяснить
-      - Апсейл и кросс-продажа в каждом контакте
-      - Презентации товара и сенсорные предложения (понюхать кофе)
-      - Соблюдение стандартов внешнего вида и поведения
+
+    | Day | Task |
+
+    |---|---|
+
+    | **Monday** | Review new tasks assigned by the manager |
+
+    | **Monday** | Cross-check all price tags against the current price list |
+
+    | **Monday** | Place the weekly goods order |
+
+    | **Tuesday** | Chemical cleaning of coffee machine + send report to Telegram chat |
+
+    | **Thursday** | Chemical cleaning of coffee machine + send report to Telegram chat |
+
+    | **Friday** | Submit the completed weekly task sheet to the manager |
+
+
+    ---
+
+    **Chemical cleaning procedure:**
+
+    Run the full chemical cleaning cycle according to the machine manual.
+
+    After completion, take a photo of the cleaning confirmation screen or cycle summary
+
+    and send it to the team Telegram chat with the note "Tuesday/Thursday cleaning done — [store name]".
+
+
+    **Price tag check (Monday):**
+
+    Go through every product on the shelf. Compare the visible price tag to the current
+
+    price list in Shop Seller. If a discrepancy is found, update the tag immediately.
+
+    If a tag is missing, print and attach one before the store opens.
+
+    '
+  content_ru: 'Задачи, которые нужно выполнять в определённые дни каждой недели.
+
+
+    | День | Задача |
+
+    |---|---|
+
+    | **Понедельник** | Разобрать новые задачи от менеджера |
+
+    | **Понедельник** | Сверить все ценники с актуальным прайсом |
+
+    | **Понедельник** | Оформить еженедельный заказ товара |
+
+    | **Вторник** | Химчистка кофемашины + отчёт в Telegram |
+
+    | **Четверг** | Химчистка кофемашины + отчёт в Telegram |
+
+    | **Пятница** | Сдать заполненный еженедельный лист задач менеджеру |
+
+
+    ---
+
+    **Процедура химчистки:**
+
+    Запустите полный цикл химчистки по инструкции к машине.
+
+    После завершения сделайте фото экрана подтверждения или итогов цикла
+
+    и отправьте в командный чат Telegram с пометкой «Химчистка вторник/четверг — [название точки]».
+
+
+    **Проверка ценников (понедельник):**
+
+    Пройдите все товары на полке. Сравните ценник с текущим прайсом в Shop Seller.
+
+    При расхождении — сразу обновите ценник. Если ценника нет — распечатайте и прикрепите до открытия.
+
+    '
+  title_ka: ყოველკვირეული საკონტროლო სია
+  content_ka: 'განმეორებადი დავალებები, რომლებიც უნდა შესრულდეს ყოველ კვირას კონკრეტულ დღეებში.
+
+
+    | დღე | ამოცანა |
+
+    |---|---|
+
+    | ** ორშაბათი ** | მენეჯერის მიერ დაკისრებული ახალი ამოცანების გადახედვა |
+
+    | ** ორშაბათი ** | გადაამოწმეთ ყველა ფასის ტეგი მიმდინარე ფასების სიაში |
+
+    | ** ორშაბათი ** | განათავსეთ ყოველკვირეული საქონლის შეკვეთა |
+
+    | **სამშაბათი** | ყავის აპარატის ქიმიური წმენდა + ანგარიშის გაგზავნა Telegram chat-ში |
+
+    | ** ხუთშაბათი ** | ყავის აპარატის ქიმიური წმენდა + ანგარიშის გაგზავნა Telegram chat-ში |
+
+    | **პარასკევი** | წარუდგინეთ დასრულებული ყოველკვირეული დავალების ფურცელი მენეჯერს |
+
+
+    ---
+
+    **ქიმიური წმენდის პროცედურა:**
+
+    ჩაატარეთ ქიმიური გაწმენდის სრული ციკლი მანქანის ინსტრუქციის მიხედვით.
+
+    დასრულების შემდეგ გადაიღეთ დასუფთავების დადასტურების ეკრანის ან ციკლის შეჯამების ფოტო
+
+    და გაუგზავნეთ გუნდის Telegram-ის ჩატში ჩანაწერით "სამშაბათი/ხუთშაბათი დასუფთავება შესრულებულია — [მაღაზიის სახელი]".
+
+
+    **ფასის შემოწმება (ორშაბათი):**
+
+    გაიარეთ ყველა პროდუქტი თაროზე. შეადარეთ ხილული ფასი მიმდინარე
+
+    ფასების სია მაღაზია გამყიდველში. შეუსაბამობის აღმოჩენის შემთხვევაში, დაუყოვნებლივ განაახლეთ ტეგი.
+
+    თუ ტეგი აკლია, დაბეჭდეთ და მიამაგრეთ მაღაზიის გახსნამდე.'
+- slug: monthly-checklist
+  section: procedures
+  title: Monthly Checklist
+  title_en: Monthly Checklist
+  title_ru: Ежемесячный чек-лист
+  status: published
+  content: 'Deep maintenance and audit tasks to be completed once per month.
+
+    Schedule these tasks at the end of the month during a quieter period.
+
+
+    | Task | Notes |
+
+    |---|---|
+
+    | **Clean and wipe display cabinets and shelves** | Wipe all surfaces of the product stand |
+
+    | **Defrost and clean the fridge** | Full defrost, interior cleaning |
+
+    | **Deep clean coffee machine groups with tablet** | Use manufacturer-approved cleaning tablet |
+
+    | **Wash grinder flasks and clean grinder blades** | Remove flasks fully, wash, dry, reattach. Clean blades carefully.
+    |
+
+    | **Check product expiry dates** | Inspect every item on the shelf. Log in the expiry date journal. |
+
+    | **Full inventory** | Complete count of all products. Must be accurate and submitted to manager. |
+
+
+    ---
+
+    > **Expiry date log:** Use the dedicated expiry journal. Record product name, batch,
+
+    > expiry date, and any action taken (sold, removed, returned to stock).
+
+    > Products approaching expiry must be moved to the front of the display (FIFO rule).
+
+    '
+  content_ru: 'Глубокое обслуживание и контрольные задачи — один раз в месяц.
+
+    Планируйте выполнение в конце месяца в более спокойное время.
+
+
+    | Задача | Примечания |
+
+    |---|---|
+
+    | **Протереть витрины и полки** | Все поверхности торгового стеллажа |
+
+    | **Разморозить и помыть холодильник** | Полная разморозка, мойка камеры |
+
+    | **Глубокая чистка групп кофемашины таблеткой** | Только одобренное производителем средство |
+
+    | **Помыть бункеры кофемолок и почистить жернова** | Бункеры снять полностью, вымыть, высушить, установить. Жернова —
+    аккуратно. |
+
+    | **Проверить сроки годности** | Каждая позиция на полке. Запись в журнале сроков. |
+
+    | **Полная инвентаризация** | Пересчёт всего товара. Точность и сдача отчёта менеджеру. |
+
+
+    ---
+
+    > **Журнал сроков годности:** ведите отдельный журнал: наименование, партия,
+
+    > срок годности, действие (продано, снято, возврат на склад).
+
+    > Товары с приближающимся сроком выкладывайте ближе к покупателю (правило FIFO).
+
+    '
+  title_ka: ყოველთვიური ჩამონათვალი
+  content_ka: 'ღრმა ტექნიკური და აუდიტის ამოცანები უნდა დასრულდეს თვეში ერთხელ.
+
+    დაგეგმეთ ეს დავალებები თვის ბოლოს უფრო წყნარ პერიოდში.
+
+
+    | ამოცანა | შენიშვნები |
+
+    |---|---|
+
+    | **გაწმინდეთ და გაწმინდეთ ჩვენების კარადები და თაროები** | წაშალეთ პროდუქტის სადგამის ყველა ზედაპირი |
+
+    | **გაყინეთ და გაასუფთავეთ მაცივარი** | სრული გალღობა, ინტერიერის გაწმენდა |
+
+    | **ღრმა სუფთა ყავის აპარატების ჯგუფები ტაბლეტით ** | გამოიყენეთ მწარმოებლის მიერ დამტკიცებული საწმენდი ტაბლეტი |
+
+    | **გარეცხეთ საფქვავი კოლბები და გაწმინდეთ საფქვავი პირები** | ამოიღეთ კოლბები მთლიანად, გარეცხეთ, გააშრეთ, ხელახლა მიამაგრეთ.
+    ფრთხილად გაასუფთავეთ პირები. |
+
+    | ** შეამოწმეთ პროდუქტის ვარგისიანობის ვადები** | შეამოწმეთ ყველა ნივთი თაროზე. შედით ვარგისიანობის თარიღის ჟურნალში.
+    |
+
+    | ** სრული ინვენტარი ** | ყველა პროდუქტის სრული რაოდენობა. უნდა იყოს ზუსტი და წარედგინოს მენეჯერს. |
+
+
+    ---
+
+    > ** ვადის გასვლის თარიღის ჟურნალი:** გამოიყენეთ სპეციალური ვადის გასვლის ჟურნალი. ჩაწერეთ პროდუქტის სახელი, პარტია,
+
+    > ვადის გასვლის თარიღი და განხორციელებული ნებისმიერი ქმედება (გაყიდვა, ამოღება, მარაგში დაბრუნება).
+
+    > პროდუქტი, რომელიც ვადის გასვლას უახლოვდება, უნდა გადაიტანოთ ეკრანის წინა მხარეს (FIFO წესი).'
+- slug: dk-service-standards
+  section: service-standards
+  title: DK Service Standards — Client Interaction Rules
+  title_en: DK Service Standards — Client Interaction Rules
+  title_ru: Стандарты сервиса DK — правила общения с клиентом
+  status: published
+  content: "These are the core standards every Dim Kava employee must follow at all times.\nThey define how we present ourselves,\
+    \ talk to clients, and sell our products.\nThese are not suggestions — they are the standard.\n\n## Presence and Attitude\n\
+    \n- We are always **smiling, making eye contact**, and ready to help with genuine enthusiasm.\n- We **greet every client\
+    \ first** — loud and clear.\n- We address **regular clients by name**.\n- We work in **turbo mode** when the store is\
+    \ busy.\n\n## Starting the Conversation\n\n- From the first moment, we **ask questions**. We identify needs and find out\n\
+    \  their preferences regarding coffee, accessories, and machines.\n- We introduce our coffee simply:\n  > \"We carry Swiss-roasted\
+    \ coffee — pure varietals like 100% Arabica, 100% Robusta,\n  > and blends in different ratios.\"\n- We **show 3 packages\
+    \ and invite the client to smell them immediately**.\n- We always mention: **specialty beans, hand-picked, highest quality,\
+    \ balanced\n  acidity and exceptional aromas**.\n\n## Loyalty Card (Every Client, Every Time)\n\n- Ask about the card\
+    \ **loudly and clearly, with enthusiasm**.\n- Explain the benefits just as clearly.\n- If the client doesn't want a card:\
+    \ *\"That's a shame — you're missing out on a lot of bonuses and gifts!\"*\n- If the client has a card: **tell them their\
+    \ current bonus balance** and how many\n  more cups/packs they need until their next free reward. This drives additional\
+    \ sales.\n\n## Cross-Selling and Upselling\n\n- Client buying **coffee** → offer Caotina. Ask if they've tried it. Show\
+    \ the aroma.\n  Explain the difference from regular cocoa.\n- Client buying **a drink** → offer snacks: home-made cookies,\
+    \ Lomba bars\n  (gluten-free, sugar-free), Choco Choco chocolates.\n  > \"We offer these because the client may not know\
+    \ the product exists — if we don't mention it, they won't buy it.\"\n- Client buying **accessories** → offer coffee. Ask\
+    \ if they've tasted it. Show genuine interest.\n- **Always use** up-sale and cross-sale techniques actively.\n\n## During\
+    \ the Sale\n\n- We **never say \"no\"**. Instead: *\"We have this instead...\"*\n- During promotions: find a way to **mention\
+    \ the promotion to every client**.\n  A good manager uses promotions as a tool to hit targets.\n- When a client approaches\
+    \ while we're serving another: smile and say *\"One moment, please?\"*\n- Ask every client if they're following **Dim\
+    \ Kava Georgia on Instagram and Facebook**.\n\n## Serving the Drink\n\n- After preparing: announce the drink — *\"Your\
+    \ espresso Lila Rosa! Enjoy!\"*\n- Hold the cup from below when handing it over.\n\n## Closing and Farewell\n\n- Close\
+    \ every interaction warmly and clearly:\n  > \"Have a great day, we look forward to seeing you again! I hope you enjoy\
+    \ it!\n  > Next time try [product]... Thank you! Thank you so much!\"\n- Do **not** use the expression \"АРАПPИЗ\" (or\
+    \ any local slang equivalent).\n\n## Staying on Track\n\n- Monitor Telegram during the working day — both on the work\
+    \ computer and on your phone.\n- Throughout the day, actively track progress against the daily sales plan.\n- Discuss\
+    \ results with the manager at the end of the day.\n"
+  content_ru: "Это базовые стандарты, которым должен следовать каждый сотрудник Dim Kava всегда.\nОни определяют, как мы выглядим,\
+    \ как общаемся с клиентами и как продаём.\nЭто не рекомендации — это норма.\n\n## Присутствие и настрой\n\n- Мы всегда\
+    \ **улыбаемся, поддерживаем зрительный контакт** и готовы помочь по-настоящему.\n- Мы **здороваемся с каждым клиентом\
+    \ первыми** — громко и чётко.\n- Мы обращаемся к **постоянным клиентам по имени**.\n- В час пик работаем в **режиме турбо**.\n\
+    \n## Начало разговора\n\n- С первых секунд **задаём вопросы**. Выясняем потребности и предпочтения\n  по кофе, аксессуарам\
+    \ и технике.\n- Представляем кофе простыми словами:\n  > «У нас швейцарская обжарка — моносорта 100% арабика, 100% робуста\n\
+    \  > и бленды в разных пропорциях.»\n- **Показываем три упаковки и сразу предлагаем понюхать.**\n- Всегда упоминаем: **спешелти,\
+    \ ручной сбор, высокое качество, сбалансированная\n  кислотность и выразительная ароматика.**\n\n## Карта лояльности (каждый\
+    \ клиент, каждый раз)\n\n- Спрашиваем про карту **громко, чётко и с энтузиазмом**.\n- Объясняем выгоды так же ясно.\n\
+    - Если клиент не хочет карту: *«Жаль — вы упускаете много бонусов и подарков!»*\n- Если карта есть: **назовите текущий\
+    \ баланс бонусов** и сколько ещё чашек/упаковок\n  до следующего подарка — это стимулирует допродажи.\n\n## Допродажи\
+    \ и апсейл\n\n- Клиент покупает **кофе** → предложите Caotina. Спросите, пробовал ли. Пусть почует аромат.\n  Объясните\
+    \ отличие от обычного какао.\n- Клиент покупает **напиток** → предложите снеки: домашнее печенье, батончики Lomba\n  (без\
+    \ глютена, без сахара), Choco Choco.\n  > «Мы предлагаем это потому что клиент может не знать, что товар есть — если мы\
+    \ не скажем, он не купит.»\n- Клиент покупает **аксессуары** → предложите кофе. Спросите, пробовал ли. Проявите искренний\
+    \ интерес.\n- **Всегда** используйте апсейл и кросс-сейл активно.\n\n## Во время продажи\n\n- Мы **никогда не говорим\
+    \ «нет»**. Вместо этого: *«У нас есть вот это…»*\n- В акции: найдите способ **упомянуть акцию каждому клиенту**.\n- Когда\
+    \ подходит второй клиент: улыбнитесь и скажите *«Одну минуту, пожалуйста?»*\n- Спросите у каждого, подписан ли он на **Dim\
+    \ Kava Georgia в Instagram и Facebook**.\n\n## Подача напитка\n\n- После приготовления объявите напиток: *«Ваш эспрессо\
+    \ Lila Rosa! Приятного!»*\n- Передавайте чашку, держа её снизу.\n\n## Завершение и прощание\n\n- Завершайте тепло и ясно:\n\
+    \  > «Хорошего дня, будем рады видеть снова! Надеюсь, понравится!\n  > В следующий раз попробуйте [товар]… Спасибо большое!»\n\
+    - Не используйте сленг вроде «араппиз» и аналоги.\n\n## Контроль дня\n\n- Следите за Telegram в течение дня — и с рабочего\
+    \ ПК, и с телефона.\n- Активно отслеживайте выполнение плана продаж.\n- В конце дня обсудите результат с менеджером.\n"
+  title_ka: DK სერვისის სტანდარტები — კლიენტთან ურთიერთობის წესები
+  content_ka: "ეს არის ძირითადი სტანდარტები, რომლებიც Dim Kava-ს ყველა თანამშრომელმა ყოველთვის უნდა დაიცვას.\nისინი განსაზღვრავენ,\
+    \ თუ როგორ წარმოვადგენთ საკუთარ თავს, ვესაუბრებით კლიენტებს და ვყიდით ჩვენს პროდუქტებს.\nეს არ არის წინადადებები - ისინი\
+    \ სტანდარტია.\n\n## ყოფნა და დამოკიდებულება\n\n- ჩვენ ყოველთვის **ვიღიმებით, ვიმყარებთ თვალით** და მზად ვართ დაგეხმაროთ\
+    \ ნამდვილი ენთუზიაზმით.\n- ჩვენ **პირველ რიგში მივესალმებით თითოეულ კლიენტს** - ხმამაღლა და გარკვევით.\n- **რეგულარულ\
+    \ კლიენტებს სახელით მივმართავთ**.\n- ჩვენ ვმუშაობთ **ტურბო რეჟიმში** როცა მაღაზია დატვირთულია.\n\n## საუბრის დაწყება\n\
+    \n- პირველივე მომენტიდან **ვსვამთ კითხვებს**. ჩვენ ვადგენთ საჭიროებებს და ვიგებთ\n  მათი პრეფერენციები ყავასთან, აქსესუარებთან\
+    \ და მანქანებთან დაკავშირებით.\n- წარმოგიდგენთ ჩვენს ყავას უბრალოდ:\n  > „ჩვენ ვატარებთ შვეიცარიულ მოხალულ ყავას - სუფთა\
+    \ ჯიშები, როგორიცაა 100% არაბიკა, 100% რობუსტა,\n  > და ერწყმის სხვადასხვა თანაფარდობას.\"\n- ჩვენ **ვაჩვენებთ 3 პაკეტს\
+    \ და ვიწვევთ კლიენტს, რომ დაუყონებლივ ისუნთქოს მათ**.\n- ყოველთვის აღვნიშნავთ: **სპეციალობის ლობიო, ხელით დაკრეფილი, უმაღლესი\
+    \ ხარისხის, დაბალანსებული\n  მჟავიანობა და განსაკუთრებული არომატები**.\n\n## ლოიალობის ბარათი (ყოველი კლიენტი, ყოველ ჯერზე)\n\
+    \n- იკითხეთ ბარათის შესახებ **ხმამაღლა და გარკვევით, ენთუზიაზმით**.\n- ისევე ნათლად ახსენით სარგებელი.\n- თუ კლიენტს არ\
+    \ სურს ბარათი: *\"სირცხვილია - ბევრ ბონუსს და საჩუქრებს კარგავთ!\"*\n- თუ კლიენტს აქვს ბარათი: **უთხარით მათ მიმდინარე\
+    \ ბონუს ბალანსი** და რამდენი\n  მეტი ფინჯანი/შეფუთვა მათ სჭირდებათ მომდევნო უფასო ჯილდომდე. ეს იწვევს დამატებით გაყიდვებს.\n\
+    \n## ჯვარედინი გაყიდვები და გაყიდვები\n\n- კლიენტი ყიდულობს **ყავას** → გთავაზობთ კაოტინას. ჰკითხეთ, სცადეს თუ არა. აჩვენე\
+    \ არომატი.\n  ახსენით განსხვავება ჩვეულებრივი კაკაოსგან.\n- კლიენტი ყიდულობს **სასმელს** → გთავაზობთ საჭმელს: სახლში დამზადებული\
+    \ ნამცხვრები, ლომბა ბარები\n  (უგლუტენო, უშაქრო), Choco Choco შოკოლადები.\n  > \"ჩვენ ვთავაზობთ მათ, რადგან კლიენტმა შეიძლება\
+    \ არ იცოდეს პროდუქტის არსებობა - თუ არ აღვნიშნავთ, არ იყიდის.\"\n- კლიენტი ყიდულობს **აქსესუარებს** → გთავაზობთ ყავას.\
+    \ ჰკითხეთ, გასინჯეს თუ არა. გამოიჩინეთ გულწრფელი ინტერესი.\n- ** ყოველთვის აქტიურად გამოიყენეთ ** გაყიდვებისა და ჯვარედინი\
+    \ გაყიდვების ტექნიკა.\n\n## გაყიდვის დროს\n\n- ჩვენ **არასდროს ვამბობთ \"არას\"**. ამის ნაცვლად: *\"ჩვენ გვაქვს ამის ნაცვლად...\"\
+    *\n- აქციების დროს: იპოვეთ გზა, რომ ** აღნიშნოთ აქცია ყველა კლიენტს**.\n  კარგი მენეჯერი იყენებს აქციებს, როგორც მიზნების\
+    \ მისაღწევად.\n- როცა კლიენტი უახლოვდება მაშინ, როცა მეორეს ვემსახურებით: გაიღიმე და უთხარი *\"ერთ წამს, გთხოვ?\"*\n-\
+    \ ჰკითხეთ თითოეულ კლიენტს, თვალს ადევნებს თუ არა **Dim Kava Georgia-ს Instagram-სა და Facebook-ზე**.\n\n## მიირთვით სასმელი\n\
+    \n- მომზადების შემდეგ: გამოაცხადეთ სასმელი — *\"თქვენი ესპრესო ლილა როზა! მიირთვით!\"*\n- ჩაბარებისას ჭიქა ქვემოდან დაიჭირეთ.\n\
+    \n## დახურვა და დამშვიდობება\n\n- დახურეთ ყოველი ურთიერთქმედება თბილად და მკაფიოდ:\n  > \"კარგ დღეს გისურვებთ, მოუთმენლად\
+    \ ველით თქვენთან შეხვედრას! იმედია ისიამოვნებთ!\n  > შემდეგ ჯერზე სცადეთ [პროდუქტი]... გმადლობთ! დიდი მადლობა!\"\n- **არ**\
+    \ გამოიყენოთ გამოთქმა „АРАППИЗ“ (ან ადგილობრივი ჟარგონის ექვივალენტი).\n\n## გზაზე დარჩენა\n\n- დააკვირდით Telegram-ს\
+    \ სამუშაო დღის განმავლობაში — როგორც სამუშაო კომპიუტერზე, ასევე თქვენს ტელეფონზე.\n- მთელი დღის განმავლობაში, აქტიურად\
+    \ ადევნეთ თვალყური პროგრესს ყოველდღიური გაყიდვების გეგმის მიხედვით.\n- განიხილეთ შედეგები მენეჯერთან დღის ბოლოს."
+- slug: job-description-manager-consultant
+  section: company-info
+  title: Job Description — Manager Consultant
+  title_en: Job Description — Manager Consultant
+  title_ru: Должностная инструкция — менеджер-консультант
+  status: published
+  content: "## About Dim Kava\n\nDIM KAVA is a network of specialised stores selling Swiss-brand Blaser Café coffee\nand coffee\
+    \ equipment from leading Italian manufacturers, with a tasting room and service centre.\nOur mission: to spread espresso\
+    \ culture. Our goal: to maintain a leadership position in the coffee business.\n\nThe Manager Consultant is an integral\
+    \ part of the Dim Kava team and embodies the\ncompany's core values: **teamwork, competence, leadership, uniqueness, espresso\
+    \ culture**.\n\nThe Manager is the face of Dim Kava in Georgia.\n\nThey are a key link in the coffee chain:\n**plantation\
+    \ → harvest → processing → roasting → preparation → sale**.\n\n---\n\n## Core Functions\n\n### 1. Sales\nProfessional\
+    \ consultation and sale of products in the store. Pre-sale product preparation.\nWe care about every visitor and client.\
+    \ Our core goal: introduce them to the quality of\nour products and make their life more enjoyable through what we sell.\n\
+    **Active work to increase sales through competence, sales techniques, and client bonus systems.**\n\n### 2. Education\
+    \ & Development of the Client\nThe client is part of the Dim Kava community. With every cup, every visit, they learn\n\
+    something new about coffee and how to prepare it correctly. We make it interesting.\nClients want to come back. Our clients\
+    \ understand coffee varieties and brewing methods.\nThey know what makes our coffee different.\n\n### 3. Self-Improvement\n\
+    - Continuously improve sales technique skills.\n- Deepen knowledge of Dim Kava products (how they work, brand history,\
+    \ values).\n- Master barista technique and develop latte art skills.\n- Stay current with coffee trends and news.\n- Participate\
+    \ in championships and training events.\n- Promote espresso culture.\n\n### 4. Professionalism — \"Building the Dream\"\
+    \n- Use sales techniques, promotional programmes, and client offers professionally.\n- Apply every available method to\
+    \ hit sales targets.\n- Maintain professional records (inventory, reporting), submit reports on time.\n- Know all products\
+    \ in the store and navigate the price list confidently.\n- Communicative, active, and always smiling.\n- Use professional\
+    \ coffee vocabulary.\n- Know how to pique a client's interest — **\"plant the seed of a dream\"**.\n- Maintain at least\
+    \ Category 1 qualification and continuously grow.\n- Contribute to building a strong team by training new employees.\n\
+    \n### 5. Operations\n- Follow store operating standards.\n- Ensure high-quality, active sales through product knowledge,\
+    \ sales techniques,\n  cleanliness, quality product range, preparation skills, and professional client consultation.\n\
+    - The store (coffee corner) is always clean and welcoming.\n\n---\n\n## Barista Function\nCorrectly prepare drinks according\
+    \ to standards. Never serve a sub-standard drink.\nIntroduce clients to different preparation methods. Give professional\
+    \ advice on coffee varieties.\n> *Barista philosophy: start a good day with a good cup of coffee.\n> A cup of coffee is\
+    \ the beginning of the path to selling coffee in packs — and eventually to selling a coffee machine.*\n\n## Active Sales\
+    \ Manager Function\nAn employee who is actively invested in increasing store sales.\nAlways meets the client with energy\
+    \ and readiness to help.\n"
+  content_ru: "## О Dim Kava\n\nDIM KAVA — сеть специализированных магазинов, где продаётся кофе швейцарского бренда Blaser\
+    \ Café\nи кофейное оборудование ведущих итальянских производителей, с дегустационной зоной и сервисным центром.\nНаша\
+    \ миссия: распространять эспрессо-культуру. Наша цель: сохранять лидирующие позиции в кофейном бизнесе.\n\nМенеджер-консультант\
+    \ — неотъемлемая часть команды Dim Kava и воплощает\nключевые ценности компании: **командность, компетентность, лидерство,\
+    \ уникальность, эспрессо-культура**.\n\nМенеджер — лицо Dim Kava в Грузии.\n\nОн — важное звено в кофейной цепочке:\n\
+    **плантация → сбор → обработка → обжарка → приготовление → продажа**.\n\n---\n\n## Основные функции\n\n### 1. Продажи\n\
+    Профессиональное консультирование и продажа товаров в магазине. Предпродажная подготовка продукции.\nМы заботимся о каждом\
+    \ посетителе и клиенте. Главная цель: познакомить их с качеством\nнашей продукции и сделать жизнь приятнее через то, что\
+    \ мы продаём.\n**Активная работа по росту продаж через компетентность, техники продаж и бонусные программы для клиентов.**\n\
+    \n### 2. Обучение и развитие клиента\nКлиент — часть сообщества Dim Kava. С каждой чашкой и каждым визитом он узнаёт\n\
+    что-то новое о кофе и о том, как его правильно готовить. Мы делаем это интересно.\nКлиенты хотят возвращаться. Наши клиенты\
+    \ понимают сорта кофе и способы заваривания.\nОни знают, чем наш кофе отличается.\n\n### 3. Саморазвитие\n- Постоянно\
+    \ совершенствовать навыки техники продаж.\n- Углублять знания о продукции Dim Kava (как работает, история бренда, ценности).\n\
+    - Осваивать бариста-технику и развивать латте-арт.\n- Следить за трендами и новостями в кофе.\n- Участвовать в чемпионатах\
+    \ и обучающих мероприятиях.\n- Продвигать эспрессо-культуру.\n\n### 4. Профессионализм — «построение мечты»\n- Профессионально\
+    \ использовать техники продаж, акции и предложения для клиентов.\n- Применять все доступные методы для достижения планов\
+    \ продаж.\n- Вести профессиональный учёт (инвентаризация, отчётность), сдавать отчёты в срок.\n- Знать весь ассортимент\
+    \ магазина и уверенно ориентироваться в прайсе.\n- Быть коммуникабельным, активным и всегда с улыбкой.\n- Использовать\
+    \ профессиональную кофейную лексику.\n- Уметь заинтересовать клиента — **«засеять зерно мечты»**.\n- Поддерживать как\
+    \ минимум квалификацию категории 1 и постоянно расти.\n- Укреплять команду, обучая новых сотрудников.\n\n### 5. Операции\n\
+    - Соблюдать стандарты работы магазина.\n- Обеспечивать качественные активные продажи через знание продукта, техники продаж,\n\
+    \  чистоту, ассортимент, навыки приготовления и профессиональное консультирование.\n- Кофейный уголок всегда чистый и\
+    \ гостеприимный.\n\n---\n\n## Функция баристы\nПравильно готовить напитки по стандартам. Никогда не подавать напиток ниже\
+    \ стандарта.\nЗнакомить клиентов с разными способами приготовления. Давать профессиональные советы по сортам кофе.\n>\
+    \ *Философия баристы: начать хороший день с хорошей чашки кофе.\n> Чашка кофе — начало пути к продаже кофе в упаковке\
+    \ — и в итоге к продаже кофемашины.*\n\n## Функция активного менеджера по продажам\nСотрудник, который активно вкладывается\
+    \ в рост продаж магазина.\nВсегда встречает клиента с энергией и готовностью помочь.\n"
+  title_ka: სამუშაოს აღწერა - მენეჯერის კონსულტანტი
+  content_ka: "## დიმ კავას შესახებ\n\nDIM KAVA არის სპეციალიზებული მაღაზიების ქსელი, რომელიც ყიდის შვეიცარიული ბრენდის Blaser\
+    \ Café ყავას\nდა ყავის აღჭურვილობა წამყვანი იტალიური მწარმოებლებისგან, სადეგუსტაციო ოთახით და სერვის ცენტრით.\nჩვენი მისიაა\
+    \ ესპრესო კულტურის გავრცელება. ჩვენი მიზანი: შევინარჩუნოთ ლიდერული პოზიცია ყავის ბიზნესში.\n\nმენეჯერის კონსულტანტი Dim\
+    \ Kava-ს გუნდის განუყოფელი ნაწილია და განასახიერებს\nკომპანიის ძირითადი ღირებულებები: **გუნდური მუშაობა, კომპეტენცია,\
+    \ ლიდერობა, უნიკალურობა, ესპრესო კულტურა **.\n\nმენეჯერი დიმ კავას სახეა საქართველოში.\n\nისინი ყავის ჯაჭვის მთავარი რგოლია:\n\
+    **პლანტაცია → მოსავალი → გადამუშავება → შეწვა → მომზადება → გაყიდვა**.\n\n---\n\n## ძირითადი ფუნქციები\n\n### 1. გაყიდვები\n\
+    პროფესიონალური კონსულტაცია და პროდუქციის გაყიდვა მაღაზიაში. წინასწარი გაყიდვის პროდუქტის მომზადება.\nჩვენ ვზრუნავთ თითოეულ\
+    \ ვიზიტორზე და კლიენტზე. ჩვენი მთავარი მიზანი: გავაცნოთ მათ ხარისხს\nჩვენი პროდუქცია და მათი ცხოვრება უფრო სასიამოვნოს\
+    \ გავხადოთ იმით, რასაც ჩვენ ვყიდით.\n** აქტიური მუშაობა გაყიდვების გაზრდის მიზნით კომპეტენციის, გაყიდვების ტექნიკისა და\
+    \ კლიენტის ბონუს სისტემების მეშვეობით.**\n\n### 2. კლიენტის განათლება და განვითარება\nკლიენტი არის Dim Kava საზოგადოების\
+    \ ნაწილი. ყოველი თასით, ყოველი ვიზიტით სწავლობენ\nრაღაც ახალი ყავის შესახებ და როგორ მოვამზადოთ ის სწორად. ჩვენ ვაქცევთ\
+    \ საინტერესოს.\nკლიენტებს სურთ დაბრუნება. ჩვენს კლიენტებს ესმით ყავის სახეობები და მომზადების მეთოდები.\nმათ იციან, რა\
+    \ განასხვავებს ჩვენს ყავას.\n\n### 3. თვითგანვითარება\n- მუდმივად გააუმჯობესეთ გაყიდვების ტექნიკის უნარები.\n- გაიღრმავეთ\
+    \ ცოდნა Dim Kava-ს პროდუქციის შესახებ (როგორ მუშაობს ისინი, ბრენდის ისტორია, ღირებულებები).\n- დაეუფლეთ ბარისტას ტექნიკას\
+    \ და განავითარეთ ლატე არტის უნარები.\n- იყავით აქტუალური ყავის ტენდენციებითა და სიახლეებით.\n- მონაწილეობა მიიღოთ ჩემპიონატებში\
+    \ და ტრენინგებში.\n- ესპრესო კულტურის პოპულარიზაცია.\n\n### 4. პროფესიონალიზმი - \"ოცნების აშენება\"\n- პროფესიონალურად\
+    \ გამოიყენეთ გაყიდვების ტექნიკა, სარეკლამო პროგრამები და კლიენტების შეთავაზებები.\n- გამოიყენეთ ყველა ხელმისაწვდომი მეთოდი\
+    \ გაყიდვების მიზნების მისაღწევად.\n- პროფესიული ჩანაწერების წარმოება (ინვენტარიზაცია, ანგარიშგება), ანგარიშების დროულად\
+    \ წარდგენა.\n- იცოდე მაღაზიაში არსებული ყველა პროდუქტი და თავდაჯერებულად გადახედე ფასების სიას.\n- კომუნიკაბელური, აქტიური\
+    \ და ყოველთვის მომღიმარი.\n- გამოიყენეთ პროფესიონალური ყავის ლექსიკა.\n- იცოდე, როგორ გააჩინო კლიენტის ინტერესი - **\"\
+    ოცნების თესლი დარგე\"**.\n- შეინარჩუნეთ მინიმუმ 1 კატეგორიის კვალიფიკაცია და მუდმივად გაიზარდეთ.\n- წვლილი შეიტანეთ ძლიერი\
+    \ გუნდის შექმნაში ახალი თანამშრომლების მომზადებით.\n\n### 5. ოპერაციები\n- დაიცავით მაღაზიის მუშაობის სტანდარტები.\n-\
+    \ უზრუნველყოს მაღალი ხარისხის, აქტიური გაყიდვები პროდუქტის ცოდნის, გაყიდვების ტექნიკის საშუალებით,\n  სისუფთავე, ხარისხის\
+    \ პროდუქციის ასორტიმენტი, მომზადების უნარები და პროფესიონალი კლიენტების კონსულტაცია.\n- მაღაზია (ყავის კუთხე) ყოველთვის\
+    \ სუფთა და მისასალმებელია.\n\n---\n\n## ბარისტას ფუნქცია\nსწორად მოამზადეთ სასმელები სტანდარტების მიხედვით. არასოდეს მიირთვათ\
+    \ არასტანდარტული სასმელი.\nგააცანით კლიენტებს მომზადების სხვადასხვა მეთოდი. მიეცით პროფესიონალური რჩევები ყავის ჯიშებზე.\n\
+    > *ბარისტას ფილოსოფია: დაიწყეთ კარგი დღე კარგი ფინჯანი ყავით.\n> ფინჯანი ყავა არის გზის დასაწყისი ყავის შეფუთვით გაყიდვისკენ\
+    \ — და საბოლოოდ ყავის აპარატის გაყიდვისკენ.*\n\n## აქტიური გაყიდვების მენეჯერის ფუნქცია\nთანამშრომელი, რომელიც აქტიურად\
+    \ არის ჩადებული მაღაზიის გაყიდვების გაზრდაში.\nყოველთვის ენერგიით და დახმარებისთვის მზადყოფნით ხვდება კლიენტს."
+- slug: qualification-levels
+  section: training
+  title: Professional Qualification Levels — Dim Kava
+  title_en: Professional Qualification Levels — Dim Kava
+  title_ru: Уровни профессиональной квалификации — Dim Kava
+  status: published
+  content: "Dim Kava has a structured qualification system. Every employee starts at the foundation\nlevel and grows through\
+    \ demonstrated knowledge and practice. Advancement is confirmed\nby passing the corresponding quiz and manager review.\n\
+    \n---\n\n## Qualification Areas\n\n### 1. Coffee Specialist — \"Dim Kava Coffee Expert\"\nKnowledge of coffee from seed\
+    \ to cup:\n- Coffee botany and growing conditions\n- History of espresso and its value\n- Espresso preparation technique\
+    \ to SCA standards\n- Espresso-based drinks (espresso as the base)\n- Roasting and flavour characteristics by roast level\n\
+    - Grinding\n- Alternative preparation methods\n- Which coffee works best with which method\n- Latte art\n\n**Must know:**\n\
+    - Coffee tree botany and cultivation\n- Espresso history and value\n- SCA espresso preparation standards\n- All espresso-based\
+    \ drinks\n- Roasting levels and their impact on flavour\n- Grinding for each method\n- Alternative brewing methods\n-\
+    \ Coffee-method pairing\n- Latte art fundamentals\n\n---\n\n### 2. Sales Techniques\nCore sales skills applied consistently:\n\
+    - **Contact** — eye contact, smile, open body language\n- **Needs identification** — asking questions to understand client\
+    \ preferences\n- **Presentation** — *\"We carry Swiss-brand coffee...\"* + show packaging + smell\n- **Closing the sale**\
+    \ — always sell something; the client does not leave empty-handed\n- **Farewell** — leaves the client wanting to return\n\
+    \  > *\"Looking forward to seeing you again! Next time try...\"*\n- **Cross-sale** — offer a complementary product alongside\
+    \ the main purchase\n- **Up-sale** — suggest a higher-value option\n- **Key factor:** information transfer → value communication.\n\
+    \  The client understands why our product is worth it.\n\n---\n\n### 3. Product Value Communication\nThe ability to articulate\
+    \ the value of our products clearly:\n- Know the values and positioning of Dim Kava as a company\n- Know the values of\
+    \ each brand we carry (Blaser, Delonghi, Nivona, Melitta, Caotina, etc.)\n- Communicate those values to clients in simple,\
+    \ natural language\n\n---\n\n### 4. Checklist Execution\nConsistent fulfilment of all operational checklists:\n- Daily\
+    \ checklist (every item, every day)\n- Weekly tasks (chemical cleaning, price check, order, task submission)\n- Monthly\
+    \ tasks (deep clean, inventory, expiry check)\n\n---\n\n### 5. Coffee Machine Knowledge\nFor stable equipment sales:\n\
+    - Operating principles of manual and automatic machines\n- Components and how they work\n- Delonghi range: key models\
+    \ and their features\n- When to recommend manual vs. automatic to a client\n- Basic troubleshooting guidance\n\n---\n\n\
+    ### 6. Service Standards\nMastery and consistent application of DK service rules:\n- Greeting and farewell scripts\n-\
+    \ Loyalty card — always asked, always explained\n- Up-sale and cross-sale in every interaction\n- Product presentations\
+    \ and sensory offers (smell the coffee)\n- Compliance with appearance and behaviour standards\n"
+  content_ru: "В Dim Kava действует структурированная система квалификации. Каждый сотрудник начинает с базового уровня\n\
+    и растёт через подтверждённые знания и практику. Переход подтверждается\nсдачей соответствующего теста и оценкой менеджера.\n\
+    \n---\n\n## Области квалификации\n\n### 1. Coffee Specialist — «эксперт по кофе Dim Kava»\nЗнание кофе от зерна до чашки:\n\
+    - Ботаника кофе и условия выращивания\n- История эспрессо и его ценность\n- Техника приготовления эспрессо по стандартам\
+    \ SCA\n- Напитки на основе эспрессо (эспрессо как основа)\n- Обжарка и вкусовые характеристики по степени обжарки\n- Помол\n\
+    - Альтернативные способы приготовления\n- Какой кофе к какому методу подходит\n- Латте-арт\n\n**Обязательно знать:**\n\
+    - Ботанику кофейного дерева и выращивание\n- Историю и ценность эспрессо\n- Стандарты SCA по приготовлению эспрессо\n\
+    - Все напитки на основе эспрессо\n- Степени обжарки и влияние на вкус\n- Помол под каждый метод\n- Альтернативные методы\
+    \ заваривания\n- Сочетание кофе и метода\n- Основы латте-арта\n\n---\n\n### 2. Техники продаж\nБазовые навыки продаж,\
+    \ применяемые последовательно:\n- **Контакт** — зрительный контакт, улыбка, открытая поза\n- **Выявление потребностей**\
+    \ — вопросы, чтобы понять предпочтения клиента\n- **Презентация** — *«У нас кофе швейцарского бренда…»* + показать упаковку\
+    \ + дать понюхать\n- **Закрытие сделки** — всегда продать что-то; клиент не уходит с пустыми руками\n- **Прощание** —\
+    \ клиент хочет вернуться\n  > *«Ждём вас снова! В следующий раз попробуйте…»*\n- **Кросс-продажа** — дополнительный товар\
+    \ к основной покупке\n- **Апсейл** — предложение более ценного варианта\n- **Ключевой фактор:** передача информации →\
+    \ донесение ценности.\n  Клиент понимает, за что платит.\n\n---\n\n### 3. Донесение ценности продукта\nУмение ясно формулировать\
+    \ ценность наших товаров:\n- Знать ценности и позиционирование Dim Kava как компании\n- Знать ценности каждого бренда\
+    \ в ассортименте (Blaser, Delonghi, Nivona, Melitta, Caotina и др.)\n- Доносить их до клиентов простым, естественным языком\n\
+    \n---\n\n### 4. Выполнение чек-листов\nСтабильное выполнение всех операционных чек-листов:\n- Ежедневный чек-лист (каждый\
+    \ пункт, каждый день)\n- Еженедельные задачи (химчистка, проверка цен, заказ, сдача задач)\n- Ежемесячные задачи (глубокая\
+    \ чистка, инвентаризация, проверка сроков)\n\n---\n\n### 5. Знание кофемашин\nДля стабильных продаж оборудования:\n- Принципы\
+    \ работы ручных и автоматических машин\n- Узлы и их назначение\n- Линейка Delonghi: ключевые модели и особенности\n- Когда\
+    \ рекомендовать ручную, когда автоматическую клиенту\n- Базовая помощь при неисправностях\n\n---\n\n### 6. Стандарты обслуживания\n\
+    Владение и последовательное применение правил сервиса DK:\n- Скрипты приветствия и прощания\n- Карта лояльности — всегда\
+    \ спросить, всегда объяснить\n- Апсейл и кросс-продажа в каждом контакте\n- Презентации товара и сенсорные предложения\
+    \ (понюхать кофе)\n- Соблюдение стандартов внешнего вида и поведения\n"
+  title_ka: პროფესიული კვალიფიკაციის საფეხურები - დიმ კავა
+  content_ka: "დიმ კავას აქვს სტრუქტურირებული საკვალიფიკაციო სისტემა. ყველა თანამშრომელი იწყება ფონდიდან\nდონეზე და იზრდება\
+    \ დემონსტრირებული ცოდნისა და პრაქტიკის მეშვეობით. წინსვლა დადასტურებულია\nშესაბამისი ვიქტორინის და მენეჯერის მიმოხილვის\
+    \ გავლის გზით.\n\n---\n\n## საკვალიფიკაციო სფეროები\n\n### 1. ყავის სპეციალისტი — „დიმ კავა ყავის ექსპერტი“\nყავის ცოდნა\
+    \ თესლიდან ფინჯამდე:\n- ყავის ბოტანიკა და მზარდი პირობები\n- ესპრესოს ისტორია და მისი ღირებულება\n- ესპრესოს მომზადების\
+    \ ტექნიკა SCA სტანდარტების შესაბამისად\n- ესპრესოზე დაფუძნებული სასმელები (ესპრესო, როგორც საფუძველი)\n- გამოწვის და გემოს\
+    \ მახასიათებლები შემწვარი დონის მიხედვით\n- დაფქვა\n- მომზადების ალტერნატიული მეთოდები\n- რომელი ყავა რომელი მეთოდით მუშაობს\
+    \ საუკეთესოდ\n- ლატე არტი\n\n**უნდა იცოდე:**\n- ყავის ხის ბოტანიკა და კულტივირება\n- ესპრესოს ისტორია და ღირებულება\n\
+    - SCA ესპრესო მომზადების სტანდარტები\n- ესპრესოზე დაფუძნებული ყველა სასმელი\n- გამოწვის დონე და მათი გავლენა გემოზე\n\
+    - დაფქვა თითოეული მეთოდისთვის\n- მოხარშვის ალტერნატიული მეთოდები\n- ყავის მეთოდის დაწყვილება\n- ლატე ხელოვნების საფუძვლები\n\
+    \n---\n\n### 2. გაყიდვების ტექნიკა\nგაყიდვების ძირითადი უნარები მუდმივად გამოიყენება:\n- **კონტაქტი** - თვალის კონტაქტი,\
+    \ ღიმილი, სხეულის ღია ენა\n- ** საჭიროებს იდენტიფიკაციას ** - დასვით კითხვები კლიენტის პრეფერენციების გასაგებად\n- **პრეზენტაცია**\
+    \ — *\"ჩვენ ვატარებთ შვეიცარიული ბრენდის ყავას...\"* + ჩვენება შეფუთვა + სუნი\n- **გაყიდვის დახურვა** — ყოველთვის გაყიდე\
+    \ რაღაც; კლიენტი ხელცარიელი არ ტოვებს\n- **მშვიდობით** - კლიენტს უტოვებს დაბრუნების სურვილს\n  > *\"მოუთმენლად ველი თქვენთან\
+    \ ხელახლა ნახვას! შემდეგ ჯერზე სცადეთ...\"*\n- **ჯვარედინი გაყიდვა** — შესთავაზეთ დამატებითი პროდუქტი ძირითად შესყიდვასთან\
+    \ ერთად\n- **Up-sale** — შემოგვთავაზეთ უფრო მაღალი ღირებულების ვარიანტი\n- **საკვანძო ფაქტორი:** ინფორმაციის გადაცემა\
+    \ → ღირებულების კომუნიკაცია.\n  კლიენტს ესმის, რატომ ღირს ჩვენი პროდუქტი.\n\n---\n\n### 3. პროდუქტის ღირებულების კომუნიკაცია\n\
+    ჩვენი პროდუქციის ღირებულების ნათლად გამოხატვის უნარი:\n- იცოდე Dim Kava-ს, როგორც კომპანიის ღირებულებები და პოზიციონირება\n\
+    - იცოდეთ თითოეული ბრენდის ღირებულებები, რომელსაც ჩვენ ვატარებთ (Blaser, Delonghi, Nivona, Melitta, Caotina და ა.შ.)\n\
+    - მიაწოდეთ ეს ღირებულებები კლიენტებს მარტივი, ბუნებრივი ენით\n\n---\n\n### 4. სიის შესრულება\nყველა ოპერატიული სიის თანმიმდევრული\
+    \ შესრულება:\n- ყოველდღიური საკონტროლო სია (ყოველი პუნქტი, ყოველდღე)\n- ყოველკვირეული დავალებები (ქიმიური გაწმენდა, ფასის\
+    \ შემოწმება, შეკვეთა, დავალების წარდგენა)\n- ყოველთვიური დავალებები (ღრმა გაწმენდა, ინვენტარი, ვადის გასვლის შემოწმება)\n\
+    \n---\n\n### 5. ყავის აპარატის ცოდნა\nაღჭურვილობის სტაბილური გაყიდვისთვის:\n- მექანიკური და ავტომატური მანქანების მუშაობის\
+    \ პრინციპები\n- კომპონენტები და როგორ მუშაობს ისინი\n- Delonghi დიაპაზონი: ძირითადი მოდელები და მათი მახასიათებლები\n\
+    - როდის უნდა ვურჩიოთ კლიენტს მექანიკური და ავტომატური\n- ძირითადი პრობლემების მოგვარების ინსტრუქცია\n\n---\n\n### 6. მომსახურების\
+    \ სტანდარტები\nDK სერვისის წესების ოსტატობა და თანმიმდევრული გამოყენება:\n- მისალმებისა და გამოსამშვიდობებელი სკრიპტები\n\
+    - ერთგული ბარათი - ყოველთვის ეკითხებოდა, ყოველთვის ხსნიდა\n- გაყიდვები და ჯვარედინი გაყიდვები ყველა ურთიერთქმედებაში\n\
+    - პროდუქტის პრეზენტაციები და სენსორული შეთავაზებები (ყავის სუნი)\n- გარეგნობისა და ქცევის სტანდარტების დაცვა"

@@ -1,13 +1,16 @@
 """
-Fill missing *_ka fields in HR YAML seeds using DeepL (Georgian).
+Fill missing *_ka fields in HR YAML seeds (Georgian).
 
-Requires DEEPL_AUTH_KEY in environment or .env (see apps.core.services.deepl_translate).
+Backends:
+  - deepl — DEEPL_AUTH_KEY in .env (best quality)
+  - google — deep-translator / Google Translate (no API key; OK for dev)
 
 Usage:
-  python manage.py translate_seed_yaml_ka
-  python manage.py translate_seed_yaml_ka --only onboarding
+  python manage.py translate_seed_yaml_ka --backend google
+  python manage.py translate_seed_yaml_ka --only onboarding --backend google
   python manage.py translate_seed_yaml_ka --dry-run
 """
+import time
 from pathlib import Path
 
 import yaml
@@ -44,11 +47,40 @@ def _missing_ka(val) -> bool:
     return not (val or "").strip()
 
 
-def _batch_translate_strings(strings: list[str]) -> list[str]:
+def _batch_translate_deepl(strings: list[str]) -> list[str]:
     out: list[str] = []
     for i in range(0, len(strings), CHUNK):
         chunk = strings[i : i + CHUNK]
         out.extend(translate_texts(texts=chunk, target_lang="ka"))
+    while len(out) < len(strings):
+        out.append("")
+    return out[: len(strings)]
+
+
+def _batch_translate_google(strings: list[str]) -> list[str]:
+    try:
+        from deep_translator import GoogleTranslator
+    except ImportError as e:
+        raise CommandError("Install deep-translator: pip install deep-translator") from e
+
+    t = GoogleTranslator(source="en", target="ka")
+    out: list[str] = []
+    chunk_size = 8
+    for i in range(0, len(strings), chunk_size):
+        chunk = strings[i : i + chunk_size]
+        try:
+            batch = t.translate_batch(chunk)
+            if isinstance(batch, str):
+                batch = [batch]
+            out.extend(batch)
+        except Exception:
+            for s in chunk:
+                try:
+                    out.append(t.translate(s))
+                except Exception:
+                    out.append("")
+                time.sleep(0.25)
+        time.sleep(0.4)
     while len(out) < len(strings):
         out.append("")
     return out[: len(strings)]
@@ -68,7 +100,7 @@ def _dump(path: Path, data) -> None:
 
 
 class Command(BaseCommand):
-    help = "Translate EN fields in seed YAML files to Georgian (*_ka) via DeepL."
+    help = "Translate EN fields in seed YAML files to Georgian (*_ka)."
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -77,13 +109,20 @@ class Command(BaseCommand):
             default="all",
             help="Which seed file to process.",
         )
+        parser.add_argument(
+            "--backend",
+            choices=["deepl", "google"],
+            default="deepl",
+            help="deepl (API key) or google (deep-translator, no key).",
+        )
         parser.add_argument("--dry-run", action="store_true", help="Count fields only, do not write files.")
 
     def handle(self, *args, **options):
         only = options["only"]
         dry_run = bool(options["dry_run"])
+        backend = options["backend"]
 
-        if not dry_run:
+        if not dry_run and backend == "deepl":
             try:
                 translate_texts(texts=[], target_lang="ka")
             except ImproperlyConfigured as e:
@@ -166,7 +205,10 @@ class Command(BaseCommand):
             if dry_run or not texts:
                 continue
 
-            translated = _batch_translate_strings(texts)
+            if backend == "google":
+                translated = _batch_translate_google(texts)
+            else:
+                translated = _batch_translate_deepl(texts)
             for (target, tr) in zip(setters, translated):
                 tr = (tr or "").strip()
                 if not tr:

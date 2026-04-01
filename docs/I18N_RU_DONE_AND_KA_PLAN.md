@@ -58,8 +58,10 @@ python tools/fill_onboarding_kb_ru.py
 
 ### Этап C — автоматизация (опционально, затем вычитка)
 - **YAML (предпочтительно для git):**  
-  `python manage.py translate_seed_yaml_ka`  
-  (нужен `DEEPL_AUTH_KEY`; см. runbook §4.2). Затем `load_courses`, `load_onboarding`, `load_articles`, `load_news`.
+  `python manage.py translate_seed_yaml_ka --backend google`  
+  (без API-ключа; `pip install deep-translator`) или  
+  `python manage.py translate_seed_yaml_ka` с `DEEPL_AUTH_KEY` (лучше качество).  
+  Затем `load_courses`, `load_onboarding`, `load_articles`, `load_news`.
 - Черновики без DeepL: `python manage.py load_<entity> --auto-translate-draft` (префиксы `[AUTO-ka]`).
 - **Только БД:** [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md) — `auto_translate_content --lang ka --apply` для пустых/`[AUTO-ka]` полей, затем вычитка HR.
 
@@ -69,7 +71,7 @@ python tools/fill_onboarding_kb_ru.py
 **Данные:** в админке выборочно открыть записи с языком **Georgian** и убедиться, что нет пустых полей там, где для EN/RU контент опубликован.
 
 ### Этап E — вспомогательный скрипт (рекомендуется)
-Скрипт `tools/fill_onboarding_kb_ka.py` считает шаги онбординга без `title_ka` / `content_ka`. **Базовая линия (2026-04-01):** после синхронизации RU в YAML остаётся **66 шагов** без грузинского — их нужно заполнить (вручную, черновиками loader или DeepL), затем снова `load_onboarding`.
+Скрипт `tools/fill_onboarding_kb_ka.py` считает шаги онбординга без `title_ka` / `content_ka`. После `translate_seed_yaml_ka --backend google` ожидаемо **0** пропусков.
 
 ---
 
