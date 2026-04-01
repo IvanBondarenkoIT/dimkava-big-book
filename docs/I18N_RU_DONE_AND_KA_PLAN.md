@@ -39,6 +39,7 @@ python tools/fill_onboarding_kb_ru.py
 ### Этап A — интерфейс (`django.po`)
 1. Открыть `locale/ka/LC_MESSAGES/django.po`.
 2. Сверить с `locale/ru/LC_MESSAGES/django.po`: **каждый `msgid` из RU должен иметь пару в KA** (не оставлять пустой `msgstr` для пользовательских экранов).
+3. **Статус 2026-04-01:** в `django.po` для `ka` добавлены недостававшие строки (онбординг, база знаний, модуль, новости) — **число `msgid` совпадает с `ru`**. После `git pull` выполните `compilemessages`, чтобы обновить `django.mo` (на Windows нужен gettext / `msgfmt`).
 3. Особое внимание: строки с `msgctxt` (например `news_post_tag`), onboarding, knowledge base, courses, news.
 4. Выполнить `python manage.py compilemessages` (нужен gettext / `msgfmt`).
 5. Проверить в браузере переключение `en → ka → ru` по чеклисту ниже.
