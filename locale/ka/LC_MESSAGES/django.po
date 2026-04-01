@@ -184,6 +184,78 @@ msgstr "მენტორი"
 msgid "Legend"
 msgstr "ლეგენდა"
 
+msgid "Your Onboarding Journey"
+msgstr "თქვენი ონბორდინგის გზა"
+
+msgid "Knowledge Base"
+msgstr "ცოდნის ბაზა"
+
+msgid "Procedures, standards, company info"
+msgstr "პროცედურები, სტანდარტები, კომპანიის ინფორმაცია"
+
+msgid "Not started"
+msgstr "არ დაწყებულა"
+
+msgid "In progress"
+msgstr "მიმდინარე"
+
+msgid "Completed"
+msgstr "დასრულებული"
+
+msgid "steps"
+msgstr "ნაბიჯი"
+
+msgid "min"
+msgstr "წთ"
+
+msgid "Curriculum"
+msgstr "სასწავლო პროგრამა"
+
+msgid "Back to Curriculum"
+msgstr "უკან სასწავლო პროგრამაზე"
+
+msgid "© 2026 Specialty Coffee Learning Portal. All rights reserved."
+msgstr "© 2026 Specialty Coffee-ის სასწავლო პორტალი. ყველა უფლება დაცულია."
+
+msgid "Onboarding feedback"
+msgstr "უკუკავშირი ონბორდინგზე"
+
+msgid "How was your onboarding experience so far?"
+msgstr "როგორია თქვენი ონბორდინგის გამოცდილება ამ დროისთვის?"
+
+msgid "Your rating"
+msgstr "თქვენი შეფასება"
+
+msgid "Save feedback"
+msgstr "უკუკავშირის შენახვა"
+
+msgid "Optional comment..."
+msgstr "კომენტარი (არასავალდებულო)…"
+
+msgid "Approved feedback from others"
+msgstr "სხვების დამოწმებული უკუკავშირი"
+
+msgid "Back to Knowledge Base"
+msgstr "უკან ცოდნის ბაზაზე"
+
+msgid "Back to Onboarding"
+msgstr "უკან ონბორდინგზე"
+
+msgid "Mark done"
+msgstr "შესრულებად მონიშვნა"
+
+msgid "Module"
+msgstr "მოდული"
+
+msgid "Module not found"
+msgstr "მოდული ვერ მოიძებნა"
+
+msgid "Load onboarding:"
+msgstr "ჩატვირთეთ ონბორდინგი:"
+
+msgid "No steps in this module."
+msgstr "ამ მოდულში ნაბიჯები არ არის."
+
 msgid "News & Announcements"
 msgstr "სიახლეები და განცხადებები"
 
