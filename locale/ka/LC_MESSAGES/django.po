@@ -485,3 +485,178 @@ msgstr "Django ადმინისტრაცია"
 
 msgid "Full access interface for advanced operations."
 msgstr "სრული წვდომა გაფართოებული ოპერაციებისთვის."
+
+msgid "Pre-hire users with limited access."
+msgstr "წინასწარი დაქირავების მომხმარებლები შეზღუდული წვდომით."
+
+msgid "Open in admin"
+msgstr "ადმინში გახსნა"
+
+msgid "Email verified"
+msgstr "ელფოსტა დადასტურებულია"
+
+msgid "Actions"
+msgstr "ქმედებები"
+
+msgid "Last login:"
+msgstr "ბოლო შესვლა:"
+
+msgid "Yes"
+msgstr "კი"
+
+msgid "No"
+msgstr "არა"
+
+msgid "Mark verified"
+msgstr "დადასტურებულად მონიშვნა"
+
+msgid "Convert"
+msgstr "თანამშრომლად გადაყვანა"
+
+msgid "No candidates found."
+msgstr "კანდიდატები ვერ მოიძებნა."
+
+msgid "Visibility for candidates"
+msgstr "ხილვადობა კანდიდატებისთვის"
+
+msgid "Toggle what candidates can see (programs, courses, lessons)."
+msgstr "დააყენეთ, რას ხედავენ კანდიდატები (პროგრამები, კურსები, გაკვეთილები)."
+
+msgid "Onboarding programs"
+msgstr "ონბორდინგის პროგრამები"
+
+msgid "Visible"
+msgstr "ხილულია"
+
+msgid "Hidden"
+msgstr "დამალულია"
+
+msgid "No programs."
+msgstr "პროგრამები არ არის."
+
+msgid "Lessons"
+msgstr "გაკვეთილები"
+
+msgid "No courses."
+msgstr "კურსები არ არის."
+
+msgid "No lessons."
+msgstr "გაკვეთილები არ არის."
+
+msgid "Comment moderation"
+msgstr "კომენტარების მოდერაცია"
+
+msgid "Approve comments before they become visible."
+msgstr "დაამტკიცეთ კომენტარები, სანამ ხილული გახდება."
+
+msgid "Reject"
+msgstr "უარყოფა"
+
+msgid "Approve"
+msgstr "დამტკიცება"
+
+msgid "No pending comments."
+msgstr "მოდერაციისთვის კომენტარები არ არის."
+
+msgid "Onboarding feedback moderation"
+msgstr "ონბორდინგის უკუკავშირის მოდერაცია"
+
+msgid "Approve feedback before it becomes visible to everyone."
+msgstr "დაამტკიცეთ უკუკავშირი, სანამ ყველასთვის ხილული გახდება."
+
+msgid "Program"
+msgstr "პროგრამა"
+
+msgid "All"
+msgstr "ყველა"
+
+msgid "Rating"
+msgstr "შეფასება"
+
+msgid "Search"
+msgstr "ძიება"
+
+msgid "user email, username, program, text..."
+msgstr "ელფოსტა, სახელი, პროგრამა, ტექსტი..."
+
+msgid "Apply filters"
+msgstr "ფილტრების გამოყენება"
+
+msgid "Reset"
+msgstr "გასუფთავება"
+
+msgid "No pending onboarding feedback."
+msgstr "მოდერაციისთვის უკუკავშირი არ არის."
+
+msgid "Stale content and items that require review."
+msgstr "დაძველებული კონტენტი და ელემენტები, რომლებიც რევიუს საჭიროებს."
+
+msgid "Total"
+msgstr "სულ"
+
+#, python-format
+msgid "%(stale)s stale · %(courses)s courses · %(articles)s articles"
+msgstr "%(stale)s დაძველებული · %(courses)s კურსი · %(articles)s სტატია"
+
+msgid "Stale only"
+msgstr "მხოლოდ დაძველებული"
+
+msgid "Open admin"
+msgstr "ადმინის გახსნა"
+
+msgid "Type"
+msgstr "ტიპი"
+
+msgid "Title"
+msgstr "სათაური"
+
+msgid "Status"
+msgstr "სტატუსი"
+
+msgid "Editor"
+msgstr "რედაქტორი"
+
+msgid "Links"
+msgstr "ბმულები"
+
+msgid "Course"
+msgstr "კურსი"
+
+msgid "Article"
+msgstr "სტატია"
+
+msgid "Updated:"
+msgstr "განახლდა:"
+
+msgid "View"
+msgstr "ნახვა"
+
+msgid "Edit"
+msgstr "რედაქტირება"
+
+msgid "Nothing to review."
+msgstr "სარევიუ არაფერი არის."
+
+msgid "HR Analytics Dashboard"
+msgstr "HR ანალიტიკის დაფა"
+
+msgid "Learning metrics and progress overview"
+msgstr "სასწავლო მეტრიკები და პროგრესის მიმოხილვა"
+
+msgid "Active courses"
+msgstr "აქტიური კურსები"
+
+msgid "Onboarding in progress"
+msgstr "ონბორდინგი პროცესშია"
+
+msgid "Onboarding completion rate"
+msgstr "ონბორდინგის დასრულების მაჩვენებელი"
+
+msgid "Avg onboarding days (completed)"
+msgstr "ონბორდინგის საშუალო დღეები (დასრულებული)"
+
+msgid "Users with ≥1 course completed"
+msgstr "მომხმარებლები ≥1 დასრულებული კურსით"
+
+msgid "Total employees"
+msgstr "სულ თანამშრომლები"

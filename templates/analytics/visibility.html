@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
-{% block title %}Visibility for candidates{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Visibility for candidates" %}{% endblock %}
 {% block content %}
 <div class="space-y-10">
   <header class="flex items-start justify-between gap-6">
     <div>
-      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Visibility for candidates</h1>
-      <p class="text-on-surface-variant/70 mt-2">Toggle what candidates can see (programs, courses, lessons).</p>
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "Visibility for candidates" %}</h1>
+      <p class="text-on-surface-variant/70 mt-2">{% trans "Toggle what candidates can see (programs, courses, lessons)." %}</p>
     </div>
     <div class="flex items-center gap-3">
-      <a href="{% url 'analytics:hr_hub' %}" class="btn-secondary px-4 py-2 no-underline">HR Hub</a>
-      <a href="/admin/" class="btn-secondary px-4 py-2 no-underline">Admin</a>
+      <a href="{% url 'analytics:hr_hub' %}" class="btn-secondary px-4 py-2 no-underline">{% trans "HR Hub" %}</a>
+      <a href="/admin/" class="btn-secondary px-4 py-2 no-underline">{% trans "Admin" %}</a>
     </div>
   </header>
 
   <section class="card-atelier p-0 overflow-hidden">
-    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">Onboarding programs</div>
+    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">{% trans "Onboarding programs" %}</div>
     {% for p in programs %}
       <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-outline-variant/10">
         <div class="min-w-0">
@@ -27,17 +28,17 @@
           <input type="hidden" name="id" value="{{ p.id }}"/>
           <input type="hidden" name="value" value="{% if p.visible_for_candidates %}0{% else %}1{% endif %}"/>
           <button type="submit" class="btn-secondary px-3 py-2 text-xs">
-            {% if p.visible_for_candidates %}Visible{% else %}Hidden{% endif %}
+            {% if p.visible_for_candidates %}{% trans "Visible" %}{% else %}{% trans "Hidden" %}{% endif %}
           </button>
         </form>
       </div>
     {% empty %}
-      <div class="px-5 py-6 text-on-surface-variant/70">No programs.</div>
+      <div class="px-5 py-6 text-on-surface-variant/70">{% trans "No programs." %}</div>
     {% endfor %}
   </section>
 
   <section class="card-atelier p-0 overflow-hidden">
-    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">Courses</div>
+    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">{% trans "Courses" %}</div>
     {% for c in courses %}
       <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-outline-variant/10">
         <div class="min-w-0">
@@ -50,17 +51,17 @@
           <input type="hidden" name="id" value="{{ c.id }}"/>
           <input type="hidden" name="value" value="{% if c.visible_for_candidates %}0{% else %}1{% endif %}"/>
           <button type="submit" class="btn-secondary px-3 py-2 text-xs">
-            {% if c.visible_for_candidates %}Visible{% else %}Hidden{% endif %}
+            {% if c.visible_for_candidates %}{% trans "Visible" %}{% else %}{% trans "Hidden" %}{% endif %}
           </button>
         </form>
       </div>
     {% empty %}
-      <div class="px-5 py-6 text-on-surface-variant/70">No courses.</div>
+      <div class="px-5 py-6 text-on-surface-variant/70">{% trans "No courses." %}</div>
     {% endfor %}
   </section>
 
   <section class="card-atelier p-0 overflow-hidden">
-    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">Lessons</div>
+    <div class="px-5 py-4 border-b border-outline-variant/10 font-extrabold text-on-surface">{% trans "Lessons" %}</div>
     {% for l in lessons %}
       <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-outline-variant/10">
         <div class="min-w-0">
@@ -73,12 +74,12 @@
           <input type="hidden" name="id" value="{{ l.id }}"/>
           <input type="hidden" name="value" value="{% if l.visible_for_candidates %}0{% else %}1{% endif %}"/>
           <button type="submit" class="btn-secondary px-3 py-2 text-xs">
-            {% if l.visible_for_candidates %}Visible{% else %}Hidden{% endif %}
+            {% if l.visible_for_candidates %}{% trans "Visible" %}{% else %}{% trans "Hidden" %}{% endif %}
           </button>
         </form>
       </div>
     {% empty %}
-      <div class="px-5 py-6 text-on-surface-variant/70">No lessons.</div>
+      <div class="px-5 py-6 text-on-surface-variant/70">{% trans "No lessons." %}</div>
     {% endfor %}
   </section>
 </div>

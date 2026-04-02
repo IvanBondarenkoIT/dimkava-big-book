@@ -1,37 +1,38 @@
 {% extends 'base.html' %}
-{% block title %}Candidates{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Candidates" %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
   <header class="flex items-start justify-between gap-6">
     <div>
-      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">Candidates</h1>
-      <p class="text-on-surface-variant/70 mt-2">Pre-hire users with limited access.</p>
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "Candidates" %}</h1>
+      <p class="text-on-surface-variant/70 mt-2">{% trans "Pre-hire users with limited access." %}</p>
     </div>
     <div class="flex items-center gap-3">
-      <a href="{% url 'analytics:hr_hub' %}" class="btn-secondary px-4 py-2 no-underline">HR Hub</a>
-      <a href="/admin/accounts/userprofile/?user_type__exact=candidate" class="btn-secondary px-4 py-2 no-underline">Open in admin</a>
+      <a href="{% url 'analytics:hr_hub' %}" class="btn-secondary px-4 py-2 no-underline">{% trans "HR Hub" %}</a>
+      <a href="/admin/accounts/userprofile/?user_type__exact=candidate" class="btn-secondary px-4 py-2 no-underline">{% trans "Open in admin" %}</a>
     </div>
   </header>
 
   <section class="card-atelier p-0 overflow-hidden">
     <div class="grid grid-cols-12 gap-0 px-5 py-3 bg-surface-container-lowest border-b border-outline-variant/10 text-xs font-bold uppercase tracking-widest text-on-surface-variant/70">
-      <div class="col-span-4">User</div>
-      <div class="col-span-2">Phone</div>
-      <div class="col-span-2">Email verified</div>
-      <div class="col-span-2">Onboarding</div>
-      <div class="col-span-2 text-right">Actions</div>
+      <div class="col-span-4">{% trans "User" %}</div>
+      <div class="col-span-2">{% trans "Phone" %}</div>
+      <div class="col-span-2">{% trans "Email verified" %}</div>
+      <div class="col-span-2">{% trans "Onboarding" %}</div>
+      <div class="col-span-2 text-right">{% trans "Actions" %}</div>
     </div>
     {% for c in candidates %}
       <div class="grid grid-cols-12 gap-0 px-5 py-4 border-b border-outline-variant/10">
         <div class="col-span-4 min-w-0">
           <div class="font-extrabold text-on-surface truncate">{{ c.public_username|default:c.email }}</div>
           <div class="text-xs text-on-surface-variant/60 mt-1">
-            Last login: {% if c.last_login %}{{ c.last_login|date:"Y-m-d" }}{% else %}—{% endif %}
+            {% trans "Last login:" %} {% if c.last_login %}{{ c.last_login|date:"Y-m-d" }}{% else %}—{% endif %}
           </div>
         </div>
         <div class="col-span-2 text-sm text-on-surface-variant/80 truncate">{{ c.phone|default:"—" }}</div>
         <div class="col-span-2 text-sm font-bold {% if c.email_verified_at %}text-secondary{% else %}text-amber-700{% endif %}">
-          {% if c.email_verified_at %}Yes{% else %}No{% endif %}
+          {% if c.email_verified_at %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}
         </div>
         <div class="col-span-2 text-sm font-bold text-on-surface-variant/80">{{ c.onboarding_progress_pct }}%</div>
         <div class="col-span-2 flex justify-end gap-2">
@@ -40,19 +41,19 @@
             {% csrf_token %}
             <input type="hidden" name="action" value="mark_email_verified"/>
             <input type="hidden" name="profile_id" value="{{ c.profile_id }}"/>
-            <button type="submit" class="btn-secondary px-3 py-2 text-xs">Mark verified</button>
+            <button type="submit" class="btn-secondary px-3 py-2 text-xs">{% trans "Mark verified" %}</button>
           </form>
           {% endif %}
           <form method="post" class="inline">
             {% csrf_token %}
             <input type="hidden" name="action" value="convert_to_employee"/>
             <input type="hidden" name="profile_id" value="{{ c.profile_id }}"/>
-            <button type="submit" class="btn-primary px-3 py-2 text-xs">Convert</button>
+            <button type="submit" class="btn-primary px-3 py-2 text-xs">{% trans "Convert" %}</button>
           </form>
         </div>
       </div>
     {% empty %}
-      <div class="px-5 py-8 text-on-surface-variant/70">No candidates found.</div>
+      <div class="px-5 py-8 text-on-surface-variant/70">{% trans "No candidates found." %}</div>
     {% endfor %}
   </section>
 </div>

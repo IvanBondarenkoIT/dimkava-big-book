@@ -485,3 +485,178 @@ msgstr "Админка Django"
 
 msgid "Full access interface for advanced operations."
 msgstr "Полный доступ для расширенных операций."
+
+msgid "Pre-hire users with limited access."
+msgstr "Пользователи до найма с ограниченным доступом."
+
+msgid "Open in admin"
+msgstr "Открыть в админке"
+
+msgid "Email verified"
+msgstr "Email подтверждён"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Last login:"
+msgstr "Последний вход:"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Mark verified"
+msgstr "Отметить как подтверждённый"
+
+msgid "Convert"
+msgstr "Перевести в сотрудника"
+
+msgid "No candidates found."
+msgstr "Кандидаты не найдены."
+
+msgid "Visibility for candidates"
+msgstr "Видимость для кандидатов"
+
+msgid "Toggle what candidates can see (programs, courses, lessons)."
+msgstr "Настройте, что видят кандидаты (программы, курсы, уроки)."
+
+msgid "Onboarding programs"
+msgstr "Программы онбординга"
+
+msgid "Visible"
+msgstr "Видно"
+
+msgid "Hidden"
+msgstr "Скрыто"
+
+msgid "No programs."
+msgstr "Нет программ."
+
+msgid "Lessons"
+msgstr "Уроки"
+
+msgid "No courses."
+msgstr "Нет курсов."
+
+msgid "No lessons."
+msgstr "Нет уроков."
+
+msgid "Comment moderation"
+msgstr "Модерация комментариев"
+
+msgid "Approve comments before they become visible."
+msgstr "Одобряйте комментарии перед тем, как они станут видимыми."
+
+msgid "Reject"
+msgstr "Отклонить"
+
+msgid "Approve"
+msgstr "Одобрить"
+
+msgid "No pending comments."
+msgstr "Нет комментариев на модерации."
+
+msgid "Onboarding feedback moderation"
+msgstr "Модерация фидбека по онбордингу"
+
+msgid "Approve feedback before it becomes visible to everyone."
+msgstr "Одобряйте фидбек перед тем, как он станет видимым для всех."
+
+msgid "Program"
+msgstr "Программа"
+
+msgid "All"
+msgstr "Все"
+
+msgid "Rating"
+msgstr "Оценка"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "user email, username, program, text..."
+msgstr "email, username, программа, текст..."
+
+msgid "Apply filters"
+msgstr "Применить фильтры"
+
+msgid "Reset"
+msgstr "Сбросить"
+
+msgid "No pending onboarding feedback."
+msgstr "Нет фидбека по онбордингу на модерации."
+
+msgid "Stale content and items that require review."
+msgstr "Устаревший контент и элементы, требующие проверки."
+
+msgid "Total"
+msgstr "Всего"
+
+#, python-format
+msgid "%(stale)s stale · %(courses)s courses · %(articles)s articles"
+msgstr "%(stale)s устар. · %(courses)s курсов · %(articles)s статей"
+
+msgid "Stale only"
+msgstr "Только устаревшие"
+
+msgid "Open admin"
+msgstr "Открыть админку"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Title"
+msgstr "Заголовок"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Editor"
+msgstr "Редактор"
+
+msgid "Links"
+msgstr "Ссылки"
+
+msgid "Course"
+msgstr "Курс"
+
+msgid "Article"
+msgstr "Статья"
+
+msgid "Updated:"
+msgstr "Обновлено:"
+
+msgid "View"
+msgstr "Смотреть"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Nothing to review."
+msgstr "Нечего проверять."
+
+msgid "HR Analytics Dashboard"
+msgstr "HR-дашборд аналитики"
+
+msgid "Learning metrics and progress overview"
+msgstr "Метрики обучения и обзор прогресса"
+
+msgid "Active courses"
+msgstr "Активные курсы"
+
+msgid "Onboarding in progress"
+msgstr "Онбординг в процессе"
+
+msgid "Onboarding completion rate"
+msgstr "Доля завершения онбординга"
+
+msgid "Avg onboarding days (completed)"
+msgstr "Средняя длительность онбординга (завершённого)"
+
+msgid "Users with ≥1 course completed"
+msgstr "Пользователи с ≥1 завершённым курсом"
+
+msgid "Total employees"
+msgstr "Всего сотрудников"

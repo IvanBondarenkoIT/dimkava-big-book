@@ -1,35 +1,36 @@
 {% extends 'base.html' %}
-{% block title %}Analytics{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Analytics" %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
   <header>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">HR Analytics Dashboard</h1>
-    <p class="text-on-surface-variant/70 mt-2">Learning metrics and progress overview</p>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "HR Analytics Dashboard" %}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{% trans "Learning metrics and progress overview" %}</p>
   </header>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <div class="card-atelier">
       <p class="text-3xl font-black text-primary">{{ metrics.active_courses }}</p>
-      <p class="text-sm text-on-surface-variant/70 mt-1">Active courses</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">{% trans "Active courses" %}</p>
     </div>
     <div class="card-atelier">
       <p class="text-3xl font-black text-primary">{{ metrics.onboarding_in_progress }}</p>
-      <p class="text-sm text-on-surface-variant/70 mt-1">Onboarding in progress</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">{% trans "Onboarding in progress" %}</p>
     </div>
     <div class="card-atelier">
       <p class="text-3xl font-black text-primary">{{ metrics.onboarding_completion_rate }}%</p>
-      <p class="text-sm text-on-surface-variant/70 mt-1">Onboarding completion rate</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">{% trans "Onboarding completion rate" %}</p>
     </div>
     <div class="card-atelier">
       <p class="text-3xl font-black text-primary">{% if metrics.avg_onboarding_days is not None %}{{ metrics.avg_onboarding_days }}{% else %}—{% endif %}</p>
-      <p class="text-sm text-on-surface-variant/70 mt-1">Avg onboarding days (completed)</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">{% trans "Avg onboarding days (completed)" %}</p>
     </div>
     <div class="card-atelier">
       <p class="text-3xl font-black text-primary">{{ metrics.course_completion_rate }}%</p>
-      <p class="text-sm text-on-surface-variant/70 mt-1">Users with ≥1 course completed</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">{% trans "Users with ≥1 course completed" %}</p>
     </div>
     <div class="card-atelier">
       <p class="text-3xl font-black text-primary">{{ metrics.total_users }}</p>
-      <p class="text-sm text-on-surface-variant/70 mt-1">Total employees</p>
+      <p class="text-sm text-on-surface-variant/70 mt-1">{% trans "Total employees" %}</p>
     </div>
   </div>
 </div>
