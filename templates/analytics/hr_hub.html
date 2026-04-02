@@ -1,53 +1,54 @@
 {% extends 'base.html' %}
-{% block title %}HR Hub{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "HR Hub" %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
   <header>
-    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">HR Hub</h1>
-    <p class="text-on-surface-variant/70 mt-2">Quick access to HR tools (restricted to HR/Admin).</p>
+    <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "HR Hub" %}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{% trans "Quick access to HR tools (restricted to HR/Admin)." %}</p>
   </header>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <a href="{% url 'analytics:candidates' %}" class="card-atelier hover:shadow-xl transition-shadow no-underline">
-      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">Candidates</div>
-      <div class="text-2xl font-extrabold text-on-surface mt-2">Monitor & manage</div>
-      <p class="text-sm text-on-surface-variant/70 mt-2">Progress, email verification, convert to employee.</p>
+      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">{% trans "Candidates" %}</div>
+      <div class="text-2xl font-extrabold text-on-surface mt-2">{% trans "Monitor & manage" %}</div>
+      <p class="text-sm text-on-surface-variant/70 mt-2">{% trans "Progress, email verification, convert to employee." %}</p>
     </a>
 
     <a href="{% url 'analytics:visibility' %}" class="card-atelier hover:shadow-xl transition-shadow no-underline">
-      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">Visibility</div>
-      <div class="text-2xl font-extrabold text-on-surface mt-2">Visible for candidates</div>
-      <p class="text-sm text-on-surface-variant/70 mt-2">Toggle visibility flags for programs/courses/lessons.</p>
+      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">{% trans "Visibility" %}</div>
+      <div class="text-2xl font-extrabold text-on-surface mt-2">{% trans "Visible for candidates" %}</div>
+      <p class="text-sm text-on-surface-variant/70 mt-2">{% trans "Toggle visibility flags for programs/courses/lessons." %}</p>
     </a>
 
     <a href="{% url 'analytics:comment_moderation' %}" class="card-atelier hover:shadow-xl transition-shadow no-underline">
-      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">Comments</div>
-      <div class="text-2xl font-extrabold text-on-surface mt-2">Moderation queue</div>
-      <p class="text-sm text-on-surface-variant/70 mt-2">Approve or reject comments before publishing.</p>
+      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">{% trans "Comments" %}</div>
+      <div class="text-2xl font-extrabold text-on-surface mt-2">{% trans "Moderation queue" %}</div>
+      <p class="text-sm text-on-surface-variant/70 mt-2">{% trans "Approve or reject comments before publishing." %}</p>
     </a>
 
     <a href="{% url 'analytics:onboarding_feedback_moderation' %}" class="card-atelier hover:shadow-xl transition-shadow no-underline">
-      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">Onboarding feedback</div>
-      <div class="text-2xl font-extrabold text-on-surface mt-2">Approve / reject</div>
-      <p class="text-sm text-on-surface-variant/70 mt-2">Publish approved onboarding feedback to all users.</p>
+      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">{% trans "Onboarding feedback" %}</div>
+      <div class="text-2xl font-extrabold text-on-surface mt-2">{% trans "Approve / reject" %}</div>
+      <p class="text-sm text-on-surface-variant/70 mt-2">{% trans "Publish approved onboarding feedback to all users." %}</p>
     </a>
 
     <a href="{% url 'analytics:content_review' %}" class="card-atelier hover:shadow-xl transition-shadow no-underline">
-      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">Content</div>
-      <div class="text-2xl font-extrabold text-on-surface mt-2">Content to review</div>
-      <p class="text-sm text-on-surface-variant/70 mt-2">Stale items and review queue with quick links.</p>
+      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">{% trans "Content" %}</div>
+      <div class="text-2xl font-extrabold text-on-surface mt-2">{% trans "Content to review" %}</div>
+      <p class="text-sm text-on-surface-variant/70 mt-2">{% trans "Stale items and review queue with quick links." %}</p>
     </a>
 
     <a href="{% url 'analytics:dashboard' %}" class="card-atelier hover:shadow-xl transition-shadow no-underline">
-      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">Analytics</div>
-      <div class="text-2xl font-extrabold text-on-surface mt-2">Dashboard</div>
-      <p class="text-sm text-on-surface-variant/70 mt-2">High-level learning metrics.</p>
+      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">{% trans "Analytics" %}</div>
+      <div class="text-2xl font-extrabold text-on-surface mt-2">{% trans "Dashboard" %}</div>
+      <p class="text-sm text-on-surface-variant/70 mt-2">{% trans "High-level learning metrics." %}</p>
     </a>
 
     <a href="/admin/" class="card-atelier hover:shadow-xl transition-shadow no-underline">
-      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">Admin</div>
-      <div class="text-2xl font-extrabold text-on-surface mt-2">Django admin</div>
-      <p class="text-sm text-on-surface-variant/70 mt-2">Full access interface for advanced operations.</p>
+      <div class="text-xs font-bold uppercase tracking-widest text-primary/70">{% trans "Admin" %}</div>
+      <div class="text-2xl font-extrabold text-on-surface mt-2">{% trans "Django admin" %}</div>
+      <p class="text-sm text-on-surface-variant/70 mt-2">{% trans "Full access interface for advanced operations." %}</p>
     </a>
   </div>
 </div>

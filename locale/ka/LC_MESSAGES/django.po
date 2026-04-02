@@ -431,3 +431,57 @@ msgstr "თანამშრომელი"
 
 msgid "User"
 msgstr "მომხმარებელი"
+
+msgid "Quick access to HR tools (restricted to HR/Admin)."
+msgstr "სწრაფი წვდომა HR ინსტრუმენტებზე (მხოლოდ HR/ადმინისთვის)."
+
+msgid "Candidates"
+msgstr "კანდიდატები"
+
+msgid "Monitor & manage"
+msgstr "მონიტორინგი და მართვა"
+
+msgid "Progress, email verification, convert to employee."
+msgstr "პროგრესი, ელფოსტის დადასტურება, თანამშრომლად გადაყვანა."
+
+msgid "Visibility"
+msgstr "ხილვადობა"
+
+msgid "Visible for candidates"
+msgstr "ხილულია კანდიდატებისთვის"
+
+msgid "Toggle visibility flags for programs/courses/lessons."
+msgstr "ჩართეთ/გამორთეთ ხილვადობა პროგრამებისთვის/კურსებისთვის/გაკვეთილებისთვის."
+
+msgid "Comments"
+msgstr "კომენტარები"
+
+msgid "Moderation queue"
+msgstr "მოდერაციის რიგი"
+
+msgid "Approve or reject comments before publishing."
+msgstr "დაამტკიცეთ ან უარყავით კომენტარები გამოქვეყნებამდე."
+
+msgid "Onboarding feedback"
+msgstr "ონბორდინგის უკუკავშირი"
+
+msgid "Approve / reject"
+msgstr "დამტკიცება / უარყოფა"
+
+msgid "Publish approved onboarding feedback to all users."
+msgstr "გამოაქვეყნეთ დამტკიცებული ონბორდინგის უკუკავშირი ყველა მომხმარებლისთვის."
+
+msgid "Content"
+msgstr "კონტენტი"
+
+msgid "Stale items and review queue with quick links."
+msgstr "დაძველებული ელემენტები და რევიუს რიგი სწრაფი ბმულებით."
+
+msgid "High-level learning metrics."
+msgstr "მაღალი დონის სასწავლო მეტრიკები."
+
+msgid "Django admin"
+msgstr "Django ადმინისტრაცია"
+
+msgid "Full access interface for advanced operations."
+msgstr "სრული წვდომა გაფართოებული ოპერაციებისთვის."

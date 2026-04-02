@@ -431,3 +431,57 @@ msgstr "Сотрудник"
 
 msgid "User"
 msgstr "Пользователь"
+
+msgid "Quick access to HR tools (restricted to HR/Admin)."
+msgstr "Быстрый доступ к HR-инструментам (только для HR/админов)."
+
+msgid "Candidates"
+msgstr "Кандидаты"
+
+msgid "Monitor & manage"
+msgstr "Контроль и управление"
+
+msgid "Progress, email verification, convert to employee."
+msgstr "Прогресс, подтверждение email, перевод в сотрудника."
+
+msgid "Visibility"
+msgstr "Видимость"
+
+msgid "Visible for candidates"
+msgstr "Видно кандидатам"
+
+msgid "Toggle visibility flags for programs/courses/lessons."
+msgstr "Переключайте видимость программ/курсов/уроков для кандидатов."
+
+msgid "Comments"
+msgstr "Комментарии"
+
+msgid "Moderation queue"
+msgstr "Очередь модерации"
+
+msgid "Approve or reject comments before publishing."
+msgstr "Подтвердите или отклоните комментарии перед публикацией."
+
+msgid "Onboarding feedback"
+msgstr "Фидбек по онбордингу"
+
+msgid "Approve / reject"
+msgstr "Подтвердить / отклонить"
+
+msgid "Publish approved onboarding feedback to all users."
+msgstr "Публикуйте одобренный фидбек по онбордингу для всех пользователей."
+
+msgid "Content"
+msgstr "Контент"
+
+msgid "Stale items and review queue with quick links."
+msgstr "Устаревшие элементы и очередь на ревью с быстрыми ссылками."
+
+msgid "High-level learning metrics."
+msgstr "Метрики обучения высокого уровня."
+
+msgid "Django admin"
+msgstr "Админка Django"
+
+msgid "Full access interface for advanced operations."
+msgstr "Полный доступ для расширенных операций."
