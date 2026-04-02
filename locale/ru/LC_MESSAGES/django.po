@@ -869,3 +869,45 @@ msgstr "Новость"
 
 msgid "News posts"
 msgstr "Новости"
+
+msgid "Gamification profile"
+msgstr "Профиль геймификации"
+
+msgid "Gamification profiles"
+msgstr "Профили геймификации"
+
+msgid "Badge"
+msgstr "Значок"
+
+msgid "Badges"
+msgstr "Значки"
+
+msgid "User badge"
+msgstr "Значок пользователя"
+
+msgid "User badges"
+msgstr "Значки пользователей"
+
+msgid "Mission"
+msgstr "Миссия"
+
+msgid "Missions"
+msgstr "Миссии"
+
+msgid "Mission step"
+msgstr "Шаг миссии"
+
+msgid "Mission steps"
+msgstr "Шаги миссии"
+
+msgid "User mission progress"
+msgstr "Прогресс миссий пользователя"
+
+msgid "Points log"
+msgstr "Лог очков"
+
+msgid "Points logs"
+msgstr "Логи очков"
+
+msgid "Notification"
+msgstr "Уведомление"

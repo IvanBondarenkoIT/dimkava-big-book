@@ -1,6 +1,7 @@
 """Notification model."""
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Notification(models.Model):
@@ -23,6 +24,8 @@ class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        verbose_name = _('Notification')
+        verbose_name_plural = _('Notifications')
         ordering = ['-created_at']
 
     def __str__(self):

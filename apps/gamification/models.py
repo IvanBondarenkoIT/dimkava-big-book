@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class GamificationProfile(models.Model):
@@ -10,6 +11,10 @@ class GamificationProfile(models.Model):
     level = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('Gamification profile')
+        verbose_name_plural = _('Gamification profiles')
 
     def __str__(self):
         return f'{self.user.get_username()} — Level {self.level} ({self.total_points} pts)'
@@ -24,6 +29,10 @@ class Badge(models.Model):
     is_compliance = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = _('Badge')
+        verbose_name_plural = _('Badges')
+
     def __str__(self):
         return f'{self.name} ({self.code})'
 
@@ -37,6 +46,8 @@ class UserBadge(models.Model):
     reason = models.CharField(max_length=200, blank=True)
 
     class Meta:
+        verbose_name = _('User badge')
+        verbose_name_plural = _('User badges')
         unique_together = [('user', 'badge')]
 
     def __str__(self):
@@ -57,6 +68,8 @@ class Mission(models.Model):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
+        verbose_name = _('Mission')
+        verbose_name_plural = _('Missions')
         ordering = ['order']
 
     def __str__(self):
@@ -78,6 +91,8 @@ class MissionStep(models.Model):
     is_required = models.BooleanField(default=True)
 
     class Meta:
+        verbose_name = _('Mission step')
+        verbose_name_plural = _('Mission steps')
         ordering = ['order']
         unique_together = [('mission', 'order')]
 
@@ -93,6 +108,8 @@ class UserMissionProgress(models.Model):
     completed_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
+        verbose_name = _('User mission progress')
+        verbose_name_plural = _('User mission progress')
         unique_together = [('user', 'mission')]
 
     def __str__(self):
@@ -119,6 +136,8 @@ class PointsLog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        verbose_name = _('Points log')
+        verbose_name_plural = _('Points logs')
         ordering = ['-created_at']
 
     def __str__(self):
