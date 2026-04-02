@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.utils.translation import get_language
 
 
@@ -16,6 +17,8 @@ class KBSection(models.Model):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
+        verbose_name = _('Knowledge base section')
+        verbose_name_plural = _('Knowledge base sections')
         ordering = ['order', 'title']
 
     def __str__(self):
@@ -57,6 +60,8 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        verbose_name = _('Article')
+        verbose_name_plural = _('Articles')
         ordering = ['section', 'title']
         unique_together = [('section', 'slug')]
 

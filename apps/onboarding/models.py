@@ -1,6 +1,7 @@
 """Onboarding models — program, modules, steps, progress."""
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django.utils.translation import get_language
 
 
@@ -20,6 +21,8 @@ class OnboardingProgram(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        verbose_name = _('Onboarding program')
+        verbose_name_plural = _('Onboarding programs')
         ordering = ['title']
 
     def __str__(self):
@@ -51,6 +54,8 @@ class OnboardingModule(models.Model):
     description_ru = models.TextField(blank=True, default='')
 
     class Meta:
+        verbose_name = _('Onboarding module')
+        verbose_name_plural = _('Onboarding modules')
         ordering = ['program', 'order']
         unique_together = [('program', 'slug')]
 
@@ -76,6 +81,8 @@ class OnboardingStep(models.Model):
     content_ru = models.TextField(blank=True, default='')
 
     class Meta:
+        verbose_name = _('Onboarding step')
+        verbose_name_plural = _('Onboarding steps')
         ordering = ['module', 'order']
         unique_together = [('module', 'order')]
 
@@ -100,6 +107,8 @@ class OnboardingProgress(models.Model):
     completed_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        verbose_name = _('Onboarding progress')
+        verbose_name_plural = _('Onboarding progress')
         unique_together = [('user', 'step')]
 
     def __str__(self):
@@ -114,6 +123,8 @@ class Mentor(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
+        verbose_name = _('Mentor')
+        verbose_name_plural = _('Mentors')
         ordering = ['user_id']
 
     def __str__(self):
@@ -126,6 +137,8 @@ class MentorAssignment(models.Model):
     assigned_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        verbose_name = _('Mentor assignment')
+        verbose_name_plural = _('Mentor assignments')
         ordering = ['-assigned_at']
 
     def __str__(self):
@@ -148,6 +161,8 @@ class MentorSession(models.Model):
     notes = models.TextField(blank=True)
 
     class Meta:
+        verbose_name = _('Mentor session')
+        verbose_name_plural = _('Mentor sessions')
         ordering = ['scheduled_date', 'id']
 
     def __str__(self):
@@ -177,6 +192,8 @@ class OnboardingFeedback(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        verbose_name = _('Onboarding feedback')
+        verbose_name_plural = _('Onboarding feedback')
         unique_together = [('user', 'program')]
         ordering = ['-updated_at', '-id']
 

@@ -1,6 +1,6 @@
 """News and announcements."""
 from django.db import models
-from django.utils.translation import get_language, pgettext
+from django.utils.translation import get_language, pgettext, gettext_lazy as _
 
 
 class NewsPost(models.Model):
@@ -20,6 +20,8 @@ class NewsPost(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        verbose_name = _('News post')
+        verbose_name_plural = _('News posts')
         ordering = ['-pinned', '-published_at']
 
     def __str__(self):

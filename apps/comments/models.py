@@ -3,6 +3,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class Comment(models.Model):
@@ -30,6 +31,8 @@ class Comment(models.Model):
     )
 
     class Meta:
+        verbose_name = _('Comment')
+        verbose_name_plural = _('Comments')
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['status', 'created_at'], name='comments_co_status_08b9ef_idx'),

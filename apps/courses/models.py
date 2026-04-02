@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.utils.translation import get_language
 
 
@@ -45,6 +46,8 @@ class Course(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        verbose_name = _('Course')
+        verbose_name_plural = _('Courses')
         ordering = ['title']
 
     def __str__(self):
@@ -93,6 +96,8 @@ class Lesson(models.Model):
     visible_for_candidates = models.BooleanField(default=False)
 
     class Meta:
+        verbose_name = _('Lesson')
+        verbose_name_plural = _('Lessons')
         ordering = ['course', 'order']
         unique_together = [('course', 'order')]
 
@@ -124,6 +129,8 @@ class TestQuestion(models.Model):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
+        verbose_name = _('Test question')
+        verbose_name_plural = _('Test questions')
         ordering = ['lesson', 'order']
         unique_together = [('lesson', 'order')]
 
@@ -159,6 +166,8 @@ class UserProgress(models.Model):
     )
 
     class Meta:
+        verbose_name = _('User progress')
+        verbose_name_plural = _('User progress')
         unique_together = [('user', 'lesson')]
 
     def __str__(self):
@@ -184,6 +193,8 @@ class IndividualLearningPlan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        verbose_name = _('Individual learning plan')
+        verbose_name_plural = _('Individual learning plans')
         ordering = ['-created_at', 'id']
 
     def __str__(self):
@@ -206,6 +217,8 @@ class ILPItem(models.Model):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
+        verbose_name = _('ILP item')
+        verbose_name_plural = _('ILP items')
         ordering = ['order', 'id']
 
     def __str__(self):
@@ -221,6 +234,8 @@ class LessonRating(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        verbose_name = _('Lesson rating')
+        verbose_name_plural = _('Lesson ratings')
         unique_together = [('user', 'lesson')]
         ordering = ['-updated_at', '-id']
 

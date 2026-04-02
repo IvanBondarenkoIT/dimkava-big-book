@@ -1,5 +1,6 @@
 """Departments and roles with learning paths."""
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Department(models.Model):
@@ -8,6 +9,8 @@ class Department(models.Model):
     slug = models.SlugField(unique=True, max_length=80)
 
     class Meta:
+        verbose_name = _('Department')
+        verbose_name_plural = _('Departments')
         ordering = ['name']
 
     def __str__(self):
@@ -36,6 +39,8 @@ class Role(models.Model):
     )
 
     class Meta:
+        verbose_name = _('Role')
+        verbose_name_plural = _('Roles')
         ordering = ['department', 'order', 'title']
 
     def __str__(self):

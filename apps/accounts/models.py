@@ -70,8 +70,8 @@ class UserProfile(models.Model):
     )
 
     class Meta:
-        verbose_name = 'User profile'
-        verbose_name_plural = 'User profiles'
+        verbose_name = _('User profile')
+        verbose_name_plural = _('User profiles')
 
     def __str__(self):
         return f'Profile: {self.user}'
@@ -112,6 +112,8 @@ class AssignmentRule(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
+        verbose_name = _('Assignment rule')
+        verbose_name_plural = _('Assignment rules')
         ordering = ['id']
 
     def __str__(self):

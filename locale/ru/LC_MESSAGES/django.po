@@ -719,3 +719,153 @@ msgstr "Одобрить выбранные комментарии"
 
 msgid "Reject selected comments"
 msgstr "Отклонить выбранные комментарии"
+
+msgid "Core"
+msgstr "Ядро"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgid "Gamification"
+msgstr "Геймификация"
+
+msgid "Analytics"
+msgstr "Аналитика"
+
+msgid "Accounts"
+msgstr "Аккаунты"
+
+msgid "Knowledge Base"
+msgstr "База знаний"
+
+msgid "News"
+msgstr "Новости"
+
+msgid "Courses"
+msgstr "Курсы"
+
+msgid "Onboarding"
+msgstr "Онбординг"
+
+msgid "Comments"
+msgstr "Комментарии"
+
+msgid "Department"
+msgstr "Отдел"
+
+msgid "Departments"
+msgstr "Отделы"
+
+msgid "Role"
+msgstr "Роль"
+
+msgid "Roles"
+msgstr "Роли"
+
+msgid "User profile"
+msgstr "Профиль пользователя"
+
+msgid "User profiles"
+msgstr "Профили пользователей"
+
+msgid "Assignment rule"
+msgstr "Правило назначения"
+
+msgid "Assignment rules"
+msgstr "Правила назначения"
+
+msgid "Course"
+msgstr "Курс"
+
+msgid "Lesson"
+msgstr "Урок"
+
+msgid "Test question"
+msgstr "Вопрос теста"
+
+msgid "Test questions"
+msgstr "Вопросы теста"
+
+msgid "User progress"
+msgstr "Прогресс пользователя"
+
+msgid "Individual learning plan"
+msgstr "Индивидуальный учебный план"
+
+msgid "Individual learning plans"
+msgstr "Индивидуальные учебные планы"
+
+msgid "ILP item"
+msgstr "Элемент ИУП"
+
+msgid "ILP items"
+msgstr "Элементы ИУП"
+
+msgid "Lesson rating"
+msgstr "Оценка урока"
+
+msgid "Lesson ratings"
+msgstr "Оценки уроков"
+
+msgid "Onboarding program"
+msgstr "Программа онбординга"
+
+msgid "Onboarding programs"
+msgstr "Программы онбординга"
+
+msgid "Onboarding module"
+msgstr "Модуль онбординга"
+
+msgid "Onboarding modules"
+msgstr "Модули онбординга"
+
+msgid "Onboarding step"
+msgstr "Шаг онбординга"
+
+msgid "Onboarding steps"
+msgstr "Шаги онбординга"
+
+msgid "Onboarding progress"
+msgstr "Прогресс онбординга"
+
+msgid "Mentor"
+msgstr "Наставник"
+
+msgid "Mentors"
+msgstr "Наставники"
+
+msgid "Mentor assignment"
+msgstr "Назначение наставника"
+
+msgid "Mentor assignments"
+msgstr "Назначения наставников"
+
+msgid "Mentor session"
+msgstr "Сессия наставника"
+
+msgid "Mentor sessions"
+msgstr "Сессии наставника"
+
+msgid "Knowledge base section"
+msgstr "Раздел базы знаний"
+
+msgid "Knowledge base sections"
+msgstr "Разделы базы знаний"
+
+msgid "Article"
+msgstr "Статья"
+
+msgid "Articles"
+msgstr "Статьи"
+
+msgid "Comment"
+msgstr "Комментарий"
+
+msgid "News post"
+msgstr "Новость"
+
+msgid "News posts"
+msgstr "Новости"
