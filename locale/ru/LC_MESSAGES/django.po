@@ -660,3 +660,62 @@ msgstr "Пользователи с ≥1 завершённым курсом"
 
 msgid "Total employees"
 msgstr "Всего сотрудников"
+
+msgid "Dim Kava Admin"
+msgstr "Dim Kava — админка"
+
+msgid "Administration"
+msgstr "Администрирование"
+
+msgid "User type"
+msgstr "Тип пользователя"
+
+msgid "Email verified at"
+msgstr "Email подтверждён"
+
+msgid "Last login"
+msgstr "Последний вход"
+
+msgid "Onboarding %"
+msgstr "Онбординг, %"
+
+msgid "Mark email as verified (candidates)"
+msgstr "Отметить email как подтверждённый (кандидаты)"
+
+#, python-format
+msgid "Marked %(count)s profile(s) as email verified."
+msgstr "Отмечено как подтверждённые: %(count)s профилей."
+
+msgid "Convert selected candidates to employees"
+msgstr "Перевести выбранных кандидатов в сотрудников"
+
+msgid "Not updated within %(days)s days"
+msgstr "Не обновлялось %(days)s дней"
+
+msgid "Question"
+msgstr "Вопрос"
+
+msgid "Allow candidate quiz retake (unlock selected)"
+msgstr "Разрешить повторную попытку теста кандидату (разблокировать выбранные)"
+
+#, python-format
+msgid "Unlocked %(count)s quiz attempt(s) for candidate retake."
+msgstr "Разблокировано попыток теста: %(count)s."
+
+msgid "Items"
+msgstr "Элементы"
+
+msgid "Steps"
+msgstr "Шаги"
+
+msgid "Approve selected onboarding feedback"
+msgstr "Одобрить выбранный фидбек по онбордингу"
+
+msgid "Reject selected onboarding feedback"
+msgstr "Отклонить выбранный фидбек по онбордингу"
+
+msgid "Approve selected comments"
+msgstr "Одобрить выбранные комментарии"
+
+msgid "Reject selected comments"
+msgstr "Отклонить выбранные комментарии"

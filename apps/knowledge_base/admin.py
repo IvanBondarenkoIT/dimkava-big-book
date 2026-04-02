@@ -1,6 +1,7 @@
 """Knowledge base admin."""
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
 from .models import Article, KBSection
 
@@ -54,23 +55,23 @@ class ArticleAdmin(admin.ModelAdmin):
         ('Review', {'fields': ('responsible_editor', 'review_required_after_days')}),
     )
 
-    @admin.display(description='Status')
+    @admin.display(description=_('Status'))
     def status_display(self, obj):
         label = obj.get_status_display()
         if obj.status == 'draft':
             return format_html('<strong style="color:#b45309;">{}</strong>', label)
         return label
 
-    @admin.display(description='Stale')
+    @admin.display(description=_('Stale'))
     def stale_indicator(self, obj):
         if obj.is_stale:
             return format_html(
-                '<span title="Not updated within {} days">⚠️</span>',
-                obj.review_required_after_days,
+                '<span title="{}">⚠️</span>',
+                _('Not updated within %(days)s days') % {'days': obj.review_required_after_days},
             )
         return '—'
 
-    @admin.display(description='Title')
+    @admin.display(description=_('Title'))
     def title_display(self, obj):
         title = obj.title
         if obj.is_stale:

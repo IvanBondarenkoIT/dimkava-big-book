@@ -1,6 +1,7 @@
 """Onboarding admin."""
 from django.contrib import admin
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from .models import (
     Mentor,
     MentorAssignment,
@@ -57,7 +58,7 @@ class OnboardingModuleAdmin(admin.ModelAdmin):
 
     def steps_count(self, obj):
         return obj.steps.count()
-    steps_count.short_description = 'Steps'
+    steps_count.short_description = _('Steps')
 
 
 @admin.register(OnboardingStep)
@@ -80,7 +81,7 @@ class OnboardingStepAdmin(admin.ModelAdmin):
         ('Legacy/Fallback', {'fields': ('title', 'content')}),
     )
 
-    @admin.display(description='Program')
+    @admin.display(description=_('Program'))
     def program_title(self, obj):
         return obj.module.program.title
 
@@ -132,7 +133,7 @@ class OnboardingFeedbackAdmin(admin.ModelAdmin):
     autocomplete_fields = ['program', 'user']
     actions = ['approve_feedback', 'reject_feedback']
 
-    @admin.action(description='Approve selected onboarding feedback')
+    @admin.action(description=_('Approve selected onboarding feedback'))
     def approve_feedback(self, request, queryset):
         queryset.update(
             status=OnboardingFeedback.Status.APPROVED,
@@ -140,7 +141,7 @@ class OnboardingFeedbackAdmin(admin.ModelAdmin):
             moderated_by=request.user,
         )
 
-    @admin.action(description='Reject selected onboarding feedback')
+    @admin.action(description=_('Reject selected onboarding feedback'))
     def reject_feedback(self, request, queryset):
         queryset.update(
             status=OnboardingFeedback.Status.REJECTED,

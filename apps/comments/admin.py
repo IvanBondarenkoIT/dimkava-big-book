@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from .models import Comment
 
@@ -12,12 +13,12 @@ class CommentAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
     actions = ['approve_comments', 'reject_comments']
 
-    @admin.action(description='Approve selected comments')
+    @admin.action(description=_('Approve selected comments'))
     def approve_comments(self, request, queryset):
         for c in queryset:
             c.approve(by_user=request.user)
 
-    @admin.action(description='Reject selected comments')
+    @admin.action(description=_('Reject selected comments'))
     def reject_comments(self, request, queryset):
         for c in queryset:
             c.reject(by_user=request.user)

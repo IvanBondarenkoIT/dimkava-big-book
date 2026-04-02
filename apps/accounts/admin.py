@@ -2,6 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 from .models import AssignmentRule, UserProfile
 from .services import convert_candidate_to_employee
@@ -31,12 +32,12 @@ class UserAdmin(BaseUserAdmin):
         'date_joined',
     ]
 
-    @admin.display(description='User type')
+    @admin.display(description=_('User type'))
     def profile_user_type(self, obj):
         profile = getattr(obj, 'profile', None)
         return getattr(profile, 'user_type', '')
 
-    @admin.display(description='Email verified at')
+    @admin.display(description=_('Email verified at'))
     def profile_email_verified_at(self, obj):
         profile = getattr(obj, 'profile', None)
         return getattr(profile, 'email_verified_at', None)
@@ -61,11 +62,11 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ['user__username', 'user__email', 'phone']
     autocomplete_fields = ['user', 'department', 'role', 'assigned_onboarding_program', 'display_badge']
 
-    @admin.display(description='Last login')
+    @admin.display(description=_('Last login'))
     def last_login(self, obj):
         return obj.user.last_login
 
-    @admin.display(description='Onboarding %')
+    @admin.display(description=_('Onboarding %'))
     def onboarding_progress_pct(self, obj):
         from apps.onboarding.selectors import get_onboarding_overview_for_user
 
@@ -74,14 +75,17 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     actions = ['convert_to_employee', 'mark_email_verified']
 
-    @admin.action(description='Mark email as verified (candidates)')
+    @admin.action(description=_('Mark email as verified (candidates)'))
     def mark_email_verified(self, request, queryset):
         from django.utils import timezone
 
         updated = queryset.update(email_verified_at=timezone.now())
-        self.message_user(request, f'Marked {updated} profile(s) as email verified.')
+        self.message_user(
+            request,
+            _('Marked %(count)s profile(s) as email verified.') % {'count': updated},
+        )
 
-    @admin.action(description='Convert selected candidates to employees')
+    @admin.action(description=_('Convert selected candidates to employees'))
     def convert_to_employee(self, request, queryset):
         for profile in queryset.select_related('user'):
             convert_candidate_to_employee(profile.user)
@@ -100,7 +104,7 @@ class AssignmentRuleAdmin(admin.ModelAdmin):
     list_filter = ['is_active', 'department']
     search_fields = ['role_name', 'onboarding_program_slug']
 
-    @admin.display(description='Courses')
+    @admin.display(description=_('Courses'))
     def course_count(self, obj):
         return len(obj.required_course_slugs or [])
 

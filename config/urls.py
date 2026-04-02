@@ -3,8 +3,13 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.views.generic import RedirectView
+from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.views import LoginView
+
+admin.site.site_header = _('Dim Kava Admin')
+admin.site.site_title = _('Dim Kava Admin')
+admin.site.index_title = _('Administration')
 
 urlpatterns = [
     path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico', permanent=True)),

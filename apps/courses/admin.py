@@ -1,6 +1,7 @@
 """Courses admin."""
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
 from .models import Course, ILPItem, IndividualLearningPlan, Lesson, LessonRating, TestQuestion, UserProgress
 from .services import unlock_candidate_quiz_retake
@@ -47,23 +48,23 @@ class CourseAdmin(admin.ModelAdmin):
         ('Review', {'fields': ('author', 'responsible_editor', 'review_required_after_days')}),
     )
 
-    @admin.display(description='Status')
+    @admin.display(description=_('Status'))
     def status_display(self, obj):
         label = obj.get_status_display()
         if obj.status == 'review':
             return format_html('<strong style="color:#b45309;">{}</strong>', label)
         return label
 
-    @admin.display(description='Stale')
+    @admin.display(description=_('Stale'))
     def stale_indicator(self, obj):
         if obj.is_stale:
             return format_html(
-                '<span title="Not updated within {} days">⚠️</span>',
-                obj.review_required_after_days,
+                '<span title="{}">⚠️</span>',
+                _('Not updated within %(days)s days') % {'days': obj.review_required_after_days},
             )
         return '—'
 
-    @admin.display(description='Title')
+    @admin.display(description=_('Title'))
     def title_display(self, obj):
         title = obj.title
         if obj.is_stale:
@@ -110,14 +111,14 @@ class TestQuestionAdmin(admin.ModelAdmin):
         ('Legacy/Fallback', {'fields': ('question_text', 'options')}),
     )
 
-    @admin.display(description='Question')
+    @admin.display(description=_('Question'))
     def short_question(self, obj):
         text = obj.question_text.strip()
         if len(text) <= 80:
             return text
         return text[:80] + '…'
 
-    @admin.display(description='Course')
+    @admin.display(description=_('Course'))
     def course_title(self, obj):
         return obj.lesson.course.title
 
@@ -137,7 +138,7 @@ class UserProgressAdmin(admin.ModelAdmin):
     autocomplete_fields = ['user', 'lesson']
     actions = ['allow_candidate_quiz_retake']
 
-    @admin.action(description='Allow candidate quiz retake (unlock selected)')
+    @admin.action(description=_('Allow candidate quiz retake (unlock selected)'))
     def allow_candidate_quiz_retake(self, request, queryset):
         unlocked = 0
         for p in queryset.select_related('user__profile', 'lesson'):
@@ -148,7 +149,10 @@ class UserProgressAdmin(admin.ModelAdmin):
                 continue
             unlock_candidate_quiz_retake(p, by_user=request.user)
             unlocked += 1
-        self.message_user(request, f'Unlocked {unlocked} quiz attempt(s) for candidate retake.')
+        self.message_user(
+            request,
+            _('Unlocked %(count)s quiz attempt(s) for candidate retake.') % {'count': unlocked},
+        )
 
 
 class ILPItemInline(admin.TabularInline):
@@ -165,7 +169,7 @@ class IndividualLearningPlanAdmin(admin.ModelAdmin):
     autocomplete_fields = ['user', 'created_by']
     inlines = [ILPItemInline]
 
-    @admin.display(description='Items')
+    @admin.display(description=_('Items'))
     def items_count(self, obj):
         return obj.items.count()
 
