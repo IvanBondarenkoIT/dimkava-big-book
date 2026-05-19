@@ -39,7 +39,13 @@ GitHub (push) → Actions «Docker publish» → GHCR (образ)
 | PR Checks | Pull Request → вкладка **Checks** |
 
 **Зелёный Docker publish** = образ можно тянуть на ПК.  
-**Красный** = сначала чиним CI (лог шага **Build and push**), локальный деплой бессмысленен.
+**Красный** = откройте упавший run → шаг **Build and push** → последние строки лога.
+
+Частые причины (если снова красный):
+
+- **Packages:** Settings → Actions → General → Workflow permissions → **Read and write**
+- **Первый push в GHCR:** нужны права `packages: write` (уже в workflow)
+- Лог `denied` / `403` — проверьте видимость репозитория и PAT при `docker login` на ПК
 
 **GitGuardian** = проверка, что в код не попали пароли. Ветка `deploy/self-hosted`, коммит `db052aa` — без `.env.prod.example` в git.
 
