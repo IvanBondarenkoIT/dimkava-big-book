@@ -1,0 +1,12 @@
+# Public HTTPS (Let's Encrypt). Copy to deploy/Caddyfile and replace the domain.
+# Ports 80 and 443 must be reachable from the internet for ACME.
+
+portal.example.com {
+	encode gzip zstd
+	reverse_proxy web:8000 {
+		header_up Host {host}
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+}

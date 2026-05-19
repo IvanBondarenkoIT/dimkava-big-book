@@ -1,0 +1,17 @@
+# LAN / VPN mode (HTTP only). Replace :80 block or use deploy/Caddyfile.https for public HTTPS.
+#
+# Public HTTPS: copy deploy/Caddyfile.https.example → deploy/Caddyfile
+# and set your domain. Then set in .env.prod:
+#   ALLOWED_HOSTS=portal.example.com
+#   CSRF_TRUSTED_ORIGINS=https://portal.example.com
+#   SECURE_SSL_REDIRECT=true
+
+:80 {
+	encode gzip zstd
+	reverse_proxy web:8000 {
+		header_up Host {host}
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+}

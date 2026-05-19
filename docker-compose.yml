@@ -1,15 +1,15 @@
 # Dim Kava — local dev (PostgreSQL + Redis)
 # Optional: use SQLite for quick start; run this when you need Postgres/Redis.
 # Usage: docker-compose up -d
-# Then: DATABASE_URL=postgres://dimkava:dimkava@localhost:5432/dimkava docker-compose ...
+# Then set DATABASE_URL in .env (see .env.example) and docker-compose up -d
 
 services:
   db:
     image: postgres:15-alpine
     environment:
-      POSTGRES_DB: dimkava
-      POSTGRES_USER: dimkava
-      POSTGRES_PASSWORD: dimkava
+      POSTGRES_DB: ${POSTGRES_DB:-dimkava}
+      POSTGRES_USER: ${POSTGRES_USER:-dimkava}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dimkava}
     ports:
       - "5432:5432"
     volumes:

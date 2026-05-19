@@ -1,4 +1,4 @@
-"""Production settings — Railway, PostgreSQL, secure cookies."""
+"""Production settings — PostgreSQL, reverse proxy, secure cookies."""
 from .base import *
 from decouple import config
 import dj_database_url
@@ -8,9 +8,14 @@ SECRET_KEY = config('SECRET_KEY')  # Required in prod, no default
 ALLOWED_HOSTS = [h.strip() for h in config('ALLOWED_HOSTS', default='').split(',') if h.strip()]
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in config('CSRF_TRUSTED_ORIGINS', default='').split(',') if o.strip()]
 
-# Database — PostgreSQL from DATABASE_URL (Railway provides this)
+# Database — PostgreSQL from DATABASE_URL
+# Self-hosted Docker Postgres: DATABASE_SSL_REQUIRE=false
+# Managed cloud DB (Railway, etc.): DATABASE_SSL_REQUIRE=true
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    'default': dj_database_url.config(
+        conn_max_age=600,
+        ssl_require=config('DATABASE_SSL_REQUIRE', default=False, cast=bool),
+    )
 }
 
 # Security

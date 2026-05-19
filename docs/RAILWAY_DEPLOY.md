@@ -24,6 +24,7 @@
 | `ALLOWED_HOSTS` | `yourapp.up.railway.app` | Домен приложения |
 | `CSRF_TRUSTED_ORIGINS` | `https://yourapp.up.railway.app` | Для HTTPS |
 | `DATABASE_URL` | (из Railway Postgres) | Подставляется автоматически при подключении БД |
+| `DATABASE_SSL_REQUIRE` | `true` | SSL к managed Postgres (на self-hosted Docker: `false`) |
 | `AUTO_CREATE_DEFAULT_USERS` | `1` | Первый запуск: создать admin/hr/employee/candidate из `DEFAULT_*` |
 | `AUTO_SEED_DEMO_CONTENT` | `1` | Вместе с `AUTO_CREATE` — сид только если таблицы пустые |
 
