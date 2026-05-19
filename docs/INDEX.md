@@ -53,6 +53,7 @@
 | [PROMPTS_MAPPING.md](PROMPTS_MAPPING.md) | Работа с AI / Cursor | Какие промпты применять, порядок, связь с фазами |
 | [FEATURES_BACKLOG.md](FEATURES_BACKLOG.md) | Будущие фичи (последняя очередь) | Ачивки и комментарии — в конец roadmap; комментарии только после approve HR + админка модерации |
 | [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md) | Операции EN/KA/RU | Как переключать язык, грузить и редактировать мультиязычный контент |
+| [GITHUB_AND_DOCKER.md](GITHUB_AND_DOCKER.md) | **Перед первым деплоем** | Что делает GitHub Actions vs Docker на ПК, чеклист |
 | [WINDOWS_SERVER_DEPLOY.md](WINDOWS_SERVER_DEPLOY.md) | **Production на своём сервере** | Windows + Docker Desktop, GHCR, Caddy, GitHub Actions |
 | [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) | Деплой Railway (legacy) | Переменные, `AUTO_LOAD_HR_CONTENT`, `compilemessages` в образе |
 | [I18N_RU_DONE_AND_KA_PLAN.md](I18N_RU_DONE_AND_KA_PLAN.md) | После фазы RU / перед KA | Что сделано для русского и пошаговый план грузинского без пропусков |

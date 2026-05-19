@@ -2,6 +2,9 @@
 
 Production-стек: **Caddy** (reverse proxy) → **Django/Gunicorn** → **PostgreSQL**. Образ приложения публикуется в **GHCR** через GitHub Actions; сервер только делает `docker pull`.
 
+**Сначала непонятно GitHub vs Docker?** → [GITHUB_AND_DOCKER.md](GITHUB_AND_DOCKER.md).  
+Проверка на машине: `.\deploy\scripts\verify-setup.ps1`
+
 См. также: [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) (старая схема), [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md).
 
 ---

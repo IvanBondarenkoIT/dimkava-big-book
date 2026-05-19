@@ -45,6 +45,7 @@ dimkava-big-book/
 
 ## Деплой
 
+- **Не понятно GitHub vs Docker?** **[docs/GITHUB_AND_DOCKER.md](docs/GITHUB_AND_DOCKER.md)** — схема, чеклист, что куда смотреть.
 - **Self-hosted (Windows Server + Docker):** **[docs/WINDOWS_SERVER_DEPLOY.md](docs/WINDOWS_SERVER_DEPLOY.md)** — `docker-compose.prod.yml`, GHCR, GitHub Actions.
 - **Railway (legacy):** **[docs/RAILWAY_DEPLOY.md](docs/RAILWAY_DEPLOY.md)**.
 
