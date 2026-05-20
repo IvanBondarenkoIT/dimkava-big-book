@@ -41,6 +41,23 @@ GitHub (push) → Actions «Docker publish» → GHCR (образ)
 **Зелёный Docker publish** = образ можно тянуть на ПК.  
 **Красный** = откройте упавший run → шаг **Build and push** → последние строки лога.
 
+### Ошибка `403 Forbidden` при `docker pull` (пакет уже Public)
+
+1. **Выйти из GHCR** — старый токен часто ломает pull публичного образа:
+   ```powershell
+   docker logout ghcr.io
+   docker pull ghcr.io/ivanbondarenkoit/dimkava-big-book:latest
+   ```
+2. Проверить, что образ есть: репозиторий → **Packages** → `dimkava-big-book` → есть тег **latest** (зелёный Actions).
+3. Попробовать тег по коммиту (из последнего зелёного run):  
+   `docker pull ghcr.io/ivanbondarenkoit/dimkava-big-book:<короткий-sha>`
+4. **Обход без GHCR** — собрать на сервере из git (15–20 мин):
+   ```powershell
+   cd C:\Projects\dimkava-big-book
+   .\deploy\scripts\build-local-image.ps1
+   ```
+   В `.env.prod`: `DIMKAVA_IMAGE=dimkava-local:latest`, затем `docker compose ... up -d`.
+
 Частые причины (если снова красный):
 
 - **Packages:** Settings → Actions → General → Workflow permissions → **Read and write**
