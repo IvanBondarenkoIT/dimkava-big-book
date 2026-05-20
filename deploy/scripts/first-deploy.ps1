@@ -1,13 +1,15 @@
-# Dim Kava — first production deploy on Windows Server
+# Dim Kava - first production deploy on Windows Server
+# Run from repo: .\deploy\scripts\first-deploy.ps1
 
 param(
     [string]$ComposeDir = "C:\dimkava\compose"
 )
 
 $ErrorActionPreference = "Stop"
-$scriptsDir = if (Test-Path "C:\dimkava\scripts\new-env-prod.ps1") { "C:\dimkava\scripts" } else { $PSScriptRoot }
+$repoScripts = $PSScriptRoot
+$scriptsDir = if (Test-Path "C:\dimkava\scripts\new-env-prod.ps1") { "C:\dimkava\scripts" } else { $repoScripts }
 
-Write-Host "Dim Kava — first deploy" -ForegroundColor Cyan
+Write-Host "Dim Kava - first deploy" -ForegroundColor Cyan
 Write-Host "Working directory: $ComposeDir"
 
 if (-not (Test-Path $ComposeDir)) {
@@ -17,15 +19,22 @@ if (-not (Test-Path $ComposeDir)) {
 Set-Location $ComposeDir
 
 if (-not (Test-Path ".env.prod")) {
-    & (Join-Path $scriptsDir "new-env-prod.ps1") -ComposeDir $ComposeDir
-    Write-Host "Edit .env.prod — set POSTGRES_PASSWORD, SECRET_KEY, DEFAULT_ADMIN_PASSWORD." -ForegroundColor Yellow
+    $newEnv = Join-Path $scriptsDir "new-env-prod.ps1"
+    if (-not (Test-Path $newEnv)) {
+        throw "new-env-prod.ps1 not found. Run copy-to-server.ps1 from repo root first."
+    }
+    & $newEnv -ComposeDir $ComposeDir
+    Write-Host "Edit .env.prod - set POSTGRES_PASSWORD, SECRET_KEY, DEFAULT_ADMIN_PASSWORD." -ForegroundColor Yellow
     notepad .env.prod
-    Read-Host "Press Enter after saving .env.prod"
+    Write-Host "Save .env.prod in Notepad, then press Enter here." -ForegroundColor Yellow
+    Read-Host
 }
 
-Write-Host "Logging in to GHCR..."
-docker login ghcr.io
+if (-not (Test-Path "docker-compose.prod.yml")) {
+    throw "docker-compose.prod.yml missing in $ComposeDir. Run copy-to-server.ps1"
+}
 
+Write-Host "Pulling images and starting stack..."
 $dc = "docker compose --env-file .env.prod -f docker-compose.prod.yml"
 Invoke-Expression "$dc pull"
 Invoke-Expression "$dc up -d"
@@ -34,4 +43,5 @@ Start-Sleep -Seconds 15
 Invoke-Expression "$dc ps"
 Invoke-Expression "$dc logs web --tail 80"
 
+Write-Host ""
 Write-Host "Open http://localhost/ then run post-first-login.ps1" -ForegroundColor Green
