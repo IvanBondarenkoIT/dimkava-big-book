@@ -23,7 +23,7 @@ New-Item -ItemType Directory -Path "C:\dimkava\backups" -Force | Out-Null
 foreach ($rel in $files) {
     $src = Join-Path $RepoRoot $rel
     if (-not (Test-Path $src)) {
-        throw "Missing in repo: $src — run: git checkout deploy/self-hosted -- $rel"
+        throw "Missing in repo: $src. Run: git checkout deploy/self-hosted -- $rel"
     }
     $dest = Join-Path $TargetDir $rel
     $destParent = Split-Path $dest -Parent

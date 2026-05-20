@@ -1,4 +1,4 @@
-# Run after first successful admin login — disables auto user creation
+# Run after first successful admin login - disables auto user creation
 
 param(
     [string]$ComposeDir = "C:\dimkava\compose"

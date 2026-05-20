@@ -1,4 +1,4 @@
-# Dim Kava — PostgreSQL backup to C:\dimkava\backups
+# Dim Kava - PostgreSQL backup to C:\dimkava\backups
 # Schedule via Task Scheduler (daily recommended).
 
 param(

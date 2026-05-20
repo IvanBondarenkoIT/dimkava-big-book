@@ -1,4 +1,4 @@
-# Dim Kava — check GitHub deploy prerequisites on this machine (read-only checks)
+# Dim Kava - check GitHub deploy prerequisites on this machine (read-only checks)
 param(
     [string]$ComposeDir = "C:\dimkava\compose"
 )

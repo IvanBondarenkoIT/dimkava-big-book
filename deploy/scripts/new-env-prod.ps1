@@ -16,7 +16,7 @@ if ((Test-Path $envPath) -and -not $Force) {
 New-Item -ItemType Directory -Path $ComposeDir -Force | Out-Null
 
 $content = @'
-# Dim Kava production — fill all empty values on the server. Do not commit this file.
+# Dim Kava production - fill all empty values on the server. Do not commit this file.
 
 POSTGRES_DB=dimkava
 POSTGRES_USER=dimkava
@@ -62,4 +62,4 @@ DEFAULT_FROM_EMAIL=Dim Kava <noreply@dimkava.ge>
 '@
 
 Set-Content -Path $envPath -Value $content.TrimEnd() -Encoding utf8
-Write-Host "Created $envPath — fill POSTGRES_PASSWORD, SECRET_KEY, and DEFAULT_* passwords before deploy." -ForegroundColor Green
+Write-Host "Created $envPath - fill POSTGRES_PASSWORD, SECRET_KEY, and DEFAULT_* passwords before deploy." -ForegroundColor Green
