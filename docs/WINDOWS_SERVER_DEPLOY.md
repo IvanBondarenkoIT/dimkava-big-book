@@ -7,6 +7,15 @@ Production-стек: **Caddy** (reverse proxy) → **Django/Gunicorn** → **Pos
 
 См. также: [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) (старая схема), [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md).
 
+### Текущий прод (зафиксировано)
+
+| Параметр | Значение |
+|----------|----------|
+| URL | `http://178.63.72.227:777/` |
+| Файл env | **`C:\dimkava\compose\.env.prod`** (с точкой; не `env.prod`) |
+| `PUBLIC_HTTP_PORT` | `777` (NAT WAN `:777` → host `:777`) |
+| После правки `ALLOWED_HOSTS` | `docker compose ... up -d --force-recreate web` |
+
 ---
 
 ## 1. Требования к серверу
@@ -258,7 +267,7 @@ Get-Content C:\dimkava\backups\dimkava-....sql | docker compose --env-file .env.
 |---------|---------|
 | `web` не стартует, ошибка SSL к БД | `DATABASE_SSL_REQUIRE=false` |
 | Redirect loop | LAN: `SECURE_SSL_REDIRECT=false`; HTTPS: проверить Caddy и `CSRF_TRUSTED_ORIGINS` |
-| 400 Bad Request (DisallowedHost) | Добавить IP в `ALLOWED_HOSTS`; для `:777` см. § публичный IP |
+| 400 Bad Request (DisallowedHost) | IP в `ALLOWED_HOSTS` в **`.env.prod`**, затем `--force-recreate web`; проверить `docker exec ... printenv ALLOWED_HOSTS` |
 | 403 CSRF | Добавить `http://IP:777` в `CSRF_TRUSTED_ORIGINS` |
 | Снаружи `:777` не открывается | `configure-public-access.ps1`, NAT A/B, `verify-public-access.ps1` |
 | Нет образа | `docker login ghcr.io`, проверить `DIMKAVA_IMAGE` |
