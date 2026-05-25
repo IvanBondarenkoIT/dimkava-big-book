@@ -7,11 +7,12 @@ Production-стек: **Caddy** (reverse proxy) → **Django/Gunicorn** → **Pos
 
 См. также: [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) (старая схема), [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md).
 
-### Текущий прод (зафиксировано)
+### Текущий прод (live, 2026-05-25)
 
 | Параметр | Значение |
 |----------|----------|
 | URL | `http://ge.domkofe.biz:777/` |
+| Снимок | [deploy/docs/PRODUCTION_STATUS.md](../deploy/docs/PRODUCTION_STATUS.md) |
 | Файл env | **`C:\dimkava\compose\.env.prod`** (с точкой; не `env.prod`) |
 | `PUBLIC_HTTP_PORT` | `777` (NAT WAN `:777` → host `:777`) |
 | После правки `ALLOWED_HOSTS` | `docker compose ... up -d --force-recreate web` |

@@ -55,6 +55,7 @@
 | [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md) | Операции EN/KA/RU | Как переключать язык, грузить и редактировать мультиязычный контент |
 | [GITHUB_AND_DOCKER.md](GITHUB_AND_DOCKER.md) | **Перед первым деплоем** | Что делает GitHub Actions vs Docker на ПК, чеклист |
 | [WINDOWS_SERVER_DEPLOY.md](WINDOWS_SERVER_DEPLOY.md) | **Production на своём сервере** | Windows + Docker Desktop, GHCR, Caddy, GitHub Actions |
+| [PRODUCTION_STATUS.md](../deploy/docs/PRODUCTION_STATUS.md) | **Текущий прод (live)** | URL `ge.domkofe.biz:777`, пути на сервере, чеклист «позже» |
 | [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) | Деплой Railway (legacy) | Переменные, `AUTO_LOAD_HR_CONTENT`, `compilemessages` в образе |
 | [I18N_RU_DONE_AND_KA_PLAN.md](I18N_RU_DONE_AND_KA_PLAN.md) | После фазы RU / перед KA | Что сделано для русского и пошаговый план грузинского без пропусков |
 
