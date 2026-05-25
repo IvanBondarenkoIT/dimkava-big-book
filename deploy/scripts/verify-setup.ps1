@@ -53,6 +53,13 @@ Write-Host ""
 Write-Host "Docs: docs/GITHUB_AND_DOCKER.md | docs/WINDOWS_SERVER_DEPLOY.md"
 Write-Host ""
 
+if ($ok -and (Test-Path (Join-Path $ComposeDir ".env.prod"))) {
+    $envRaw = Get-Content (Join-Path $ComposeDir ".env.prod") -Raw
+    if ($envRaw -match "ALLOWED_HOSTS=localhost,127\.0\.0\.1\s") {
+        Write-Host "[HINT] Public internet: configure-public-access.ps1 -PublicIp <WAN-IP> -PublicPort 777" -ForegroundColor Yellow
+    }
+}
+
 if ($ok) {
     Write-Host "Local checks passed. Next: docker login ghcr.io && first-deploy.ps1" -ForegroundColor Green
 } else {

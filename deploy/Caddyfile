@@ -1,7 +1,10 @@
-# LAN / VPN mode (HTTP only). Replace :80 block or use deploy/Caddyfile.https for public HTTPS.
+# LAN / VPN / public HTTP (default :80 inside container).
+#
+# Public IP + WAN port (e.g. http://178.63.72.227:777/):
+#   configure-public-access.ps1 -PublicIp ... -PublicPort 777
+#   See deploy/docs/PUBLIC_ACCESS_NAT.md (NAT variant A vs B).
 #
 # Public HTTPS: copy deploy/Caddyfile.https.example → deploy/Caddyfile
-# and set your domain. Then set in .env.prod:
 #   ALLOWED_HOSTS=portal.example.com
 #   CSRF_TRUSTED_ORIGINS=https://portal.example.com
 #   SECURE_SSL_REDIRECT=true

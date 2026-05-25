@@ -23,3 +23,4 @@ Set-Location $ComposeDir
 docker compose --env-file .env.prod -f docker-compose.prod.yml up -d web
 
 Write-Host "Web container restarted. Verify login still works." -ForegroundColor Green
+Write-Host "Change admin password in the UI if the site is reachable from the internet." -ForegroundColor Yellow

@@ -42,8 +42,10 @@ foreach ($s in $scriptSources) {
 
 Write-Host ""
 Write-Host "Done. Next commands:" -ForegroundColor Green
-Write-Host "  .\deploy\scripts\new-env-prod.ps1"
+Write-Host "  .\deploy\scripts\new-env-prod.ps1 -PublicIp 178.63.72.227 -PublicPort 777"
 Write-Host "  notepad C:\dimkava\compose\.env.prod"
+Write-Host "  .\deploy\scripts\configure-public-access.ps1 -PublicIp 178.63.72.227 -PublicPort 777 -NatVariant B"
 Write-Host "  .\deploy\scripts\verify-setup.ps1"
+Write-Host "  .\deploy\scripts\verify-public-access.ps1 -PublicIp 178.63.72.227 -PublicPort 777"
 Write-Host "  docker login ghcr.io"
 Write-Host "  .\deploy\scripts\first-deploy.ps1"
