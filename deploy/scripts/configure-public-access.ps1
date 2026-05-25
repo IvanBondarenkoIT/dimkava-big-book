@@ -1,13 +1,13 @@
-# Configure .env.prod and firewall for public HTTP access (e.g. http://178.63.72.227:777/)
+# Configure .env.prod and firewall for public HTTP access (e.g. http://ge.domkofe.biz:777/)
 # Run on the server after copy-to-server.ps1 and new-env-prod.ps1 (secrets filled).
 #
 # Examples:
-#   .\configure-public-access.ps1 -PublicIp 178.63.72.227 -PublicPort 777 -NatVariant B
-#   .\configure-public-access.ps1 -PublicIp 178.63.72.227 -PublicPort 777 -NatVariant A
+#   .\configure-public-access.ps1 -PublicHost ge.domkofe.biz -PublicPort 777 -NatVariant B
+#   .\configure-public-access.ps1 -PublicHost ge.domkofe.biz -PublicIp 178.63.72.227 -NatVariant B
 
 param(
-    [Parameter(Mandatory = $true)]
-    [string]$PublicIp,
+    [string]$PublicHost = "ge.domkofe.biz",
+    [string]$PublicIp = "",
     [int]$PublicPort = 777,
     [ValidateSet("A", "B")]
     [string]$NatVariant = "B",
@@ -28,9 +28,13 @@ if (-not (Test-Path $composeFile)) {
 }
 
 $hostPort = if ($NatVariant -eq "B") { $PublicPort } else { 80 }
-$csrfOrigin = "http://${PublicIp}:${PublicPort}"
-$allowedHosts = "$PublicIp,localhost,127.0.0.1"
+$csrfOrigin = "http://${PublicHost}:${PublicPort}"
+$allowedHosts = @($PublicHost)
+if ($PublicIp) { $allowedHosts += $PublicIp }
+$allowedHosts += @("localhost", "127.0.0.1")
+$allowedHosts = ($allowedHosts -join ",")
 $csrfOrigins = "$csrfOrigin,http://localhost,http://127.0.0.1"
+$publicUrl = "http://${PublicHost}:${PublicPort}/"
 
 function Set-EnvLine {
     param([string]$Name, [string]$Value, [ref]$Text)
@@ -64,7 +68,7 @@ if ($NatVariant -eq "A") {
 } else {
     Write-Host "  WAN :$PublicPort -> this server LAN IP, port $PublicPort"
 }
-Write-Host "  Public URL: http://${PublicIp}:${PublicPort}/"
+Write-Host "  Public URL: $publicUrl"
 Write-Host "  See: deploy/docs/PUBLIC_ACCESS_NAT.md"
 Write-Host ""
 
@@ -81,12 +85,12 @@ if (-not $SkipFirewall) {
 
 if (-not $SkipComposeUp) {
     Set-Location $ComposeDir
-    docker compose --env-file .env.prod -f docker-compose.prod.yml up -d
+    docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --force-recreate web
     if ($LASTEXITCODE -ne 0) {
         throw "docker compose up -d failed"
     }
-    Write-Host "Stack restarted." -ForegroundColor Green
+    Write-Host "Web container recreated (ALLOWED_HOSTS applied)." -ForegroundColor Green
 }
 
 Write-Host ""
-Write-Host "Next: .\verify-public-access.ps1 -PublicIp $PublicIp -PublicPort $PublicPort -HostPort $hostPort"
+Write-Host "Next: .\verify-public-access.ps1 -PublicHost $PublicHost -PublicPort $PublicPort -HostPort $hostPort"

@@ -11,7 +11,7 @@ Production-стек: **Caddy** (reverse proxy) → **Django/Gunicorn** → **Pos
 
 | Параметр | Значение |
 |----------|----------|
-| URL | `http://178.63.72.227:777/` |
+| URL | `http://ge.domkofe.biz:777/` |
 | Файл env | **`C:\dimkava\compose\.env.prod`** (с точкой; не `env.prod`) |
 | `PUBLIC_HTTP_PORT` | `777` (NAT WAN `:777` → host `:777`) |
 | После правки `ALLOWED_HOSTS` | `docker compose ... up -d --force-recreate web` |
@@ -121,32 +121,34 @@ notepad C:\dimkava\compose\.env.prod
 - `deploy/Caddyfile` — блок `:80` (по умолчанию в репозитории).
 - `SECURE_SSL_REDIRECT=false`, `CSRF_TRUSTED_ORIGINS=http://192.168.x.x`
 
-### Режим публичный IP + порт (HTTP, пример `178.63.72.227:777`)
+### Режим публичный домен + порт (HTTP, `ge.domkofe.biz:777`)
 
-Сеть снаружи уже может ходить на IP (как `http://178.63.72.227:8010/...`). Для Dim Kava:
+DNS **ge.domkofe.biz** → IP сервера (тот же, что `178.63.72.227`). Порт **777** как у health на `:8010`.
 
 1. Скопировать файлы: `copy-to-server.ps1`.
 2. На сервере (PowerShell **от администратора** для firewall):
 
 ```powershell
-C:\dimkava\scripts\configure-public-access.ps1 -PublicIp 178.63.72.227 -PublicPort 777 -NatVariant B
-C:\dimkava\scripts\verify-public-access.ps1 -PublicIp 178.63.72.227 -PublicPort 777 -HostPort 777
+C:\dimkava\scripts\configure-public-access.ps1 -PublicHost ge.domkofe.biz -PublicPort 777 -NatVariant B
+C:\dimkava\scripts\verify-public-access.ps1 -PublicHost ge.domkofe.biz -PublicPort 777 -HostPort 777
 ```
 
-**NAT:** вариант **B** — WAN `:777` → сервер `:777` (`PUBLIC_HTTP_PORT=777` в `.env.prod`). Вариант **A** — WAN `:777` → сервер `:80` (`-NatVariant A`, firewall только 80). Подробно: [`deploy/docs/PUBLIC_ACCESS_NAT.md`](../deploy/docs/PUBLIC_ACCESS_NAT.md).
+Опционально оставить доступ по IP: `-PublicIp 178.63.72.227`.
+
+**NAT:** вариант **B** — WAN `:777` → сервер `:777`. Подробно: [`deploy/docs/PUBLIC_ACCESS_NAT.md`](../deploy/docs/PUBLIC_ACCESS_NAT.md).
 
 Минимум в `.env.prod` (скрипт выставляет сам):
 
 ```env
-ALLOWED_HOSTS=178.63.72.227,localhost,127.0.0.1
-CSRF_TRUSTED_ORIGINS=http://178.63.72.227:777,http://localhost,http://127.0.0.1
+ALLOWED_HOSTS=ge.domkofe.biz,localhost,127.0.0.1
+CSRF_TRUSTED_ORIGINS=http://ge.domkofe.biz:777,http://localhost,http://127.0.0.1
 SECURE_SSL_REDIRECT=false
 SESSION_COOKIE_SECURE=false
 CSRF_COOKIE_SECURE=false
 PUBLIC_HTTP_PORT=777
 ```
 
-Открыть с телефона (не офисный Wi‑Fi): `http://178.63.72.227:777/`.
+Открыть: `http://ge.domkofe.biz:777/login/`.
 
 | Симптом | Действие |
 |---------|----------|

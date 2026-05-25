@@ -1,6 +1,7 @@
 # Create C:\dimkava\compose\.env.prod with empty values (fill on server only; never commit .env.prod)
 param(
     [string]$ComposeDir = "C:\dimkava\compose",
+    [string]$PublicHost = "",
     [string]$PublicIp = "",
     [int]$PublicPort = 777,
     [switch]$Force
@@ -64,15 +65,17 @@ EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 DEFAULT_FROM_EMAIL=Dim Kava <noreply@dimkava.ge>
 '@
 
-if ($PublicIp) {
-    $csrf = "http://${PublicIp}:${PublicPort}"
-    $content = $content -replace 'ALLOWED_HOSTS=localhost,127.0.0.1', "ALLOWED_HOSTS=$PublicIp,localhost,127.0.0.1"
+$presetHost = if ($PublicHost) { $PublicHost } elseif ($PublicIp) { $PublicIp } else { "" }
+if ($presetHost) {
+    $csrf = "http://${presetHost}:${PublicPort}"
+    $hosts = if ($PublicHost -and $PublicIp) { "$PublicHost,$PublicIp,localhost,127.0.0.1" } else { "$presetHost,localhost,127.0.0.1" }
+    $content = $content -replace 'ALLOWED_HOSTS=localhost,127.0.0.1', "ALLOWED_HOSTS=$hosts"
     $content = $content -replace 'CSRF_TRUSTED_ORIGINS=http://localhost,http://127.0.0.1', "CSRF_TRUSTED_ORIGINS=$csrf,http://localhost,http://127.0.0.1"
     $content = $content -replace 'PUBLIC_HTTP_PORT=80', "PUBLIC_HTTP_PORT=$PublicPort"
 }
 
 Set-Content -Path $envPath -Value $content.TrimEnd() -Encoding utf8
 Write-Host "Created $envPath - fill POSTGRES_PASSWORD, SECRET_KEY, and DEFAULT_* passwords before deploy." -ForegroundColor Green
-if ($PublicIp) {
-    Write-Host "Public IP preset: $PublicIp (port $PublicPort). Run configure-public-access.ps1 if NAT variant A (host port 80)." -ForegroundColor Yellow
+if ($presetHost) {
+    Write-Host "Public host preset: $presetHost (port $PublicPort). Run configure-public-access.ps1 if NAT variant A (host port 80)." -ForegroundColor Yellow
 }

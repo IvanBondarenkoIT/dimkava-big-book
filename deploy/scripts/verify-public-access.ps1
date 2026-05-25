@@ -1,6 +1,6 @@
 # Verify Dim Kava responds locally after public-access configuration.
 param(
-    [string]$PublicIp = "178.63.72.227",
+    [string]$PublicHost = "ge.domkofe.biz",
     [int]$PublicPort = 777,
     [int]$HostPort = 777,
     [string]$ComposeDir = "C:\dimkava\compose"
@@ -10,7 +10,7 @@ $ErrorActionPreference = "Continue"
 $ok = $true
 
 Write-Host "=== Dim Kava public access check ===" -ForegroundColor Cyan
-Write-Host "Expected public URL: http://${PublicIp}:${PublicPort}/"
+Write-Host "Expected public URL: http://${PublicHost}:${PublicPort}/"
 Write-Host "Local probe port (host): $HostPort"
 Write-Host ""
 
@@ -59,7 +59,20 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host ""
-Write-Host "From phone (not office Wi-Fi): http://${PublicIp}:${PublicPort}/" -ForegroundColor Cyan
+# Host header check (Django ALLOWED_HOSTS)
+$hostHeaderUrl = "http://127.0.0.1:${HostPort}/login/"
+try {
+    $codeDomain = curl.exe -s -o NUL -w "%{http_code}" -H "Host: ${PublicHost}:${PublicPort}" --connect-timeout 5 $hostHeaderUrl 2>$null
+} catch { $codeDomain = "000" }
+if ($codeDomain -match "^(200|302)$") {
+    Write-Host "[OK] Host header $PublicHost`:$PublicPort -> HTTP $codeDomain" -ForegroundColor Green
+} else {
+    Write-Host "[FAIL] Host header $PublicHost`:$PublicPort -> HTTP $codeDomain (fix ALLOWED_HOSTS + force-recreate web)" -ForegroundColor Red
+    $ok = $false
+}
+
+Write-Host ""
+Write-Host "From phone (not office Wi-Fi): http://${PublicHost}:${PublicPort}/" -ForegroundColor Cyan
 Write-Host "If local OK but public fails: check NAT (see deploy/docs/PUBLIC_ACCESS_NAT.md) and try -NatVariant A vs B"
 Write-Host ""
 
