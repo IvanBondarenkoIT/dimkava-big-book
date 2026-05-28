@@ -298,12 +298,14 @@ docker compose --env-file .env.prod -f docker-compose.prod.yml logs -f proxy
 После `git pull` с обновлёнными `input/hr docs/content/regulations*.yaml` и кодом импорта:
 
 ```powershell
-cd C:\Projects\dimkava-big-book   # или путь клонa
+cd C:\Projects\dimkava-big-book
 git pull
 
-# Если образ собирается локально (без GHCR):
+# Локальный образ (скрипт в репозитории, не в C:\dimkava\compose):
+.\deploy\scripts\build-local-image.ps1
+# В C:\dimkava\compose\.env.prod: DIMKAVA_IMAGE=dimkava-local:latest
+
 cd C:\dimkava\compose
-.\build-local-image.ps1
 docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --force-recreate web
 
 # В .env.prod должен быть явный DATABASE_URL для docker compose run:
@@ -321,3 +323,49 @@ python manage.py import_telegram_regulations
 ```
 
 Требует `input/hr docs/content/regulations_en_translations.yaml` для EN (регламенты + тест).
+
+---
+
+## 13. Режим редактирования: админка vs YAML
+
+Два режима работы с контентом (статьи KB, курсы, quiz, новости):
+
+| Режим | `AUTO_LOAD_HR_CONTENT` | Источник правды | Когда использовать |
+|--------|------------------------|-----------------|-------------------|
+| **Seed / deploy** | `1` | YAML в git | Первичная заливка, массовое обновление переводов из репозитория |
+| **Редакторский (прод)** | `0` | База + `/admin/` | Повседневные правки HR; рестарт контейнера не затирает правки |
+
+При `AUTO_LOAD_HR_CONTENT=1` при **каждом** старте `web` выполняются `load_courses`, `load_onboarding`, `load_articles`, `load_news`, `load_departments`. Команды делают `update_or_create` по `slug` — поля из YAML **перезаписывают** то, что изменили в админке.
+
+### Включить режим админки (рекомендуется после первой заливки)
+
+В `C:\dimkava\compose\.env.prod`:
+
+```env
+AUTO_LOAD_HR_CONTENT=0
+```
+
+Перезапуск:
+
+```powershell
+cd C:\dimkava\compose
+docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --force-recreate web
+```
+
+Не запускайте вручную `load_articles` / `load_courses`, пока правите контент в админке.
+
+### Редактирование
+
+- URL: `http://ge.domkofe.biz:777/admin/` (staff / superuser)
+- **Knowledge base → Articles** — регламенты (`reg-*`), поля `title_*` / `content_*` (RU, KA, EN)
+- **Courses → Lessons / Test questions** — курс `regulations`, quiz
+
+### Снова подтянуть YAML из git (осознанно)
+
+1. `C:\dimkava\scripts\backup-db.ps1`
+2. Временно `AUTO_LOAD_HR_CONTENT=1` **или** один раз:  
+   `docker compose ... run --rm web python manage.py load_articles` (и `load_courses` при необходимости)
+3. Проверить сайт
+4. Вернуть `AUTO_LOAD_HR_CONTENT=0` и `--force-recreate web`
+
+Локальная разработка: в `.env` не задавайте `AUTO_LOAD_HR_CONTENT=1`, если тестируете правки через админку.

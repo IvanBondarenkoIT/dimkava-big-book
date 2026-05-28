@@ -46,7 +46,9 @@ PORT=8000
 
 AUTO_CREATE_DEFAULT_USERS=1
 AUTO_SEED_DEMO_CONTENT=1
-AUTO_LOAD_HR_CONTENT=1
+# 1 = load YAML into DB on every web start (overwrites admin edits). Use 1 for first seed only.
+# 0 = editorial mode: edit in /admin/, restarts do not reload YAML (recommended for production).
+AUTO_LOAD_HR_CONTENT=0
 
 DEFAULT_ADMIN_EMAIL=admin@dimkava.ge
 DEFAULT_ADMIN_PASSWORD=

@@ -65,6 +65,16 @@ C:\dimkava\scripts\configure-public-access.ps1 -PublicHost ge.domkofe.biz -Publi
 - [x] `AUTO_CREATE_DEFAULT_USERS=0` after first login
 - [x] Deploy scripts and docs in git (`deploy/self-hosted`)
 
+## Content editing (production)
+
+After the first YAML seed, set in `.env.prod`:
+
+```env
+AUTO_LOAD_HR_CONTENT=0
+```
+
+Then edit KB articles and courses in `/admin/` without restarts overwriting changes. See [WINDOWS_SERVER_DEPLOY.md](../../docs/WINDOWS_SERVER_DEPLOY.md) §13.
+
 ## Later (optional)
 
 - [ ] Merge `deploy/self-hosted` → `main`
