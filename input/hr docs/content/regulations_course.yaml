@@ -1,0 +1,746 @@
+courses:
+- slug: regulations
+  title_en: Regulations
+  title_ru: Регламенты
+  title_ka: შინაგანაწესები
+  description_en: Company regulations and standards.
+  description_ru: Регламенты и стандарты компании.
+  description_ka: კომპანიის შინაგანაწესები და სტანდარტები.
+  level: beginner
+  estimated_minutes: 30
+  image: ''
+  lessons:
+  - order: 1
+    title_en: Regulations Quiz
+    title_ru: Тест по регламентам
+    title_ka: შინაგანაწესების ტესტი
+    type: quiz
+    minutes: 15
+    passing_score: 0
+    questions:
+    - text_ru: Как часто оформляется заказ товара на точку?
+      text_en: Как часто оформляется заказ товара на точку?
+      text_ka: რამდენჯერ კეთდება საქონლის შეკვეთა ობიექტზე?
+      options_ru: &id001
+      - text: Каждый день
+        is_correct: true
+      - text: 1 раз в неделю
+        is_correct: true
+      - text: 2 раза в неделю
+        is_correct: true
+      - text: По необходимости
+        is_correct: true
+      options: *id001
+      options_ka:
+      - text: ყოველდღე
+        is_correct: true
+      - text: კვირაში 1-ჯერ
+        is_correct: true
+      - text: კვირაში 2-ჯერ
+        is_correct: true
+      - text: საჭიროების მიხედვით
+        is_correct: true
+    - text_ru: Кому отправляется заказ товара?
+      text_en: Кому отправляется заказ товара?
+      text_ka: ვის ეგზავნება საქონლის შეკვეთა?
+      options_ru: &id002
+      - text: Логисту
+        is_correct: true
+      - text: Регине
+        is_correct: true
+      - text: Бухгалтеру
+        is_correct: true
+      - text: Директору
+        is_correct: true
+      options: *id002
+      options_ka:
+      - text: ლოგისტს
+        is_correct: true
+      - text: რეგინას
+        is_correct: true
+      - text: ბუღალტერს
+        is_correct: true
+      - text: დირექტორს
+        is_correct: true
+    - text_ru: Что обязательно нужно проверить при приеме товара?
+      text_en: Что обязательно нужно проверить при приеме товара?
+      text_ka: რა არის სავალდებულო შემოწმება საქონლის მიღებისას?
+      options_ru: &id003
+      - text: Только накладную
+        is_correct: true
+      - text: Только коробки
+        is_correct: true
+      - text: Количество и целостность
+        is_correct: true
+      - text: Только сроки
+        is_correct: true
+      options: *id003
+      options_ka:
+      - text: მხოლოდ ზედნადები
+        is_correct: true
+      - text: მხოლოდ ყუთები
+        is_correct: true
+      - text: რაოდენობა და მთლიანობა
+        is_correct: true
+      - text: მხოლოდ ვადები
+        is_correct: true
+    - text_ru: Сколько времени курьер ожидает при приемке?
+      text_en: Сколько времени курьер ожидает при приемке?
+      text_ka: რამდენი წუთი ელოდება კურიერი მიღებისას?
+      options_ru: &id004
+      - text: 5 минут
+        is_correct: true
+      - text: 10 минут
+        is_correct: true
+      - text: 15 минут
+        is_correct: true
+      - text: 30 минут
+        is_correct: true
+      options: *id004
+      options_ka:
+      - text: 5 წუთი
+        is_correct: true
+      - text: 10 წუთი
+        is_correct: true
+      - text: 15 წუთი
+        is_correct: true
+      - text: 30 წუთი
+        is_correct: true
+    - text_ru: Что делать, если товар пришел без накладной?
+      text_en: Что делать, если товар пришел без накладной?
+      text_ka: რა უნდა გააკეთოთ, თუ საქონელი მოვიდა ზედნადების გარეშე?
+      options_ru: &id005
+      - text: Принять товар
+        is_correct: true
+      - text: Отказаться принимать
+        is_correct: true
+      - text: Проверить позже
+        is_correct: true
+      - text: Записать в блокнот
+        is_correct: true
+      options: *id005
+      options_ka:
+      - text: მიღება
+        is_correct: true
+      - text: არ მიღება
+        is_correct: true
+      - text: მოგვიანებით შემოწმება
+        is_correct: true
+      - text: ჩაწერა ბლოკნოტში
+        is_correct: true
+    - text_ru: Что делать при несоответствии товара?
+      text_en: Что делать при несоответствии товара?
+      text_ka: რა უნდა გაკეთდეს შეუსაბამობის შემთხვევაში?
+      options_ru: &id006
+      - text: Игнорировать
+        is_correct: true
+      - text: Сообщить сразу в офис
+        is_correct: true
+      - text: Принять товар
+        is_correct: true
+      - text: Написать в конце дня
+        is_correct: true
+      options: *id006
+      options_ka:
+      - text: იგნორირება
+        is_correct: true
+      - text: დაუყოვნებლივ შეტყობინება ოფისში
+        is_correct: true
+      - text: მიღება მაინც
+        is_correct: true
+      - text: დღის ბოლოს დაწერა
+        is_correct: true
+    - text_ru: Можно ли принимать товар без накладной?
+      text_en: Можно ли принимать товар без накладной?
+      text_ka: შეიძლება თუ არა საქონლის მიღება ზედნადების გარეშე?
+      options_ru: &id007
+      - text: Да
+        is_correct: true
+      - text: Иногда
+        is_correct: true
+      - text: Нет
+        is_correct: true
+      - text: Только от знакомого
+        is_correct: true
+      options: *id007
+      options_ka:
+      - text: კი
+        is_correct: true
+      - text: ზოგჯერ
+        is_correct: true
+      - text: არა
+        is_correct: true
+      - text: მხოლოდ ნაცნობთან
+        is_correct: true
+    - text_ru: Сколько внутренних накладных должно быть при доставке на точку?
+      text_en: Сколько внутренних накладных должно быть при доставке на точку?
+      text_ka: რამდენი შიდა ზედნადებია საჭირო ობიექტზე მიწოდებისას?
+      options_ru: &id008
+      - text: '1'
+        is_correct: true
+      - text: '2'
+        is_correct: true
+      - text: '3'
+        is_correct: true
+      - text: Не важно
+        is_correct: true
+      options: *id008
+      options_ka:
+      - text: '1'
+        is_correct: true
+      - text: '2'
+        is_correct: true
+      - text: '3'
+        is_correct: true
+      - text: არ აქვს მნიშვნელობა
+        is_correct: true
+    - text_ru: Кто несет штраф за выезд без транспортной накладной?
+      text_en: Кто несет штраф за выезд без транспортной накладной?
+      text_ka: ვინ იხდის ჯარიმას სატრანსპორტო ზედნადების გარეშე გასვლისთვის?
+      options_ru: &id009
+      - text: Менеджер
+        is_correct: true
+      - text: Сотрудник точки
+        is_correct: true
+      - text: Логист
+        is_correct: true
+      - text: Директор
+        is_correct: true
+      options: *id009
+      options_ka:
+      - text: მენეჯერი
+        is_correct: true
+      - text: ობიექტის თანამშრომელი
+        is_correct: true
+      - text: ლოგისტი
+        is_correct: true
+      - text: დირექტორი
+        is_correct: true
+    - text_ru: Что указывается в “КАССА НА ВЕЧЕР”?
+      text_en: Что указывается в “КАССА НА ВЕЧЕР”?
+      text_ka: რას ვწერთ „სალარო საღამოსთვის“-ში?
+      options_ru: &id010
+      - text: План продаж
+        is_correct: true
+      - text: Фактические наличные
+        is_correct: true
+      - text: Безнал
+        is_correct: true
+      - text: Прибыль
+        is_correct: true
+      options: *id010
+      options_ka:
+      - text: გაყიდვების გეგმა
+        is_correct: true
+      - text: ფაქტობრივი ნაღდი ფული
+        is_correct: true
+      - text: უნაღდო
+        is_correct: true
+      - text: მოგება
+        is_correct: true
+    - text_ru: Когда нужно сообщать о несоответствии?
+      text_en: Когда нужно сообщать о несоответствии?
+      text_ka: როდის უნდა შეატყობინოთ შეუსაბამობა?
+      options_ru: &id011
+      - text: В конце месяца
+        is_correct: true
+      - text: Сразу
+        is_correct: true
+      - text: Через неделю
+        is_correct: true
+      - text: Не обязательно
+        is_correct: true
+      options: *id011
+      options_ka:
+      - text: თვის ბოლოს
+        is_correct: true
+      - text: დაუყოვნებლივ
+        is_correct: true
+      - text: ერთ კვირაში
+        is_correct: true
+      - text: აუცილებელი არაა
+        is_correct: true
+    - text_ru: Что будет за несообщение?
+      text_en: Что будет за несообщение?
+      text_ka: რა ჯარიმაა არ შეტყობინების შემთხვევაში?
+      options_ru: &id012
+      - text: Ничего
+        is_correct: true
+      - text: Штраф 10 лари
+        is_correct: true
+      - text: Увольнение
+        is_correct: true
+      - text: Предупреждение
+        is_correct: true
+      options: *id012
+      options_ka:
+      - text: არაფერი
+        is_correct: true
+      - text: 10 ლარი
+        is_correct: true
+      - text: გათავისუფლება
+        is_correct: true
+      - text: გაფრთხილება
+        is_correct: true
+    - text_ru: Что нужно делать при приеме смены?
+      text_en: Что нужно делать при приеме смены?
+      text_ka: რა უნდა გააკეთოთ ცვლის მიღებისას?
+      options_ru: &id013
+      - text: Начать работу
+        is_correct: true
+      - text: Пересчитать кассу
+        is_correct: true
+      - text: Сделать кофе
+        is_correct: true
+      - text: Позвонить менеджеру
+        is_correct: true
+      options: *id013
+      options_ka:
+      - text: მუშაობის დაწყება
+        is_correct: true
+      - text: სალაროს გადათვლა
+        is_correct: true
+      - text: ყავის გაკეთება
+        is_correct: true
+      - text: მენეჯერთან დარეკვა
+        is_correct: true
+    - text_ru: Что обязательно указывать в расходах?
+      text_en: Что обязательно указывать в расходах?
+      text_ka: რას უნდა ვწერდეთ ხარჯებში?
+      options_ru: &id014
+      - text: Только сумму
+        is_correct: true
+      - text: Только дату
+        is_correct: true
+      - text: Название и количество
+        is_correct: true
+      - text: Ничего
+        is_correct: true
+      options: *id014
+      options_ka:
+      - text: მხოლოდ თანხა
+        is_correct: true
+      - text: მხოლოდ თარიღი
+        is_correct: true
+      - text: დასახელება და რაოდენობა
+        is_correct: true
+      - text: არაფერი
+        is_correct: true
+    - text_ru: 'При записи “такси” нужно указать:'
+      text_en: 'При записи “такси” нужно указать:'
+      text_ka: „ტაქსის“ შემთხვევაში რა უნდა მიეთითოს?
+      options_ru: &id015
+      - text: Только сумму
+        is_correct: true
+      - text: Причину поездки
+        is_correct: true
+      - text: Водителя
+        is_correct: true
+      - text: Ничего
+        is_correct: true
+      options: *id015
+      options_ka:
+      - text: მხოლოდ თანხა
+        is_correct: true
+      - text: მგზავრობის მიზეზი
+        is_correct: true
+      - text: მძღოლი
+        is_correct: true
+      - text: არაფერი
+        is_correct: true
+    - text_ru: Сколько чашек кофе дается сотруднику в месяц?
+      text_en: Сколько чашек кофе дается сотруднику в месяц?
+      text_ka: რამდენი ჭიქა ყავა ეკუთვნის თანამშრომელს თვეში?
+      options_ru: &id016
+      - text: '30'
+        is_correct: true
+      - text: '48'
+        is_correct: true
+      - text: '60'
+        is_correct: true
+      - text: Без лимита
+        is_correct: true
+      options: *id016
+      options_ka:
+      - text: '30'
+        is_correct: true
+      - text: '48'
+        is_correct: true
+      - text: '60'
+        is_correct: true
+      - text: შეუზღუდავად
+        is_correct: true
+    - text_ru: Сколько порций молока (150 г) дается?
+      text_en: Сколько порций молока (150 г) дается?
+      text_ka: რამდენი პორცია რძე (150გ) ეკუთვნის?
+      options_ru: &id017
+      - text: '5'
+        is_correct: true
+      - text: '10'
+        is_correct: true
+      - text: '15'
+        is_correct: true
+      - text: '20'
+        is_correct: true
+      options: *id017
+      options_ka:
+      - text: '5'
+        is_correct: true
+      - text: '10'
+        is_correct: true
+      - text: '15'
+        is_correct: true
+      - text: '20'
+        is_correct: true
+    - text_ru: Как вносится молоко в программу?
+      text_en: Как вносится молоко в программу?
+      text_ka: როგორ იწერება რძე პროგრამაში?
+      options_ru: &id018
+      - text: В мл
+        is_correct: true
+      - text: В граммах
+        is_correct: true
+      - text: В литрах
+        is_correct: true
+      - text: Не вносится
+        is_correct: true
+      options: *id018
+      options_ka:
+      - text: მლ-ში
+        is_correct: true
+      - text: გრამებში
+        is_correct: true
+      - text: ლიტრებში
+        is_correct: true
+      - text: არ იწერება
+        is_correct: true
+    - text_ru: Что будет, если чашка пробита без карты сотрудника?
+      text_en: Что будет, если чашка пробита без карты сотрудника?
+      text_ka: რა ხდება თუ ჭიქა გაიტარდა თანამშრომლის ბარათის გარეშე?
+      options_ru: &id019
+      - text: Ничего
+        is_correct: true
+      - text: Ошибка
+        is_correct: true
+      - text: Недостача
+        is_correct: true
+      - text: Перепроверка
+        is_correct: true
+      options: *id019
+      options_ka:
+      - text: არაფერი
+        is_correct: true
+      - text: შეცდომაა
+        is_correct: true
+      - text: დეფიციტი
+        is_correct: true
+      - text: გადამოწმება
+        is_correct: true
+    - text_ru: На чем учатся взбивать на начальном этапе?
+      text_en: На чем учатся взбивать на начальном этапе?
+      text_ka: რაზე სწავლობენ ქაფის გაკეთებას დასაწყისში?
+      options_ru: &id020
+      - text: Вода
+        is_correct: true
+      - text: Молоко
+        is_correct: true
+      - text: Фейри
+        is_correct: true
+      - text: Кофе
+        is_correct: true
+      options: *id020
+      options_ka:
+      - text: წყალი
+        is_correct: true
+      - text: რძე
+        is_correct: true
+      - text: ფეირი
+        is_correct: true
+      - text: ყავა
+        is_correct: true
+    - text_ru: Когда начинают использовать молоко?
+      text_en: Когда начинают использовать молоко?
+      text_ka: როდის იწყებენ რძის გამოყენებას?
+      options_ru: &id021
+      - text: Сразу
+        is_correct: true
+      - text: После обучения
+        is_correct: true
+      - text: Через месяц
+        is_correct: true
+      - text: Никогда
+        is_correct: true
+      options: *id021
+      options_ka:
+      - text: დაუყოვნებლივ
+        is_correct: true
+      - text: სწავლის შემდეგ
+        is_correct: true
+      - text: ერთი თვის შემდეგ
+        is_correct: true
+      - text: არასდროს
+        is_correct: true
+    - text_ru: Когда нужно сообщать о сроках?
+      text_en: Когда нужно сообщать о сроках?
+      text_ka: როდის უნდა შევატყობინოთ ვადების შესახებ?
+      options_ru: &id022
+      - text: За 1 месяц
+        is_correct: true
+      - text: За 2 месяца
+        is_correct: true
+      - text: За 3 месяца
+        is_correct: true
+      - text: За 6 месяцев
+        is_correct: true
+      options: *id022
+      options_ka:
+      - text: 1 თვე ადრე
+        is_correct: true
+      - text: 2 თვე ადრე
+        is_correct: true
+      - text: 3 თვე ადრე
+        is_correct: true
+      - text: 6 თვე ადრე
+        is_correct: true
+    - text_ru: Когда сообщают по регламенту (фиксированная дата)?
+      text_en: Когда сообщают по регламенту (фиксированная дата)?
+      text_ka: რომელ რიცხვში ხდება სავალდებულო შეტყობინება?
+      options_ru: &id023
+      - text: 1 число
+        is_correct: true
+      - text: 5 число
+        is_correct: true
+      - text: 10 число
+        is_correct: true
+      - text: 15 число
+        is_correct: true
+      options: *id023
+      options_ka:
+      - text: '1'
+        is_correct: true
+      - text: '5'
+        is_correct: true
+      - text: '10'
+        is_correct: true
+      - text: '15'
+        is_correct: true
+    - text_ru: Можно ли выдать товар без оплаты?
+      text_en: Можно ли выдать товар без оплаты?
+      text_ka: შეიძლება თუ არა საქონლის გაცემა გადახდის გარეშე?
+      options_ru: &id024
+      - text: Да
+        is_correct: true
+      - text: Иногда
+        is_correct: true
+      - text: Нет
+        is_correct: true
+      - text: По договоренности
+        is_correct: true
+      options: *id024
+      options_ka:
+      - text: კი
+        is_correct: true
+      - text: ზოგჯერ
+        is_correct: true
+      - text: არა
+        is_correct: true
+      - text: შეთანხმებით
+        is_correct: true
+    - text_ru: Что обязательно при выдаче товара?
+      text_en: Что обязательно при выдаче товара?
+      text_ka: რა არის აუცილებელი საქონლის გაცემისას?
+      options_ru: &id025
+      - text: Упаковка
+        is_correct: true
+      - text: Чек
+        is_correct: true
+      - text: Слова
+        is_correct: true
+      - text: Фото
+        is_correct: true
+      options: *id025
+      options_ka:
+      - text: შეფუთვა
+        is_correct: true
+      - text: ჩეკი
+        is_correct: true
+      - text: სიტყვა
+        is_correct: true
+      - text: ფოტო
+        is_correct: true
+    - text_ru: Что сделать первым при неисправности терминала?
+      text_en: Что сделать первым при неисправности терминала?
+      text_ka: რა უნდა გააკეთოთ პირველ რიგში ტერმინალის პრობლემისას?
+      options_ru: &id026
+      - text: Закрыть магазин
+        is_correct: true
+      - text: Проверить питание и интернет
+        is_correct: true
+      - text: Позвонить клиенту
+        is_correct: true
+      - text: Игнорировать
+        is_correct: true
+      options: *id026
+      options_ka:
+      - text: მაღაზიის დახურვა
+        is_correct: true
+      - text: ელექტროენერგიის და ინტერნეტის შემოწმება
+        is_correct: true
+      - text: კლიენტთან დარეკვა
+        is_correct: true
+      - text: იგნორირება
+        is_correct: true
+    - text_ru: Куда нужно сообщить о проблеме?
+      text_en: Куда нужно сообщить о проблеме?
+      text_ka: ვის უნდა შეატყობინოთ პრობლემა?
+      options_ru: &id027
+      - text: Клиенту
+        is_correct: true
+      - text: Банку и менеджеру
+        is_correct: true
+      - text: Коллеге
+        is_correct: true
+      - text: Никому
+        is_correct: true
+      options: *id027
+      options_ka:
+      - text: კლიენტს
+        is_correct: true
+      - text: ბანკს და მენეჯერს
+        is_correct: true
+      - text: კოლეგას
+        is_correct: true
+      - text: არავის
+        is_correct: true
+    - text_ru: Можно ли дарить подарки при рассрочке?
+      text_en: Можно ли дарить подарки при рассрочке?
+      text_ka: შეიძლება თუ არა საჩუქრების მიცემა განვადებისას?
+      options_ru: &id028
+      - text: Да
+        is_correct: true
+      - text: Нет
+        is_correct: true
+      - text: Иногда
+        is_correct: true
+      - text: По желанию
+        is_correct: true
+      options: *id028
+      options_ka:
+      - text: კი
+        is_correct: true
+      - text: არა
+        is_correct: true
+      - text: ზოგჯერ
+        is_correct: true
+      - text: სურვილის მიხედვით
+        is_correct: true
+    - text_ru: 'Максимальная скидка без согласования:'
+      text_en: 'Максимальная скидка без согласования:'
+      text_ka: 'მაქსიმალური ფასდაკლება შეთანხმების გარეშე:'
+      options_ru: &id029
+      - text: 3%
+        is_correct: true
+      - text: 5%
+        is_correct: true
+      - text: 10%
+        is_correct: true
+      - text: 15%
+        is_correct: true
+      options: *id029
+      options_ka:
+      - text: 3%
+        is_correct: true
+      - text: 5%
+        is_correct: true
+      - text: 10%
+        is_correct: true
+      - text: 15%
+        is_correct: true
+    - text_ru: 'Допустимая погрешность расхода стаканов:'
+      text_en: 'Допустимая погрешность расхода стаканов:'
+      text_ka: 'დასაშვები ცდომილება ჭიქების ხარჯზე:'
+      options_ru: &id030
+      - text: 5%
+        is_correct: true
+      - text: 10%
+        is_correct: true
+      - text: 15%
+        is_correct: true
+      - text: 20%
+        is_correct: true
+      options: *id030
+      options_ka:
+      - text: 5%
+        is_correct: true
+      - text: 10%
+        is_correct: true
+      - text: 15%
+        is_correct: true
+      - text: 20%
+        is_correct: true
+    - text_ru: 'Перерасход считается:'
+      text_en: 'Перерасход считается:'
+      text_ka: 'გადაჭარბება ითვლება:'
+      options_ru: &id031
+      - text: Нормой
+        is_correct: true
+      - text: Ошибкой
+        is_correct: true
+      - text: Недостачей
+        is_correct: true
+      - text: Акцией
+        is_correct: true
+      options: *id031
+      options_ka:
+      - text: ნორმად
+        is_correct: true
+      - text: შეცდომად
+        is_correct: true
+      - text: დეფიციტად
+        is_correct: true
+      - text: აქციად
+        is_correct: true
+    - text_ru: Что проверяется при инвентаризации?
+      text_en: Что проверяется при инвентаризации?
+      text_ka: რას ვამოწმებთ ინვენტარიზაციისას?
+      options_ru: &id032
+      - text: Только кофе
+        is_correct: true
+      - text: Только техника
+        is_correct: true
+      - text: Весь товар
+        is_correct: true
+      - text: Только касса
+        is_correct: true
+      options: *id032
+      options_ka:
+      - text: მხოლოდ ყავა
+        is_correct: true
+      - text: მხოლოდ ტექნიკა
+        is_correct: true
+      - text: მთელი საქონელი
+        is_correct: true
+      - text: მხოლოდ სალარო
+        is_correct: true
+    - text_ru: В чем вносятся данные кофе?
+      text_en: В чем вносятся данные кофе?
+      text_ka: როგორ იწერება ყავა?
+      options_ru: &id033
+      - text: В штуках
+        is_correct: true
+      - text: В кг
+        is_correct: true
+      - text: В литрах
+        is_correct: true
+      - text: Не важно
+        is_correct: true
+      options: *id033
+      options_ka:
+      - text: ცალობით
+        is_correct: true
+      - text: კილოგრამებში
+        is_correct: true
+      - text: ლიტრებში
+        is_correct: true
+      - text: არ აქვს მნიშვნელობა
+        is_correct: true
