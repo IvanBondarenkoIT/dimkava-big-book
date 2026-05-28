@@ -290,3 +290,34 @@ docker compose --env-file .env.prod -f docker-compose.prod.yml logs -f proxy
 См. [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md): `migrate` → опционально `AUTO_LOAD_HR_CONTENT` → `AUTO_CREATE_DEFAULT_USERS` → `collectstatic` → Gunicorn.
 
 Медиафайлы хранятся в volume `media_data` (не теряются при пересоздании контейнера).
+
+---
+
+## 12. Перезагрузка регламентов (Telegram → KB + quiz)
+
+После `git pull` с обновлёнными `input/hr docs/content/regulations*.yaml` и кодом импорта:
+
+```powershell
+cd C:\Projects\dimkava-big-book   # или путь клонa
+git pull
+
+# Если образ собирается локально (без GHCR):
+cd C:\dimkava\compose
+.\build-local-image.ps1
+docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --force-recreate web
+
+# В .env.prod должен быть явный DATABASE_URL для docker compose run:
+# DATABASE_URL=postgres://dimkava:<password>@db:5432/dimkava
+
+docker compose --env-file .env.prod -f docker-compose.prod.yml run --rm web python manage.py cleanup_regulations_import
+docker compose --env-file .env.prod -f docker-compose.prod.yml run --rm web python manage.py load_articles
+docker compose --env-file .env.prod -f docker-compose.prod.yml run --rm web python manage.py load_courses
+```
+
+Повторная генерация YAML из `data/input/result.json` (на машине с экспортом):
+
+```powershell
+python manage.py import_telegram_regulations
+```
+
+Требует `input/hr docs/content/regulations_en_translations.yaml` для EN (регламенты + тест).
