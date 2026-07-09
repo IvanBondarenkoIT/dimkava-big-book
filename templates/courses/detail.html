@@ -8,6 +8,10 @@
       <span class="material-symbols-outlined text-lg">arrow_back</span>
       {% trans "Back to Curriculum" %}
     </a>
+    {% if can_edit_content and course %}
+    {% url 'content_editor:course_edit' course.slug as edit_url %}
+    {% include 'content_editor/_edit_button.html' %}
+    {% endif %}
     {% if course %}
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ course.localized_title }}</h1>
     {% if course.localized_description %}<p class="text-on-surface-variant/70 mt-2">{{ course.localized_description }}</p>{% endif %}

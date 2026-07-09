@@ -13,8 +13,16 @@
   {% for rd in roles %}
   <section class="space-y-4">
     <div class="card-atelier">
-      <h3 class="font-bold text-on-surface">{{ rd.role.title }}</h3>
-      {% if rd.role.description %}<p class="text-sm text-on-surface-variant/70 mt-1">{{ rd.role.description }}</p>{% endif %}
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h3 class="font-bold text-on-surface">{{ rd.role.title }}</h3>
+          {% if rd.role.description %}<p class="text-sm text-on-surface-variant/70 mt-1">{{ rd.role.description }}</p>{% endif %}
+        </div>
+        {% if can_edit_content %}
+        {% url 'content_editor:role_edit' rd.role.pk as edit_url %}
+        <a href="{{ edit_url }}" class="text-sm font-bold text-primary hover:underline no-underline shrink-0">Edit</a>
+        {% endif %}
+      </div>
 
       {% if rd.required or rd.recommended %}
       <div class="mt-4 pt-4 border-t border-outline-variant/20 space-y-3">

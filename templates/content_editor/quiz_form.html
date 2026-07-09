@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+<div class="space-y-8 max-w-3xl pb-16">
+  <header>
+    <a href="{{ cancel_url }}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+      <span class="material-symbols-outlined text-lg">arrow_back</span>
+      {% trans "Cancel" %}
+    </a>
+    <h1 class="text-4xl font-extrabold tracking-tighter text-primary">{{ page_title }}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{{ course.localized_title }} — {{ lesson.localized_title }}</p>
+  </header>
+
+  <form method="post" class="space-y-6">
+    {% csrf_token %}
+
+    <div class="card-atelier space-y-2">
+      <label class="text-sm font-semibold">{% trans "Passing score (%)" %}</label>
+      <input type="number" name="passing_score" min="0" max="100" value="{{ lesson.passing_score|default:70 }}"
+        class="w-32 rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" />
+    </div>
+
+    {% for q in questions %}
+    <input type="hidden" name="question_ids" value="{{ q.pk }}" />
+    <details class="card-atelier" {% if forloop.first %}open{% endif %}>
+      <summary class="font-bold cursor-pointer text-on-surface">
+        {% trans "Question" %} {{ forloop.counter }}
+      </summary>
+      <div class="mt-4 space-y-6">
+        {% with en_lang=q.langs.0 %}
+        <p class="text-xs text-on-surface-variant/60">{% trans "Correct answer (one per question — select the radio next to the option number)" %}</p>
+        <div class="flex flex-wrap gap-4 mb-2">
+          {% for opt in en_lang.options %}
+          <label class="inline-flex items-center gap-2 text-sm font-medium cursor-pointer">
+            <input type="radio" name="q_{{ q.pk }}_correct" value="{{ forloop.counter0 }}" {% if opt.is_correct %}checked{% endif %} />
+            <span>{% trans "Option" %} {{ forloop.counter }}</span>
+          </label>
+          {% endfor %}
+        </div>
+        {% endwith %}
+        {% for lang in q.langs %}
+        <div class="space-y-3 border-t border-outline-variant/10 pt-4 first:border-0 first:pt-0">
+          <p class="text-xs font-bold uppercase tracking-widest text-primary/80">{{ lang.label }}</p>
+          <textarea name="q_{{ q.pk }}_text_{{ lang.code }}" rows="2" class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm">{{ lang.text }}</textarea>
+          <p class="text-xs text-on-surface-variant/60">{% trans "Answer options (same order in all languages)" %}</p>
+          {% for opt in lang.options %}
+          <div class="flex items-center gap-2">
+            <span class="w-6 text-xs font-bold text-on-surface-variant/50 shrink-0">{{ forloop.counter }}.</span>
+            <input type="text" name="q_{{ q.pk }}_opt{{ forloop.counter0 }}_{{ lang.code }}" value="{{ opt.text }}" class="flex-1 rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" />
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+    </details>
+    {% empty %}
+    <p class="text-on-surface-variant">{% trans "No questions yet. Add them in Django admin or load from YAML." %}</p>
+    {% endfor %}
+
+    <div class="flex gap-3">
+      <button type="submit" class="btn-primary px-6 py-3">{% trans "Save quiz" %}</button>
+      <a href="{{ cancel_url }}" class="btn-secondary px-6 py-3 no-underline">{% trans "Cancel" %}</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

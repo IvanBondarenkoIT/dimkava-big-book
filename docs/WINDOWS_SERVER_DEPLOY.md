@@ -352,7 +352,9 @@ cd C:\dimkava\compose
 docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --force-recreate web
 ```
 
-Не запускайте вручную `load_articles` / `load_courses`, пока правите контент в админке.
+Не запускайте вручную `load_articles` / `load_courses`, пока правите контент в админке или портале (**Edit**).
+
+Подробная инструкция безопасного деплоя: [SERVER_EDITORIAL_DEPLOY.md](SERVER_EDITORIAL_DEPLOY.md).
 
 ### Редактирование
 

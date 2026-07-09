@@ -104,3 +104,56 @@ class GlobalSearchTest(TestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].type, "course")
         self.assertIn("public-coffee", results[0].url)
+
+    def test_search_articles_by_russian_content(self):
+        section = KBSection.objects.create(slug="reg", title="Regulations", order=0)
+        Article.objects.create(
+            section=section,
+            slug="reg-test",
+            title="Legacy EN",
+            title_ru="Регламент",
+            content_ru="Правила работы с кассой",
+            status="published",
+        )
+        results = global_search("кассой", self.user)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].type, "article")
+
+    def test_search_articles_by_georgian_title(self):
+        section = KBSection.objects.create(slug="ka", title="KA", order=0)
+        Article.objects.create(
+            section=section,
+            slug="ka-test",
+            title="EN",
+            title_ka="რეგლამენტი",
+            status="published",
+        )
+        results = global_search("რეგლამენტი", self.user)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].type, "article")
+
+    def test_search_excludes_draft_articles(self):
+        section = KBSection.objects.create(slug="d", title="D", order=0)
+        Article.objects.create(
+            section=section,
+            slug="draft-only",
+            title="Secret Draft",
+            content="hidden content",
+            status="draft",
+        )
+        results = global_search("hidden", self.user)
+        self.assertEqual(len(results), 0)
+
+    def test_search_case_insensitive_russian(self):
+        section = KBSection.objects.create(slug="proc2", title="Proc", order=0)
+        Article.objects.create(
+            section=section,
+            slug="monthly",
+            title="Checklist",
+            title_ru="Ежемесячный чек-лист",
+            content_ru="Важная Задача для сотрудника",
+            status="published",
+        )
+        self.assertEqual(len(global_search("задача", self.user)), 1)
+        self.assertEqual(len(global_search("Задача", self.user)), 1)
+        self.assertEqual(len(global_search("ЗАДАЧА", self.user)), 1)

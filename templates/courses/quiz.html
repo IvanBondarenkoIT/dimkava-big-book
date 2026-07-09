@@ -8,6 +8,14 @@
       <span class="material-symbols-outlined text-lg">arrow_back</span>
       {% trans "Back to Course" %}
     </a>
+    {% if can_edit_content and lesson %}
+    {% if lesson.lesson_type == 'quiz' %}
+    {% url 'content_editor:quiz_edit' course_slug lesson.id as edit_url %}
+    {% else %}
+    {% url 'content_editor:lesson_edit' lesson.id as edit_url %}
+    {% endif %}
+    {% include 'content_editor/_edit_button.html' %}
+    {% endif %}
     <p class="text-primary font-bold text-sm uppercase tracking-widest">{% trans "Quiz" %} · {{ questions|length }} {% trans "questions" %}</p>
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary mt-2">{{ lesson.localized_title }}</h1>
     <p class="text-on-surface-variant/70 mt-2">{% trans "Passing score:" %} {{ passing_score }}%</p>

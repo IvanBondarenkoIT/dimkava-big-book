@@ -9,6 +9,10 @@
       {% trans "Back to Onboarding" %}
     </a>
     {% if module %}
+    {% if can_edit_content %}
+    {% url 'content_editor:onboarding_module_edit' module.pk as edit_url %}
+    {% include 'content_editor/_edit_button.html' %}
+    {% endif %}
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ module.title }}</h1>
     {% if module.description %}
     <p class="text-on-surface-variant/70 mt-2 max-w-2xl">{{ module.description }}</p>
@@ -30,6 +34,10 @@
             {% endif %}
             <h3 class="text-lg font-bold text-on-surface">{{ s.title }}</h3>
           </div>
+          {% if can_edit_content %}
+          {% url 'content_editor:onboarding_step_edit' s.id as edit_url %}
+          <a href="{{ edit_url }}" class="text-xs font-bold text-primary hover:underline no-underline shrink-0">{% trans "Edit" %}</a>
+          {% endif %}
           {% if s.content %}
           <div class="mt-2 text-on-surface-variant/80 text-sm leading-relaxed prose prose-sm max-w-none">{{ s.content|linebreaks }}</div>
           {% endif %}

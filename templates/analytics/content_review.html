@@ -50,9 +50,10 @@
         <div class="col-span-2 text-sm text-on-surface-variant/70 truncate">
           {% if it.responsible_editor %}{{ it.responsible_editor.get_username }}{% else %}—{% endif %}
         </div>
-        <div class="col-span-1 flex justify-end gap-2">
+        <div class="col-span-1 flex flex-col items-end gap-1">
           <a href="{{ it.view_url }}" class="text-sm font-bold text-primary hover:underline no-underline" title="{% trans 'View' %}">{% trans "View" %}</a>
-          <a href="{{ it.admin_url }}" class="text-sm font-bold text-primary hover:underline no-underline" title="{% trans 'Edit' %}">{% trans "Edit" %}</a>
+          <a href="{{ it.edit_url }}" class="text-sm font-bold text-primary hover:underline no-underline" title="{% trans 'Edit' %}">{% trans "Edit" %}</a>
+          <a href="{{ it.admin_url }}" class="text-[10px] text-on-surface-variant/50 hover:underline no-underline" title="{% trans 'Admin' %}">{% trans "Admin" %}</a>
         </div>
       </div>
     {% empty %}
