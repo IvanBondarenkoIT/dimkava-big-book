@@ -28,13 +28,22 @@ if (-not (Test-Path $composeFile)) {
 }
 
 $hostPort = if ($NatVariant -eq "B") { $PublicPort } else { 80 }
-$csrfOrigin = "http://${PublicHost}:${PublicPort}"
+# Browsers omit default ports in Origin; CSRF must match (no :80 / :443).
+$csrfOrigin = if ($PublicPort -eq 80 -or $PublicPort -eq 443) {
+    "http://${PublicHost}"
+} else {
+    "http://${PublicHost}:${PublicPort}"
+}
 $allowedHosts = @($PublicHost)
 if ($PublicIp) { $allowedHosts += $PublicIp }
 $allowedHosts += @("localhost", "127.0.0.1")
 $allowedHosts = ($allowedHosts -join ",")
 $csrfOrigins = "$csrfOrigin,http://localhost,http://127.0.0.1"
-$publicUrl = "http://${PublicHost}:${PublicPort}/"
+$publicUrl = if ($PublicPort -eq 80) {
+    "http://${PublicHost}/"
+} else {
+    "http://${PublicHost}:${PublicPort}/"
+}
 
 function Set-EnvLine {
     param([string]$Name, [string]$Value, [ref]$Text)

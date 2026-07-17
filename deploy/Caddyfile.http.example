@@ -1,0 +1,12 @@
+# LAN / public HTTP without TLS (listen on container :80).
+# For production HTTPS use deploy/Caddyfile (bigbook.dimkava.ge).
+
+:80 {
+	encode gzip zstd
+	reverse_proxy web:8000 {
+		header_up Host {host}
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+}

@@ -96,6 +96,6 @@ docker compose --env-file .env.prod -f docker-compose.prod.yml run --rm web pyth
 
 ## HR Edit в портале
 
-После деплоя HR видит кнопку **Edit** на статьях, курсах, quiz, новостях, onboarding и ролях. URL: `/edit/...` (только группа `hr_manager` или superuser).
+После деплоя HR видит кнопку **Edit** на статьях, курсах, quiz, новостях, onboarding и ролях. URL: `/edit/...` (только группа `hr_manager` или superuser). Prod: `https://bigbook.dimkava.ge/`.
 
 См. также [WINDOWS_SERVER_DEPLOY.md](WINDOWS_SERVER_DEPLOY.md) §13.

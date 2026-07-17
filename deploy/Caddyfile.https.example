@@ -1,7 +1,8 @@
-# Public HTTPS (Let's Encrypt). Copy to deploy/Caddyfile and replace the domain.
+# Public HTTPS (Let's Encrypt). Domain: bigbook.dimkava.ge
+# Copy to deploy/Caddyfile (already the default in this repo).
 # Ports 80 and 443 must be reachable from the internet for ACME.
 
-portal.example.com {
+bigbook.dimkava.ge {
 	encode gzip zstd
 	reverse_proxy web:8000 {
 		header_up Host {host}

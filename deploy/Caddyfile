@@ -1,15 +1,10 @@
-# LAN / VPN / public HTTP (default :80 inside container).
+# Public HTTPS for bigbook.dimkava.ge (Let's Encrypt via Caddy).
+# Ports 80 and 443 must be reachable from the internet for ACME.
 #
-# Public host + WAN port (e.g. http://ge.domkofe.biz:777/):
-#   configure-public-access.ps1 -PublicHost ge.domkofe.biz -PublicPort 777
-#   See deploy/docs/PUBLIC_ACCESS_NAT.md (NAT variant A vs B).
-#
-# Public HTTPS: copy deploy/Caddyfile.https.example → deploy/Caddyfile
-#   ALLOWED_HOSTS=portal.example.com
-#   CSRF_TRUSTED_ORIGINS=https://portal.example.com
-#   SECURE_SSL_REDIRECT=true
+# LAN-only HTTP without a domain: use a temporary block ":80 { ... }" instead
+# (see git history or deploy/Caddyfile.http.example if present).
 
-:80 {
+bigbook.dimkava.ge {
 	encode gzip zstd
 	reverse_proxy web:8000 {
 		header_up Host {host}

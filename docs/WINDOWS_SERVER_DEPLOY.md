@@ -7,15 +7,17 @@ Production-стек: **Caddy** (reverse proxy) → **Django/Gunicorn** → **Pos
 
 См. также: [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) (старая схема), [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md).
 
-### Текущий прод (live, 2026-05-25)
+### Текущий прод (live, 2026-07-17)
 
 | Параметр | Значение |
 |----------|----------|
-| URL | `http://ge.domkofe.biz:777/` |
+| URL | `https://bigbook.dimkava.ge/` |
 | Снимок | [deploy/docs/PRODUCTION_STATUS.md](../deploy/docs/PRODUCTION_STATUS.md) |
 | Файл env | **`C:\dimkava\compose\.env.prod`** (с точкой; не `env.prod`) |
-| `PUBLIC_HTTP_PORT` | `777` (NAT WAN `:777` → host `:777`) |
-| После правки `ALLOWED_HOSTS` | `docker compose ... up -d --force-recreate web` |
+| `PUBLIC_HTTP_PORT` | `80` (+ host `:443` для TLS) |
+| Caddy | hostname `bigbook.dimkava.ge` (Let's Encrypt) |
+| После правки `ALLOWED_HOSTS` / Caddy | `docker compose ... up -d --force-recreate web proxy` |
+| Cutover script | `C:\dimkava\scripts\configure-bigbook-https.ps1` |
 
 ---
 
@@ -54,7 +56,7 @@ C:\dimkava\
 Скопируйте из репозитория (ветка `deploy/self-hosted` или `main` после merge):
 
 - `docker-compose.prod.yml`
-- `deploy/Caddyfile` (LAN) или `deploy/Caddyfile.https.example` → `deploy/Caddyfile`
+- `deploy/Caddyfile` (prod HTTPS `bigbook.dimkava.ge`) или `deploy/Caddyfile.http.example` для LAN HTTP
 - `deploy/scripts/*.ps1` → `C:\dimkava\scripts\`
 
 `.env.prod` создаётся на сервере скриптом `new-env-prod.ps1` (не в git).
@@ -119,15 +121,48 @@ notepad C:\dimkava\compose\.env.prod
 
 ### Режим LAN (HTTP)
 
-- `deploy/Caddyfile` — блок `:80` (по умолчанию в репозитории).
+- `deploy/Caddyfile.http.example` → `deploy/Caddyfile` — блок `:80`.
 - `SECURE_SSL_REDIRECT=false`, `CSRF_TRUSTED_ORIGINS=http://192.168.x.x`
 
-### Режим публичный домен + порт (HTTP, `ge.domkofe.biz:777`)
+### Режим публичный домен (HTTPS) — prod: `bigbook.dimkava.ge`
 
-DNS **ge.domkofe.biz** → IP сервера (тот же, что `178.63.72.227`). Порт **777** как у health на `:8010`.
+1. DNS A: `bigbook.dimkava.ge` → IP сервера (`178.63.72.227`); порты **80 и 443** с интернета.
+2. На сервере:
 
-1. Скопировать файлы: `copy-to-server.ps1`.
-2. На сервере (PowerShell **от администратора** для firewall):
+```powershell
+cd C:\Projects\dimkava-big-book
+git pull
+.\deploy\scripts\copy-to-server.ps1
+C:\dimkava\scripts\configure-bigbook-https.ps1
+```
+
+Скрипт выставляет `.env.prod` и копирует `deploy/Caddyfile` (блок `bigbook.dimkava.ge`), затем `--force-recreate web proxy`.
+
+Минимум в `.env.prod`:
+
+```env
+ALLOWED_HOSTS=bigbook.dimkava.ge,178.63.72.227,localhost,127.0.0.1
+CSRF_TRUSTED_ORIGINS=https://bigbook.dimkava.ge,http://localhost,http://127.0.0.1
+SECURE_SSL_REDIRECT=true
+SESSION_COOKIE_SECURE=true
+CSRF_COOKIE_SECURE=true
+PUBLIC_HTTP_PORT=80
+```
+
+Открыть: `https://bigbook.dimkava.ge/login/`.
+
+Опционально сначала HTTP smoke: `configure-bigbook-https.ps1 -HttpOnly` (Caddy `:80` из `Caddyfile.http.example`).
+
+| Симптом | Действие |
+|---------|----------|
+| ACME / нет сертификата | DNS, NAT 80+443, firewall; `logs proxy` |
+| Redirect loop | `X-Forwarded-Proto` в Caddy; `SECURE_SSL_REDIRECT` |
+| 403 CSRF | origin `https://bigbook.dimkava.ge` без порта |
+| 400 DisallowedHost | `ALLOWED_HOSTS` + recreate `web` |
+
+### Режим публичный домен + порт (HTTP legacy, `ge.domkofe.biz:777`)
+
+DNS **ge.domkofe.biz** → IP сервера. Порт **777** (legacy).
 
 ```powershell
 C:\dimkava\scripts\configure-public-access.ps1 -PublicHost ge.domkofe.biz -PublicPort 777 -NatVariant B
@@ -137,8 +172,6 @@ C:\dimkava\scripts\verify-public-access.ps1 -PublicHost ge.domkofe.biz -PublicPo
 Опционально оставить доступ по IP: `-PublicIp 178.63.72.227`.
 
 **NAT:** вариант **B** — WAN `:777` → сервер `:777`. Подробно: [`deploy/docs/PUBLIC_ACCESS_NAT.md`](../deploy/docs/PUBLIC_ACCESS_NAT.md).
-
-Минимум в `.env.prod` (скрипт выставляет сам):
 
 ```env
 ALLOWED_HOSTS=ge.domkofe.biz,localhost,127.0.0.1
@@ -157,17 +190,6 @@ PUBLIC_HTTP_PORT=777
 | 400 DisallowedHost | IP в `ALLOWED_HOSTS`, `docker compose up -d web` |
 | 403 CSRF | `http://IP:777` в `CSRF_TRUSTED_ORIGINS` |
 | Редирект по кругу | `SECURE_SSL_REDIRECT=false` |
-
-### Режим публичный домен (HTTPS)
-
-1. DNS A-запись → IP сервера; порты 80/443 доступны из интернета.
-2. Скопировать `deploy/Caddyfile.https.example` → `deploy/Caddyfile`, подставить домен.
-3. В `.env.prod`:
-   - `ALLOWED_HOSTS=portal.example.com`
-   - `CSRF_TRUSTED_ORIGINS=https://portal.example.com`
-   - `SECURE_SSL_REDIRECT=true`
-   - `SESSION_COOKIE_SECURE=true`
-   - `CSRF_COOKIE_SECURE=true`
 
 ---
 
@@ -358,7 +380,7 @@ docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --force-rec
 
 ### Редактирование
 
-- URL: `http://ge.domkofe.biz:777/admin/` (staff / superuser)
+- URL: `https://bigbook.dimkava.ge/admin/` (staff / superuser)
 - **Knowledge base → Articles** — регламенты (`reg-*`), поля `title_*` / `content_*` (RU, KA, EN)
 - **Courses → Lessons / Test questions** — курс `regulations`, quiz
 

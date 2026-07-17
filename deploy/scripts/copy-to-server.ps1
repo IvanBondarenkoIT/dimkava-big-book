@@ -12,7 +12,8 @@ $ErrorActionPreference = "Stop"
 $files = @(
     "docker-compose.prod.yml",
     "deploy\Caddyfile",
-    "deploy\Caddyfile.https.example"
+    "deploy\Caddyfile.https.example",
+    "deploy\Caddyfile.http.example"
 )
 
 New-Item -ItemType Directory -Path $TargetDir -Force | Out-Null
