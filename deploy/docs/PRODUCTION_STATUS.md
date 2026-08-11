@@ -1,6 +1,6 @@
 # Dim Kava — production status (self-hosted)
 
-**Last updated:** 2026-07-17  
+**Last updated:** 2026-08-11  
 **Branch:** `deploy/self-hosted`  
 **Status:** live (domain cutover to `bigbook.dimkava.ge` + HTTPS)
 
@@ -18,7 +18,7 @@
 
 | Path | Purpose |
 |------|---------|
-| `C:\dimkava\compose\` | `docker-compose.prod.yml`, `.env.prod`, `deploy/Caddyfile` |
+| `C:\dimkava\compose\` | `docker-compose.prod.yml`, `.env.prod`, `deploy\Caddyfile` |
 | `C:\dimkava\scripts\` | Deploy/maintenance PowerShell scripts |
 | `C:\dimkava\backups\` | DB dumps (`backup-db.ps1`) |
 | `C:\Projects\dimkava-big-book\` | Git clone (pull + `copy-to-server.ps1`) |
@@ -33,7 +33,7 @@
 
 ```env
 ALLOWED_HOSTS=bigbook.dimkava.ge,178.63.72.227,localhost,127.0.0.1
-CSRF_TRUSTED_ORIGINS=https://bigbook.dimkava.ge,http://localhost,http://127.0.0.1
+CSRF_TRUSTED_ORIGINS=https://bigbook.dimkava.ge,http://bigbook.dimkava.ge,http://localhost,http://127.0.0.1
 SECURE_SSL_REDIRECT=true
 SESSION_COOKIE_SECURE=true
 CSRF_COOKIE_SECURE=true
@@ -64,6 +64,40 @@ C:\dimkava\scripts\configure-bigbook-https.ps1
 
 Prerequisites: DNS A record, NAT **80+443**, Windows firewall TCP 80/443.
 
+## Deploy app fix (web only, no DB overwrite)
+
+Use when shipping code fixes (e.g. CSRF / language switcher) **without** reloading YAML content:
+
+```powershell
+cd C:\dimkava\scripts
+.\backup-db.ps1
+
+cd C:\Projects\dimkava-big-book
+git pull
+.\deploy\scripts\build-local-image.ps1   # if DIMKAVA_IMAGE=dimkava-local:latest
+
+# Refresh CSRF origins (https + http for the domain)
+C:\dimkava\scripts\configure-bigbook-https.ps1 -SkipFirewall -SkipComposeUp
+
+cd C:\dimkava\compose
+# Confirm AUTO_LOAD_HR_CONTENT=0 in .env.prod
+docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --force-recreate web
+```
+
+Do **not** run `load_articles` / `load_courses` after editorial go-live. Recreate **proxy** only if Caddyfile changed.
+
+### Smoke after recreate
+
+1. `GET https://bigbook.dimkava.ge/login/` → 200  
+2. Change language on login (RU/KA/EN) → redirect, **not** 403  
+3. Login → home dashboard, **not** CSRF 403  
+4. Candidate account: change language after login → OK  
+5. If users still see 403: clear cookies for `bigbook.dimkava.ge` (or try Incognito)
+
+### Docker Desktop “sleep”
+
+Resource Saver can slow the **first** request after idle; it does **not** cause CSRF 403. Prefer disabling or raising Resource Saver thresholds on the host. Compose already uses `restart: unless-stopped`.
+
 ## Routine operations
 
 ```powershell
@@ -84,6 +118,7 @@ C:\dimkava\scripts\configure-bigbook-https.ps1
 - [x] Domain `bigbook.dimkava.ge` + HTTPS (Caddy / Let's Encrypt)
 - [x] `AUTO_CREATE_DEFAULT_USERS=0` after first login
 - [x] Deploy scripts and docs in git (`deploy/self-hosted`)
+- [x] Language switcher via GET (no CSRF trap) + dual CSRF origins + friendly CSRF failure page
 
 ## Content editing (production)
 

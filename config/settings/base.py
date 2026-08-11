@@ -112,6 +112,7 @@ LOCALE_PATHS = [BASE_DIR / 'locale']
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+CSRF_FAILURE_VIEW = 'apps.core.views.csrf_failure'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'

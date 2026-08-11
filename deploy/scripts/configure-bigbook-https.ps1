@@ -67,7 +67,17 @@ if ($HttpOnly) {
     $cookieSecure = "false"
     $publicUrl = "http://${PublicHost}/"
 } else {
-    $csrf = @("https://${PublicHost}", "http://localhost", "http://127.0.0.1")
+    # Both schemes: browsers/proxies sometimes send Origin: http://… even on HTTPS pages.
+    $csrf = @(
+        "https://${PublicHost}",
+        "http://${PublicHost}",
+        "http://localhost",
+        "http://127.0.0.1"
+    )
+    if ($KeepLegacyHost) {
+        $csrf = @("https://${PublicHost}", "http://${PublicHost}", "http://ge.domkofe.biz:777") + $csrf |
+            Select-Object -Unique
+    }
     $sslRedirect = "true"
     $cookieSecure = "true"
     $publicUrl = "https://${PublicHost}/"

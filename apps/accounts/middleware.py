@@ -42,6 +42,7 @@ def _is_allowed_for_candidate(path: str) -> bool:
         '/login',
         '/logout',
         '/password-reset',
+        '/i18n',
         '/admin',  # Django admin will still enforce staff-only; keep this for predictable behavior.
     )
     allowed_exact = (

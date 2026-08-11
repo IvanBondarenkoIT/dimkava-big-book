@@ -22,10 +22,13 @@ DATABASES = {
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+# Softer than Django default same-origin — helps same-site language/login POSTs after HTTPS cutover.
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 # Allow toggling during initial platform bring-up to avoid redirect loops.
 SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=True, cast=bool)
 SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=True, cast=bool)
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
+CSRF_FAILURE_VIEW = 'apps.core.views.csrf_failure'
 
 # Common reverse-proxy setup (Railway/Render/Fly/Nginx): trust X-Forwarded-Proto for https detection.
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
