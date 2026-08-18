@@ -49,3 +49,123 @@ def get_candidate_rows():
         )
     return rows
 
+
+def _display_name(user) -> str:
+    profile = getattr(user, 'profile', None)
+    if profile:
+        return profile.get_public_username()
+    return user.email or user.username
+
+
+def _passing_score(lesson) -> int:
+    return lesson.passing_score or 70
+
+
+@dataclass(frozen=True)
+class QuizCatalogRow:
+    lesson_id: int
+    course_title: str
+    lesson_title: str
+    passing_score: int
+    attempted: int
+    passed: int
+    failed: int
+    locked: int
+
+
+@dataclass(frozen=True)
+class QuizTakerRow:
+    user_id: int
+    display_name: str
+    email: str
+    is_candidate: bool
+    quiz_score: int
+    passed: bool
+    attempts: int
+    locked: bool
+    completed_at: object
+
+
+def get_quiz_catalog_rows(*, q: str = '') -> list[QuizCatalogRow]:
+    from django.db.models import Q
+
+    from apps.courses.models import Lesson, UserProgress
+
+    lessons = (
+        Lesson.objects.filter(lesson_type='quiz')
+        .select_related('course')
+        .order_by('course__title', 'order', 'id')
+    )
+    needle = (q or '').strip()
+    if needle:
+        lessons = lessons.filter(
+            Q(title__icontains=needle)
+            | Q(title_en__icontains=needle)
+            | Q(title_ru__icontains=needle)
+            | Q(title_ka__icontains=needle)
+            | Q(course__title__icontains=needle)
+        )
+
+    rows: list[QuizCatalogRow] = []
+    for lesson in lessons:
+        passing = _passing_score(lesson)
+        progress = UserProgress.objects.filter(lesson=lesson, quiz_score__isnull=False)
+        attempted = progress.count()
+        passed = progress.filter(quiz_score__gte=passing).count()
+        rows.append(
+            QuizCatalogRow(
+                lesson_id=lesson.pk,
+                course_title=lesson.course.localized_title,
+                lesson_title=lesson.localized_title,
+                passing_score=passing,
+                attempted=attempted,
+                passed=passed,
+                failed=attempted - passed,
+                locked=progress.filter(candidate_quiz_locked=True).count(),
+            )
+        )
+    return rows
+
+
+def get_quiz_taker_rows(
+    lesson,
+    *,
+    candidates_only: bool = False,
+    failed_only: bool = False,
+    locked_only: bool = False,
+) -> list[QuizTakerRow]:
+    from apps.courses.models import UserProgress
+
+    passing = _passing_score(lesson)
+    qs = (
+        UserProgress.objects.filter(lesson=lesson, quiz_score__isnull=False)
+        .select_related('user', 'user__profile')
+    )
+    if candidates_only:
+        qs = qs.filter(user__profile__user_type='candidate')
+    if locked_only:
+        qs = qs.filter(candidate_quiz_locked=True)
+
+    rows: list[QuizTakerRow] = []
+    for p in qs:
+        score = p.quiz_score or 0
+        passed = score >= passing
+        if failed_only and passed:
+            continue
+        profile = getattr(p.user, 'profile', None)
+        rows.append(
+            QuizTakerRow(
+                user_id=p.user_id,
+                display_name=_display_name(p.user),
+                email=p.user.email or p.user.username,
+                is_candidate=bool(profile and profile.is_candidate),
+                quiz_score=score,
+                passed=passed,
+                attempts=p.quiz_attempts_count or 0,
+                locked=bool(p.candidate_quiz_locked),
+                completed_at=p.completed_at,
+            )
+        )
+    rows.sort(key=lambda r: (r.passed, not r.locked, r.display_name.lower()))
+    return rows
+

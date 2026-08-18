@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Quiz results" %}{% endblock %}
+{% block content %}
+<div class="space-y-8">
+  <header class="flex items-start justify-between gap-6">
+    <div>
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "Quiz results" %}</h1>
+      <p class="text-on-surface-variant/70 mt-2">{% trans "Choose a test to see who submitted it." %}</p>
+    </div>
+    <a href="{% url 'analytics:hr_hub' %}" class="btn-secondary px-4 py-2 no-underline">{% trans "HR Hub" %}</a>
+  </header>
+
+  <form method="get" class="flex flex-wrap gap-3">
+    <input type="search" name="q" value="{{ query_filter }}" placeholder="{% trans 'Search tests' %}" class="flex-1 min-w-[12rem] rounded-lg border border-outline-variant/20 bg-surface px-3 py-2 text-sm"/>
+    <button type="submit" class="btn-secondary px-4 py-2">{% trans "Search" %}</button>
+    {% if query_filter %}
+    <a href="{% url 'analytics:quiz_results' %}" class="btn-secondary px-4 py-2 no-underline">{% trans "Reset" %}</a>
+    {% endif %}
+  </form>
+
+  <section class="card-atelier p-0 overflow-hidden">
+    <div class="grid grid-cols-12 gap-0 px-5 py-3 bg-surface-container-lowest border-b border-outline-variant/10 text-xs font-bold uppercase tracking-widest text-on-surface-variant/70">
+      <div class="col-span-5">{% trans "Test" %}</div>
+      <div class="col-span-2">{% trans "Pass mark" %}</div>
+      <div class="col-span-1">{% trans "Taken" %}</div>
+      <div class="col-span-1">{% trans "Passed" %}</div>
+      <div class="col-span-1">{% trans "Failed" %}</div>
+      <div class="col-span-2">{% trans "Locked" %}</div>
+    </div>
+    {% for quiz in quizzes %}
+      <a href="{% url 'analytics:quiz_results_takers' quiz.lesson_id %}" class="grid grid-cols-12 gap-0 px-5 py-4 border-b border-outline-variant/10 hover:bg-surface-container-low no-underline text-inherit">
+        <div class="col-span-5 min-w-0">
+          <div class="font-extrabold text-on-surface truncate">{{ quiz.lesson_title }}</div>
+          <div class="text-xs text-on-surface-variant/60 mt-1 truncate">{{ quiz.course_title }}</div>
+        </div>
+        <div class="col-span-2 text-sm text-on-surface-variant/80">{{ quiz.passing_score }}%</div>
+        <div class="col-span-1 text-sm font-bold">{{ quiz.attempted }}</div>
+        <div class="col-span-1 text-sm font-bold text-secondary">{{ quiz.passed }}</div>
+        <div class="col-span-1 text-sm font-bold text-amber-700">{{ quiz.failed }}</div>
+        <div class="col-span-2 text-sm text-on-surface-variant/80">{{ quiz.locked }}</div>
+      </a>
+    {% empty %}
+      <div class="px-5 py-8 text-on-surface-variant/70">{% trans "No quizzes found." %}</div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

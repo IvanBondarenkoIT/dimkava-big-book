@@ -56,7 +56,7 @@ msgid "Where to start"
 msgstr "საიდან დავიწყოთ"
 
 msgid "Welcome back,"
-msgstr "კეთილი დაბრუნება,"
+msgstr "კეთილი იყოს შენი დაბრუნება,"
 
 msgid "Your journey to the perfect extraction continues."
 msgstr "თქვენი გზა იდეალური ექსტრაქციისკენ გრძელდება."
@@ -65,7 +65,7 @@ msgid "You're in the top %(pct)s%% this week (#%(rank)s of %(total)s)."
 msgstr "ამ კვირაში თქვენ ხართ ტოპ %(pct)s%%‑ში (#%(rank)s %(total)s‑დან)."
 
 msgid "Keep going this week to climb the leaderboard."
-msgstr "გააგრძელეთ ამ კვირაში, რომ ლიდერბორდზე აიწიოთ."
+msgstr "გააგრძელეთ ამ კვირაში და აიმაღლეთ რეიტინგი."
 
 msgid "Current Streak"
 msgstr "მიმდინარე სერია"
@@ -660,3 +660,96 @@ msgstr "მომხმარებლები ≥1 დასრულებუ
 
 msgid "Total employees"
 msgstr "სულ თანამშრომლები"
+
+msgid "No courses are available yet. If this looks wrong, contact HR."
+msgstr "კურსები ჯერ არ არის ხელმისაწვდომი. თუ ეს შეცდომაა, მიმართეთ HR-ს."
+
+msgid "Quiz results"
+msgstr "ქვიზის შედეგები"
+
+msgid "Browse tests, who took them, and individual scores."
+msgstr "ნახეთ ტესტები, ვინ ჩააბარა და ინდივიდუალური ქულები."
+
+msgid "Choose a test to see who submitted it."
+msgstr "აირჩიეთ ტესტი, რომ ნახოთ ვინ ჩააბარა."
+
+msgid "Search tests"
+msgstr "ტესტების ძიება"
+
+msgid "Test"
+msgstr "ტესტი"
+
+msgid "Pass mark"
+msgstr "გამსვლელი ქულა"
+
+msgid "Taken"
+msgstr "ჩაბარებული"
+
+msgid "Passed"
+msgstr "ჩაბარებულია"
+
+msgid "Failed"
+msgstr "ჩაჭრილია"
+
+msgid "Locked"
+msgstr "დაბლოკილია"
+
+msgid "No quizzes found."
+msgstr "ქვიზები არ მოიძებნა."
+
+msgid "All tests"
+msgstr "ყველა ტესტი"
+
+msgid "Pass mark:"
+msgstr "გამსვლელი ქულა:"
+
+msgid "Candidates only"
+msgstr "მხოლოდ კანდიდატები"
+
+msgid "Below pass mark"
+msgstr "გამსვლელ ქულაზე დაბლა"
+
+msgid "Locked only"
+msgstr "მხოლოდ დაბლოკილი"
+
+msgid "Apply"
+msgstr "გამოყენება"
+
+msgid "Score"
+msgstr "ქულა"
+
+msgid "Result"
+msgstr "შედეგი"
+
+msgid "Attempts"
+msgstr "მცდელობები"
+
+msgid "Submitted"
+msgstr "გაგზავნილია"
+
+msgid "Nobody has submitted this test yet."
+msgstr "ამ ტესტს ჯერ არავინ ჩაუბარებია."
+
+msgid "People who took this test"
+msgstr "ვინც ჩააბარა ეს ტესტი"
+
+msgid "Retake is locked until HR unlocks it."
+msgstr "გამეორება დაბლოკილია, სანამ HR არ განბლოკავს."
+
+msgid "Last unlock:"
+msgstr "ბოლო განბლოკვა:"
+
+msgid "Unlock retake"
+msgstr "განბლოკვა"
+
+msgid "Quiz retake unlocked."
+msgstr "ქვიზის გამეორება განბლოკილია."
+
+msgid "Questions on this test"
+msgstr "ტესტის კითხვები"
+
+msgid "Individual answer choices are not stored. This list is the current question set."
+msgstr "არჩეული პასუხები არ ინახება. ეს არის ტესტის მიმდინარე კითხვები."
+
+msgid "Quizzes"
+msgstr "ქვიზები"

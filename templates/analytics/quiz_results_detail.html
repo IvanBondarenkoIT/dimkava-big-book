@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Quiz results" %}{% endblock %}
+{% block content %}
+<div class="space-y-8 max-w-3xl">
+  <header>
+    <a href="{% url 'analytics:quiz_results_takers' lesson.pk %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+      <span class="material-symbols-outlined text-lg">arrow_back</span>
+      {% trans "People who took this test" %}
+    </a>
+    <h1 class="text-4xl font-extrabold tracking-tighter text-primary">{{ display_name }}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{{ result_user.email|default:result_user.username }} · {{ lesson.localized_title }}</p>
+  </header>
+
+  <section class="card-atelier space-y-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">{% trans "Score" %}</p>
+        <p class="text-3xl font-black text-primary">{{ progress.quiz_score }}%</p>
+      </div>
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">{% trans "Result" %}</p>
+        <p class="text-2xl font-extrabold {% if passed %}text-secondary{% else %}text-amber-700{% endif %}">
+          {% if passed %}{% trans "Passed" %}{% else %}{% trans "Failed" %}{% endif %}
+        </p>
+      </div>
+    </div>
+    <p class="text-sm text-on-surface-variant/80">{% trans "Pass mark:" %} {{ passing_score }}%</p>
+    <p class="text-sm text-on-surface-variant/80">{% trans "Attempts" %}: {{ progress.quiz_attempts_count }}</p>
+    <p class="text-sm text-on-surface-variant/80">{% trans "Role" %}: {% if is_candidate %}{% trans "Candidate" %}{% else %}{% trans "Employee" %}{% endif %}</p>
+    <p class="text-sm text-on-surface-variant/80">{% trans "Submitted" %}: {% if progress.completed_at %}{{ progress.completed_at|date:"Y-m-d H:i" }}{% else %}—{% endif %}</p>
+    {% if progress.candidate_quiz_locked %}
+    <p class="text-sm text-amber-700 font-bold">{% trans "Retake is locked until HR unlocks it." %}</p>
+    {% endif %}
+    {% if progress.candidate_retake_unlocked_at %}
+    <p class="text-sm text-on-surface-variant/80">
+      {% trans "Last unlock:" %} {{ progress.candidate_retake_unlocked_at|date:"Y-m-d H:i" }}
+      {% if progress.candidate_retake_unlocked_by %}· {{ progress.candidate_retake_unlocked_by }}{% endif %}
+    </p>
+    {% endif %}
+
+    {% if is_candidate and progress.candidate_quiz_locked %}
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="unlock"/>
+      <button type="submit" class="btn-primary px-4 py-2">{% trans "Unlock retake" %}</button>
+    </form>
+    {% endif %}
+  </section>
+
+  <section class="card-atelier space-y-3">
+    <h2 class="text-lg font-bold text-on-surface">{% trans "Questions on this test" %}</h2>
+    <p class="text-sm text-on-surface-variant/70">{% trans "Individual answer choices are not stored. This list is the current question set." %}</p>
+    <ol class="list-decimal pl-5 space-y-2 text-sm text-on-surface-variant/90">
+      {% for q in questions %}
+      <li>{{ q.localized_question_text }}</li>
+      {% empty %}
+      <li class="list-none pl-0">{% trans "No questions in this quiz." %}</li>
+      {% endfor %}
+    </ol>
+  </section>
+</div>
+{% endblock %}

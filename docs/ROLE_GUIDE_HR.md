@@ -1,6 +1,6 @@
 # ROLE GUIDE — HR
 
-Обновлено: 2026-03-26  
+Обновлено: 2026-08-18  
 Назначение: операционная инструкция HR по управлению кандидатами, контентом и модерацией.
 
 ## 1) Основные зоны HR
@@ -24,11 +24,15 @@
 - ключевые курсы доступны и пройдены;
 - базовые атрибуты профиля заполнены.
 
-## 4) Квизы кандидатов: политика retake
-- Кандидат отправляет квиз 1 раз.
-- После отправки повторная попытка блокируется автоматически.
-- HR принимает решение о повторной попытке.
-- Разблокировка retake выполняется через HR-доступ в админ-панели `UserProgress`.
+## 4) Квизы: просмотр результатов и retake
+- Кандидат отправляет квиз 1 раз; повтор блокируется автоматически.
+- HR смотрит результаты в Hub: `/analytics/hr/quiz-results/`
+  1. список тестов;
+  2. сдавшие выбранный тест;
+  3. карточка человека (балл, порог, попытки, lock).
+- Unlock retake — кнопка на карточке кандидата (тот же сервис, что admin).
+- Запасной путь: Django admin `UserProgress`.
+- Ответы по вопросам не хранятся; на карточке виден итоговый % и текущий список вопросов.
 
 ## 5) Visibility и контент
 Контролируйте флаги:
@@ -68,4 +72,5 @@
 ![SHOT-H6 content review](C:/Users/Computer/.cursor/projects/d-CursorProjects-dimkava-big-book/assets/c__Users_Computer_AppData_Roaming_Cursor_User_workspaceStorage_bbc6fcab8e4ff239132c403c3d74202b_images_image-592436e9-2c0e-4e4a-8771-6339bc26a2e2.png)
 - `SHOT-H7`: admin `UserProgress` (lock/attempts + unlock action).
 ![SHOT-H7 admin userprogress](C:/Users/Computer/.cursor/projects/d-CursorProjects-dimkava-big-book/assets/c__Users_Computer_AppData_Roaming_Cursor_User_workspaceStorage_bbc6fcab8e4ff239132c403c3d74202b_images_image-51a9bcad-b4bc-43dc-bddf-9f5be6ce02fb.png)
+- Quiz results in Hub: `/analytics/hr/quiz-results/` → takers → person card.
 

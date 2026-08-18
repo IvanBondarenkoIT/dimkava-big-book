@@ -103,3 +103,82 @@ class HRToolsAccessTests(TestCase):
         r = self.client.get(base, {'q': 'fb1@test.local'})
         self.assertContains(r, 'Great progress')
         self.assertNotContains(r, 'Needs support')
+
+
+class QuizResultsHRTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth.models import Group
+        from django.utils import timezone
+
+        from apps.courses.models import Course, Lesson, TestQuestion, UserProgress
+
+        self.hr = User.objects.create_user(username='hr-quiz@test.local', password='x')
+        self.hr.groups.add(Group.objects.get_or_create(name='hr_manager')[0])
+        self.employee = User.objects.create_user(username='emp-quiz@test.local', password='x')
+        self.candidate = User.objects.create_user(
+            username='cand-quiz@test.local', email='cand-quiz@test.local', password='x'
+        )
+        self.candidate.profile.user_type = 'candidate'
+        self.candidate.profile.save()
+
+        course = Course.objects.create(slug='quiz-hr-course', title='Espresso', status='published')
+        self.lesson = Lesson.objects.create(
+            course=course, title='Extraction quiz', order=1, lesson_type='quiz', passing_score=70,
+        )
+        TestQuestion.objects.create(lesson=self.lesson, question_text='What is TDS?', order=0)
+        UserProgress.objects.create(
+            user=self.candidate,
+            lesson=self.lesson,
+            is_completed=True,
+            completed_at=timezone.now(),
+            quiz_score=80,
+            quiz_attempts_count=1,
+            candidate_quiz_locked=True,
+        )
+
+    def test_employee_cannot_open_quiz_results(self):
+        self.client.login(username='emp-quiz@test.local', password='x')
+        self.assertEqual(self.client.get(reverse('analytics:quiz_results')).status_code, 403)
+
+    def test_hr_sees_quiz_and_takers(self):
+        self.client.login(username='hr-quiz@test.local', password='x')
+        list_resp = self.client.get(reverse('analytics:quiz_results'))
+        self.assertEqual(list_resp.status_code, 200)
+        self.assertContains(list_resp, 'Extraction quiz')
+
+        takers_url = reverse('analytics:quiz_results_takers', kwargs={'lesson_id': self.lesson.pk})
+        takers_resp = self.client.get(takers_url)
+        self.assertEqual(takers_resp.status_code, 200)
+        self.assertContains(takers_resp, 'cand-quiz@test.local')
+        self.assertContains(takers_resp, '80%')
+
+        detail_url = reverse(
+            'analytics:quiz_results_detail',
+            kwargs={'lesson_id': self.lesson.pk, 'user_id': self.candidate.pk},
+        )
+        detail_resp = self.client.get(detail_url)
+        self.assertEqual(detail_resp.status_code, 200)
+        self.assertContains(detail_resp, 'What is TDS?')
+        self.assertContains(detail_resp, 'Unlock retake')
+
+    def test_hr_unlock_retake_for_candidate(self):
+        from apps.courses.models import UserProgress
+
+        self.client.login(username='hr-quiz@test.local', password='x')
+        detail_url = reverse(
+            'analytics:quiz_results_detail',
+            kwargs={'lesson_id': self.lesson.pk, 'user_id': self.candidate.pk},
+        )
+        resp = self.client.post(detail_url, {'action': 'unlock'})
+        self.assertEqual(resp.status_code, 302)
+        progress = UserProgress.objects.get(user=self.candidate, lesson=self.lesson)
+        self.assertFalse(progress.candidate_quiz_locked)
+        self.assertEqual(progress.quiz_score, 80)
+
+    def test_missing_taker_is_404(self):
+        self.client.login(username='hr-quiz@test.local', password='x')
+        url = reverse(
+            'analytics:quiz_results_detail',
+            kwargs={'lesson_id': self.lesson.pk, 'user_id': self.employee.pk},
+        )
+        self.assertEqual(self.client.get(url).status_code, 404)

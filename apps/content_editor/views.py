@@ -326,7 +326,7 @@ class OnboardingModuleEditView(ContentEditorRequiredMixin, UpdateView):
         ctx['page_title'] = _('Edit onboarding module')
         ctx['cancel_url'] = reverse(
             'onboarding:module_detail',
-            kwargs={'module_slug': self.object.slug},
+            kwargs={'slug': self.object.slug},
         )
         ctx['i18n_fields'] = [
             ('title', _('Title')),
@@ -339,7 +339,7 @@ class OnboardingModuleEditView(ContentEditorRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('onboarding:module_detail', kwargs={'module_slug': self.object.slug})
+        return reverse('onboarding:module_detail', kwargs={'slug': self.object.slug})
 
 
 class OnboardingStepEditView(ContentEditorRequiredMixin, UpdateView):
@@ -352,7 +352,7 @@ class OnboardingStepEditView(ContentEditorRequiredMixin, UpdateView):
         ctx = super().get_context_data(**kwargs)
         ctx['page_title'] = _('Edit onboarding step')
         module = self.object.module
-        ctx['cancel_url'] = reverse('onboarding:module_detail', kwargs={'module_slug': module.slug})
+        ctx['cancel_url'] = reverse('onboarding:module_detail', kwargs={'slug': module.slug})
         ctx['i18n_fields'] = [
             ('title', _('Title')),
             ('content', _('Content')),
@@ -366,7 +366,7 @@ class OnboardingStepEditView(ContentEditorRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse(
             'onboarding:module_detail',
-            kwargs={'module_slug': self.object.module.slug},
+            kwargs={'slug': self.object.module.slug},
         )
 
 

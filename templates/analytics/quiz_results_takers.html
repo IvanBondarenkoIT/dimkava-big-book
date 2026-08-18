@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Quiz results" %}{% endblock %}
+{% block content %}
+<div class="space-y-8">
+  <header class="flex items-start justify-between gap-6">
+    <div>
+      <a href="{% url 'analytics:quiz_results' %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+        <span class="material-symbols-outlined text-lg">arrow_back</span>
+        {% trans "All tests" %}
+      </a>
+      <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ lesson.localized_title }}</h1>
+      <p class="text-on-surface-variant/70 mt-2">{{ lesson.course.localized_title }} · {% trans "Pass mark:" %} {{ passing_score }}%</p>
+    </div>
+    <a href="{% url 'analytics:hr_hub' %}" class="btn-secondary px-4 py-2 no-underline">{% trans "HR Hub" %}</a>
+  </header>
+
+  <form method="get" class="flex flex-wrap items-center gap-4 text-sm">
+    <label class="inline-flex items-center gap-2">
+      <input type="checkbox" name="candidates" value="1" {% if candidates_only %}checked{% endif %}/>
+      {% trans "Candidates only" %}
+    </label>
+    <label class="inline-flex items-center gap-2">
+      <input type="checkbox" name="failed" value="1" {% if failed_only %}checked{% endif %}/>
+      {% trans "Below pass mark" %}
+    </label>
+    <label class="inline-flex items-center gap-2">
+      <input type="checkbox" name="locked" value="1" {% if locked_only %}checked{% endif %}/>
+      {% trans "Locked only" %}
+    </label>
+    <button type="submit" class="btn-secondary px-4 py-2">{% trans "Apply" %}</button>
+    <a href="{% url 'analytics:quiz_results_takers' lesson.pk %}" class="btn-secondary px-4 py-2 no-underline">{% trans "Reset" %}</a>
+  </form>
+
+  <section class="card-atelier p-0 overflow-hidden">
+    <div class="grid grid-cols-12 gap-0 px-5 py-3 bg-surface-container-lowest border-b border-outline-variant/10 text-xs font-bold uppercase tracking-widest text-on-surface-variant/70">
+      <div class="col-span-4">{% trans "User" %}</div>
+      <div class="col-span-2">{% trans "Role" %}</div>
+      <div class="col-span-1">{% trans "Score" %}</div>
+      <div class="col-span-2">{% trans "Result" %}</div>
+      <div class="col-span-1">{% trans "Attempts" %}</div>
+      <div class="col-span-2">{% trans "Submitted" %}</div>
+    </div>
+    {% for t in takers %}
+      <a href="{% url 'analytics:quiz_results_detail' lesson.pk t.user_id %}" class="grid grid-cols-12 gap-0 px-5 py-4 border-b border-outline-variant/10 hover:bg-surface-container-low no-underline text-inherit">
+        <div class="col-span-4 min-w-0">
+          <div class="font-extrabold text-on-surface truncate">{{ t.display_name }}</div>
+          <div class="text-xs text-on-surface-variant/60 mt-1 truncate">{{ t.email }}</div>
+        </div>
+        <div class="col-span-2 text-sm">
+          {% if t.is_candidate %}{% trans "Candidate" %}{% else %}{% trans "Employee" %}{% endif %}
+          {% if t.locked %}<span class="block text-xs text-amber-700">{% trans "Locked" %}</span>{% endif %}
+        </div>
+        <div class="col-span-1 text-sm font-bold">{{ t.quiz_score }}%</div>
+        <div class="col-span-2 text-sm font-bold {% if t.passed %}text-secondary{% else %}text-amber-700{% endif %}">
+          {% if t.passed %}{% trans "Passed" %}{% else %}{% trans "Failed" %}{% endif %}
+        </div>
+        <div class="col-span-1 text-sm">{{ t.attempts }}</div>
+        <div class="col-span-2 text-sm text-on-surface-variant/80">{% if t.completed_at %}{{ t.completed_at|date:"Y-m-d H:i" }}{% else %}—{% endif %}</div>
+      </a>
+    {% empty %}
+      <div class="px-5 py-8 text-on-surface-variant/70">{% trans "Nobody has submitted this test yet." %}</div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

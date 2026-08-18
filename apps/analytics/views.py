@@ -1,12 +1,14 @@
 """Analytics views — HR/Admin only."""
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
 from .permissions import user_can_view_analytics
 from .content_review_selectors import get_content_to_review
-from .hr_selectors import get_candidate_rows
+from .hr_selectors import get_candidate_rows, get_quiz_catalog_rows, get_quiz_taker_rows
 from .selectors import get_analytics_metrics
 
 
@@ -212,3 +214,111 @@ class OnboardingFeedbackModerationView(LoginRequiredMixin, UserPassesTestMixin, 
             fb.reject(by_user=request.user)
 
         return redirect('analytics:onboarding_feedback_moderation')
+
+
+class _HRQuizMixin(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return user_can_view_analytics(self.request.user)
+
+
+class QuizResultsListView(_HRQuizMixin, TemplateView):
+    template_name = 'analytics/quiz_results_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        q = (self.request.GET.get('q') or '').strip()
+        context['query_filter'] = q
+        context['quizzes'] = get_quiz_catalog_rows(q=q)
+        return context
+
+
+class QuizResultsTakersView(_HRQuizMixin, TemplateView):
+    template_name = 'analytics/quiz_results_takers.html'
+
+    def get_context_data(self, **kwargs):
+        from apps.courses.models import Lesson
+
+        context = super().get_context_data(**kwargs)
+        lesson = get_object_or_404(
+            Lesson.objects.select_related('course'),
+            pk=self.kwargs['lesson_id'],
+            lesson_type='quiz',
+        )
+        candidates_only = self.request.GET.get('candidates') in ('1', 'true', 'yes')
+        failed_only = self.request.GET.get('failed') in ('1', 'true', 'yes')
+        locked_only = self.request.GET.get('locked') in ('1', 'true', 'yes')
+        context['lesson'] = lesson
+        context['passing_score'] = lesson.passing_score or 70
+        context['candidates_only'] = candidates_only
+        context['failed_only'] = failed_only
+        context['locked_only'] = locked_only
+        context['takers'] = get_quiz_taker_rows(
+            lesson,
+            candidates_only=candidates_only,
+            failed_only=failed_only,
+            locked_only=locked_only,
+        )
+        return context
+
+
+class QuizResultsDetailView(_HRQuizMixin, TemplateView):
+    template_name = 'analytics/quiz_results_detail.html'
+
+    def _get_progress(self):
+        from django.contrib.auth import get_user_model
+
+        from apps.courses.models import Lesson, UserProgress
+
+        User = get_user_model()
+        lesson = get_object_or_404(
+            Lesson.objects.select_related('course'),
+            pk=self.kwargs['lesson_id'],
+            lesson_type='quiz',
+        )
+        user = get_object_or_404(User, pk=self.kwargs['user_id'])
+        progress = get_object_or_404(
+            UserProgress.objects.select_related(
+                'user', 'user__profile', 'lesson', 'candidate_retake_unlocked_by'
+            ),
+            lesson=lesson,
+            user=user,
+            quiz_score__isnull=False,
+        )
+        return lesson, user, progress
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        lesson, user, progress = self._get_progress()
+        passing = lesson.passing_score or 70
+        profile = getattr(user, 'profile', None)
+        context['lesson'] = lesson
+        context['result_user'] = user
+        context['progress'] = progress
+        context['passing_score'] = passing
+        context['passed'] = (progress.quiz_score or 0) >= passing
+        context['is_candidate'] = bool(profile and profile.is_candidate)
+        context['display_name'] = (
+            profile.get_public_username() if profile else (user.email or user.username)
+        )
+        context['questions'] = list(lesson.questions.all().order_by('order'))
+        return context
+
+    def post(self, request, *args, **kwargs):
+        from apps.courses.services import unlock_candidate_quiz_retake
+
+        lesson, user, progress = self._get_progress()
+        profile = getattr(user, 'profile', None)
+        if (
+            request.POST.get('action') == 'unlock'
+            and profile
+            and profile.is_candidate
+            and progress.lesson.lesson_type == 'quiz'
+            and progress.candidate_quiz_locked
+        ):
+            unlock_candidate_quiz_retake(progress, by_user=request.user)
+            messages.success(request, _('Quiz retake unlocked.'))
+        return redirect(
+            'analytics:quiz_results_detail',
+            lesson_id=lesson.pk,
+            user_id=user.pk,
+        )
