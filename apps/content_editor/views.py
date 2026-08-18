@@ -179,11 +179,18 @@ class QuizEditView(ContentEditorRequiredMixin, TemplateView):
 
     @staticmethod
     def _options_for_lang(question, lang: str) -> list:
+        from apps.courses.quiz_review import answer_key, has_answer_key
+
         opts = getattr(question, f'options_{lang}') or question.options_en or question.options or []
+        key = answer_key(question) if has_answer_key(question) else set()
+        # Mark only the first correct index for radio UI (one checked per group).
+        first_correct = min(key) if key else None
         result = []
         for i in range(4):
             if i < len(opts):
-                result.append(opts[i])
+                opt = dict(opts[i])
+                opt['is_correct'] = first_correct is not None and i == first_correct
+                result.append(opt)
             else:
                 result.append({'text': '', 'is_correct': False})
         return result
@@ -197,11 +204,17 @@ class QuizEditView(ContentEditorRequiredMixin, TemplateView):
         )
 
     def get_context_data(self, **kwargs):
+        from apps.courses.quiz_review import effective_passing_score, has_answer_key
+
         lesson = self.get_lesson()
         questions = []
+        missing_keys = 0
         for q in lesson.questions.order_by('order'):
+            if not has_answer_key(q):
+                missing_keys += 1
             questions.append({
                 'pk': q.pk,
+                'has_key': has_answer_key(q),
                 'langs': [
                     {
                         'code': 'en',
@@ -228,6 +241,8 @@ class QuizEditView(ContentEditorRequiredMixin, TemplateView):
             'lesson': lesson,
             'course': lesson.course,
             'questions': questions,
+            'missing_key_count': missing_keys,
+            'effective_passing_score': effective_passing_score(lesson),
             'page_title': _('Edit quiz'),
             'cancel_url': reverse('courses:quiz', kwargs={
                 'slug': lesson.course.slug,

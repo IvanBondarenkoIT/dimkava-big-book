@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 from .models import Course, Lesson, LessonRating, TestQuestion, UserProgress
 from .selectors import get_course_detail, get_courses_for_user, get_lesson_for_user
 from .services import mark_lesson_complete, save_quiz_result, record_quiz_attempt
-from .quiz_review import grade_quiz_submission
+from .quiz_review import effective_passing_score, grade_quiz_submission
 
 
 class CourseListView(LoginRequiredMixin, TemplateView):
@@ -88,7 +88,7 @@ class QuizView(LoginRequiredMixin, TemplateView):
         context['lesson'] = lesson
         context['questions'] = questions
         context['course_slug'] = lesson.course.slug
-        context['passing_score'] = lesson.passing_score or 70
+        context['passing_score'] = effective_passing_score(lesson)
         context['quiz_locked'] = quiz_locked
         context['existing_quiz_score'] = progress.quiz_score if progress else None
         return context
@@ -107,7 +107,7 @@ class QuizView(LoginRequiredMixin, TemplateView):
         if progress and progress.candidate_quiz_locked:
             messages.error(request, _('Retake is locked. Ask HR to review and unlock this quiz.'))
             return redirect('courses:detail', slug=slug)
-        passing = lesson.passing_score or 70
+        passing = effective_passing_score(lesson)
         total = lesson.questions.count()
         if total == 0:
             return redirect('courses:detail', slug=slug)

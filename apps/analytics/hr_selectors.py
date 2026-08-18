@@ -58,7 +58,9 @@ def _display_name(user) -> str:
 
 
 def _passing_score(lesson) -> int:
-    return lesson.passing_score or 70
+    from apps.courses.quiz_review import effective_passing_score
+
+    return effective_passing_score(lesson)
 
 
 @dataclass(frozen=True)

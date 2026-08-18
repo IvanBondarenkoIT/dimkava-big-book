@@ -249,7 +249,9 @@ class QuizResultsTakersView(_HRQuizMixin, TemplateView):
         failed_only = self.request.GET.get('failed') in ('1', 'true', 'yes')
         locked_only = self.request.GET.get('locked') in ('1', 'true', 'yes')
         context['lesson'] = lesson
-        context['passing_score'] = lesson.passing_score or 70
+        from apps.courses.quiz_review import effective_passing_score
+
+        context['passing_score'] = effective_passing_score(lesson)
         context['candidates_only'] = candidates_only
         context['failed_only'] = failed_only
         context['locked_only'] = locked_only
@@ -288,19 +290,22 @@ class QuizResultsDetailView(_HRQuizMixin, TemplateView):
         return lesson, user, progress
 
     def get_context_data(self, **kwargs):
-        from apps.courses.quiz_review import build_quiz_review_rows
+        from apps.courses.quiz_review import (
+            build_quiz_review_rows,
+            effective_passing_score,
+            summarize_review_rows,
+        )
 
         context = super().get_context_data(**kwargs)
         lesson, user, progress = self._get_progress()
-        passing = lesson.passing_score or 70
+        passing = effective_passing_score(lesson)
         profile = getattr(user, 'profile', None)
         has_stored_answers = bool(progress.quiz_answers)
         review_rows = build_quiz_review_rows(
             lesson,
             progress.quiz_answers if has_stored_answers else None,
         )
-        correct_count = sum(1 for row in review_rows if row.is_correct is True)
-        wrong_count = sum(1 for row in review_rows if row.is_correct is False)
+        summary = summarize_review_rows(review_rows)
 
         context['lesson'] = lesson
         context['result_user'] = user
@@ -313,9 +318,12 @@ class QuizResultsDetailView(_HRQuizMixin, TemplateView):
         )
         context['has_stored_answers'] = has_stored_answers
         context['review_rows'] = review_rows
-        context['correct_count'] = correct_count
-        context['wrong_count'] = wrong_count
-        context['question_count'] = len(review_rows)
+        context['correct_count'] = summary['correct_count']
+        context['wrong_count'] = summary['wrong_count']
+        context['answered_count'] = summary['answered_count']
+        context['unanswered_count'] = summary['unanswered_count']
+        context['question_count'] = summary['question_count']
+        context['missing_key_count'] = summary['missing_key_count']
         context['quiz_edit_url'] = reverse(
             'content_editor:quiz_edit',
             kwargs={'course_slug': lesson.course.slug, 'pk': lesson.pk},

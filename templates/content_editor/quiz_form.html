@@ -17,15 +17,26 @@
 
     <div class="card-atelier space-y-2">
       <label class="text-sm font-semibold">{% trans "Passing score (%)" %}</label>
-      <input type="number" name="passing_score" min="0" max="100" value="{{ lesson.passing_score|default:70 }}"
+      <input type="number" name="passing_score" min="0" max="100" value="{{ lesson.passing_score|default_if_none:70 }}"
         class="w-32 rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" />
     </div>
+
+    {% if missing_key_count %}
+    <div class="card-atelier border border-amber-500/30 bg-amber-500/5">
+      <p class="text-sm text-amber-800 font-semibold">
+        {% blocktrans with count=missing_key_count %}{{ count }} question(s) have no answer key yet. Select the correct option below before publishing scores.{% endblocktrans %}
+      </p>
+    </div>
+    {% endif %}
 
     {% for q in questions %}
     <input type="hidden" name="question_ids" value="{{ q.pk }}" />
     <details class="card-atelier" {% if forloop.first %}open{% endif %}>
       <summary class="font-bold cursor-pointer text-on-surface">
         {% trans "Question" %} {{ forloop.counter }}
+        {% if not q.has_key %}
+        <span class="ml-2 text-xs font-bold uppercase tracking-widest text-amber-700">{% trans "No answer key" %}</span>
+        {% endif %}
       </summary>
       <div class="mt-4 space-y-6">
         {% with en_lang=q.langs.0 %}

@@ -241,21 +241,41 @@ class RoleForm(forms.ModelForm):
         self.fields['recommended_courses'].queryset = Course.objects.order_by('title')
 
 
-def parse_quiz_options(post, prefix: str, lang: str) -> list[dict]:
-    """Build options JSON from POST fields q_{id}_opt{N}_{lang} and q_{id}_correct."""
+def parse_quiz_options(
+    post,
+    prefix: str,
+    lang: str,
+    *,
+    previous: list | None = None,
+) -> list[dict]:
+    """Build options JSON from POST. Preserve prior key if _correct is missing."""
+    correct_raw = post.get(f'{prefix}_correct')
+    previous = previous or []
+    previous_key = {
+        i for i, opt in enumerate(previous) if opt.get('is_correct')
+    }
     options = []
-    correct = post.get(f'{prefix}_correct', '')
     for i in range(4):
         text = (post.get(f'{prefix}_opt{i}_{lang}') or '').strip()
-        options.append({
-            'text': text,
-            'is_correct': str(i) == str(correct),
-        })
+        if not text and i >= len(previous):
+            continue
+        if correct_raw is None or correct_raw == '':
+            is_correct = i in previous_key
+        else:
+            is_correct = str(i) == str(correct_raw)
+        if text or is_correct or i < len(previous):
+            options.append({
+                'text': text if text else (previous[i].get('text', '') if i < len(previous) else ''),
+                'is_correct': is_correct,
+            })
+    # Drop trailing empty options that are not marked correct
+    while options and not options[-1].get('text') and not options[-1].get('is_correct'):
+        options.pop()
     return options
 
 
 def save_quiz_from_post(lesson: Lesson, post) -> None:
-    """Persist quiz questions from POST data."""
+    """Persist quiz questions from POST data without wiping answer keys."""
     question_ids = [int(x) for x in post.getlist('question_ids') if x.isdigit()]
     for qid in question_ids:
         prefix = f'q_{qid}'
@@ -266,9 +286,15 @@ def save_quiz_from_post(lesson: Lesson, post) -> None:
         question.question_text_en = post.get(f'{prefix}_text_en', '')
         question.question_text_ru = post.get(f'{prefix}_text_ru', '')
         question.question_text_ka = post.get(f'{prefix}_text_ka', '')
-        question.options_en = parse_quiz_options(post, prefix, 'en')
-        question.options_ru = parse_quiz_options(post, prefix, 'ru')
-        question.options_ka = parse_quiz_options(post, prefix, 'ka')
+        question.options_en = parse_quiz_options(
+            post, prefix, 'en', previous=question.options_en or question.options or [],
+        )
+        question.options_ru = parse_quiz_options(
+            post, prefix, 'ru', previous=question.options_ru or [],
+        )
+        question.options_ka = parse_quiz_options(
+            post, prefix, 'ka', previous=question.options_ka or [],
+        )
         sync_question_legacy(question)
         question.save()
 

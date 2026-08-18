@@ -29,22 +29,24 @@ def mark_lesson_complete(user, lesson: Lesson) -> bool:
 def save_quiz_result(
     user,
     lesson: Lesson,
-    score: int,
+    score: int | None,
     passing_score: int = 70,
     *,
     quiz_answers: dict | None = None,
 ) -> bool:
     """
     Save quiz score and mark lesson complete if passed.
+    score=None means no gradable questions (survey); stored as 0.
     Returns True if passed.
     """
     if not isinstance(lesson, Lesson):
         lesson = Lesson.objects.get(pk=lesson)
-    passed = score >= passing_score
+    stored_score = 0 if score is None else int(score)
+    passed = stored_score >= passing_score
     defaults = {
         'is_completed': passed,
         'completed_at': timezone.now(),
-        'quiz_score': score,
+        'quiz_score': stored_score,
     }
     if quiz_answers is not None:
         defaults['quiz_answers'] = quiz_answers
@@ -55,7 +57,7 @@ def save_quiz_result(
             defaults=defaults,
         )
     if passed:
-        quiz_passed.send(sender=UserProgress, user=user, lesson=lesson, score=score)
+        quiz_passed.send(sender=UserProgress, user=user, lesson=lesson, score=stored_score)
     return passed
 
 

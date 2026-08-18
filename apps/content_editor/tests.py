@@ -99,6 +99,21 @@ class QuizEditViewTest(TestCase):
         resp = self.client.get(self.edit_url)
         self.assertEqual(resp.status_code, 200)
 
+    def test_save_preserves_answer_key_when_correct_missing(self):
+        from apps.content_editor.forms import parse_quiz_options
+
+        previous = [
+            {'text': 'A', 'is_correct': False},
+            {'text': 'B', 'is_correct': True},
+        ]
+        # No q_1_correct in POST — must keep index 1.
+        post = {
+            'q_1_opt0_en': 'A',
+            'q_1_opt1_en': 'B',
+        }
+        opts = parse_quiz_options(post, 'q_1', 'en', previous=previous)
+        self.assertEqual([o['is_correct'] for o in opts], [False, True])
+
 
 class OnboardingEditorTests(TestCase):
     def setUp(self):
