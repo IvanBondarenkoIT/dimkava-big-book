@@ -220,3 +220,32 @@ class QuizResultsHRTests(TestCase):
             kwargs={'lesson_id': self.lesson.pk, 'user_id': self.employee.pk},
         )
         self.assertEqual(self.client.get(url).status_code, 404)
+
+
+class HRTaskStackTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth.models import Group
+        from apps.comments.models import Comment
+        from apps.courses.models import Course, Lesson, UserProgress
+        from django.contrib.contenttypes.models import ContentType
+        from django.utils import timezone
+
+        self.hr = User.objects.create_user(username='hr-stack@test.local', password='x')
+        self.hr.groups.add(Group.objects.get_or_create(name='hr_manager')[0])
+        self.emp = User.objects.create_user(username='emp-stack@test.local', password='x')
+        course = Course.objects.create(slug='stack-c', title='S', status='published')
+        Comment.objects.create(
+            user=self.emp,
+            content_type=ContentType.objects.get_for_model(Course),
+            object_id=course.pk,
+            text='Please approve',
+            status=Comment.Status.PENDING,
+        )
+
+    def test_hr_sees_task_stack(self):
+        self.client.login(username='hr-stack@test.local', password='x')
+        r = self.client.get(reverse('analytics:hr_task_stack'))
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'Please approve')
+        hub = self.client.get(reverse('analytics:hr_hub'))
+        self.assertContains(hub, 'Task Stack')

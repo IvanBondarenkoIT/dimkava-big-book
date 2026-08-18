@@ -52,6 +52,7 @@
 | [STRUCTURE_PLAN.md](STRUCTURE_PLAN.md) | «Где это лежит?» | Структура папок, связь design → Django, input → проект |
 | [PROMPTS_MAPPING.md](PROMPTS_MAPPING.md) | Работа с AI / Cursor | Какие промпты применять, порядок, связь с фазами |
 | [FEATURES_BACKLOG.md](FEATURES_BACKLOG.md) | Будущие фичи (последняя очередь) | Ачивки и комментарии — в конец roadmap; комментарии только после approve HR + админка модерации |
+| [DEFERRED_WAVE_D.md](DEFERRED_WAVE_D.md) | Отложенные темы после P0–C | KA, FTS, Celery/S3, invite-token, Manager |
 | [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md) | Операции EN/KA/RU | Как переключать язык, грузить и редактировать мультиязычный контент |
 | [GITHUB_AND_DOCKER.md](GITHUB_AND_DOCKER.md) | **Перед первым деплоем** | Что делает GitHub Actions vs Docker на ПК, чеклист |
 | [WINDOWS_SERVER_DEPLOY.md](WINDOWS_SERVER_DEPLOY.md) | **Production на своём сервере** | Windows + Docker Desktop, GHCR, Caddy, GitHub Actions |

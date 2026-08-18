@@ -1,0 +1,37 @@
+{% load i18n %}
+<section class="space-y-4 max-w-3xl pt-4" id="comments">
+  <h2 class="text-2xl font-extrabold tracking-tight text-primary">{% trans "Comments" %}</h2>
+  <p class="text-sm text-on-surface-variant/70">{% trans "New comments are published after HR approval." %}</p>
+
+  {% if user.is_authenticated %}
+  <form method="post" action="{% url 'comments:submit' %}" class="card-atelier space-y-3">
+    {% csrf_token %}
+    <input type="hidden" name="app_label" value="{{ comment_app_label }}"/>
+    <input type="hidden" name="model" value="{{ comment_model }}"/>
+    <input type="hidden" name="object_id" value="{{ comment_object_id }}"/>
+    <input type="hidden" name="next" value="{{ request.path }}"/>
+    <label class="block text-sm font-semibold text-on-surface">{% trans "Your comment" %}</label>
+    <textarea name="text" rows="3" required maxlength="2000"
+      class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm"
+      placeholder="{% trans 'Write a short comment…' %}"></textarea>
+    <button type="submit" class="btn-primary px-4 py-2">{% trans "Submit comment" %}</button>
+  </form>
+  {% endif %}
+
+  <ul class="space-y-3">
+    {% for c in comments %}
+    <li class="card-atelier space-y-2">
+      <div class="flex flex-wrap items-center gap-2 text-sm">
+        <span class="font-bold text-on-surface">{{ c.display_name }}</span>
+        <span class="text-on-surface-variant/50">{{ c.created_at|date:"Y-m-d H:i" }}</span>
+        {% if c.is_pending %}
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-800 bg-amber-500/15 px-2 py-0.5 rounded-full">{% trans "Pending" %}</span>
+        {% endif %}
+      </div>
+      <p class="text-on-surface-variant/90 whitespace-pre-wrap">{{ c.text }}</p>
+    </li>
+    {% empty %}
+    <li class="text-sm text-on-surface-variant/70">{% trans "No comments yet." %}</li>
+    {% endfor %}
+  </ul>
+</section>

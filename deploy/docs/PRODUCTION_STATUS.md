@@ -71,6 +71,7 @@ Use when shipping code fixes (e.g. CSRF / language switcher) **without** reloadi
 ```powershell
 cd C:\dimkava\scripts
 .\backup-db.ps1
+.\verify-prod-flags.ps1
 
 cd C:\Projects\dimkava-big-book
 git pull
@@ -83,6 +84,18 @@ cd C:\dimkava\compose
 # Confirm AUTO_LOAD_HR_CONTENT=0 in .env.prod
 docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --force-recreate web
 ```
+
+### Scheduled DB backups
+
+One-time (Administrator PowerShell):
+
+```powershell
+cd C:\Projects\dimkava-big-book
+.\deploy\scripts\copy-to-server.ps1
+C:\dimkava\scripts\schedule-backup.ps1
+```
+
+Daily dump goes to `C:\dimkava\backups\dimkava-*.sql` (retention 14 days via `backup-db.ps1`).
 
 Do **not** run `load_articles` / `load_courses` after editorial go-live. Recreate **proxy** only if Caddyfile changed.
 

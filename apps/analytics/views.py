@@ -44,6 +44,28 @@ class HRHubView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     def test_func(self):
         return user_can_view_analytics(self.request.user)
 
+    def get_context_data(self, **kwargs):
+        from .task_stack import get_hr_task_stack_counts
+
+        context = super().get_context_data(**kwargs)
+        context['task_counts'] = get_hr_task_stack_counts()
+        return context
+
+
+class HRTaskStackView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'analytics/hr_task_stack.html'
+
+    def test_func(self):
+        return user_can_view_analytics(self.request.user)
+
+    def get_context_data(self, **kwargs):
+        from .task_stack import get_hr_task_stack, get_hr_task_stack_counts
+
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = get_hr_task_stack()
+        context['task_counts'] = get_hr_task_stack_counts()
+        return context
+
 
 class CandidatesView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'analytics/candidates.html'

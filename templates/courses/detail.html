@@ -39,5 +39,9 @@
     <li class="p-4 text-on-surface-variant">{% trans "No lessons. Run:" %} <code>python manage.py load_courses</code></li>
     {% endfor %}
   </ul>
+
+  {% if course %}
+  {% include 'comments/_thread.html' %}
+  {% endif %}
 </div>
 {% endblock %}

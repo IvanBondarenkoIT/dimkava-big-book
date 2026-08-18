@@ -40,10 +40,16 @@ class ModuleDetailView(LoginRequiredMixin, TemplateView):
 
 
 class MarkStepCompleteView(LoginRequiredMixin, View):
-    """POST to mark a step complete. Redirects back to module."""
+    """POST to mark a step complete. Only steps in the user's visible program."""
 
     def post(self, request, step_id):
-        step = get_object_or_404(OnboardingStep, pk=step_id)
+        step = get_object_or_404(OnboardingStep.objects.select_related('module'), pk=step_id)
+        data = get_module_for_user(step.module.slug, request.user)
+        if not data or not data.get('module') or data['module'].pk != step.module_id:
+            return redirect('onboarding:overview')
+        allowed_ids = {s['id'] for s in data.get('steps') or []}
+        if step.pk not in allowed_ids:
+            return redirect('onboarding:overview')
         mark_step_complete(request.user, step)
         return redirect('onboarding:module_detail', slug=step.module.slug)
 

@@ -13,11 +13,18 @@ def _course_level_label(level: str) -> str:
 
 
 def get_courses_for_user(user):
-    """List courses with progress for user."""
+    """List courses with progress for user.
+
+    If AssignmentRule left pending_course_slugs on the profile, restrict the
+    catalog to those published courses (assigned enrollment path).
+    """
     courses = Course.objects.filter(status='published')
     profile = getattr(user, 'profile', None)
     if profile and profile.is_candidate:
         courses = courses.filter(visible_for_candidates=True)
+    assigned = list(getattr(profile, 'pending_course_slugs', None) or []) if profile else []
+    if assigned:
+        courses = courses.filter(slug__in=assigned)
     courses = courses.prefetch_related('lessons')
     result = []
     for c in courses:
@@ -44,6 +51,9 @@ def get_course_detail(course_slug, user):
     profile = getattr(user, 'profile', None)
     if profile and profile.is_candidate:
         qs = qs.filter(visible_for_candidates=True)
+    assigned = list(getattr(profile, 'pending_course_slugs', None) or []) if profile else []
+    if assigned and course_slug not in assigned:
+        return None
     course = qs.first()
     if not course:
         return None
@@ -70,6 +80,9 @@ def get_lesson_for_user(course_slug, lesson_id, user):
     profile = getattr(user, 'profile', None)
     if profile and profile.is_candidate:
         qs = qs.filter(visible_for_candidates=True)
+    assigned = list(getattr(profile, 'pending_course_slugs', None) or []) if profile else []
+    if assigned and course_slug not in assigned:
+        return None
     course = qs.first()
     if not course:
         return None
