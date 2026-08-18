@@ -121,6 +121,38 @@ class CandidateVisibilityTests(TestCase):
         self.assertTrue(p.candidate_quiz_locked)
         self.assertEqual(p.quiz_attempts_count, 2)
 
+    def test_employee_quiz_locked_and_tracks_attempts(self):
+        from .models import TestQuestion
+
+        emp_course = Course.objects.create(
+            slug='emp-quiz', title='Emp quiz course', status='published', level='beginner',
+        )
+        quiz = Lesson.objects.create(
+            course=emp_course, title='Emp Q', order=1, lesson_type='quiz', passing_score=70,
+        )
+        q = TestQuestion.objects.create(
+            lesson=quiz,
+            question_text='Q1',
+            options=[
+                {'text': 'A', 'is_correct': True},
+                {'text': 'B', 'is_correct': False},
+            ],
+            order=1,
+        )
+        self.client.login(username='emp@test.ge', password='pass')
+        url = reverse('courses:quiz', kwargs={'slug': emp_course.slug, 'pk': quiz.pk})
+        data = {f'q_{q.pk}': '0'}
+
+        self.client.post(url, data)
+        p = UserProgress.objects.get(user=self.employee, lesson=quiz)
+        self.assertTrue(p.candidate_quiz_locked)
+        self.assertEqual(p.quiz_attempts_count, 1)
+
+        r = self.client.post(url, data, follow=True)
+        self.assertEqual(r.status_code, 200)
+        p.refresh_from_db()
+        self.assertEqual(p.quiz_attempts_count, 1)
+
 
 class ILPSelectorsTests(TestCase):
     def test_active_ilp_context_progress_and_next_up(self):

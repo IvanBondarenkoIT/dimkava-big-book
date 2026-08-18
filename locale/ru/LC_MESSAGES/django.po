@@ -1004,3 +1004,39 @@ msgstr "Выбранные ответы не хранятся. Здесь тек
 
 msgid "Quizzes"
 msgstr "Квизы"
+
+msgid "Answer review"
+msgstr "Разбор ответов"
+
+msgid "Answer key (for manual review)"
+msgstr "Ключ ответов (для ручной проверки)"
+
+msgid "Green = learner answered correctly. Red = wrong choice; correct answer is marked with a check."
+msgstr "Зелёный — ответ верный. Красный — ошибка; правильный вариант отмечен галочкой."
+
+msgid "This attempt was saved before per-answer tracking. Use the answer key below to verify manually, or ask the learner to retake after unlock."
+msgstr "Эта попытка сохранена до учёта ответов по вопросам. Используйте ключ ниже для ручной проверки или попросите пересдать после разблокировки."
+
+msgid "Correct"
+msgstr "Верно"
+
+msgid "Wrong"
+msgstr "Ошибка"
+
+msgid "No answer"
+msgstr "Без ответа"
+
+msgid "Correct answer"
+msgstr "Правильный ответ"
+
+msgid "Learner chose this"
+msgstr "Выбрал ученик"
+
+msgid "Should be:"
+msgstr "Должно быть:"
+
+msgid "No options defined."
+msgstr "Варианты не заданы."
+
+msgid "Edit quiz"
+msgstr "Редактировать квиз"

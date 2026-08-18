@@ -753,3 +753,39 @@ msgstr "არჩეული პასუხები არ ინახებ
 
 msgid "Quizzes"
 msgstr "ქვიზები"
+
+msgid "Answer review"
+msgstr "პასუხების განხილვა"
+
+msgid "Answer key (for manual review)"
+msgstr "პასუხების გასაღები (ხელით შემოწმებისთვის)"
+
+msgid "Green = learner answered correctly. Red = wrong choice; correct answer is marked with a check."
+msgstr "მწვანე — სწორი პასუხი. წითელი — შეცდომა; სწორი ვარიანტი მონიშნულია ნიშნით."
+
+msgid "This attempt was saved before per-answer tracking. Use the answer key below to verify manually, or ask the learner to retake after unlock."
+msgstr "ეს მცდელობა შენახულია პასუხების ჩაწერამდე. გამოიყენეთ გასაღები ხელით შესამოწმებლად ან მოითხოვეთ გამეორება განბლოკვის შემდეგ."
+
+msgid "Correct"
+msgstr "სწორია"
+
+msgid "Wrong"
+msgstr "შეცდომა"
+
+msgid "No answer"
+msgstr "უპასუხო"
+
+msgid "Correct answer"
+msgstr "სწორი პასუხი"
+
+msgid "Learner chose this"
+msgstr "მოსწავლემ აირჩია"
+
+msgid "Should be:"
+msgstr "უნდა იყოს:"
+
+msgid "No options defined."
+msgstr "ვარიანტები არ არის."
+
+msgid "Edit quiz"
+msgstr "ქვიზის რედაქტირება"

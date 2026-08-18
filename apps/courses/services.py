@@ -26,7 +26,14 @@ def mark_lesson_complete(user, lesson: Lesson) -> bool:
     return created
 
 
-def save_quiz_result(user, lesson: Lesson, score: int, passing_score: int = 70) -> bool:
+def save_quiz_result(
+    user,
+    lesson: Lesson,
+    score: int,
+    passing_score: int = 70,
+    *,
+    quiz_answers: dict | None = None,
+) -> bool:
     """
     Save quiz score and mark lesson complete if passed.
     Returns True if passed.
@@ -34,23 +41,35 @@ def save_quiz_result(user, lesson: Lesson, score: int, passing_score: int = 70) 
     if not isinstance(lesson, Lesson):
         lesson = Lesson.objects.get(pk=lesson)
     passed = score >= passing_score
+    defaults = {
+        'is_completed': passed,
+        'completed_at': timezone.now(),
+        'quiz_score': score,
+    }
+    if quiz_answers is not None:
+        defaults['quiz_answers'] = quiz_answers
     with transaction.atomic():
         progress, _ = UserProgress.objects.update_or_create(
             user=user,
             lesson=lesson,
-            defaults={
-                'is_completed': passed,
-                'completed_at': timezone.now() if passed else None,
-                'quiz_score': score,
-            }
+            defaults=defaults,
         )
     if passed:
         quiz_passed.send(sender=UserProgress, user=user, lesson=lesson, score=score)
     return passed
 
 
-def unlock_candidate_quiz_retake(progress: UserProgress, *, by_user) -> None:
-    """Allow candidate to retake a locked quiz once."""
+def record_quiz_attempt(progress: UserProgress) -> None:
+    """Increment attempt counter and lock until HR unlocks retake."""
+    if not progress.lesson or progress.lesson.lesson_type != 'quiz':
+        return
+    progress.quiz_attempts_count = (progress.quiz_attempts_count or 0) + 1
+    progress.candidate_quiz_locked = True
+    progress.save(update_fields=['quiz_attempts_count', 'candidate_quiz_locked'])
+
+
+def unlock_quiz_retake(progress: UserProgress, *, by_user) -> None:
+    """Allow this user to submit the quiz again (HR/admin action)."""
     if not progress.lesson or progress.lesson.lesson_type != 'quiz':
         return
     progress.candidate_quiz_locked = False
@@ -63,3 +82,8 @@ def unlock_candidate_quiz_retake(progress: UserProgress, *, by_user) -> None:
             'candidate_retake_unlocked_by',
         ]
     )
+
+
+def unlock_candidate_quiz_retake(progress: UserProgress, *, by_user) -> None:
+    """Backward-compatible alias."""
+    unlock_quiz_retake(progress, by_user=by_user)

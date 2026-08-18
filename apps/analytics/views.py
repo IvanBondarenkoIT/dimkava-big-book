@@ -2,6 +2,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
@@ -287,10 +288,20 @@ class QuizResultsDetailView(_HRQuizMixin, TemplateView):
         return lesson, user, progress
 
     def get_context_data(self, **kwargs):
+        from apps.courses.quiz_review import build_quiz_review_rows
+
         context = super().get_context_data(**kwargs)
         lesson, user, progress = self._get_progress()
         passing = lesson.passing_score or 70
         profile = getattr(user, 'profile', None)
+        has_stored_answers = bool(progress.quiz_answers)
+        review_rows = build_quiz_review_rows(
+            lesson,
+            progress.quiz_answers if has_stored_answers else None,
+        )
+        correct_count = sum(1 for row in review_rows if row.is_correct is True)
+        wrong_count = sum(1 for row in review_rows if row.is_correct is False)
+
         context['lesson'] = lesson
         context['result_user'] = user
         context['progress'] = progress
@@ -300,23 +311,33 @@ class QuizResultsDetailView(_HRQuizMixin, TemplateView):
         context['display_name'] = (
             profile.get_public_username() if profile else (user.email or user.username)
         )
-        context['questions'] = list(lesson.questions.all().order_by('order'))
+        context['has_stored_answers'] = has_stored_answers
+        context['review_rows'] = review_rows
+        context['correct_count'] = correct_count
+        context['wrong_count'] = wrong_count
+        context['question_count'] = len(review_rows)
+        context['quiz_edit_url'] = reverse(
+            'content_editor:quiz_edit',
+            kwargs={'course_slug': lesson.course.slug, 'pk': lesson.pk},
+        )
         return context
 
     def post(self, request, *args, **kwargs):
-        from apps.courses.services import unlock_candidate_quiz_retake
+        from apps.courses.services import unlock_quiz_retake
 
         lesson, user, progress = self._get_progress()
-        profile = getattr(user, 'profile', None)
         if (
             request.POST.get('action') == 'unlock'
-            and profile
-            and profile.is_candidate
             and progress.lesson.lesson_type == 'quiz'
             and progress.candidate_quiz_locked
         ):
-            unlock_candidate_quiz_retake(progress, by_user=request.user)
-            messages.success(request, _('Quiz retake unlocked.'))
+            unlock_quiz_retake(progress, by_user=request.user)
+            messages.success(
+                request,
+                _('Retake allowed. Attempts so far: %(count)s.') % {
+                    'count': progress.quiz_attempts_count,
+                },
+            )
         return redirect(
             'analytics:quiz_results_detail',
             lesson_id=lesson.pk,

@@ -2,18 +2,21 @@
 {% load i18n %}
 {% block title %}{% trans "Quiz results" %}{% endblock %}
 {% block content %}
-<div class="space-y-8 max-w-3xl">
-  <header>
-    <a href="{% url 'analytics:quiz_results_takers' lesson.pk %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
-      <span class="material-symbols-outlined text-lg">arrow_back</span>
-      {% trans "People who took this test" %}
-    </a>
-    <h1 class="text-4xl font-extrabold tracking-tighter text-primary">{{ display_name }}</h1>
-    <p class="text-on-surface-variant/70 mt-2">{{ result_user.email|default:result_user.username }} · {{ lesson.localized_title }}</p>
+<div class="space-y-8 max-w-3xl pb-16">
+  <header class="flex flex-wrap items-start justify-between gap-4">
+    <div>
+      <a href="{% url 'analytics:quiz_results_takers' lesson.pk %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+        <span class="material-symbols-outlined text-lg">arrow_back</span>
+        {% trans "People who took this test" %}
+      </a>
+      <h1 class="text-4xl font-extrabold tracking-tighter text-primary">{{ display_name }}</h1>
+      <p class="text-on-surface-variant/70 mt-2">{{ result_user.email|default:result_user.username }} · {{ lesson.localized_title }}</p>
+    </div>
+    <a href="{{ quiz_edit_url }}" class="btn-secondary px-4 py-2 text-sm no-underline shrink-0">{% trans "Edit quiz" %}</a>
   </header>
 
   <section class="card-atelier space-y-4">
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
       <div>
         <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">{% trans "Score" %}</p>
         <p class="text-3xl font-black text-primary">{{ progress.quiz_score }}%</p>
@@ -24,6 +27,16 @@
           {% if passed %}{% trans "Passed" %}{% else %}{% trans "Failed" %}{% endif %}
         </p>
       </div>
+      {% if has_stored_answers and question_count %}
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">{% trans "Correct" %}</p>
+        <p class="text-2xl font-extrabold text-secondary">{{ correct_count }}/{{ question_count }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">{% trans "Wrong" %}</p>
+        <p class="text-2xl font-extrabold text-amber-700">{{ wrong_count }}</p>
+      </div>
+      {% endif %}
     </div>
     <p class="text-sm text-on-surface-variant/80">{% trans "Pass mark:" %} {{ passing_score }}%</p>
     <p class="text-sm text-on-surface-variant/80">{% trans "Attempts" %}: {{ progress.quiz_attempts_count }}</p>
@@ -38,26 +51,82 @@
       {% if progress.candidate_retake_unlocked_by %}· {{ progress.candidate_retake_unlocked_by }}{% endif %}
     </p>
     {% endif %}
-
-    {% if is_candidate and progress.candidate_quiz_locked %}
-    <form method="post">
+    {% if progress.candidate_quiz_locked %}
+    <form method="post" class="pt-2">
       {% csrf_token %}
       <input type="hidden" name="action" value="unlock"/>
-      <button type="submit" class="btn-primary px-4 py-2">{% trans "Unlock retake" %}</button>
+      <button type="submit" class="btn-primary px-4 py-2">
+        {% blocktrans with count=progress.quiz_attempts_count %}Allow retake ({{ count }} attempt(s) so far){% endblocktrans %}
+      </button>
     </form>
+    {% elif progress.quiz_attempts_count %}
+    <p class="text-sm text-secondary font-semibold">{% trans "Retake is allowed." %}</p>
     {% endif %}
   </section>
 
-  <section class="card-atelier space-y-3">
-    <h2 class="text-lg font-bold text-on-surface">{% trans "Questions on this test" %}</h2>
-    <p class="text-sm text-on-surface-variant/70">{% trans "Individual answer choices are not stored. This list is the current question set." %}</p>
-    <ol class="list-decimal pl-5 space-y-2 text-sm text-on-surface-variant/90">
-      {% for q in questions %}
-      <li>{{ q.localized_question_text }}</li>
-      {% empty %}
-      <li class="list-none pl-0">{% trans "No questions in this quiz." %}</li>
-      {% endfor %}
-    </ol>
+  <section class="space-y-4">
+    <div>
+      <h2 class="text-lg font-bold text-on-surface">{% if has_stored_answers %}{% trans "Answer review" %}{% else %}{% trans "Answer key (for manual review)" %}{% endif %}</h2>
+      {% if has_stored_answers %}
+      <p class="text-sm text-on-surface-variant/70 mt-1">{% trans "Green = learner answered correctly. Red = wrong choice; correct answer is marked with a check." %}</p>
+      {% else %}
+      <p class="text-sm text-amber-800 mt-1 bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3">
+        {% trans "This attempt was saved before per-answer tracking. Use the answer key below to verify manually, or ask the learner to retake after unlock." %}
+      </p>
+      {% endif %}
+    </div>
+
+    {% for row in review_rows %}
+    <div class="card-atelier space-y-3 {% if has_stored_answers and row.is_correct == False %}ring-2 ring-amber-500/30{% elif has_stored_answers and row.is_correct == True %}ring-2 ring-secondary/25{% endif %}">
+      <div class="flex flex-wrap items-start justify-between gap-2">
+        <h3 class="font-bold text-on-surface flex-1">{{ forloop.counter }}. {{ row.question_text }}</h3>
+        {% if has_stored_answers %}
+          {% if row.is_correct == True %}
+          <span class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-secondary bg-secondary/10 px-2 py-1 rounded-full">
+            <span class="material-symbols-outlined text-sm">check_circle</span>{% trans "Correct" %}
+          </span>
+          {% elif row.is_correct == False %}
+          <span class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-amber-800 bg-amber-500/15 px-2 py-1 rounded-full">
+            <span class="material-symbols-outlined text-sm">cancel</span>{% trans "Wrong" %}
+          </span>
+          {% else %}
+          <span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/50">{% trans "No answer" %}</span>
+          {% endif %}
+        {% endif %}
+      </div>
+
+      <ul class="space-y-2">
+        {% for opt in row.options %}
+        <li class="flex items-start gap-3 p-3 rounded-lg text-sm border {% if opt.is_correct %}border-secondary/40 bg-secondary/5{% else %}border-outline-variant/15 bg-surface-container-low{% endif %} {% if has_stored_answers and opt.is_selected and not opt.is_correct %}border-amber-600/50 bg-amber-500/10{% elif has_stored_answers and opt.is_selected and opt.is_correct %}ring-2 ring-secondary/40{% endif %}">
+          <span class="material-symbols-outlined text-lg shrink-0 {% if opt.is_correct %}text-secondary{% elif has_stored_answers and opt.is_selected %}text-amber-700{% else %}text-on-surface-variant/30{% endif %}">
+            {% if opt.is_correct %}check_circle{% elif has_stored_answers and opt.is_selected %}radio_button_checked{% else %}radio_button_unchecked{% endif %}
+          </span>
+          <span class="text-on-surface flex-1">
+            {{ opt.text }}
+            {% if opt.is_correct %}
+            <span class="block text-xs font-bold text-secondary mt-1">{% trans "Correct answer" %}</span>
+            {% endif %}
+            {% if has_stored_answers and opt.is_selected and not opt.is_correct %}
+            <span class="block text-xs font-bold text-amber-800 mt-1">{% trans "Learner chose this" %}</span>
+            {% endif %}
+          </span>
+        </li>
+        {% empty %}
+        <li class="text-sm text-on-surface-variant/70">{% trans "No options defined." %}</li>
+        {% endfor %}
+      </ul>
+
+      {% if has_stored_answers and row.is_correct == False and row.correct_option_text %}
+      <p class="text-sm text-on-surface-variant/80 border-t border-outline-variant/10 pt-3">
+        <span class="font-bold text-secondary">{% trans "Should be:" %}</span> {{ row.correct_option_text }}
+      </p>
+      {% endif %}
+    </div>
+    {% empty %}
+    <div class="card-atelier">
+      <p class="text-on-surface-variant/70">{% trans "No questions in this quiz." %}</p>
+    </div>
+    {% endfor %}
   </section>
 </div>
 {% endblock %}

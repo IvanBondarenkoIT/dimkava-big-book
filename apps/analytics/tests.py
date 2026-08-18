@@ -125,15 +125,25 @@ class QuizResultsHRTests(TestCase):
         self.lesson = Lesson.objects.create(
             course=course, title='Extraction quiz', order=1, lesson_type='quiz', passing_score=70,
         )
-        TestQuestion.objects.create(lesson=self.lesson, question_text='What is TDS?', order=0)
+        self.question = TestQuestion.objects.create(
+            lesson=self.lesson,
+            question_text='What is TDS?',
+            question_text_en='What is TDS?',
+            options_en=[
+                {'text': 'Too low', 'is_correct': False},
+                {'text': '18-22 percent', 'is_correct': True},
+            ],
+            order=0,
+        )
         UserProgress.objects.create(
             user=self.candidate,
             lesson=self.lesson,
-            is_completed=True,
+            is_completed=False,
             completed_at=timezone.now(),
-            quiz_score=80,
+            quiz_score=39,
             quiz_attempts_count=1,
             candidate_quiz_locked=True,
+            quiz_answers={str(self.question.id): 0},
         )
 
     def test_employee_cannot_open_quiz_results(self):
@@ -150,7 +160,7 @@ class QuizResultsHRTests(TestCase):
         takers_resp = self.client.get(takers_url)
         self.assertEqual(takers_resp.status_code, 200)
         self.assertContains(takers_resp, 'cand-quiz@test.local')
-        self.assertContains(takers_resp, '80%')
+        self.assertContains(takers_resp, '39%')
 
         detail_url = reverse(
             'analytics:quiz_results_detail',
@@ -159,7 +169,35 @@ class QuizResultsHRTests(TestCase):
         detail_resp = self.client.get(detail_url)
         self.assertEqual(detail_resp.status_code, 200)
         self.assertContains(detail_resp, 'What is TDS?')
-        self.assertContains(detail_resp, 'Unlock retake')
+        self.assertContains(detail_resp, 'Wrong')
+        self.assertContains(detail_resp, '18-22 percent')
+        self.assertContains(detail_resp, 'Allow retake')
+
+    def test_hr_unlock_retake_for_employee(self):
+        from django.utils import timezone
+        from apps.courses.models import UserProgress
+
+        UserProgress.objects.create(
+            user=self.employee,
+            lesson=self.lesson,
+            is_completed=False,
+            completed_at=timezone.now(),
+            quiz_score=55,
+            quiz_attempts_count=1,
+            candidate_quiz_locked=True,
+        )
+        self.client.login(username='hr-quiz@test.local', password='x')
+        detail_url = reverse(
+            'analytics:quiz_results_detail',
+            kwargs={'lesson_id': self.lesson.pk, 'user_id': self.employee.pk},
+        )
+        detail_resp = self.client.get(detail_url)
+        self.assertContains(detail_resp, 'Allow retake')
+
+        resp = self.client.post(detail_url, {'action': 'unlock'})
+        self.assertEqual(resp.status_code, 302)
+        progress = UserProgress.objects.get(user=self.employee, lesson=self.lesson)
+        self.assertFalse(progress.candidate_quiz_locked)
 
     def test_hr_unlock_retake_for_candidate(self):
         from apps.courses.models import UserProgress
@@ -173,7 +211,7 @@ class QuizResultsHRTests(TestCase):
         self.assertEqual(resp.status_code, 302)
         progress = UserProgress.objects.get(user=self.candidate, lesson=self.lesson)
         self.assertFalse(progress.candidate_quiz_locked)
-        self.assertEqual(progress.quiz_score, 80)
+        self.assertEqual(progress.quiz_score, 39)
 
     def test_missing_taker_is_404(self):
         self.client.login(username='hr-quiz@test.local', password='x')
