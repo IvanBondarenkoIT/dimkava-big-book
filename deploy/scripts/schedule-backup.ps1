@@ -10,7 +10,7 @@ param(
 $ErrorActionPreference = "Stop"
 $backupScript = Join-Path $ScriptsDir "backup-db.ps1"
 if (-not (Test-Path $backupScript)) {
-    throw "Missing $backupScript — run copy-to-server.ps1 first"
+    throw "Missing $backupScript - run copy-to-server.ps1 first"
 }
 
 $action = New-ScheduledTaskAction -Execute "powershell.exe" `

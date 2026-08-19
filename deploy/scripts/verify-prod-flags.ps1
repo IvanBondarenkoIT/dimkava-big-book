@@ -50,13 +50,13 @@ if ($users -eq "1" -or $users -eq "true") {
 
 Write-Host "EMAIL_BACKEND=$emailBackend"
 if (-not $emailBackend -or $emailBackend -match "console") {
-    Write-Host "WARN: EMAIL_BACKEND is console — password reset / verify emails stay in container logs" -ForegroundColor Yellow
+    Write-Host "WARN: EMAIL_BACKEND is console - password reset / verify emails stay in container logs" -ForegroundColor Yellow
 } else {
     Write-Host "OK: non-console email backend" -ForegroundColor Green
 }
 
 if ($pgPass -and $pgPass.Contains('$') -and -not $pgPass.Contains('$$')) {
-    Write-Host "WARN: POSTGRES_PASSWORD contains `$ — escape as `$`$ in .env.prod for Compose" -ForegroundColor Yellow
+    Write-Host "WARN: POSTGRES_PASSWORD contains `$ - escape as `$`$ in .env.prod for Compose" -ForegroundColor Yellow
 } elseif ($pgPass) {
     Write-Host "OK: POSTGRES_PASSWORD looks Compose-safe (or has no `$)" -ForegroundColor Green
 }
