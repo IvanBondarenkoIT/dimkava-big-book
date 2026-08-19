@@ -30,7 +30,8 @@
 | [ROLE_GUIDE_EMPLOYEE.md](ROLE_GUIDE_EMPLOYEE.md) | Employee | Профиль, KPI, ILP, feedback |
 | [ROLE_GUIDE_HR.md](ROLE_GUIDE_HR.md) | HR | Кандидаты, контент для кандидатов, мониторинг, конвертация |
 | [ROLE_GUIDE_ADMIN.md](ROLE_GUIDE_ADMIN.md) | Admin | Окружение, доступы, стабильность, инциденты |
-| [HR_FULL_FUNCTIONAL_CHECKLIST.md](HR_FULL_FUNCTIONAL_CHECKLIST.md) | HR | Полный поэтапный чеклист проверки всего функционала |
+| [HR_QA_ONE_PAGE.md](HR_QA_ONE_PAGE.md) | **HR — главный файл проверки** | Куда смотреть, сценарии, полный чеклист |
+| [HR_FULL_FUNCTIONAL_CHECKLIST.md](HR_FULL_FUNCTIONAL_CHECKLIST.md) | HR | Старый чеклист → см. HR_QA_ONE_PAGE |
 | [FUNCTIONAL_OVERVIEW_SHORT.md](FUNCTIONAL_OVERVIEW_SHORT.md) | Все | Короткое и понятное описание функционала системы |
 | [DIRECTOR_REPORT_WHAT_WAS_DONE.md](DIRECTOR_REPORT_WHAT_WAS_DONE.md) | Director | Что реализовано, зачем, эффект и следующие шаги |
 

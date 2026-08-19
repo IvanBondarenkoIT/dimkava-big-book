@@ -145,12 +145,14 @@ Then edit KB articles and courses in portal **Edit** or `/admin/` without restar
 
 ## Later (optional)
 
+Runtime targets: **local (dev)** and **self-hosted prod** only. Railway is out of scope.
+
 - [ ] Merge `deploy/self-hosted` → `main`
 - [ ] Remove legacy `ge.domkofe.biz:777` NAT if unused
-- [ ] GHCR pull instead of `dimkava-local:latest`
+- [ ] GHCR pull instead of `dimkava-local:latest` (optional; local build is fine)
 - [ ] Strong unique passwords for all default accounts
-- [ ] Scheduled `backup-db.ps1` (Task Scheduler)
-- [ ] Disable Railway project
+- [ ] Scheduled `backup-db.ps1` via `schedule-backup.ps1` (if not already)
+- [ ] Escape `$` in `POSTGRES_PASSWORD` as `$$` in `.env.prod` (removes Compose warnings)
 
 ## Docs
 
