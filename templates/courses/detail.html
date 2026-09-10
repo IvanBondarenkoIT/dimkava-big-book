@@ -56,7 +56,7 @@
       <a href="{% url 'courses:lesson_detail' course_slug lesson.id %}" class="flex flex-1 items-center gap-4 p-4 bg-surface-container-low rounded-lg hover:bg-surface-container-high transition-colors no-underline text-inherit group min-w-0">
       {% endif %}
         <span class="material-symbols-outlined text-primary shrink-0">{% if lesson.completed %}check_circle{% else %}{% if lesson.lesson_type == 'quiz' %}quiz{% else %}play_circle{% endif %}{% endif %}</span>
-        <span class="font-medium text-on-surface group-hover:text-primary transition-colors truncate">{{ lesson.localized_title }}</span>
+        <span class="font-medium text-on-surface group-hover:text-primary transition-colors truncate">{{ lesson.title }}</span>
         <span class="text-sm text-on-surface-variant ml-auto shrink-0">{{ lesson.estimated_minutes }} {% trans "min" %}</span>
         {% if lesson.quiz_score is not None %}<span class="text-xs text-on-surface-variant shrink-0">{{ lesson.quiz_score }}%</span>{% endif %}
         <span class="material-symbols-outlined text-on-surface-variant/60 group-hover:text-primary shrink-0">chevron_right</span>

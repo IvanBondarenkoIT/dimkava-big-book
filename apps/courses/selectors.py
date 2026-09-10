@@ -65,7 +65,8 @@ def get_course_detail(course_slug, user):
         prog = UserProgress.objects.filter(user=user, lesson=l).first()
         lessons.append({
             'id': l.id,
-            'title': l.localized_title,
+            # Template uses lesson.title (dicts, not Lesson instances).
+            'title': l.localized_title or l.title or f'#{l.id}',
             'lesson_type': l.lesson_type,
             'estimated_minutes': l.estimated_minutes,
             'completed': prog.is_completed if prog else False,
