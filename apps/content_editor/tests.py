@@ -200,6 +200,17 @@ class LessonQuizCreateTests(TestCase):
         data.update(overrides)
         return data
 
+    def _quiz_post(self, **overrides):
+        data = {
+            'title_en': 'Promo quiz',
+            'title_ru': 'Квиз акций',
+            'title_ka': '',
+            'order': 1,
+            'passing_score': 70,
+        }
+        data.update(overrides)
+        return data
+
     def test_employee_cannot_create_lesson_or_quiz(self):
         self.client.login(username='emp-lq', password='test')
         self.assertEqual(self.client.get(self.lesson_create_url).status_code, 403)
@@ -226,18 +237,11 @@ class LessonQuizCreateTests(TestCase):
 
     def test_hr_creates_quiz_with_blank_questions(self):
         self.client.login(username='hr-lq', password='test')
-        resp = self.client.post(
-            self.quiz_create_url,
-            self._lesson_post(
-                title_en='Promo quiz',
-                title_ru='Квиз акций',
-                lesson_type='quiz',
-                order=1,
-                passing_score=70,
-                content_en='',
-                content_ru='',
-            ),
-        )
+        resp = self.client.get(self.quiz_create_url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Continue to questions')
+        self.assertNotContains(resp, 'name="content_en"')
+        resp = self.client.post(self.quiz_create_url, self._quiz_post())
         self.assertEqual(resp.status_code, 302)
         quiz = Lesson.objects.get(course=self.course, lesson_type='quiz')
         self.assertGreaterEqual(quiz.questions.count(), 1)

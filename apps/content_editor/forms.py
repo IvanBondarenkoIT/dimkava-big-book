@@ -102,6 +102,15 @@ class CourseForm(SlugOnCreateMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         _style_fields(self)
+        desc_hint = (
+            'Short course summary only — not quiz questions. '
+            'Use Add quiz on the course page for questions and answers.'
+        )
+        for name in ('description_en', 'description_ru', 'description_ka'):
+            field = self.fields[name]
+            field.help_text = desc_hint
+            field.widget.attrs['class'] = INPUT_CLASS + ' text-sm min-h-[4.5rem]'
+            field.widget.attrs['rows'] = 3
 
     def save(self, commit=True):
         obj = super().save(commit=False)
@@ -129,6 +138,34 @@ class LessonForm(forms.ModelForm):
 
     def save(self, commit=True):
         obj = super().save(commit=False)
+        sync_legacy_fields(obj, {'title': 'title', 'content': 'content'})
+        if commit:
+            obj.save()
+        return obj
+
+
+class QuizCreateForm(forms.ModelForm):
+    """Minimal create step — questions are edited on QuizEditView after save."""
+
+    class Meta:
+        model = Lesson
+        fields = [
+            'title_en', 'title_ru', 'title_ka',
+            'passing_score', 'order',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _style_fields(self)
+        self.fields['order'].widget = forms.HiddenInput()
+        self.fields['passing_score'].required = False
+        self.fields['passing_score'].help_text = 'Percent needed to pass (0–100). Default 70.'
+
+    def save(self, commit=True):
+        obj = super().save(commit=False)
+        obj.lesson_type = 'quiz'
+        if obj.passing_score is None:
+            obj.passing_score = 70
         sync_legacy_fields(obj, {'title': 'title', 'content': 'content'})
         if commit:
             obj.save()

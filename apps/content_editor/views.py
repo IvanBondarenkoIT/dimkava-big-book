@@ -1,5 +1,4 @@
 """HR content editor views."""
-from django import forms
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
@@ -15,6 +14,7 @@ from apps.content_editor.forms import (
     OnboardingModuleForm,
     OnboardingProgramForm,
     OnboardingStepForm,
+    QuizCreateForm,
     RoleForm,
     save_quiz_from_post,
 )
@@ -241,25 +241,16 @@ class QuizCreateView(ContentEditorRequiredMixin, CreateView):
     """Create a quiz lesson under a course, with blank questions for the quiz editor."""
 
     model = Lesson
-    form_class = LessonForm
+    form_class = QuizCreateForm
     template_name = 'content_editor/form.html'
 
     def get_course(self):
         return get_object_or_404(Course, slug=self.kwargs['course_slug'])
 
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.fields['lesson_type'].widget = forms.HiddenInput()
-        form.fields['content_en'].required = False
-        form.fields['content_ru'].required = False
-        form.fields['content_ka'].required = False
-        return form
-
     def get_initial(self):
         initial = super().get_initial()
         course = self.get_course()
         initial['order'] = next_lesson_order(course)
-        initial['lesson_type'] = 'quiz'
         initial['passing_score'] = 70
         return initial
 
@@ -270,8 +261,12 @@ class QuizCreateView(ContentEditorRequiredMixin, CreateView):
         ctx['cancel_url'] = reverse('courses:detail', kwargs={'slug': course.slug})
         ctx['i18n_fields'] = [
             ('title', _('Title')),
-            ('content', _('Content')),
         ]
+        ctx['form_hint'] = _(
+            'Enter the quiz title, then continue. Questions, answer options, and the '
+            'correct answer key are on the next screen.'
+        )
+        ctx['submit_label'] = _('Continue to questions')
         return ctx
 
     def form_valid(self, form):

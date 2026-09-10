@@ -43,7 +43,7 @@
 - `Course.visible_for_candidates`
 - `Lesson.visible_for_candidates`
 
-Создание курса в портале: **Create** на `/courses/` → на странице курса **Add lesson** / **Add quiz** → для квиза заполните вопросы EN/RU/KA и ключ ответов (**Edit quiz** / **Add question**). `load_courses` для этого не нужен.
+Создание курса в портале: **Create** на `/courses/` → **Add lesson** / **Add quiz** → для квиза: название → **Continue to questions** → вопросы EN/RU/KA и ключ (**Add question**). Описание курса — краткое; не вставляйте туда текст квиза. `load_courses` не нужен.
 
 Проверка перед запуском кандидата в обучение:
 - нужная программа видна;

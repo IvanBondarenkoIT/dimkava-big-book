@@ -10,7 +10,22 @@
     </a>
     {% if course %}
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ course.localized_title }}</h1>
-    {% if course.localized_description %}<p class="text-on-surface-variant/70 mt-2">{{ course.localized_description }}</p>{% endif %}
+    {% if course.localized_description %}
+    <div class="mt-2 max-w-2xl text-on-surface-variant/70 leading-relaxed">
+      {% if course.localized_description|length > 320 %}
+      <div class="line-clamp-6">{{ course.localized_description|linebreaks }}</div>
+      <details class="mt-2 group">
+        <summary class="cursor-pointer text-sm font-semibold text-primary list-none">
+          <span class="group-open:hidden">{% trans "Show full description" %}</span>
+          <span class="hidden group-open:inline">{% trans "Hide description" %}</span>
+        </summary>
+        <div class="mt-2">{{ course.localized_description|linebreaks }}</div>
+      </details>
+      {% else %}
+      {{ course.localized_description|linebreaks }}
+      {% endif %}
+    </div>
+    {% endif %}
     {% if can_edit_content %}
     <nav class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2" aria-label="{% trans 'Course editor' %}">
       <a href="{% url 'content_editor:course_edit' course.slug %}" class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline no-underline">

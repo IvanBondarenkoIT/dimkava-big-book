@@ -9,6 +9,9 @@
       {% trans "Cancel" %}
     </a>
     <h1 class="text-4xl font-extrabold tracking-tighter text-primary">{{ page_title }}</h1>
+    {% if form_hint %}
+    <p class="text-on-surface-variant/70 mt-2 max-w-2xl">{{ form_hint }}</p>
+    {% endif %}
   </header>
 
   <form method="post" class="card-atelier space-y-6">
@@ -19,10 +22,14 @@
 
     {% include 'content_editor/_locale_tabs.html' %}
 
+    {% for field in form %}
+      {% if field.is_hidden %}{{ field }}{% endif %}
+    {% endfor %}
+
     <div class="border-t border-outline-variant/20 pt-6 space-y-4">
       <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant/70">{% trans "Settings" %}</h3>
       {% for field in form %}
-        {% if field.name != 'title_en' and field.name != 'title_ru' and field.name != 'title_ka' and field.name != 'content_en' and field.name != 'content_ru' and field.name != 'content_ka' and field.name != 'description_en' and field.name != 'description_ru' and field.name != 'description_ka' %}
+        {% if not field.is_hidden and field.name != 'title_en' and field.name != 'title_ru' and field.name != 'title_ka' and field.name != 'content_en' and field.name != 'content_ru' and field.name != 'content_ka' and field.name != 'description_en' and field.name != 'description_ru' and field.name != 'description_ka' %}
         <div class="space-y-1">
           <label for="{{ field.id_for_label }}" class="text-sm font-semibold text-on-surface">{{ field.label }}</label>
           {{ field }}
@@ -34,7 +41,7 @@
     </div>
 
     <div class="flex gap-3 pt-4">
-      <button type="submit" class="btn-primary px-6 py-3">{% trans "Save" %}</button>
+      <button type="submit" class="btn-primary px-6 py-3">{% if submit_label %}{{ submit_label }}{% else %}{% trans "Save" %}{% endif %}</button>
       <a href="{{ cancel_url }}" class="btn-secondary px-6 py-3 no-underline">{% trans "Cancel" %}</a>
     </div>
   </form>
