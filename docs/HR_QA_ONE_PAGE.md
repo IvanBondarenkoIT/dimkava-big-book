@@ -63,6 +63,8 @@ Hub-меню: [/analytics/hr/](https://bigbook.dimkava.ge/analytics/hr/)
 
 Новый квиз в курсе: страница курса → **Add quiz** → название EN/RU/KA (+ порог) → **Continue to questions** → заполнить вопросы (кнопка **Add question**) и ключ → Save. Не вставляйте текст квиза в описание курса. Новый обычный урок — **Add lesson**.
 
+Переименовать квиз/урок: на странице курса кнопка **Edit** у строки, либо открыть квиз → **Edit** → поля Title EN/RU/KA → Save quiz.
+
 ---
 
 ## Сценарий C — Комментарии

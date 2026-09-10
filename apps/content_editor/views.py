@@ -157,21 +157,46 @@ class LessonEditView(ContentEditorRequiredMixin, UpdateView):
     template_name = 'content_editor/form.html'
     pk_url_kwarg = 'pk'
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        if self.object.lesson_type == 'quiz':
+            for name in ('content_en', 'content_ru', 'content_ka', 'video_url'):
+                form.fields[name].widget = form.fields[name].hidden_widget()
+                form.fields[name].required = False
+        return form
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['page_title'] = _('Edit lesson')
-        ctx['cancel_url'] = reverse(
-            'courses:lesson_detail',
-            kwargs={'slug': self.object.course.slug, 'pk': self.object.pk},
-        )
-        ctx['i18n_fields'] = [
-            ('title', _('Title')),
-            ('content', _('Content')),
-        ]
+        if self.object.lesson_type == 'quiz':
+            ctx['page_title'] = _('Edit quiz')
+            ctx['cancel_url'] = reverse(
+                'courses:quiz',
+                kwargs={'slug': self.object.course.slug, 'pk': self.object.pk},
+            )
+            ctx['i18n_fields'] = [
+                ('title', _('Title')),
+            ]
+            ctx['form_hint'] = _(
+                'Change the quiz title and settings here. Questions are edited on the next screen after Save.'
+            )
+        else:
+            ctx['page_title'] = _('Edit lesson')
+            ctx['cancel_url'] = reverse(
+                'courses:lesson_detail',
+                kwargs={'slug': self.object.course.slug, 'pk': self.object.pk},
+            )
+            ctx['i18n_fields'] = [
+                ('title', _('Title')),
+                ('content', _('Content')),
+            ]
         return ctx
 
     def form_valid(self, form):
-        messages.success(self.request, _('Lesson saved.'))
+        if self.object.lesson_type == 'quiz':
+            form.instance.lesson_type = 'quiz'
+            messages.success(self.request, _('Quiz settings saved.'))
+        else:
+            messages.success(self.request, _('Lesson saved.'))
         return super().form_valid(form)
 
     def get_success_url(self):

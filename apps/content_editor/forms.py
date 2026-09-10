@@ -312,7 +312,15 @@ def parse_quiz_options(
 
 
 def save_quiz_from_post(lesson: Lesson, post) -> None:
-    """Persist quiz questions from POST data without wiping answer keys."""
+    """Persist quiz title, passing score, and questions from POST without wiping answer keys."""
+    previous_title = lesson.title
+    lesson.title_en = (post.get('title_en') or '').strip()
+    lesson.title_ru = (post.get('title_ru') or '').strip()
+    lesson.title_ka = (post.get('title_ka') or '').strip()
+    sync_legacy_fields(lesson, {'title': 'title'})
+    if not lesson.title:
+        lesson.title = previous_title or 'Quiz'
+
     question_ids = [int(x) for x in post.getlist('question_ids') if x.isdigit()]
     for qid in question_ids:
         prefix = f'q_{qid}'
@@ -335,7 +343,9 @@ def save_quiz_from_post(lesson: Lesson, post) -> None:
         sync_question_legacy(question)
         question.save()
 
+    update_fields = ['title', 'title_en', 'title_ru', 'title_ka']
     passing = post.get('passing_score', '').strip()
     if passing.isdigit():
         lesson.passing_score = int(passing)
-        lesson.save(update_fields=['passing_score'])
+        update_fields.append('passing_score')
+    lesson.save(update_fields=update_fields)

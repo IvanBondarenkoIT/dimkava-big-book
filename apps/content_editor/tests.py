@@ -98,6 +98,21 @@ class QuizEditViewTest(TestCase):
         self.client.login(username='hr2', password='test')
         resp = self.client.get(self.edit_url)
         self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'name="title_en"')
+
+    def test_hr_renames_quiz_via_quiz_edit(self):
+        self.client.login(username='hr2', password='test')
+        resp = self.client.post(self.edit_url, {
+            'title_en': 'Autumn sale quiz',
+            'title_ru': 'Квиз акций',
+            'title_ka': '',
+            'passing_score': '70',
+        })
+        self.assertEqual(resp.status_code, 302)
+        self.lesson.refresh_from_db()
+        self.assertEqual(self.lesson.title, 'Autumn sale quiz')
+        self.assertEqual(self.lesson.title_en, 'Autumn sale quiz')
+        self.assertEqual(self.lesson.title_ru, 'Квиз акций')
 
     def test_save_preserves_answer_key_when_correct_missing(self):
         from apps.content_editor.forms import parse_quiz_options
@@ -113,6 +128,24 @@ class QuizEditViewTest(TestCase):
         }
         opts = parse_quiz_options(post, 'q_1', 'en', previous=previous)
         self.assertEqual([o['is_correct'] for o in opts], [False, True])
+
+    def test_course_detail_shows_edit_links_for_hr(self):
+        text_lesson = Lesson.objects.create(
+            course=self.lesson.course,
+            title='Text lesson',
+            title_en='Text lesson',
+            order=2,
+            lesson_type='text',
+        )
+        self.client.login(username='hr2', password='test')
+        resp = self.client.get(reverse('courses:detail', kwargs={'slug': 'regulations'}))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, reverse('content_editor:quiz_edit', kwargs={
+            'course_slug': 'regulations', 'pk': self.lesson.pk,
+        }))
+        self.assertContains(resp, reverse('content_editor:lesson_edit', kwargs={
+            'pk': text_lesson.pk,
+        }))
 
 
 class OnboardingEditorTests(TestCase):

@@ -224,7 +224,15 @@ Workflow: `.github/workflows/deploy-self-hosted.yml`
 
 После успешной сборки образа workflow выполняет `pull` + `up -d` на сервере.
 
-Ручное обновление: `deploy\scripts\update.ps1`.
+Ручное обновление с GHCR: `deploy\scripts\update.ps1`.
+
+Локальный образ (self-hosted Windows): один клик / одна команда после push в git:
+
+```powershell
+C:\Projects\dimkava-big-book\deploy\scripts\update-from-git.bat
+```
+
+или `.\deploy\scripts\update-from-git.ps1` из корня репо (`git pull` → `build-local-image` → recreate `web`).
 
 ---
 
