@@ -160,3 +160,114 @@ class OnboardingEditorTests(TestCase):
         self.step.refresh_from_db()
         self.assertEqual(self.step.title, 'Step EN')
         self.assertEqual(self.step.title_ka, 'ნაბიჯი')
+
+
+class LessonQuizCreateTests(TestCase):
+    def setUp(self):
+        self.employee = User.objects.create_user(username='emp-lq', password='test')
+        self.hr = User.objects.create_user(username='hr-lq', password='test')
+        hr_group, _ = Group.objects.get_or_create(name='hr_manager')
+        self.hr.groups.add(hr_group)
+        self.course = Course.objects.create(
+            title='Autumn promotions',
+            slug='autumn-promotions',
+            status='draft',
+        )
+        self.lesson_create_url = reverse(
+            'content_editor:lesson_create',
+            kwargs={'course_slug': self.course.slug},
+        )
+        self.quiz_create_url = reverse(
+            'content_editor:quiz_create',
+            kwargs={'course_slug': self.course.slug},
+        )
+
+    def _lesson_post(self, **overrides):
+        data = {
+            'title_en': 'Welcome',
+            'title_ru': 'Добро пожаловать',
+            'title_ka': '',
+            'content_en': 'Body EN',
+            'content_ru': 'Тело RU',
+            'content_ka': '',
+            'order': 1,
+            'lesson_type': 'text',
+            'video_url': '',
+            'estimated_minutes': 5,
+            'is_required': 'on',
+            'passing_score': '',
+        }
+        data.update(overrides)
+        return data
+
+    def test_employee_cannot_create_lesson_or_quiz(self):
+        self.client.login(username='emp-lq', password='test')
+        self.assertEqual(self.client.get(self.lesson_create_url).status_code, 403)
+        self.assertEqual(self.client.get(self.quiz_create_url).status_code, 403)
+
+    def test_hr_creates_lesson_with_order(self):
+        Lesson.objects.create(
+            course=self.course,
+            title='Existing',
+            order=1,
+            lesson_type='text',
+        )
+        self.client.login(username='hr-lq', password='test')
+        resp = self.client.post(self.lesson_create_url, self._lesson_post(order=2))
+        self.assertEqual(resp.status_code, 302)
+        lesson = Lesson.objects.get(course=self.course, order=2)
+        self.assertEqual(lesson.course_id, self.course.pk)
+        self.assertEqual(lesson.lesson_type, 'text')
+        self.assertEqual(lesson.title, 'Welcome')
+        self.assertEqual(
+            resp.url,
+            reverse('courses:lesson_detail', kwargs={'slug': self.course.slug, 'pk': lesson.pk}),
+        )
+
+    def test_hr_creates_quiz_with_blank_questions(self):
+        self.client.login(username='hr-lq', password='test')
+        resp = self.client.post(
+            self.quiz_create_url,
+            self._lesson_post(
+                title_en='Promo quiz',
+                title_ru='Квиз акций',
+                lesson_type='quiz',
+                order=1,
+                passing_score=70,
+                content_en='',
+                content_ru='',
+            ),
+        )
+        self.assertEqual(resp.status_code, 302)
+        quiz = Lesson.objects.get(course=self.course, lesson_type='quiz')
+        self.assertGreaterEqual(quiz.questions.count(), 1)
+        self.assertEqual(
+            resp.url,
+            reverse(
+                'content_editor:quiz_edit',
+                kwargs={'course_slug': self.course.slug, 'pk': quiz.pk},
+            ),
+        )
+        edit_resp = self.client.get(resp.url)
+        self.assertEqual(edit_resp.status_code, 200)
+
+    def test_hr_adds_quiz_question(self):
+        quiz = Lesson.objects.create(
+            course=self.course,
+            title='Quiz',
+            order=1,
+            lesson_type='quiz',
+            passing_score=70,
+        )
+        from apps.content_editor.lesson_create import create_blank_test_question
+
+        create_blank_test_question(quiz)
+        before = quiz.questions.count()
+        add_url = reverse(
+            'content_editor:quiz_question_add',
+            kwargs={'course_slug': self.course.slug, 'pk': quiz.pk},
+        )
+        self.client.login(username='hr-lq', password='test')
+        resp = self.client.post(add_url)
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(quiz.questions.count(), before + 1)

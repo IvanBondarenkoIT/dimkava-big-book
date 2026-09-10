@@ -66,13 +66,18 @@
       </div>
     </details>
     {% empty %}
-    <p class="text-on-surface-variant">{% trans "No questions yet. Add them in Django admin or load from YAML." %}</p>
+    <p class="text-on-surface-variant">{% trans "No questions yet. Use Add question below." %}</p>
     {% endfor %}
 
-    <div class="flex gap-3">
+    <div class="flex flex-wrap gap-3 items-center">
       <button type="submit" class="btn-primary px-6 py-3">{% trans "Save quiz" %}</button>
+      <button type="submit" form="add-question-form" class="btn-secondary px-6 py-3">{% trans "Add question" %}</button>
       <a href="{{ cancel_url }}" class="btn-secondary px-6 py-3 no-underline">{% trans "Cancel" %}</a>
     </div>
+  </form>
+
+  <form id="add-question-form" method="post" action="{% url 'content_editor:quiz_question_add' course.slug lesson.pk %}" class="hidden">
+    {% csrf_token %}
   </form>
 </div>
 {% endblock %}

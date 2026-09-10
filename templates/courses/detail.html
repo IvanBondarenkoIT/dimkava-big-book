@@ -9,8 +9,20 @@
       {% trans "Back to Curriculum" %}
     </a>
     {% if can_edit_content and course %}
-    {% url 'content_editor:course_edit' course.slug as edit_url %}
-    {% include 'content_editor/_edit_button.html' %}
+    <div class="flex flex-wrap items-center gap-4 mb-2">
+      {% url 'content_editor:course_edit' course.slug as edit_url %}
+      {% include 'content_editor/_edit_button.html' %}
+      {% url 'content_editor:lesson_create' course.slug as lesson_create_url %}
+      <a href="{{ lesson_create_url }}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline no-underline">
+        <span class="material-symbols-outlined text-lg">add</span>
+        {% trans "Add lesson" %}
+      </a>
+      {% url 'content_editor:quiz_create' course.slug as quiz_create_url %}
+      <a href="{{ quiz_create_url }}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline no-underline">
+        <span class="material-symbols-outlined text-lg">quiz</span>
+        {% trans "Add quiz" %}
+      </a>
+    </div>
     {% endif %}
     {% if course %}
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ course.localized_title }}</h1>
@@ -36,7 +48,21 @@
       </a>
     </li>
     {% empty %}
-    <li class="p-4 text-on-surface-variant">{% trans "No lessons. Run:" %} <code>python manage.py load_courses</code></li>
+    <li class="p-4 text-on-surface-variant space-y-3">
+      <p>{% trans "No lessons yet. Add a lesson or quiz." %}</p>
+      {% if can_edit_content and course %}
+      <div class="flex flex-wrap gap-4">
+        <a href="{% url 'content_editor:lesson_create' course.slug %}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline no-underline">
+          <span class="material-symbols-outlined text-lg">add</span>
+          {% trans "Add lesson" %}
+        </a>
+        <a href="{% url 'content_editor:quiz_create' course.slug %}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline no-underline">
+          <span class="material-symbols-outlined text-lg">quiz</span>
+          {% trans "Add quiz" %}
+        </a>
+      </div>
+      {% endif %}
+    </li>
     {% endfor %}
   </ul>
 

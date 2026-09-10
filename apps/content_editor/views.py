@@ -1,8 +1,10 @@
 """HR content editor views."""
+from django import forms
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.views import View
 from django.views.generic import CreateView, TemplateView, UpdateView
 
 from apps.content_editor.forms import (
@@ -15,6 +17,11 @@ from apps.content_editor.forms import (
     OnboardingStepForm,
     RoleForm,
     save_quiz_from_post,
+)
+from apps.content_editor.lesson_create import (
+    create_blank_quiz_questions,
+    create_blank_test_question,
+    next_lesson_order,
 )
 from apps.content_editor.mixins import ContentEditorRequiredMixin
 from apps.courses.models import Course, Lesson
@@ -168,9 +175,141 @@ class LessonEditView(ContentEditorRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
+        if self.object.lesson_type == 'quiz':
+            return reverse(
+                'content_editor:quiz_edit',
+                kwargs={'course_slug': self.object.course.slug, 'pk': self.object.pk},
+            )
         return reverse(
             'courses:lesson_detail',
             kwargs={'slug': self.object.course.slug, 'pk': self.object.pk},
+        )
+
+
+class LessonCreateView(ContentEditorRequiredMixin, CreateView):
+    model = Lesson
+    form_class = LessonForm
+    template_name = 'content_editor/form.html'
+
+    def get_course(self):
+        return get_object_or_404(Course, slug=self.kwargs['course_slug'])
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Quizzes use QuizCreateView — keep lesson types non-quiz here.
+        form.fields['lesson_type'].choices = [
+            (value, label)
+            for value, label in form.fields['lesson_type'].choices
+            if value and value != 'quiz'
+        ]
+        return form
+
+    def get_initial(self):
+        initial = super().get_initial()
+        course = self.get_course()
+        initial['order'] = next_lesson_order(course)
+        initial['lesson_type'] = 'text'
+        return initial
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        course = self.get_course()
+        ctx['page_title'] = _('New lesson')
+        ctx['cancel_url'] = reverse('courses:detail', kwargs={'slug': course.slug})
+        ctx['i18n_fields'] = [
+            ('title', _('Title')),
+            ('content', _('Content')),
+        ]
+        return ctx
+
+    def form_valid(self, form):
+        course = self.get_course()
+        form.instance.course = course
+        if not form.instance.order:
+            form.instance.order = next_lesson_order(course)
+        messages.success(self.request, _('Lesson created.'))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse(
+            'courses:lesson_detail',
+            kwargs={'slug': self.object.course.slug, 'pk': self.object.pk},
+        )
+
+
+class QuizCreateView(ContentEditorRequiredMixin, CreateView):
+    """Create a quiz lesson under a course, with blank questions for the quiz editor."""
+
+    model = Lesson
+    form_class = LessonForm
+    template_name = 'content_editor/form.html'
+
+    def get_course(self):
+        return get_object_or_404(Course, slug=self.kwargs['course_slug'])
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['lesson_type'].widget = forms.HiddenInput()
+        form.fields['content_en'].required = False
+        form.fields['content_ru'].required = False
+        form.fields['content_ka'].required = False
+        return form
+
+    def get_initial(self):
+        initial = super().get_initial()
+        course = self.get_course()
+        initial['order'] = next_lesson_order(course)
+        initial['lesson_type'] = 'quiz'
+        initial['passing_score'] = 70
+        return initial
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        course = self.get_course()
+        ctx['page_title'] = _('New quiz')
+        ctx['cancel_url'] = reverse('courses:detail', kwargs={'slug': course.slug})
+        ctx['i18n_fields'] = [
+            ('title', _('Title')),
+            ('content', _('Content')),
+        ]
+        return ctx
+
+    def form_valid(self, form):
+        course = self.get_course()
+        form.instance.course = course
+        form.instance.lesson_type = 'quiz'
+        if not form.instance.order:
+            form.instance.order = next_lesson_order(course)
+        if form.instance.passing_score is None:
+            form.instance.passing_score = 70
+        response = super().form_valid(form)
+        create_blank_quiz_questions(self.object, count=3)
+        messages.success(self.request, _('Quiz created. Add questions and the answer key.'))
+        return response
+
+    def get_success_url(self):
+        return reverse(
+            'content_editor:quiz_edit',
+            kwargs={'course_slug': self.object.course.slug, 'pk': self.object.pk},
+        )
+
+
+class QuizQuestionAddView(ContentEditorRequiredMixin, View):
+    """POST: append a blank question to an existing quiz lesson."""
+
+    def post(self, request, course_slug, pk):
+        lesson = get_object_or_404(
+            Lesson,
+            pk=pk,
+            course__slug=course_slug,
+            lesson_type='quiz',
+        )
+        create_blank_test_question(lesson)
+        messages.success(request, _('Question added.'))
+        return redirect(
+            'content_editor:quiz_edit',
+            course_slug=lesson.course.slug,
+            pk=lesson.pk,
         )
 
 
