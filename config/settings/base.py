@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.search',
     'apps.gamification',
     'apps.comments',
+    'apps.content_editor',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'apps.accounts.middleware.CandidateRestrictionsMiddleware',
-    'apps.accounts.middleware.I18nDebugMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -78,6 +78,7 @@ TEMPLATES = [
                 'apps.notifications.context_processors.unread_notifications_count',
                 'apps.accounts.context_processors.candidate_ui',
                 'apps.accounts.context_processors.hr_ui',
+                'apps.accounts.context_processors.can_edit_content',
                 'apps.accounts.context_processors.avatar_badge',
             ],
         },
@@ -110,6 +111,7 @@ LOCALE_PATHS = [BASE_DIR / 'locale']
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+CSRF_FAILURE_VIEW = 'apps.core.views.csrf_failure'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'

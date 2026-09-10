@@ -1,12 +1,15 @@
 """Analytics views — HR/Admin only."""
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
 from .permissions import user_can_view_analytics
 from .content_review_selectors import get_content_to_review
-from .hr_selectors import get_candidate_rows
+from .hr_selectors import get_candidate_rows, get_quiz_catalog_rows, get_quiz_taker_rows
 from .selectors import get_analytics_metrics
 
 
@@ -40,6 +43,28 @@ class HRHubView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     def test_func(self):
         return user_can_view_analytics(self.request.user)
+
+    def get_context_data(self, **kwargs):
+        from .task_stack import get_hr_task_stack_counts
+
+        context = super().get_context_data(**kwargs)
+        context['task_counts'] = get_hr_task_stack_counts()
+        return context
+
+
+class HRTaskStackView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'analytics/hr_task_stack.html'
+
+    def test_func(self):
+        return user_can_view_analytics(self.request.user)
+
+    def get_context_data(self, **kwargs):
+        from .task_stack import get_hr_task_stack, get_hr_task_stack_counts
+
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = get_hr_task_stack()
+        context['task_counts'] = get_hr_task_stack_counts()
+        return context
 
 
 class CandidatesView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
@@ -212,3 +237,139 @@ class OnboardingFeedbackModerationView(LoginRequiredMixin, UserPassesTestMixin, 
             fb.reject(by_user=request.user)
 
         return redirect('analytics:onboarding_feedback_moderation')
+
+
+class _HRQuizMixin(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return user_can_view_analytics(self.request.user)
+
+
+class QuizResultsListView(_HRQuizMixin, TemplateView):
+    template_name = 'analytics/quiz_results_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        q = (self.request.GET.get('q') or '').strip()
+        context['query_filter'] = q
+        context['quizzes'] = get_quiz_catalog_rows(q=q)
+        return context
+
+
+class QuizResultsTakersView(_HRQuizMixin, TemplateView):
+    template_name = 'analytics/quiz_results_takers.html'
+
+    def get_context_data(self, **kwargs):
+        from apps.courses.models import Lesson
+
+        context = super().get_context_data(**kwargs)
+        lesson = get_object_or_404(
+            Lesson.objects.select_related('course'),
+            pk=self.kwargs['lesson_id'],
+            lesson_type='quiz',
+        )
+        candidates_only = self.request.GET.get('candidates') in ('1', 'true', 'yes')
+        failed_only = self.request.GET.get('failed') in ('1', 'true', 'yes')
+        locked_only = self.request.GET.get('locked') in ('1', 'true', 'yes')
+        context['lesson'] = lesson
+        from apps.courses.quiz_review import effective_passing_score
+
+        context['passing_score'] = effective_passing_score(lesson)
+        context['candidates_only'] = candidates_only
+        context['failed_only'] = failed_only
+        context['locked_only'] = locked_only
+        context['takers'] = get_quiz_taker_rows(
+            lesson,
+            candidates_only=candidates_only,
+            failed_only=failed_only,
+            locked_only=locked_only,
+        )
+        return context
+
+
+class QuizResultsDetailView(_HRQuizMixin, TemplateView):
+    template_name = 'analytics/quiz_results_detail.html'
+
+    def _get_progress(self):
+        from django.contrib.auth import get_user_model
+
+        from apps.courses.models import Lesson, UserProgress
+
+        User = get_user_model()
+        lesson = get_object_or_404(
+            Lesson.objects.select_related('course'),
+            pk=self.kwargs['lesson_id'],
+            lesson_type='quiz',
+        )
+        user = get_object_or_404(User, pk=self.kwargs['user_id'])
+        progress = get_object_or_404(
+            UserProgress.objects.select_related(
+                'user', 'user__profile', 'lesson', 'candidate_retake_unlocked_by'
+            ),
+            lesson=lesson,
+            user=user,
+            quiz_score__isnull=False,
+        )
+        return lesson, user, progress
+
+    def get_context_data(self, **kwargs):
+        from apps.courses.quiz_review import (
+            build_quiz_review_rows,
+            effective_passing_score,
+            summarize_review_rows,
+        )
+
+        context = super().get_context_data(**kwargs)
+        lesson, user, progress = self._get_progress()
+        passing = effective_passing_score(lesson)
+        profile = getattr(user, 'profile', None)
+        has_stored_answers = bool(progress.quiz_answers)
+        review_rows = build_quiz_review_rows(
+            lesson,
+            progress.quiz_answers if has_stored_answers else None,
+        )
+        summary = summarize_review_rows(review_rows)
+
+        context['lesson'] = lesson
+        context['result_user'] = user
+        context['progress'] = progress
+        context['passing_score'] = passing
+        context['passed'] = (progress.quiz_score or 0) >= passing
+        context['is_candidate'] = bool(profile and profile.is_candidate)
+        context['display_name'] = (
+            profile.get_public_username() if profile else (user.email or user.username)
+        )
+        context['has_stored_answers'] = has_stored_answers
+        context['review_rows'] = review_rows
+        context['correct_count'] = summary['correct_count']
+        context['wrong_count'] = summary['wrong_count']
+        context['answered_count'] = summary['answered_count']
+        context['unanswered_count'] = summary['unanswered_count']
+        context['question_count'] = summary['question_count']
+        context['missing_key_count'] = summary['missing_key_count']
+        context['quiz_edit_url'] = reverse(
+            'content_editor:quiz_edit',
+            kwargs={'course_slug': lesson.course.slug, 'pk': lesson.pk},
+        )
+        return context
+
+    def post(self, request, *args, **kwargs):
+        from apps.courses.services import unlock_quiz_retake
+
+        lesson, user, progress = self._get_progress()
+        if (
+            request.POST.get('action') == 'unlock'
+            and progress.lesson.lesson_type == 'quiz'
+            and progress.candidate_quiz_locked
+        ):
+            unlock_quiz_retake(progress, by_user=request.user)
+            messages.success(
+                request,
+                _('Retake allowed. Attempts so far: %(count)s.') % {
+                    'count': progress.quiz_attempts_count,
+                },
+            )
+        return redirect(
+            'analytics:quiz_results_detail',
+            lesson_id=lesson.pk,
+            user_id=user.pk,
+        )

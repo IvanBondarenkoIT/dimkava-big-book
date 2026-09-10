@@ -1,0 +1,20 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dim Kava | {% trans "Session expired" %}</title>
+  <link rel="stylesheet" href="{% static 'css/tailwind.css' %}?v=4"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-surface text-on-surface-variant min-h-screen flex flex-col items-center justify-center p-6 antialiased">
+  <div class="w-full max-w-md card-atelier p-8 shadow-xl space-y-4 text-center">
+    <h1 class="text-2xl font-extrabold text-primary">{% trans "Please refresh the page" %}</h1>
+    <p class="text-sm text-on-surface-variant/80">
+      {% trans "Your session or security token expired (common after switching to HTTPS or leaving the page open). Reload and try again. If the problem continues, clear cookies for this site." %}
+    </p>
+    <a href="{{ next_url|default:'/' }}" class="btn-primary inline-flex px-6 py-3 no-underline">{% trans "Reload" %}</a>
+  </div>
+</body>
+</html>

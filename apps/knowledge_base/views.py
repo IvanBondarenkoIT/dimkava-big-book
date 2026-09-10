@@ -51,4 +51,6 @@ class ArticleView(LoginRequiredMixin, TemplateView):
         context['article_title'] = article.localized_title
         context['section_slug'] = article.section.slug
         context['section_title'] = article.section.localized_title
+        from apps.comments.services import comments_context_for
+        context.update(comments_context_for(article, self.request.user))
         return context

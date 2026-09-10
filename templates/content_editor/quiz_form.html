@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+<div class="space-y-8 max-w-3xl pb-16">
+  <header>
+    <a href="{{ cancel_url }}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+      <span class="material-symbols-outlined text-lg">arrow_back</span>
+      {% trans "Cancel" %}
+    </a>
+    <h1 class="text-4xl font-extrabold tracking-tighter text-primary">{{ page_title }}</h1>
+    <p class="text-on-surface-variant/70 mt-2">{{ course.localized_title }}</p>
+    <p class="text-sm text-on-surface-variant/60 mt-1">{% trans "Edit the quiz title below, then questions and the answer key." %}</p>
+  </header>
+
+  <form method="post" class="space-y-6">
+    {% csrf_token %}
+
+    <div class="card-atelier space-y-3">
+      <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant/70">{% trans "Title" %}</h3>
+      <div class="space-y-1">
+        <label class="text-xs font-semibold text-on-surface-variant" for="id_title_en">English</label>
+        <input id="id_title_en" type="text" name="title_en" value="{{ lesson.title_en|default:lesson.title }}"
+          class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" />
+      </div>
+      <div class="space-y-1">
+        <label class="text-xs font-semibold text-on-surface-variant" for="id_title_ru">Русский</label>
+        <input id="id_title_ru" type="text" name="title_ru" value="{{ lesson.title_ru }}"
+          class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" />
+      </div>
+      <div class="space-y-1">
+        <label class="text-xs font-semibold text-on-surface-variant" for="id_title_ka">ქართული</label>
+        <input id="id_title_ka" type="text" name="title_ka" value="{{ lesson.title_ka }}"
+          class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" />
+      </div>
+    </div>
+
+    <div class="card-atelier space-y-2">
+      <label class="text-sm font-semibold">{% trans "Passing score (%)" %}</label>
+      <input type="number" name="passing_score" min="0" max="100" value="{{ lesson.passing_score|default_if_none:70 }}"
+        class="w-32 rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" />
+    </div>
+
+    {% if missing_key_count %}
+    <div class="card-atelier border border-amber-500/30 bg-amber-500/5">
+      <p class="text-sm text-amber-800 font-semibold">
+        {% blocktrans with count=missing_key_count %}{{ count }} question(s) have no answer key yet. Select the correct option below before publishing scores.{% endblocktrans %}
+      </p>
+    </div>
+    {% endif %}
+
+    {% for q in questions %}
+    <input type="hidden" name="question_ids" value="{{ q.pk }}" />
+    <details class="card-atelier" {% if forloop.first %}open{% endif %}>
+      <summary class="font-bold cursor-pointer text-on-surface">
+        {% trans "Question" %} {{ forloop.counter }}
+        {% if not q.has_key %}
+        <span class="ml-2 text-xs font-bold uppercase tracking-widest text-amber-700">{% trans "No answer key" %}</span>
+        {% endif %}
+      </summary>
+      <div class="mt-4 space-y-6">
+        {% with en_lang=q.langs.0 %}
+        <p class="text-xs text-on-surface-variant/60">{% trans "Correct answer (one per question — select the radio next to the option number)" %}</p>
+        <div class="flex flex-wrap gap-4 mb-2">
+          {% for opt in en_lang.options %}
+          <label class="inline-flex items-center gap-2 text-sm font-medium cursor-pointer">
+            <input type="radio" name="q_{{ q.pk }}_correct" value="{{ forloop.counter0 }}" {% if opt.is_correct %}checked{% endif %} />
+            <span>{% trans "Option" %} {{ forloop.counter }}</span>
+          </label>
+          {% endfor %}
+        </div>
+        {% endwith %}
+        {% for lang in q.langs %}
+        <div class="space-y-3 border-t border-outline-variant/10 pt-4 first:border-0 first:pt-0">
+          <p class="text-xs font-bold uppercase tracking-widest text-primary/80">{{ lang.label }}</p>
+          <textarea name="q_{{ q.pk }}_text_{{ lang.code }}" rows="2" class="w-full rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm">{{ lang.text }}</textarea>
+          <p class="text-xs text-on-surface-variant/60">{% trans "Answer options (same order in all languages)" %}</p>
+          {% for opt in lang.options %}
+          <div class="flex items-center gap-2">
+            <span class="w-6 text-xs font-bold text-on-surface-variant/50 shrink-0">{{ forloop.counter }}.</span>
+            <input type="text" name="q_{{ q.pk }}_opt{{ forloop.counter0 }}_{{ lang.code }}" value="{{ opt.text }}" class="flex-1 rounded-lg bg-surface-container-lowest border border-outline-variant/20 px-3 py-2 text-sm" />
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+    </details>
+    {% empty %}
+    <p class="text-on-surface-variant">{% trans "No questions yet. Use Add question below." %}</p>
+    {% endfor %}
+
+    <div class="flex flex-wrap gap-3 items-center">
+      <button type="submit" class="btn-primary px-6 py-3">{% trans "Save quiz" %}</button>
+      <button type="submit" form="add-question-form" class="btn-secondary px-6 py-3">{% trans "Add question" %}</button>
+      <a href="{{ cancel_url }}" class="btn-secondary px-6 py-3 no-underline">{% trans "Cancel" %}</a>
+    </div>
+  </form>
+
+  <form id="add-question-form" method="post" action="{% url 'content_editor:quiz_question_add' course.slug lesson.pk %}" class="hidden">
+    {% csrf_token %}
+  </form>
+</div>
+{% endblock %}

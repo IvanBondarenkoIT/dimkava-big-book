@@ -164,6 +164,7 @@ class UserProgress(models.Model):
         on_delete=models.SET_NULL,
         related_name='candidate_quiz_unlock_actions',
     )
+    quiz_answers = models.JSONField(default=dict, blank=True)
 
     class Meta:
         verbose_name = _('User progress')

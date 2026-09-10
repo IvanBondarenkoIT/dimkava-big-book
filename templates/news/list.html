@@ -3,8 +3,12 @@
 {% block title %}{% trans "News" %}{% endblock %}
 {% block content %}
 <div class="space-y-8">
-  <header>
+  <header class="flex flex-wrap items-start justify-between gap-4">
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "News & Announcements" %}</h1>
+    {% if can_edit_content %}
+    {% url 'content_editor:news_create' as create_url %}
+    {% include 'content_editor/_create_button.html' %}
+    {% endif %}
   </header>
   <div class="space-y-4 max-w-3xl">
     {% for n in news %}

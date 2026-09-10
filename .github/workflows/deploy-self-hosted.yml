@@ -1,0 +1,40 @@
+name: Deploy to self-hosted server
+
+on:
+  workflow_run:
+    workflows: ["Docker publish (GHCR)"]
+    types:
+      - completed
+    branches:
+      - main
+      - deploy/self-hosted
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy over SSH (Windows OpenSSH + PowerShell)
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          DEPLOY_COMPOSE_DIR: ${{ secrets.DEPLOY_COMPOSE_DIR }}
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_SSH_PORT || 22 }}
+          envs: GHCR_TOKEN,GHCR_USERNAME,DEPLOY_COMPOSE_DIR
+          script_stop: true
+          script: |
+            $composeDir = if ($env:DEPLOY_COMPOSE_DIR) { $env:DEPLOY_COMPOSE_DIR } else { 'C:\dimkava\compose' }
+            Set-Location $composeDir
+            $env:GHCR_TOKEN | docker login ghcr.io -u $env:GHCR_USERNAME --password-stdin
+            docker compose --env-file .env.prod -f docker-compose.prod.yml pull web
+            docker compose --env-file .env.prod -f docker-compose.prod.yml up -d
+            docker compose --env-file .env.prod -f docker-compose.prod.yml ps

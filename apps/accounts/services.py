@@ -79,8 +79,8 @@ def apply_assignment_rules(user) -> None:
     """
     Apply matching AssignmentRule to the user's profile (if any).
 
-    TODO: connect required_course_slugs to real enrollment / UserProgress
-    (best_practices §3 — mock assignment path until product rules are defined).
+    required_course_slugs are stored on pending_course_slugs and used by
+    course selectors to restrict the published catalog to assigned courses.
     """
     profile = getattr(user, 'profile', None)
     if profile is None:

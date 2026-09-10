@@ -8,6 +8,10 @@
       <span class="material-symbols-outlined text-lg">arrow_back</span>
       {% trans "Back to News" %}
     </a>
+    {% if can_edit_content and news_post %}
+    {% url 'content_editor:news_edit' news_post.slug as edit_url %}
+    {% include 'content_editor/_edit_button.html' %}
+    {% endif %}
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ news_title }}</h1>
     <p class="text-on-surface-variant/70 mt-2">{{ news_date }}{% if news_post.tag %} • {{ news_post.localized_tag }}{% endif %}</p>
   </header>
@@ -18,5 +22,6 @@
       {% trans "No content." %}
     {% endif %}
   </div>
+  {% include 'comments/_thread.html' %}
 </div>
 {% endblock %}

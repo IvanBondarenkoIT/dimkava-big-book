@@ -9,6 +9,14 @@
       {% trans "Back to Knowledge Base" %}
     </a>
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ section_title|default:section_slug }}</h1>
+    {% if can_edit_content %}
+    <div class="mt-4">
+      <a href="{% url 'content_editor:article_create' %}?section={{ section_slug }}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline no-underline">
+        <span class="material-symbols-outlined text-lg">add</span>
+        {% trans "Create article" %}
+      </a>
+    </div>
+    {% endif %}
   </header>
   <ul class="space-y-2 max-w-2xl">
     {% for a in articles %}

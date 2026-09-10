@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from .models import Course, ILPItem, IndividualLearningPlan, Lesson, LessonRating, TestQuestion, UserProgress
-from .services import unlock_candidate_quiz_retake
+from .services import unlock_quiz_retake
 
 
 class LessonInline(admin.TabularInline):
@@ -136,23 +136,24 @@ class UserProgressAdmin(admin.ModelAdmin):
     ]
     list_filter = ['is_completed', 'candidate_quiz_locked', 'lesson__lesson_type']
     autocomplete_fields = ['user', 'lesson']
-    actions = ['allow_candidate_quiz_retake']
+    actions = ['allow_quiz_retake']
 
-    @admin.action(description=_('Allow candidate quiz retake (unlock selected)'))
-    def allow_candidate_quiz_retake(self, request, queryset):
+    @admin.action(description=_('Allow quiz retake (unlock selected)'))
+    def allow_quiz_retake(self, request, queryset):
         unlocked = 0
-        for p in queryset.select_related('user__profile', 'lesson'):
-            profile = getattr(p.user, 'profile', None)
-            if not profile or not profile.is_candidate:
-                continue
+        for p in queryset.select_related('lesson'):
             if p.lesson.lesson_type != 'quiz':
                 continue
-            unlock_candidate_quiz_retake(p, by_user=request.user)
+            if not p.candidate_quiz_locked:
+                continue
+            unlock_quiz_retake(p, by_user=request.user)
             unlocked += 1
         self.message_user(
             request,
-            _('Unlocked %(count)s quiz attempt(s) for candidate retake.') % {'count': unlocked},
+            _('Unlocked %(count)s quiz attempt(s) for retake.') % {'count': unlocked},
         )
+
+    allow_candidate_quiz_retake = allow_quiz_retake
 
 
 class ILPItemInline(admin.TabularInline):

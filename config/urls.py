@@ -41,6 +41,8 @@ urlpatterns = [
     path('analytics/', include('apps.analytics.urls')),
     path('notifications/', include('apps.notifications.urls')),
     path('search/', include('apps.search.urls')),
+    path('edit/', include('apps.content_editor.urls')),
     path('gamification/', include('apps.gamification.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('comments/', include('apps.comments.urls')),
 ]

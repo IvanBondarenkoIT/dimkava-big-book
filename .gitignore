@@ -3,6 +3,7 @@
 *.env
 .env.*
 !.env.example
+.env.prod
 
 # Python
 __pycache__/
@@ -70,3 +71,8 @@ yarn-error.log*
 # Experiments — временные файлы (опционально: раскомментировать если не коммитить)
 # experiments/temp/
 # experiments/scratch/
+
+# Local dumps / generated artifacts (do not commit)
+docs/*.pdf
+data/input/result.json
+input/hr docs/content/_*.json

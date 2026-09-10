@@ -78,6 +78,34 @@ class MarkStepCompleteViewTest(TestCase):
         self.assertIn(self.module.slug, r.url)
         self.assertEqual(OnboardingProgress.objects.filter(user=self.user, step=self.step).count(), 1)
 
+    def test_candidate_cannot_complete_step_outside_visible_program(self):
+        from django.utils import timezone
+
+        candidate = User.objects.create_user(username='cand-ob@test.ge', password='pass')
+        candidate.profile.user_type = 'candidate'
+        candidate.profile.email_verified_at = timezone.now()
+        candidate.profile.save()
+
+        hidden = OnboardingProgram.objects.create(
+            slug='hidden-p', title='Hidden', estimated_days=7, visible_for_candidates=False,
+        )
+        hidden_mod = OnboardingModule.objects.create(
+            program=hidden, slug='hidden-m', title='HM', order=1, estimated_minutes=10,
+        )
+        hidden_step = OnboardingStep.objects.create(
+            module=hidden_mod, order=1, title='HS', content='',
+        )
+        # Visible program so candidate has somewhere to land
+        OnboardingProgram.objects.filter(pk=self.program.pk).update(visible_for_candidates=True)
+
+        self.client.login(username='cand-ob@test.ge', password='pass')
+        r = self.client.post(reverse('onboarding:mark_step_complete', args=[hidden_step.pk]))
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(
+            OnboardingProgress.objects.filter(user=candidate, step=hidden_step).count(),
+            0,
+        )
+
 
 class MentorBlockTests(TestCase):
     def setUp(self):

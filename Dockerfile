@@ -18,15 +18,14 @@ RUN pip install -r /app/requirements.txt
 
 COPY . /app
 
-# Compile locale/ru and locale/ka message files (no DB / SECRET_KEY needed for base settings)
-RUN DJANGO_SETTINGS_MODULE=config.settings.base \
-    python manage.py compilemessages
+# locale/*/LC_MESSAGES/django.mo are committed; recompile only when .po changes:
+# RUN DJANGO_SETTINGS_MODULE=config.settings.base python manage.py compilemessages
 
-# Railway sets PORT; default to 8000 for local docker run
 ENV PORT=8000 \
     DJANGO_SETTINGS_MODULE=config.settings.production
 
-RUN chmod +x /app/docker-entrypoint.sh
+# Ensure LF line endings for Linux entrypoint (Windows checkout may use CRLF)
+RUN sed -i 's/\r$//' /app/docker-entrypoint.sh && chmod +x /app/docker-entrypoint.sh
 
 EXPOSE 8000
 
