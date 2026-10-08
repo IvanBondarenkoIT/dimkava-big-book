@@ -1,11 +1,10 @@
 {% load i18n %}
 {% get_current_language as CURRENT_LANG %}
-<form action="{% url 'set_language' %}" method="post" class="inline-flex items-center gap-2 rounded-full border border-outline-variant/20 bg-surface px-3 py-1.5 text-sm">
-  {% csrf_token %}
+{% get_available_languages as AVAILABLE_LANGUAGES %}
+<form method="get" action="{% url 'core:set_language' %}" class="inline-flex items-center gap-2 rounded-full border border-outline-variant/20 bg-surface px-3 py-1.5 text-sm">
   <input type="hidden" name="next" value="{{ request.get_full_path }}">
   <label for="language-select" class="text-on-surface-variant/70">{% trans "Language" %}</label>
   <select id="language-select" name="language" class="bg-transparent text-on-surface font-semibold tracking-wide focus:outline-none min-w-[4.5rem]" onchange="this.form.submit()" aria-label="{% trans 'Language' %}">
-    {% get_available_languages as AVAILABLE_LANGUAGES %}
     {% for lang_code, lang_name in AVAILABLE_LANGUAGES %}
       <option value="{{ lang_code }}" title="{{ lang_name }}" {% if lang_code == CURRENT_LANG %}selected{% endif %}>{{ lang_code|upper }}</option>
     {% endfor %}

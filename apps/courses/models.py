@@ -31,6 +31,7 @@ class Course(models.Model):
     description_ka = models.TextField(blank=True, default='')
     description_ru = models.TextField(blank=True, default='')
     image = models.URLField(blank=True)
+    image_file = models.ImageField(upload_to='courses/', blank=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='authored_courses'
     )
@@ -62,6 +63,13 @@ class Course(models.Model):
     def localized_description(self) -> str:
         lang = (get_language() or 'en').split('-')[0]
         return getattr(self, f'description_{lang}', '') or self.description_en or self.description
+
+    @property
+    def cover_url(self) -> str:
+        """Uploaded file first, then external URL; '' lets templates use the default image."""
+        if self.image_file:
+            return self.image_file.url
+        return self.image or ''
 
     @property
     def is_stale(self) -> bool:
@@ -164,6 +172,7 @@ class UserProgress(models.Model):
         on_delete=models.SET_NULL,
         related_name='candidate_quiz_unlock_actions',
     )
+    quiz_answers = models.JSONField(default=dict, blank=True)
 
     class Meta:
         verbose_name = _('User progress')

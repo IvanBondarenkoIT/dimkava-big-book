@@ -1,11 +1,17 @@
 """Dim Kava — URL Configuration"""
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.views.generic import RedirectView
+from django.views.static import serve as serve_media
 from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.views import LoginView
+
+def media_view(request, path):
+    return serve_media(request, path, document_root=settings.MEDIA_ROOT)
+
 
 admin.site.site_header = _('Dim Kava Admin')
 admin.site.site_title = _('Dim Kava Admin')
@@ -41,6 +47,10 @@ urlpatterns = [
     path('analytics/', include('apps.analytics.urls')),
     path('notifications/', include('apps.notifications.urls')),
     path('search/', include('apps.search.urls')),
+    path('edit/', include('apps.content_editor.urls')),
     path('gamification/', include('apps.gamification.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('comments/', include('apps.comments.urls')),
+    # Self-hosted: no separate media server; course covers are small and low-traffic.
+    re_path(r'^media/(?P<path>.*)$', media_view),
 ]

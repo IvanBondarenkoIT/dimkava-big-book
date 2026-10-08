@@ -24,4 +24,6 @@ class NewsDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['news_title'] = self.object.localized_title
         context['news_date'] = self.object.published_at.strftime('%b %d, %Y')
+        from apps.comments.services import comments_context_for
+        context.update(comments_context_for(self.object, self.request.user))
         return context

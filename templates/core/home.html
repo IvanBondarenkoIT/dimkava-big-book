@@ -76,7 +76,7 @@
           </span>
         </div>
         <div class="h-64 md:h-auto relative overflow-hidden min-h-[256px]">
-          <img src="{{ active_course.image }}" alt="{{ active_course.title }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+          <img src="{{ active_course.image|default:'https://images.unsplash.com/photo-1510972527921-ce03766a1cf1?q=80&w=800' }}" alt="{{ active_course.title }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
           <div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest via-transparent to-transparent md:block hidden"></div>
         </div>
       </div>
@@ -89,6 +89,7 @@
       <h2 class="text-2xl font-bold tracking-tight text-on-surface">{% trans "Recommended for You" %}</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {% for course in courses %}
+        {% if course.slug %}
         <a href="{% url 'courses:detail' course.slug %}" class="card-atelier group cursor-pointer block no-underline text-inherit">
           <div class="aspect-video rounded-lg overflow-hidden mb-4 relative">
             <img src="{{ course.image|default:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800' }}" alt="{{ course.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"/>
@@ -97,6 +98,7 @@
           <h4 class="font-bold text-lg mb-1 text-on-surface group-hover:text-primary transition-colors">{{ course.title }}</h4>
           <p class="text-sm text-on-surface-variant/60 line-clamp-2">{{ course.description|default:'' }}</p>
         </a>
+        {% endif %}
         {% endfor %}
       </div>
     </div>

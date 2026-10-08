@@ -223,6 +223,20 @@ class CandidateRegistrationAndEmailTests(TestCase):
         r = self.client.get(reverse('onboarding:overview'))
         self.assertEqual(r.status_code, 200)
 
+    def test_candidate_can_set_language_via_get(self):
+        user = User.objects.create_user(username='u5i18n@test.ge', email='u5i18n@test.ge', password='pass123456789')
+        user.profile.user_type = 'candidate'
+        user.profile.save()
+        self.client.login(username='u5i18n@test.ge', password='pass123456789')
+
+        r = self.client.get(reverse('core:set_language'), {'language': 'ru', 'next': '/'})
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.cookies.get('django_language').value, 'ru')
+
+        r = self.client.get('/i18n/setlang/')
+        # Django's POST-only setlang returns 405 for GET; candidates must not get PermissionDenied 403.
+        self.assertNotEqual(r.status_code, 403)
+
 
 class CandidateConversionTests(TestCase):
     def test_convert_candidate_to_employee_sets_status_and_groups(self):

@@ -12,6 +12,7 @@ class ReviewItem:
     is_stale: bool
     updated_at: object
     responsible_editor: object
+    edit_url: str
     admin_url: str
     view_url: str
 
@@ -50,6 +51,7 @@ def get_content_to_review(*, stale_only: bool = False):
             is_stale=bool(c.is_stale),
             updated_at=c.updated_at,
             responsible_editor=c.responsible_editor,
+            edit_url=reverse('content_editor:course_edit', kwargs={'slug': c.slug}),
             admin_url=reverse('admin:courses_course_change', args=[c.pk]),
             view_url=reverse('courses:detail', kwargs={'slug': c.slug}),
         )
@@ -62,6 +64,10 @@ def get_content_to_review(*, stale_only: bool = False):
             is_stale=bool(a.is_stale),
             updated_at=a.updated_at,
             responsible_editor=a.responsible_editor,
+            edit_url=reverse(
+                'content_editor:article_edit',
+                kwargs={'section': a.section.slug, 'slug': a.slug},
+            ),
             admin_url=reverse('admin:knowledge_base_article_change', args=[a.pk]),
             view_url=reverse('knowledge_base:article', kwargs={'section': a.section.slug, 'slug': a.slug}),
         )
@@ -79,4 +85,3 @@ def get_content_to_review(*, stale_only: bool = False):
         },
         'stale_only': stale_only,
     }
-

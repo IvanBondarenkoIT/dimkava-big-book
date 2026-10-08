@@ -97,7 +97,7 @@ class UserProfile(models.Model):
 class AssignmentRule(models.Model):
     """
     When a user's profile matches role + department, assign onboarding program
-    and record required course slugs (enrollment wiring is TODO).
+    and store required course slugs on pending_course_slugs (catalog filter).
     """
     role_name = models.CharField(max_length=100, blank=True)
     department = models.ForeignKey(

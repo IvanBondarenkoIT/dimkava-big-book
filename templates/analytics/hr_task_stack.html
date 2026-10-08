@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "HR Task Stack" %}{% endblock %}
+{% block content %}
+<div class="space-y-8 max-w-3xl pb-16">
+  <header>
+    <a href="{% url 'analytics:hr_hub' %}" class="inline-flex items-center gap-2 text-on-surface-variant/60 hover:text-primary font-medium transition-colors mb-4 no-underline">
+      <span class="material-symbols-outlined text-lg">arrow_back</span>
+      {% trans "HR Hub" %}
+    </a>
+    <h1 class="text-4xl font-extrabold tracking-tighter text-primary">{% trans "Task Stack" %}</h1>
+    <p class="text-on-surface-variant/70 mt-2">
+      {% blocktrans with total=task_counts.total %}{{ total }} open item(s){% endblocktrans %}
+      · {% trans "Comments" %}: {{ task_counts.comments }}
+      · {% trans "Feedback" %}: {{ task_counts.feedback }}
+      · {% trans "Quizzes" %}: {{ task_counts.quizzes }}
+    </p>
+  </header>
+
+  <ul class="space-y-3">
+    {% for t in tasks %}
+    <li>
+      <a href="{{ t.url }}" class="card-atelier block no-underline hover:shadow-lg transition-shadow">
+        <div class="text-xs font-bold uppercase tracking-widest text-primary/70">{{ t.kind }}</div>
+        <div class="text-lg font-extrabold text-on-surface mt-1">{{ t.title }}</div>
+        <p class="text-sm text-on-surface-variant/80 mt-1">{{ t.subtitle }}</p>
+        {% if t.created_at %}
+        <p class="text-xs text-on-surface-variant/50 mt-2">{{ t.created_at|date:"Y-m-d H:i" }}</p>
+        {% endif %}
+      </a>
+    </li>
+    {% empty %}
+    <li class="card-atelier text-on-surface-variant/70">{% trans "No pending tasks. Nice work." %}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

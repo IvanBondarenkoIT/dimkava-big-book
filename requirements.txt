@@ -16,6 +16,9 @@ gunicorn>=21.0
 whitenoise>=6.5
 dj-database-url>=2.1
 
+# Uploaded course cover images (ImageField)
+Pillow>=10.0
+
 # Task queue (Celery) — stub for now
 celery>=5.3
 redis>=5.0

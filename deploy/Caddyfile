@@ -1,0 +1,15 @@
+# Public HTTPS for bigbook.dimkava.ge (Let's Encrypt via Caddy).
+# Ports 80 and 443 must be reachable from the internet for ACME.
+#
+# LAN-only HTTP without a domain: use a temporary block ":80 { ... }" instead
+# (see git history or deploy/Caddyfile.http.example if present).
+
+bigbook.dimkava.ge {
+	encode gzip zstd
+	reverse_proxy web:8000 {
+		header_up Host {host}
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+}

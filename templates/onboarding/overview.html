@@ -6,6 +6,10 @@
   <header>
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{% trans "Your Onboarding Journey" %}</h1>
     {% if program %}
+    {% if can_edit_content %}
+    {% url 'content_editor:onboarding_program_edit' program.slug as edit_url %}
+    {% include 'content_editor/_edit_button.html' %}
+    {% endif %}
     <p class="text-on-surface-variant/70 mt-2">{{ program.localized_title }}</p>
     <div class="mt-4 flex items-center gap-4">
       <div class="h-2 flex-1 max-w-xs bg-surface-container-high rounded-full overflow-hidden">

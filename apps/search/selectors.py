@@ -1,12 +1,13 @@
 """Global search across courses, articles, news, roles."""
 from dataclasses import dataclass
 
-from django.db.models import Q
-
+from apps.core.i18n_content import obj_matches_i18n_text, obj_matches_plain_text
 from apps.courses.models import Course, Lesson
 from apps.departments.models import Role
 from apps.knowledge_base.models import Article
 from apps.news.models import NewsPost
+
+_SEARCH_LIMIT = 10
 
 
 @dataclass
@@ -27,104 +28,123 @@ def _excerpt(text: str, max_len: int = 150) -> str:
     return (text[: max_len - 3] + "...") if len(text) > max_len else text
 
 
+def _localized_title(obj) -> str:
+    if hasattr(obj, 'localized_title'):
+        return obj.localized_title or obj.title
+    return getattr(obj, 'title', '')
+
+
+def _localized_snippet(obj, content_attr: str = 'content') -> str:
+    localized = f'localized_{content_attr}'
+    if hasattr(obj, localized):
+        text = getattr(obj, localized) or ''
+    else:
+        text = getattr(obj, content_attr, '') or ''
+    if not text and content_attr == 'description' and hasattr(obj, 'localized_description'):
+        text = obj.localized_description or ''
+    return _excerpt(text or _localized_title(obj))
+
+
+def _take_matching(qs, base_names: tuple[str, ...], query: str, limit: int):
+    """Yield up to `limit` objects matching query (case-insensitive, all locales)."""
+    n = 0
+    for obj in qs:
+        if obj_matches_i18n_text(obj, base_names, query):
+            yield obj
+            n += 1
+            if n >= limit:
+                return
+
+
 # TODO: Replace with PostgreSQL full-text search for better performance at scale.
 def global_search(query: str, user) -> list[SearchResult]:
     """
     Search across courses, lessons, articles, news, roles.
-    Uses icontains for now; replace with full-text search in production.
+    Case-insensitive for all languages (including Cyrillic on SQLite).
     """
     if not query or not query.strip():
         return []
 
     q = query.strip()
     results: list[SearchResult] = []
-    q_obj = Q(title__icontains=q) | Q(description__icontains=q)
     profile = getattr(user, 'profile', None)
     is_candidate = bool(profile and getattr(profile, 'is_candidate', False))
 
-    # Courses (published only)
-    course_qs = Course.objects.filter(q_obj, status="published")
+    course_qs = Course.objects.filter(status="published")
     if is_candidate:
         course_qs = course_qs.filter(visible_for_candidates=True)
-    for obj in course_qs.select_related()[:10]:
+    for obj in _take_matching(course_qs, ('title', 'description'), q, _SEARCH_LIMIT):
         results.append(
             SearchResult(
                 type="course",
-                title=obj.title,
+                title=_localized_title(obj),
                 url=f"/courses/{obj.slug}/",
-                snippet=_excerpt(obj.description or obj.title),
+                snippet=_localized_snippet(obj, 'description'),
                 department="",
                 tags=[obj.level] if obj.level else [],
             )
         )
 
-    # Lessons (within published courses)
-    lesson_q = Q(title__icontains=q) | Q(content__icontains=q)
     lesson_qs = (
-        Lesson.objects.filter(lesson_q)
-        .select_related("course")
+        Lesson.objects.select_related("course")
         .filter(course__status="published")
     )
     if is_candidate:
         lesson_qs = lesson_qs.filter(visible_for_candidates=True, course__visible_for_candidates=True)
-    for lesson in lesson_qs[:10]:
+    for lesson in _take_matching(lesson_qs, ('title', 'content'), q, _SEARCH_LIMIT):
         results.append(
             SearchResult(
                 type="lesson",
-                title=f"{lesson.course.title} — {lesson.title}",
+                title=f"{lesson.course.localized_title} — {lesson.localized_title}",
                 url=f"/courses/{lesson.course.slug}/lessons/{lesson.pk}/",
-                snippet=_excerpt(lesson.content or lesson.title),
+                snippet=_localized_snippet(lesson),
                 department="",
                 tags=[lesson.lesson_type] if lesson.lesson_type else [],
             )
         )
 
-    # Articles (published only)
-    article_q = Q(title__icontains=q) | Q(content__icontains=q)
     if not is_candidate:
-        for obj in (
-            Article.objects.filter(article_q, status="published")
-            .select_related("section")[:10]
-        ):
+        article_qs = Article.objects.filter(status="published").select_related("section")
+        for obj in _take_matching(article_qs, ('title', 'content'), q, _SEARCH_LIMIT):
             results.append(
                 SearchResult(
                     type="article",
-                    title=obj.title,
+                    title=_localized_title(obj),
                     url=f"/wiki/{obj.section.slug}/{obj.slug}/",
-                    snippet=_excerpt(obj.content or obj.title),
+                    snippet=_localized_snippet(obj),
                     department="",
                     tags=[obj.section.title] if obj.section else [],
                 )
             )
 
-    # News
-    news_q = Q(title__icontains=q) | Q(content__icontains=q)
-    if not is_candidate:
-        for obj in NewsPost.objects.filter(news_q)[:10]:
+        news_qs = NewsPost.objects.all()
+        for obj in _take_matching(news_qs, ('title', 'content'), q, _SEARCH_LIMIT):
             results.append(
                 SearchResult(
                     type="news",
-                    title=obj.title,
+                    title=_localized_title(obj),
                     url=f"/news/{obj.slug}/",
-                    snippet=_excerpt(obj.content or obj.title),
+                    snippet=_localized_snippet(obj),
                     department="",
                     tags=[obj.tag] if obj.tag else [],
                 )
             )
 
-    # Roles (title, description)
-    role_q = Q(title__icontains=q) | Q(description__icontains=q)
-    if not is_candidate:
-        for obj in Role.objects.filter(role_q).select_related("department")[:10]:
-            results.append(
-                SearchResult(
-                    type="role",
-                    title=obj.title,
-                    url=f"/departments/{obj.department.slug}/",
-                    snippet=_excerpt(obj.description or obj.title),
-                    department=obj.department.name if obj.department else "",
-                    tags=[],
+        role_n = 0
+        for obj in Role.objects.select_related("department"):
+            if obj_matches_plain_text(obj, ('title', 'description'), q):
+                results.append(
+                    SearchResult(
+                        type="role",
+                        title=obj.title,
+                        url=f"/departments/{obj.department.slug}/",
+                        snippet=_excerpt(obj.description or obj.title),
+                        department=obj.department.name if obj.department else "",
+                        tags=[],
+                    )
                 )
-            )
+                role_n += 1
+                if role_n >= _SEARCH_LIMIT:
+                    break
 
     return results

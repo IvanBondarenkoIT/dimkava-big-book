@@ -8,10 +8,15 @@
       <span class="material-symbols-outlined text-lg">arrow_back</span>
       {% trans "Back to" %} {{ section_title }}
     </a>
+    {% if can_edit_content %}
+    {% url 'content_editor:article_edit' section_slug article.slug as edit_article_url %}
+    {% include 'content_editor/_edit_button.html' with edit_url=edit_article_url %}
+    {% endif %}
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary">{{ article_title }}</h1>
   </header>
   <div class="card-atelier prose prose-invert max-w-none text-on-surface-variant">
     {{ article.localized_content|kb_markdown }}
   </div>
+  {% include 'comments/_thread.html' %}
 </div>
 {% endblock %}

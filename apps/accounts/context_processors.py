@@ -1,5 +1,7 @@
 """Template helpers for candidate UI."""
 
+from apps.core.permissions import user_can_edit_content
+
 
 def candidate_ui(request):
     """
@@ -22,6 +24,11 @@ def hr_ui(request):
     if request.user.is_superuser:
         return {'hr_ui': True}
     return {'hr_ui': request.user.groups.filter(name='hr_manager').exists()}
+
+
+def can_edit_content(request):
+    """HR portal content editor (articles, courses, news, …)."""
+    return {'can_edit_content': user_can_edit_content(request.user)}
 
 
 def avatar_badge(request):

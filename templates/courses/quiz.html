@@ -8,12 +8,27 @@
       <span class="material-symbols-outlined text-lg">arrow_back</span>
       {% trans "Back to Course" %}
     </a>
+    {% if can_edit_content and lesson %}
+    {% if lesson.lesson_type == 'quiz' %}
+    {% url 'content_editor:quiz_edit' course_slug lesson.id as edit_url %}
+    {% else %}
+    {% url 'content_editor:lesson_edit' lesson.id as edit_url %}
+    {% endif %}
+    {% include 'content_editor/_edit_button.html' %}
+    {% endif %}
     <p class="text-primary font-bold text-sm uppercase tracking-widest">{% trans "Quiz" %} · {{ questions|length }} {% trans "questions" %}</p>
     <h1 class="text-5xl font-extrabold tracking-tighter text-primary mt-2">{{ lesson.localized_title }}</h1>
     <p class="text-on-surface-variant/70 mt-2">{% trans "Passing score:" %} {{ passing_score }}%</p>
+    {% if questions and not quiz_locked %}
+    <p id="quiz-progress" class="text-sm text-on-surface-variant/80 mt-2"
+       data-total="{{ questions|length }}"
+       data-label="{% trans "Answered" %}">
+      {% trans "Answered" %}: 0 / {{ questions|length }}
+    </p>
+    {% endif %}
   </header>
 
-  <form method="post" class="space-y-6">
+  <form method="post" class="space-y-6" id="quiz-form">
     {% csrf_token %}
     {% if quiz_locked %}
     <div class="card-atelier border border-amber-500/30 bg-amber-500/5">
@@ -26,12 +41,13 @@
     </div>
     {% endif %}
     {% for q in questions %}
-    <div class="card-atelier">
+    <div class="card-atelier quiz-question" data-qid="{{ q.id }}">
       <h3 class="font-bold text-on-surface mb-4">{{ forloop.counter }}. {{ q.localized_question_text }}</h3>
       <div class="space-y-2">
         {% for opt in q.localized_options %}
         <label class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors">
-          <input type="radio" name="q_{{ q.id }}" value="{{ forloop.counter0 }}" class="text-primary focus:ring-primary" {% if quiz_locked %}disabled{% endif %}/>
+          <input type="radio" name="q_{{ q.id }}" value="{{ forloop.counter0 }}" class="text-primary focus:ring-primary quiz-option"
+            {% if quiz_locked %}disabled{% else %}required{% endif %}/>
           <span class="text-on-surface">{{ opt.text }}</span>
         </label>
         {% endfor %}
@@ -47,4 +63,24 @@
     {% endif %}
   </form>
 </div>
+{% if questions and not quiz_locked %}
+<script>
+(function () {
+  var form = document.getElementById('quiz-form');
+  var progress = document.getElementById('quiz-progress');
+  if (!form || !progress) return;
+  var total = parseInt(progress.getAttribute('data-total') || '0', 10);
+  var label = progress.getAttribute('data-label') || 'Answered';
+  function update() {
+    var answered = 0;
+    form.querySelectorAll('.quiz-question').forEach(function (block) {
+      if (block.querySelector('input.quiz-option:checked')) answered += 1;
+    });
+    progress.textContent = label + ': ' + answered + ' / ' + total;
+  }
+  form.addEventListener('change', update);
+  update();
+})();
+</script>
+{% endif %}
 {% endblock %}

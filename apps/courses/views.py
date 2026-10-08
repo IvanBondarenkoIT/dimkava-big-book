@@ -1,13 +1,15 @@
 """Course views."""
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
+from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic import TemplateView
 
-from .models import Course, Lesson, LessonRating, TestQuestion, UserProgress
+from .models import LessonRating, UserProgress
 from .selectors import get_course_detail, get_courses_for_user, get_lesson_for_user
-from .services import mark_lesson_complete, save_quiz_result
+from .services import mark_lesson_complete, save_quiz_result, record_quiz_attempt
+from .quiz_review import effective_passing_score, grade_quiz_submission
 
 
 class CourseListView(LoginRequiredMixin, TemplateView):
@@ -32,6 +34,8 @@ class CourseDetailView(LoginRequiredMixin, TemplateView):
         context['course'] = data['course']
         context['lessons'] = data['lessons']
         context['course_slug'] = data['course'].slug
+        from apps.comments.services import comments_context_for
+        context.update(comments_context_for(data['course'], self.request.user))
         return context
 
 
@@ -60,7 +64,10 @@ class LessonDetailView(LoginRequiredMixin, TemplateView):
 
 class MarkLessonCompleteView(LoginRequiredMixin, View):
     def post(self, request, slug, pk):
-        lesson = get_object_or_404(Lesson, course__slug=slug, pk=pk)
+        data = get_lesson_for_user(slug, pk, request.user)
+        if not data or not data.get('lesson'):
+            return redirect('courses:list')
+        lesson = data['lesson']
         mark_lesson_complete(request.user, lesson)
         return redirect('courses:lesson_detail', slug=slug, pk=pk)
 
@@ -68,65 +75,64 @@ class MarkLessonCompleteView(LoginRequiredMixin, View):
 class QuizView(LoginRequiredMixin, TemplateView):
     template_name = 'courses/quiz.html'
 
+    def _get_quiz_lesson(self, slug, pk, user):
+        data = get_lesson_for_user(slug, pk, user)
+        if not data or not data.get('lesson'):
+            return None
+        lesson = data['lesson']
+        if lesson.lesson_type != 'quiz':
+            return None
+        return lesson
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        lesson_qs = Lesson.objects.filter(
-            course__slug=self.kwargs['slug'],
-            pk=self.kwargs['pk'],
-            lesson_type='quiz',
+        lesson = self._get_quiz_lesson(
+            self.kwargs['slug'], self.kwargs['pk'], self.request.user,
         )
-        profile = getattr(self.request.user, 'profile', None)
-        if profile and profile.is_candidate:
-            lesson_qs = lesson_qs.filter(visible_for_candidates=True, course__visible_for_candidates=True)
-        lesson = get_object_or_404(lesson_qs)
+        if not lesson:
+            context['course'] = None
+            context['lesson'] = None
+            context['questions'] = []
+            context['course_slug'] = self.kwargs['slug']
+            context['passing_score'] = 70
+            context['quiz_locked'] = False
+            context['existing_quiz_score'] = None
+            return context
         questions = list(lesson.questions.all().order_by('order'))
         progress = UserProgress.objects.filter(user=self.request.user, lesson=lesson).first()
-        quiz_locked = bool(profile and profile.is_candidate and progress and progress.candidate_quiz_locked)
+        quiz_locked = bool(progress and progress.candidate_quiz_locked)
         context['course'] = lesson.course
         context['lesson'] = lesson
         context['questions'] = questions
         context['course_slug'] = lesson.course.slug
-        context['passing_score'] = lesson.passing_score or 70
+        context['passing_score'] = effective_passing_score(lesson)
         context['quiz_locked'] = quiz_locked
         context['existing_quiz_score'] = progress.quiz_score if progress else None
         return context
 
+    def get(self, request, *args, **kwargs):
+        lesson = self._get_quiz_lesson(kwargs['slug'], kwargs['pk'], request.user)
+        if not lesson:
+            return redirect('courses:list')
+        return super().get(request, *args, **kwargs)
+
     def post(self, request, slug, pk):
-        lesson_qs = Lesson.objects.filter(
-            course__slug=slug,
-            pk=pk,
-            lesson_type='quiz',
-        )
-        profile = getattr(request.user, 'profile', None)
-        if profile and profile.is_candidate:
-            lesson_qs = lesson_qs.filter(visible_for_candidates=True, course__visible_for_candidates=True)
-        lesson = get_object_or_404(lesson_qs)
+        lesson = self._get_quiz_lesson(slug, pk, request.user)
+        if not lesson:
+            return redirect('courses:list')
         progress = UserProgress.objects.filter(user=request.user, lesson=lesson).first()
-        if profile and profile.is_candidate and progress and progress.candidate_quiz_locked:
-            messages.error(request, 'Retake is locked. Ask HR to review and unlock this quiz.')
+        if progress and progress.candidate_quiz_locked:
+            messages.error(request, _('Retake is locked. Ask HR to review and unlock this quiz.'))
             return redirect('courses:detail', slug=slug)
-        passing = lesson.passing_score or 70
+        passing = effective_passing_score(lesson)
         total = lesson.questions.count()
         if total == 0:
             return redirect('courses:detail', slug=slug)
 
-        correct = 0
-        for q in lesson.questions.all().order_by('order'):
-            key = f'q_{q.id}'
-            val = request.POST.get(key)
-            # options are 0-based indices; is_correct at that index
-            for i, opt in enumerate(q.options):
-                if opt.get('is_correct') and str(i) == val:
-                    correct += 1
-                    break
-
-        score = int((correct / total) * 100) if total else 0
-        save_quiz_result(request.user, lesson, score, passing)
-        if profile and profile.is_candidate:
-            progress = UserProgress.objects.get(user=request.user, lesson=lesson)
-            progress.quiz_attempts_count = (progress.quiz_attempts_count or 0) + 1
-            progress.candidate_quiz_locked = True
-            progress.save(update_fields=['quiz_attempts_count', 'candidate_quiz_locked'])
+        score, quiz_answers = grade_quiz_submission(lesson, request.POST)
+        save_quiz_result(request.user, lesson, score, passing, quiz_answers=quiz_answers)
+        progress = UserProgress.objects.get(user=request.user, lesson=lesson)
+        record_quiz_attempt(progress)
         return redirect('courses:detail', slug=slug)
 
 

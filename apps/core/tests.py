@@ -350,3 +350,41 @@ class HomeProfileIntegrationTests(TestCase):
         r2 = self.client.get(reverse('accounts:profile'))
         self.assertEqual(r1.status_code, 200)
         self.assertEqual(r2.status_code, 200)
+
+
+class SetLanguageViewTests(TestCase):
+    def test_valid_language_sets_cookie_and_redirects(self):
+        r = self.client.get(reverse('core:set_language'), {'language': 'ka', 'next': '/login/'})
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, '/login/')
+        self.assertEqual(r.cookies.get('django_language').value, 'ka')
+
+    def test_russian_and_english_languages(self):
+        for code in ('ru', 'en'):
+            r = self.client.get(reverse('core:set_language'), {'language': code, 'next': '/'})
+            self.assertEqual(r.status_code, 302)
+            self.assertEqual(r.cookies.get('django_language').value, code)
+
+    def test_invalid_language_redirects_without_cookie(self):
+        r = self.client.get(reverse('core:set_language'), {'language': 'xx', 'next': '/login/'})
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, '/login/')
+        self.assertIsNone(r.cookies.get('django_language'))
+
+    def test_rejects_open_redirect(self):
+        r = self.client.get(
+            reverse('core:set_language'),
+            {'language': 'ru', 'next': 'https://evil.example/phish'},
+        )
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, '/')
+
+
+class CsrfFailureViewTests(TestCase):
+    def test_missing_csrf_token_shows_friendly_page(self):
+        client = Client(enforce_csrf_checks=True)
+        client.get('/login/')
+        r = client.post('/login/', {'username': 'nobody@test.ge', 'password': 'x'})
+        self.assertEqual(r.status_code, 403)
+        self.assertContains(r, 'Please refresh the page', status_code=403)
+        self.assertContains(r, 'Reload', status_code=403)

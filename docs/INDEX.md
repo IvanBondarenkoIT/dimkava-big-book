@@ -30,7 +30,8 @@
 | [ROLE_GUIDE_EMPLOYEE.md](ROLE_GUIDE_EMPLOYEE.md) | Employee | Профиль, KPI, ILP, feedback |
 | [ROLE_GUIDE_HR.md](ROLE_GUIDE_HR.md) | HR | Кандидаты, контент для кандидатов, мониторинг, конвертация |
 | [ROLE_GUIDE_ADMIN.md](ROLE_GUIDE_ADMIN.md) | Admin | Окружение, доступы, стабильность, инциденты |
-| [HR_FULL_FUNCTIONAL_CHECKLIST.md](HR_FULL_FUNCTIONAL_CHECKLIST.md) | HR | Полный поэтапный чеклист проверки всего функционала |
+| [HR_QA_ONE_PAGE.md](HR_QA_ONE_PAGE.md) | **HR — главный файл проверки** | Куда смотреть, сценарии, полный чеклист |
+| [HR_FULL_FUNCTIONAL_CHECKLIST.md](HR_FULL_FUNCTIONAL_CHECKLIST.md) | HR | Старый чеклист → см. HR_QA_ONE_PAGE |
 | [FUNCTIONAL_OVERVIEW_SHORT.md](FUNCTIONAL_OVERVIEW_SHORT.md) | Все | Короткое и понятное описание функционала системы |
 | [DIRECTOR_REPORT_WHAT_WAS_DONE.md](DIRECTOR_REPORT_WHAT_WAS_DONE.md) | Director | Что реализовано, зачем, эффект и следующие шаги |
 
@@ -52,8 +53,12 @@
 | [STRUCTURE_PLAN.md](STRUCTURE_PLAN.md) | «Где это лежит?» | Структура папок, связь design → Django, input → проект |
 | [PROMPTS_MAPPING.md](PROMPTS_MAPPING.md) | Работа с AI / Cursor | Какие промпты применять, порядок, связь с фазами |
 | [FEATURES_BACKLOG.md](FEATURES_BACKLOG.md) | Будущие фичи (последняя очередь) | Ачивки и комментарии — в конец roadmap; комментарии только после approve HR + админка модерации |
+| [DEFERRED_WAVE_D.md](DEFERRED_WAVE_D.md) | Отложенные темы после P0–C | KA, FTS, Celery/S3, invite-token, Manager |
 | [I18N_MULTILINGUAL_RUNBOOK.md](I18N_MULTILINGUAL_RUNBOOK.md) | Операции EN/KA/RU | Как переключать язык, грузить и редактировать мультиязычный контент |
-| [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) | Деплой Railway / Docker | Переменные, `AUTO_LOAD_HR_CONTENT`, `compilemessages` в образе |
+| [GITHUB_AND_DOCKER.md](GITHUB_AND_DOCKER.md) | **Перед первым деплоем** | Что делает GitHub Actions vs Docker на ПК, чеклист |
+| [WINDOWS_SERVER_DEPLOY.md](WINDOWS_SERVER_DEPLOY.md) | **Production на своём сервере** | Windows + Docker Desktop, GHCR, Caddy, GitHub Actions |
+| [PRODUCTION_STATUS.md](../deploy/docs/PRODUCTION_STATUS.md) | **Текущий прод (live)** | URL `https://bigbook.dimkava.ge/`, пути на сервере, HTTPS |
+| [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) | Деплой Railway (legacy) | Переменные, `AUTO_LOAD_HR_CONTENT`, `compilemessages` в образе |
 | [I18N_RU_DONE_AND_KA_PLAN.md](I18N_RU_DONE_AND_KA_PLAN.md) | После фазы RU / перед KA | Что сделано для русского и пошаговый план грузинского без пропусков |
 
 ---

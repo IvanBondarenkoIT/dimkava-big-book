@@ -1,6 +1,6 @@
 # ROLE GUIDE — HR
 
-Обновлено: 2026-03-26  
+Обновлено: 2026-08-18  
 Назначение: операционная инструкция HR по управлению кандидатами, контентом и модерацией.
 
 ## 1) Основные зоны HR
@@ -8,8 +8,8 @@
 - Django Admin: `/admin/` — точечные расширенные операции.
 
 ## 2) Ежедневный цикл HR
-1. Проверить новых кандидатов в `/analytics/hr/candidates/`.
-2. Проверить очереди модерации (`comments`, `onboarding feedback`).
+1. Открыть **Task Stack** `/analytics/hr/tasks/` (комментарии, feedback, проваленные квизы).
+2. Проверить новых кандидатов в `/analytics/hr/candidates/`.
 3. Проверить видимость нового контента для кандидатов.
 4. Обновить статусы готовых кандидатов (включая conversion).
 
@@ -24,11 +24,18 @@
 - ключевые курсы доступны и пройдены;
 - базовые атрибуты профиля заполнены.
 
-## 4) Квизы кандидатов: политика retake
-- Кандидат отправляет квиз 1 раз.
-- После отправки повторная попытка блокируется автоматически.
-- HR принимает решение о повторной попытке.
-- Разблокировка retake выполняется через HR-доступ в админ-панели `UserProgress`.
+## 4) Квизы: просмотр результатов и retake
+- После сдачи квиз **блокируется** для кандидата **и** сотрудника (повтор только после unlock HR).
+- Форма требует ответ на все вопросы; пропуски больше нельзя отправить.
+- HR смотрит результаты в Hub: `/analytics/hr/quiz-results/`
+  1. список тестов;
+  2. сдавшие выбранный тест;
+  3. карточка человека: балл, порог, попытки, lock, **Answered / Unanswered / Correct / Wrong**.
+- На карточке — разбор по вопросам (зелёный/красный), если попытка после включения хранения ответов.
+- Старые попытки без `quiz_answers`: виден ключ ответов для ручной проверки; процент не пересчитывается.
+- **Allow retake** — на карточке любого заблокированного пользователя (не только кандидата).
+- Запасной путь: Django admin `UserProgress` → action «Allow quiz retake».
+- **Важно:** не запускайте `load_courses` / `AUTO_LOAD_HR_CONTENT=1` — это может затереть ключи ответов, которые HR проставила в редакторе.
 
 ## 5) Visibility и контент
 Контролируйте флаги:
@@ -36,17 +43,20 @@
 - `Course.visible_for_candidates`
 - `Lesson.visible_for_candidates`
 
+Создание курса в портале: **Create** на `/courses/` → **Add lesson** / **Add quiz** → для квиза: название → **Continue to questions** → вопросы EN/RU/KA и ключ (**Add question**). Описание курса — краткое; не вставляйте туда текст квиза. `load_courses` не нужен.
+
 Проверка перед запуском кандидата в обучение:
 - нужная программа видна;
 - курс и уроки видны;
 - под кандидатом открываются `/onboarding/` и `/courses/`.
 
 ## 6) Модерация контента
-- `Comments`: публикуются только после approve.
+- Сотрудники и кандидаты оставляют комментарии на курсах (сотрудники — также wiki/news).
+- `Comments`: публикуются только после approve в `/analytics/hr/comments/` (или Task Stack).
 - `Onboarding feedback`: видно пользователям только после approve.
 - Отклоненные материалы в публичные блоки не попадают.
 
-Рекомендация: проверять pending-очереди минимум 1 раз в рабочий день.
+Рекомендация: проверять Task Stack минимум 1 раз в рабочий день.
 
 ## 7) ILP
 - Создается и поддерживается HR через админ-панель.
@@ -68,4 +78,5 @@
 ![SHOT-H6 content review](C:/Users/Computer/.cursor/projects/d-CursorProjects-dimkava-big-book/assets/c__Users_Computer_AppData_Roaming_Cursor_User_workspaceStorage_bbc6fcab8e4ff239132c403c3d74202b_images_image-592436e9-2c0e-4e4a-8771-6339bc26a2e2.png)
 - `SHOT-H7`: admin `UserProgress` (lock/attempts + unlock action).
 ![SHOT-H7 admin userprogress](C:/Users/Computer/.cursor/projects/d-CursorProjects-dimkava-big-book/assets/c__Users_Computer_AppData_Roaming_Cursor_User_workspaceStorage_bbc6fcab8e4ff239132c403c3d74202b_images_image-51a9bcad-b4bc-43dc-bddf-9f5be6ce02fb.png)
+- Quiz results in Hub: `/analytics/hr/quiz-results/` → takers → person card.
 

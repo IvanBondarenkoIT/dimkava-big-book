@@ -911,3 +911,132 @@ msgstr "Логи очков"
 
 msgid "Notification"
 msgstr "Уведомление"
+
+msgid "No courses are available yet. If this looks wrong, contact HR."
+msgstr "Пока нет доступных курсов. Если это ошибка — обратитесь к HR."
+
+msgid "Quiz results"
+msgstr "Результаты квизов"
+
+msgid "Browse tests, who took them, and individual scores."
+msgstr "Тесты, кто сдавал и индивидуальные баллы."
+
+msgid "Choose a test to see who submitted it."
+msgstr "Выберите тест, чтобы увидеть сдавших."
+
+msgid "Search tests"
+msgstr "Поиск тестов"
+
+msgid "Test"
+msgstr "Тест"
+
+msgid "Pass mark"
+msgstr "Проходной балл"
+
+msgid "Taken"
+msgstr "Сдали"
+
+msgid "Passed"
+msgstr "Сдан"
+
+msgid "Failed"
+msgstr "Не сдан"
+
+msgid "Locked"
+msgstr "Заблокирован"
+
+msgid "No quizzes found."
+msgstr "Квизы не найдены."
+
+msgid "All tests"
+msgstr "Все тесты"
+
+msgid "Pass mark:"
+msgstr "Проходной балл:"
+
+msgid "Candidates only"
+msgstr "Только кандидаты"
+
+msgid "Below pass mark"
+msgstr "Ниже проходного"
+
+msgid "Locked only"
+msgstr "Только заблокированные"
+
+msgid "Apply"
+msgstr "Применить"
+
+msgid "Score"
+msgstr "Балл"
+
+msgid "Result"
+msgstr "Результат"
+
+msgid "Attempts"
+msgstr "Попытки"
+
+msgid "Submitted"
+msgstr "Отправлен"
+
+msgid "Nobody has submitted this test yet."
+msgstr "Этот тест ещё никто не сдавал."
+
+msgid "People who took this test"
+msgstr "Кто сдавал этот тест"
+
+msgid "Retake is locked until HR unlocks it."
+msgstr "Повтор заблокирован, пока HR не разблокирует."
+
+msgid "Last unlock:"
+msgstr "Последняя разблокировка:"
+
+msgid "Unlock retake"
+msgstr "Разблокировать повтор"
+
+msgid "Quiz retake unlocked."
+msgstr "Повтор квиза разблокирован."
+
+msgid "Questions on this test"
+msgstr "Вопросы этого теста"
+
+msgid "Individual answer choices are not stored. This list is the current question set."
+msgstr "Выбранные ответы не хранятся. Здесь текущий набор вопросов."
+
+msgid "Quizzes"
+msgstr "Квизы"
+
+msgid "Answer review"
+msgstr "Разбор ответов"
+
+msgid "Answer key (for manual review)"
+msgstr "Ключ ответов (для ручной проверки)"
+
+msgid "Green = learner answered correctly. Red = wrong choice; correct answer is marked with a check."
+msgstr "Зелёный — ответ верный. Красный — ошибка; правильный вариант отмечен галочкой."
+
+msgid "This attempt was saved before per-answer tracking. Use the answer key below to verify manually, or ask the learner to retake after unlock."
+msgstr "Эта попытка сохранена до учёта ответов по вопросам. Используйте ключ ниже для ручной проверки или попросите пересдать после разблокировки."
+
+msgid "Correct"
+msgstr "Верно"
+
+msgid "Wrong"
+msgstr "Ошибка"
+
+msgid "No answer"
+msgstr "Без ответа"
+
+msgid "Correct answer"
+msgstr "Правильный ответ"
+
+msgid "Learner chose this"
+msgstr "Выбрал ученик"
+
+msgid "Should be:"
+msgstr "Должно быть:"
+
+msgid "No options defined."
+msgstr "Варианты не заданы."
+
+msgid "Edit quiz"
+msgstr "Редактировать квиз"

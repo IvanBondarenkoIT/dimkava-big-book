@@ -1,0 +1,83 @@
+# Create C:\dimkava\compose\.env.prod with empty values (fill on server only; never commit .env.prod)
+param(
+    [string]$ComposeDir = "C:\dimkava\compose",
+    [string]$PublicHost = "",
+    [string]$PublicIp = "",
+    [int]$PublicPort = 777,
+    [switch]$Force
+)
+
+$ErrorActionPreference = "Stop"
+$envPath = Join-Path $ComposeDir ".env.prod"
+
+if ((Test-Path $envPath) -and -not $Force) {
+    Write-Host ".env.prod already exists: $envPath" -ForegroundColor Yellow
+    Write-Host "Use -Force to overwrite or edit the file manually."
+    return
+}
+
+New-Item -ItemType Directory -Path $ComposeDir -Force | Out-Null
+
+$content = @'
+# Dim Kava production - fill all empty values on the server. Do not commit this file.
+
+POSTGRES_DB=dimkava
+POSTGRES_USER=dimkava
+POSTGRES_PASSWORD=
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+
+DIMKAVA_IMAGE=ghcr.io/ivanbondarenkoit/dimkava-big-book:latest
+
+SECRET_KEY=
+DEBUG=False
+ALLOWED_HOSTS=localhost,127.0.0.1
+CSRF_TRUSTED_ORIGINS=http://localhost,http://127.0.0.1
+PUBLIC_HTTP_PORT=80
+
+DATABASE_SSL_REQUIRE=false
+SECURE_SSL_REDIRECT=false
+SESSION_COOKIE_SECURE=false
+CSRF_COOKIE_SECURE=false
+
+GUNICORN_WORKERS=3
+GUNICORN_TIMEOUT=60
+PORT=8000
+
+AUTO_CREATE_DEFAULT_USERS=1
+AUTO_SEED_DEMO_CONTENT=1
+# 1 = load YAML into DB on every web start (overwrites admin edits). Use 1 for first seed only.
+# 0 = editorial mode: edit in /admin/, restarts do not reload YAML (recommended for production).
+AUTO_LOAD_HR_CONTENT=0
+
+DEFAULT_ADMIN_EMAIL=admin@dimkava.ge
+DEFAULT_ADMIN_PASSWORD=
+
+DEFAULT_HR_EMAIL=hr@dimkava.ge
+DEFAULT_HR_PASSWORD=
+
+DEFAULT_EMPLOYEE_EMAIL=employee@dimkava.ge
+DEFAULT_EMPLOYEE_PASSWORD=
+
+DEFAULT_CANDIDATE_EMAIL=candidate@dimkava.ge
+DEFAULT_CANDIDATE_PASSWORD=
+DEFAULT_CANDIDATE_PHONE=+995500000000
+
+EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+DEFAULT_FROM_EMAIL=Dim Kava <noreply@dimkava.ge>
+'@
+
+$presetHost = if ($PublicHost) { $PublicHost } elseif ($PublicIp) { $PublicIp } else { "" }
+if ($presetHost) {
+    $csrf = "http://${presetHost}:${PublicPort}"
+    $hosts = if ($PublicHost -and $PublicIp) { "$PublicHost,$PublicIp,localhost,127.0.0.1" } else { "$presetHost,localhost,127.0.0.1" }
+    $content = $content -replace 'ALLOWED_HOSTS=localhost,127.0.0.1', "ALLOWED_HOSTS=$hosts"
+    $content = $content -replace 'CSRF_TRUSTED_ORIGINS=http://localhost,http://127.0.0.1', "CSRF_TRUSTED_ORIGINS=$csrf,http://localhost,http://127.0.0.1"
+    $content = $content -replace 'PUBLIC_HTTP_PORT=80', "PUBLIC_HTTP_PORT=$PublicPort"
+}
+
+Set-Content -Path $envPath -Value $content.TrimEnd() -Encoding utf8
+Write-Host "Created $envPath - fill POSTGRES_PASSWORD, SECRET_KEY, and DEFAULT_* passwords before deploy." -ForegroundColor Green
+if ($presetHost) {
+    Write-Host "Public host preset: $presetHost (port $PublicPort). Run configure-public-access.ps1 if NAT variant A (host port 80)." -ForegroundColor Yellow
+}

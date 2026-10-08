@@ -1,6 +1,11 @@
 #!/usr/bin/env sh
 set -eu
 
+# Build DATABASE_URL at runtime from POSTGRES_* (not stored in git compose files)
+if [ -z "${DATABASE_URL:-}" ] && [ -n "${POSTGRES_PASSWORD:-}" ]; then
+  export DATABASE_URL="postgres://${POSTGRES_USER:-dimkava}:${POSTGRES_PASSWORD}@${POSTGRES_HOST:-db}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-dimkava}"
+fi
+
 echo "Running migrations..."
 python manage.py migrate --noinput
 

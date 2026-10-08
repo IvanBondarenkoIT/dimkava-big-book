@@ -121,6 +121,112 @@ class CandidateVisibilityTests(TestCase):
         self.assertTrue(p.candidate_quiz_locked)
         self.assertEqual(p.quiz_attempts_count, 2)
 
+    def test_employee_quiz_locked_and_tracks_attempts(self):
+        from .models import TestQuestion
+
+        emp_course = Course.objects.create(
+            slug='emp-quiz', title='Emp quiz course', status='published', level='beginner',
+        )
+        quiz = Lesson.objects.create(
+            course=emp_course, title='Emp Q', order=1, lesson_type='quiz', passing_score=70,
+        )
+        q = TestQuestion.objects.create(
+            lesson=quiz,
+            question_text='Q1',
+            options=[
+                {'text': 'A', 'is_correct': True},
+                {'text': 'B', 'is_correct': False},
+            ],
+            order=1,
+        )
+        self.client.login(username='emp@test.ge', password='pass')
+        url = reverse('courses:quiz', kwargs={'slug': emp_course.slug, 'pk': quiz.pk})
+        data = {f'q_{q.pk}': '0'}
+
+        self.client.post(url, data)
+        p = UserProgress.objects.get(user=self.employee, lesson=quiz)
+        self.assertTrue(p.candidate_quiz_locked)
+        self.assertEqual(p.quiz_attempts_count, 1)
+
+        r = self.client.post(url, data, follow=True)
+        self.assertEqual(r.status_code, 200)
+        p.refresh_from_db()
+        self.assertEqual(p.quiz_attempts_count, 1)
+
+
+class QuizAuthzTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='authz@test.ge', password='pass')
+        self.draft = Course.objects.create(
+            slug='draft-c', title='Draft', status='draft', level='beginner',
+        )
+        self.draft_quiz = Lesson.objects.create(
+            course=self.draft, title='Draft Q', order=1, lesson_type='quiz', passing_score=70,
+        )
+        TestQuestion.objects.create(
+            lesson=self.draft_quiz,
+            question_text='Q',
+            options=[{'text': 'A', 'is_correct': True}],
+            options_en=[{'text': 'A', 'is_correct': True}],
+            order=0,
+        )
+        self.hidden = Course.objects.create(
+            slug='hidden-c', title='Hidden', status='published', level='beginner',
+            visible_for_candidates=False,
+        )
+        self.hidden_quiz = Lesson.objects.create(
+            course=self.hidden, title='HQ', order=1, lesson_type='quiz',
+            passing_score=70, visible_for_candidates=False,
+        )
+        TestQuestion.objects.create(
+            lesson=self.hidden_quiz,
+            question_text='Q',
+            options=[{'text': 'A', 'is_correct': True}],
+            options_en=[{'text': 'A', 'is_correct': True}],
+            order=0,
+        )
+        self.candidate = User.objects.create_user(username='cand-authz@test.ge', password='pass')
+        self.candidate.profile.user_type = 'candidate'
+        self.candidate.profile.email_verified_at = timezone.now()
+        self.candidate.profile.save()
+
+    def test_draft_quiz_redirects_away(self):
+        self.client.login(username='authz@test.ge', password='pass')
+        url = reverse('courses:quiz', kwargs={'slug': self.draft.slug, 'pk': self.draft_quiz.pk})
+        r = self.client.get(url)
+        self.assertEqual(r.status_code, 302)
+
+    def test_candidate_cannot_post_hidden_quiz(self):
+        self.client.login(username='cand-authz@test.ge', password='pass')
+        url = reverse('courses:quiz', kwargs={'slug': self.hidden.slug, 'pk': self.hidden_quiz.pk})
+        r = self.client.post(url, {})
+        self.assertEqual(r.status_code, 302)
+        self.assertFalse(
+            UserProgress.objects.filter(user=self.candidate, lesson=self.hidden_quiz).exists()
+        )
+
+    def test_candidate_cannot_mark_hidden_lesson_done(self):
+        lesson = Lesson.objects.create(
+            course=self.hidden, title='Text', order=2, lesson_type='text',
+            visible_for_candidates=False,
+        )
+        self.client.login(username='cand-authz@test.ge', password='pass')
+        url = reverse('courses:mark_lesson_done', kwargs={'slug': self.hidden.slug, 'pk': lesson.pk})
+        r = self.client.post(url)
+        self.assertEqual(r.status_code, 302)
+        self.assertFalse(UserProgress.objects.filter(user=self.candidate, lesson=lesson).exists())
+
+    def test_pending_course_slugs_restricts_catalog(self):
+        from .selectors import get_courses_for_user
+
+        Course.objects.create(slug='a1', title='A1', status='published', level='beginner')
+        Course.objects.create(slug='b1', title='B1', status='published', level='beginner')
+        self.user.profile.pending_course_slugs = ['a1']
+        self.user.profile.save()
+        rows = get_courses_for_user(self.user)
+        self.assertEqual([r['slug'] for r in rows], ['a1'])
+
 
 class ILPSelectorsTests(TestCase):
     def test_active_ilp_context_progress_and_next_up(self):

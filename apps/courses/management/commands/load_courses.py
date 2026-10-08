@@ -1,4 +1,4 @@
-"""Load courses from YAML seed."""
+"""Load courses from YAML seed(s)."""
 import yaml
 from pathlib import Path
 
@@ -8,13 +8,22 @@ from django.core.management.base import BaseCommand
 from apps.courses.models import Course, Lesson, TestQuestion
 
 DEFAULT_PATH = Path(settings.BASE_DIR) / 'input' / 'hr docs' / 'content' / 'courses_seed.yaml'
+EXTRA_DEFAULT_PATHS = [
+    Path(settings.BASE_DIR) / 'input' / 'hr docs' / 'content' / 'regulations_course.yaml',
+]
 
 
 class Command(BaseCommand):
-    help = 'Load courses from courses_seed.yaml'
+    help = 'Load courses from YAML seeds'
 
     def add_arguments(self, parser):
         parser.add_argument('--path', default=str(DEFAULT_PATH), help='Path to YAML')
+        parser.add_argument(
+            '--extra-path',
+            action='append',
+            default=[],
+            help='Optional extra YAML path(s) to merge (can be passed multiple times)',
+        )
         parser.add_argument(
             '--auto-translate-draft',
             action='store_true',
@@ -38,13 +47,20 @@ class Command(BaseCommand):
         return f'[AUTO-{lang}] {value}' if value else ''
 
     def handle(self, *args, **options):
-        path = Path(options['path'])
-        if not path.exists():
-            self.stdout.write(self.style.ERROR(f'File not found: {path}'))
-            return
+        primary = Path(options['path'])
+        paths: list[Path] = [primary]
+        paths.extend([p for p in EXTRA_DEFAULT_PATHS if p.exists()])
+        for p in options.get('extra_path') or []:
+            paths.append(Path(p))
 
-        with open(path, encoding='utf-8') as f:
-            data = yaml.safe_load(f)
+        data: dict = {'courses': []}
+        for path in paths:
+            if not path.exists():
+                self.stdout.write(self.style.WARNING(f'Skipping missing YAML: {path}'))
+                continue
+            with open(path, encoding='utf-8') as f:
+                part = yaml.safe_load(f) or {}
+            data['courses'].extend(part.get('courses', []) or [])
 
         auto_draft = bool(options.get('auto_translate_draft'))
         for c in data.get('courses', []):
