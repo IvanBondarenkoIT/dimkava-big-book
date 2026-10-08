@@ -61,7 +61,6 @@ if ((Test-IsAdmin)) {
 Set-Location $RepoRoot
 
 # Quick writable check on .git
-$fetchHead = Join-Path $RepoRoot ".git\FETCH_HEAD"
 $gitDir = Join-Path $RepoRoot ".git"
 try {
     $probe = Join-Path $gitDir ("_write_probe_{0}.tmp" -f [guid]::NewGuid().ToString("N"))
@@ -74,17 +73,22 @@ try {
 
 if (-not $SkipPull) {
     Write-Host ">>> git pull" -ForegroundColor Yellow
-    git pull 2>&1 | ForEach-Object { $_ }
-    if ($LASTEXITCODE -ne 0) {
-        if (Test-Path $fetchHead) {
-            # still may be ACL issue on update
-        }
+    # git prints progress to stderr; with Stop + redirection PS 5 treats it as a terminating error.
+    $prevPref = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    git pull
+    $gitExit = $LASTEXITCODE
+    $ErrorActionPreference = $prevPref
+    if ($gitExit -ne 0) {
         Write-GitPermissionHelp
-        throw "git pull failed (exit $LASTEXITCODE)"
+        throw "git pull failed (exit $gitExit)"
     }
 } else {
     Write-Host ">>> skip git pull" -ForegroundColor DarkYellow
 }
+
+# docker also writes progress to stderr; rely on exit codes from here on.
+$ErrorActionPreference = "Continue"
 
 Write-Host ""
 Write-Host ">>> build local image ($ImageTag)" -ForegroundColor Yellow
