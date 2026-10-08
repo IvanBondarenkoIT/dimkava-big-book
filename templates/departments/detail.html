@@ -31,7 +31,7 @@
           <h4 class="text-sm font-semibold text-on-surface-variant">Required courses</h4>
           <ul class="mt-1 space-y-1">
             {% for c in rd.required %}
-            <li><a href="{% url 'courses:detail' c.slug %}" class="text-primary hover:underline">{{ c.title }}</a></li>
+            {% if c.slug %}<li><a href="{% url 'courses:detail' c.slug %}" class="text-primary hover:underline">{{ c.title }}</a></li>{% endif %}
             {% endfor %}
           </ul>
         </div>
@@ -41,7 +41,7 @@
           <h4 class="text-sm font-semibold text-on-surface-variant">Recommended courses</h4>
           <ul class="mt-1 space-y-1">
             {% for c in rd.recommended %}
-            <li><a href="{% url 'courses:detail' c.slug %}" class="text-primary hover:underline">{{ c.title }}</a></li>
+            {% if c.slug %}<li><a href="{% url 'courses:detail' c.slug %}" class="text-primary hover:underline">{{ c.title }}</a></li>{% endif %}
             {% endfor %}
           </ul>
         </div>

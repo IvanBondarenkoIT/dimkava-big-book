@@ -46,6 +46,44 @@ class ContentEditorPermissionsTest(TestCase):
         resp = self.client.get(reverse('content_editor:course_create'))
         self.assertEqual(resp.status_code, 403)
 
+    def test_course_create_with_non_latin_title_gets_slug(self):
+        from apps.content_editor.forms import CourseForm
+
+        form = CourseForm(data={
+            'slug': '',
+            'status': 'published',
+            'level': 'beginner',
+            'estimated_minutes': 0,
+            'title_en': '',
+            'title_ru': 'Осенние акции',
+            'title_ka': 'შემოდგომის აქციები',
+            'description_en': '',
+            'description_ru': '',
+            'description_ka': '',
+            'image': '',
+            'review_required_after_days': 180,
+        })
+        self.assertTrue(form.is_valid(), form.errors)
+        course = form.save()
+        self.assertTrue(course.slug)
+        self.client.login(username='hr', password='test')
+        self.assertEqual(self.client.get(reverse('courses:list')).status_code, 200)
+
+    def test_course_create_without_any_title_is_rejected(self):
+        self.client.login(username='hr', password='test')
+        resp = self.client.post(reverse('content_editor:course_create'), {
+            'slug': '',
+            'status': 'published',
+            'level': 'beginner',
+            'estimated_minutes': 0,
+            'title_en': '',
+            'title_ru': '',
+            'title_ka': '',
+            'review_required_after_days': 180,
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertFalse(Course.objects.filter(slug='').exists())
+
     def test_hr_can_access_edit(self):
         self.client.login(username='hr', password='test')
         resp = self.client.get(self.edit_url)

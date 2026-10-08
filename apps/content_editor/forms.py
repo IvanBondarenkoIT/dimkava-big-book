@@ -51,13 +51,16 @@ class SlugOnCreateMixin:
 
     def clean(self):
         cleaned = super().clean()
+        if not any((cleaned.get(f'title_{lang}') or '').strip() for lang in ('en', 'ru', 'ka')):
+            raise forms.ValidationError('Enter a title in at least one language.')
         slug = (cleaned.get('slug') or '').strip()
         change = cleaned.get('change_slug', False)
         if self.instance and self.instance.pk and not change:
             cleaned['slug'] = self.instance.slug
         elif not slug:
             title = cleaned.get('title_en') or cleaned.get('title_ru') or ''
-            cleaned['slug'] = slugify_underscore(title)
+            # RU/KA-only titles slugify to '' (ASCII-only); empty slug breaks {% url %}.
+            cleaned['slug'] = slugify_underscore(title) or self._meta.model._meta.model_name
         else:
             cleaned['slug'] = slug
         return cleaned

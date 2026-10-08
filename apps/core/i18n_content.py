@@ -89,7 +89,7 @@ def slugify_underscore(text: str, *, max_length: int = 120) -> str:
 
 def ensure_unique_slug(model_class, slug: str, *, exclude_pk=None, max_length: int = 120, **filters):
     """Append _2, _3, … until slug is unique within filters."""
-    base = slug[:max_length]
+    base = slug[:max_length] or 'item'
     candidate = base
     n = 2
     qs = model_class.objects.filter(**filters)
