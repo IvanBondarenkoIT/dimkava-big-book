@@ -40,7 +40,7 @@ def get_courses_for_user(user):
             'category_label': _course_level_label(c.level),
             'lessons_count': total,
             'progress': progress,
-            'image': c.image or '',
+            'image': c.cover_url,
         })
     return result
 

@@ -1,7 +1,12 @@
 """Tests for HR content editor."""
+import io
+import shutil
+import tempfile
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.test import TestCase
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from apps.courses.models import Course, Lesson
@@ -346,3 +351,94 @@ class LessonQuizCreateTests(TestCase):
         resp = self.client.post(add_url)
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(quiz.questions.count(), before + 1)
+
+
+DEFAULT_COVER = 'images.unsplash.com/photo-1510972527921'
+
+
+def _png_upload(name='cover.png'):
+    from PIL import Image
+
+    buf = io.BytesIO()
+    Image.new('RGB', (8, 8), (120, 80, 40)).save(buf, format='PNG')
+    return SimpleUploadedFile(name, buf.getvalue(), content_type='image/png')
+
+
+class CourseCoverTests(TestCase):
+    def setUp(self):
+        self.media_root = tempfile.mkdtemp()
+        self.override = override_settings(MEDIA_ROOT=self.media_root)
+        self.override.enable()
+        self.hr = User.objects.create_user(username='hr-cover', password='test')
+        hr_group, _ = Group.objects.get_or_create(name='hr_manager')
+        self.hr.groups.add(hr_group)
+        self.course = Course.objects.create(
+            title='Cover course', title_en='Cover course', slug='cover-course', status='published',
+        )
+        self.edit_url = reverse('content_editor:course_edit', kwargs={'slug': self.course.slug})
+        self.client.login(username='hr-cover', password='test')
+
+    def tearDown(self):
+        self.override.disable()
+        shutil.rmtree(self.media_root, ignore_errors=True)
+
+    def _post(self, **extra):
+        data = {
+            'slug': self.course.slug,
+            'status': 'published',
+            'level': 'beginner',
+            'estimated_minutes': 0,
+            'title_en': 'Cover course',
+            'title_ru': '',
+            'title_ka': '',
+            'description_en': '',
+            'description_ru': '',
+            'description_ka': '',
+            'image': '',
+            'review_required_after_days': 180,
+        }
+        data.update(extra)
+        return self.client.post(self.edit_url, data)
+
+    def test_upload_sets_cover_from_media(self):
+        resp = self._post(image_file=_png_upload())
+        self.assertEqual(resp.status_code, 302)
+        self.course.refresh_from_db()
+        self.assertTrue(self.course.cover_url.startswith('/media/courses/'))
+        served = self.client.get(self.course.cover_url)
+        self.assertEqual(served.status_code, 200)
+
+    def test_upload_takes_priority_over_url(self):
+        self._post(image='https://example.com/a.jpg', image_file=_png_upload())
+        self.course.refresh_from_db()
+        self.assertTrue(self.course.cover_url.startswith('/media/courses/'))
+
+    def test_url_only_is_used(self):
+        self._post(image='https://example.com/a.jpg')
+        self.course.refresh_from_db()
+        self.assertEqual(self.course.cover_url, 'https://example.com/a.jpg')
+
+    def test_no_cover_uses_default_image_on_list(self):
+        resp = self.client.get(reverse('courses:list'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, DEFAULT_COVER)
+
+    def test_non_image_is_rejected(self):
+        bad = SimpleUploadedFile('notes.txt', b'hello', content_type='text/plain')
+        resp = self._post(image_file=bad)
+        self.assertEqual(resp.status_code, 200)
+        self.course.refresh_from_db()
+        self.assertFalse(self.course.image_file)
+
+    def test_too_large_image_is_rejected(self):
+        from apps.content_editor import forms as editor_forms
+
+        original = editor_forms.COVER_MAX_BYTES
+        editor_forms.COVER_MAX_BYTES = 10
+        try:
+            resp = self._post(image_file=_png_upload())
+        finally:
+            editor_forms.COVER_MAX_BYTES = original
+        self.assertEqual(resp.status_code, 200)
+        self.course.refresh_from_db()
+        self.assertFalse(self.course.image_file)

@@ -92,6 +92,10 @@ class ArticleForm(SlugOnCreateMixin, forms.ModelForm):
         return obj
 
 
+COVER_MAX_BYTES = 5 * 1024 * 1024
+COVER_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp')
+
+
 class CourseForm(SlugOnCreateMixin, forms.ModelForm):
     class Meta:
         model = Course
@@ -99,12 +103,20 @@ class CourseForm(SlugOnCreateMixin, forms.ModelForm):
             'slug', 'status', 'level', 'estimated_minutes', 'visible_for_candidates',
             'title_en', 'title_ru', 'title_ka',
             'description_en', 'description_ru', 'description_ka',
-            'image', 'review_required_after_days',
+            'image_file', 'image', 'review_required_after_days',
         ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         _style_fields(self)
+        self.fields['image_file'].label = 'Cover image (upload)'
+        self.fields['image_file'].help_text = (
+            'JPG, PNG or WebP, up to 5 MB. Takes priority over the URL below. '
+            'Leave both empty to use the default picture.'
+        )
+        self.fields['image_file'].widget.attrs['accept'] = 'image/jpeg,image/png,image/webp'
+        self.fields['image'].label = 'Cover image URL (optional)'
+        self.fields['image'].help_text = 'Link to an image on the internet, used when no file is uploaded.'
         desc_hint = (
             'Short course summary only — not quiz questions. '
             'Use Add quiz on the course page for questions and answers.'
@@ -114,6 +126,17 @@ class CourseForm(SlugOnCreateMixin, forms.ModelForm):
             field.help_text = desc_hint
             field.widget.attrs['class'] = INPUT_CLASS + ' text-sm min-h-[4.5rem]'
             field.widget.attrs['rows'] = 3
+
+    def clean_image_file(self):
+        upload = self.cleaned_data.get('image_file')
+        # Only validate newly uploaded files; False means "Clear" was ticked.
+        if not upload or not hasattr(upload, 'content_type'):
+            return upload
+        if not upload.name.lower().endswith(COVER_EXTENSIONS):
+            raise forms.ValidationError('Use a JPG, PNG or WebP image.')
+        if upload.size > COVER_MAX_BYTES:
+            raise forms.ValidationError('Image is too large (max 5 MB).')
+        return upload
 
     def save(self, commit=True):
         obj = super().save(commit=False)

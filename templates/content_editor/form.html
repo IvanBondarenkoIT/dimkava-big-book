@@ -14,7 +14,7 @@
     {% endif %}
   </header>
 
-  <form method="post" class="card-atelier space-y-6">
+  <form method="post" enctype="multipart/form-data" class="card-atelier space-y-6">
     {% csrf_token %}
     {% if form.non_field_errors %}
     <div class="text-red-600 text-sm">{{ form.non_field_errors }}</div>
@@ -32,6 +32,9 @@
         {% if not field.is_hidden and field.name != 'title_en' and field.name != 'title_ru' and field.name != 'title_ka' and field.name != 'content_en' and field.name != 'content_ru' and field.name != 'content_ka' and field.name != 'description_en' and field.name != 'description_ru' and field.name != 'description_ka' %}
         <div class="space-y-1">
           <label for="{{ field.id_for_label }}" class="text-sm font-semibold text-on-surface">{{ field.label }}</label>
+          {% if field.name == 'image_file' and form.instance.cover_url %}
+          <img src="{{ form.instance.cover_url }}" alt="{% trans 'Current cover' %}" class="w-48 aspect-video object-cover rounded-lg border border-outline-variant/20 mb-2" />
+          {% endif %}
           {{ field }}
           {% if field.help_text %}<p class="text-xs text-on-surface-variant/60">{{ field.help_text }}</p>{% endif %}
           {% if field.errors %}<p class="text-xs text-red-600">{{ field.errors }}</p>{% endif %}

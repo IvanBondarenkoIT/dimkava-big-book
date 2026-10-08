@@ -37,7 +37,3 @@ USE_X_FORWARDED_HOST = True
 # Static files — WhiteNoise (add whitenoise to MIDDLEWARE in base when deploying)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Media — ephemeral on Railway, document for later S3
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '/media/'

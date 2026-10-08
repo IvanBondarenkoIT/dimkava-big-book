@@ -76,7 +76,7 @@
           </span>
         </div>
         <div class="h-64 md:h-auto relative overflow-hidden min-h-[256px]">
-          <img src="{{ active_course.image }}" alt="{{ active_course.title }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+          <img src="{{ active_course.image|default:'https://images.unsplash.com/photo-1510972527921-ce03766a1cf1?q=80&w=800' }}" alt="{{ active_course.title }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
           <div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest via-transparent to-transparent md:block hidden"></div>
         </div>
       </div>

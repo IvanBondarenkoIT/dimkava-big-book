@@ -40,7 +40,7 @@ class CourseAdmin(admin.ModelAdmin):
     inlines = [LessonInline]
     list_editable = ['responsible_editor', 'review_required_after_days']
     fieldsets = (
-        (None, {'fields': ('slug', 'level', 'status', 'visible_for_candidates', 'estimated_minutes', 'image')}),
+        (None, {'fields': ('slug', 'level', 'status', 'visible_for_candidates', 'estimated_minutes', 'image_file', 'image')}),
         ('English', {'fields': ('title_en', 'description_en')}),
         ('Georgian', {'fields': ('title_ka', 'description_ka')}),
         ('Russian', {'fields': ('title_ru', 'description_ru')}),

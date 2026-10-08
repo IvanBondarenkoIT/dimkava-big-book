@@ -292,6 +292,13 @@ C:\dimkava\scripts\backup-db.ps1
 Get-Content C:\dimkava\backups\dimkava-....sql | docker compose --env-file .env.prod -f docker-compose.prod.yml exec -T db psql -U dimkava dimkava
 ```
 
+**Загруженные обложки курсов не входят в этот бэкап** — они лежат в Docker volume `media_data` (`/app/media` в контейнере `web`). Ручная копия:
+
+```powershell
+cd C:\dimkava\compose
+docker compose --env-file .env.prod -f docker-compose.prod.yml cp web:/app/media C:\dimkava\backups\media
+```
+
 ---
 
 ## 10. Устранение неполадок
